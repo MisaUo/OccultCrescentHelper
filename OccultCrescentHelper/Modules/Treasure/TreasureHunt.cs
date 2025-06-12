@@ -1,25 +1,21 @@
 
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Objects.Enums;
-using Dalamud.Plugin.Services;
-using ECommons.Automation.LegacyTaskManager;
+using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.Automation.NeoTaskManager;
+using ECommons.Automation.NeoTaskManager.Tasks;
 using ECommons.DalamudServices;
-using ECommons.GameFunctions;
 using ECommons.GameHelpers;
-using FFXIVClientStructs.FFXIV.Client.Game.Control;
 using ImGuiNET;
 using OccultCrescentHelper.Chains;
-using OccultCrescentHelper.Modules.Debug.Panels;
 using Ocelot;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
-using Ocelot.Modules;
-using Ocelot.Prowler;
 
 namespace OccultCrescentHelper.Modules.Treasure;
 
@@ -27,67 +23,72 @@ public class TreasureHunt
 {
     private const float INTERACT_THRESHOLD = 2f;
 
-    private const float DATA_THRESHOLD = 100f;
+    private const float DATA_THRESHOLD = 75f;
 
     private List<List<Vector3>> paths = [
         [
-            new Vector3(617.09f, 66.3f, -703.88f),
-            new Vector3(490.41f, 62.46f, -590.57f),
-            new Vector3(666.53f, 79.12f, -480.37f),
-            new Vector3(870.66f, 95.69f, -388.36f),
-            new Vector3(779.02f, 96.09f, -256.24f),
-            new Vector3(770.75f, 107.99f, -143.57f),
-            new Vector3(726.28f, 108.14f, -67.92f),
-            new Vector3(788.88f, 120.38f, 109.39f),
-            new Vector3(609.61f, 107.99f, 117.27f),
-            new Vector3(475.73f, 95.99f, -87.08f),
-            new Vector3(245.59f, 109.12f, -18.17f),
-            new Vector3(354.12f, 95.66f, -288.93f),
-            new Vector3(386.92f, 96.79f, -451.38f),
-            new Vector3(381.73f, 22.17f, -743.65f),
-            new Vector3(142.11f, 16.4f, -574.06f),
-            new Vector3(-118.97f, 4.99f, -708.46f),
-            new Vector3(-140.46f, 22.35f, -414.27f),
-            new Vector3(-343.16f, 52.32f, -382.13f),
-            new Vector3(-491.02f, 2.98f, -529.59f),
-            new Vector3(-451.68f, 2.98f, -775.57f),
-            new Vector3(-585.29f, 4.99f, -864.84f),
-            new Vector3(-729.43f, 4.99f, -724.82f),
-            new Vector3(-825.16f, 2.98f, -832.27f),
-            new Vector3(-661.71f, 2.98f, -579.49f),
+            new Vector3(617.09f, 66.31f, -703.88f),
+            // new Vector3(490.41f, 62.48f, -590.57f),
+            // new Vector3(666.54f, 79.13f, -480.36f),
+            // new Vector3(870.69f, 95.7f, -388.33f),
+            // new Vector3(779.02f, 96.1f, -256.24f),
+            // new Vector3(770.75f, 108f, -143.54f),
+            // new Vector3(726.28f, 108.15f, -67.9f),
+            // new Vector3(788.88f, 120.4f, 109.39f),
+            // new Vector3(609.62f, 108f, 117.29f),
+            // new Vector3(475.73f, 96f, -87.08f),
+            // new Vector3(245.62f, 109.14f, -18.17f),
+            // new Vector3(-25.68f, 102.23f, 150.19f),
+            // new Vector3(-158.65f, 98.65f, -132.74f),
+            // new Vector3(55.31f, 111.32f, -289.08f),
+            // new Vector3(354.12f, 95.66f, -288.9f),
+            // new Vector3(386.95f, 96.82f, -451.35f),
+            // new Vector3(381.77f, 22.18f, -743.65f),
+            // new Vector3(142.11f, 16.41f, -574.06f),
+            // new Vector3(-118.97f, 5f, -708.43f),
+            // new Vector3(-140.46f, 22.38f, -414.27f),
+            // new Vector3(-343.16f, 52.35f, -382.13f),
+            // new Vector3(-490.99f, 3f, -529.59f),
+            // new Vector3(-451.68f, 3f, -775.57f),
+            // new Vector3(-585.26f, 5f, -864.84f),
+            // new Vector3(-729.43f, 5f, -724.79f),
+            // new Vector3(-825.14f, 3f, -832.25f),
+            // new Vector3(-661.68f, 3f, -579.49f),
         ],
         [
-            new Vector3(277.79f, 103.78f, 241.9f),
-            new Vector3(517.75f, 67.89f, 236.13f),
-            new Vector3(642.97f, 69.99f, 407.8f),
-            new Vector3(697.32f, 69.99f, 597.92f),
-            new Vector3(835.08f, 69.99f, 699.09f),
-            new Vector3(596.46f, 70.3f, 622.77f),
-            new Vector3(471.18f, 70.3f, 530.02f),
-            new Vector3(256.15f, 73.17f, 492.36f),
-            new Vector3(294.88f, 56.08f, 640.22f),
-            new Vector3(433.71f, 70.3f, 683.53f),
-            new Vector3(140.98f, 55.99f, 770.99f),
-            new Vector3(35.72f, 65.11f, 648.98f),
-            new Vector3(-225.02f, 75f, 804.99f),
-            new Vector3(-197.19f, 74.91f, 618.34f),
-            new Vector3(-372.67f, 75f, 527.43f),
-            new Vector3(-648f, 75f, 403.95f),
-            new Vector3(-401.66f, 85.04f, 332.54f),
-            new Vector3(-283.99f, 115.98f, 377.04f),
-            new Vector3(-256.89f, 120.99f, 125.08f),
-            new Vector3(-25.68f, 102.22f, 150.16f),
-            new Vector3(8.99f, 103.2f, 426.96f),
+            new Vector3(277.81f, 103.8f, 241.91f),
+            // new Vector3(517.75f, 67.9f, 236.13f),
+            // new Vector3(643f, 70f, 407.8f),
+            // new Vector3(697.32f, 70f, 597.92f),
+            // new Vector3(835.11f, 70f, 699.12f),
+            // new Vector3(596.49f, 70.3f, 622.77f),
+            // new Vector3(471.21f, 70.3f, 530.02f),
+            // new Vector3(433.71f, 70.3f, 683.53f),
+            // new Vector3(294.91f, 56.1f, 640.22f),
+            // new Vector3(256.15f, 73.19f, 492.36f),
+            // new Vector3(35.72f, 65.11f, 648.98f),
+            // new Vector3(140.98f, 56f, 770.99f),
+            // new Vector3(-225.02f, 75f, 804.99f),
+            // new Vector3(-197.19f, 74.93f, 618.34f),
+            // new Vector3(-372.67f, 75f, 527.43f),
+            // new Vector3(-648f, 75f, 403.98f),
+            // new Vector3(-401.63f, 85.06f, 332.54f),
+            // new Vector3(-283.96f, 116f, 377.04f),
+            // new Vector3(-256.86f, 121f, 125.08f),
         ],
         [
-            new Vector3(-158.65f, 98.62f, -132.74f),
             new Vector3(-487.11f, 98.53f, -205.46f),
-            new Vector3(-444.11f, 90.68f, 26.23f),
-            new Vector3(-394.89f, 106.74f, 175.43f),
-            new Vector3(-682.8f, 135.61f, -195.27f),
-            new Vector3(-729.92f, 116.53f, -79.06f),
-            new Vector3(-756.83f, 76.55f, 97.37f),
-            new Vector3(-713.8f, 62.06f, 192.61f),
+            new Vector3(-444.11f, 90.69f, 26.23f),
+            new Vector3(-394.89f, 106.74f, 175.46f),
+            new Vector3(-682.77f, 135.62f, -195.27f),
+            new Vector3(-713.8f, 62.07f, 192.64f),
+            new Vector3(-756.8f, 76.57f, 97.37f),
+            new Vector3(-729.92f, 116.54f, -79.06f),
+            new Vector3(-856.93f, 68.85f, -93.14f),
+            new Vector3(-767.45f, 115.62f, -235f),
+            new Vector3(-680.54f, 104.86f, -354.79f),
+            new Vector3(-798.21f, 105.61f, -310.54f),
+            new Vector3(-487.11f, 98.53f, -205.46f),
         ]
     ];
 
@@ -107,7 +108,9 @@ public class TreasureHunt
 
     private volatile float distance = 0f;
 
-    public void Tick(TreasureModule module)
+    private volatile IGameObject? treasure = null;
+
+    public unsafe void Tick(TreasureModule module)
     {
         if (!running)
         {
@@ -127,7 +130,7 @@ public class TreasureHunt
         MaintainWatcherChain(module, vnav, lifestream);
     }
 
-    private bool Is(Vector3 a, Vector3 b, float variance = 1f)
+    private bool Is(Vector3 a, Vector3 b, float variance = 5f)
     {
         return Vector3.Distance(a, b) <= variance;
     }
@@ -140,58 +143,72 @@ public class TreasureHunt
         }
 
         Plugin.Chain.Submit(
-            () => Chain.Create($"Treasure hunt looper ({pathIndex + 1}:{nodeIndex + 1})")
-                .Then(new TaskManagerTask(() => {
-                    if (!vnav.IsRunning())
-                    {
-                        vnav.PathfindAndMoveTo(currentNode, false);
-                    }
-
-                    var treasures = Svc.Objects
-                        .Where(o => o?.ObjectKind == ObjectKind.Treasure && o.IsValid() && !o.IsDead && o.IsTargetable)
-                        .ToList();
-
-                    var distance = Vector3.Distance(Player.Position, currentNode);
-                    this.distance = distance;
-                    if (distance <= DATA_THRESHOLD)
-                    {
-                        ;
-                        if (treasures.Any(o => Is(o.Position, currentNode)))
+            () => {
+                return Chain.Create($"Treasure hunt looper ({pathIndex + 1}:{nodeIndex + 1})")
+                    .Then(new TaskManagerTask(() => {
+                        if (!vnav.IsRunning())
                         {
-                            if (distance > INTERACT_THRESHOLD)
-                            {
-                                return false;
-                            }
-
-                            Svc.Targets.Target = treasures.First();
-
-                            vnav.Stop();
+                            vnav.PathfindAndMoveTo(currentNode, false);
                         }
 
-                        if (isFinalNode)
+                        var treasures = Svc.Objects
+                            .Where(o => o != null && o?.ObjectKind == ObjectKind.Treasure && o.IsValid() && !o.IsDead && o.IsTargetable)
+                            .ToList();
+
+                        var distance = Vector3.Distance(Player.Position, currentNode);
+                        this.distance = distance;
+                        if (distance <= DATA_THRESHOLD)
                         {
-                            if (isFinalPath)
+                            treasure = treasures.FirstOrDefault(o => Is(o.Position, currentNode));
+                            if (treasure != null)
                             {
-                                running = false;
+                                Svc.Targets.Target = treasure;
+
+                                if (distance > INTERACT_THRESHOLD)
+                                {
+                                    return false;
+                                }
+
+                                Svc.Log.Info("Chest!");
+                                Plugin.Chain.Submit(
+                                    () => Chain.Create("Interact")
+                                        .Then(_ => module.Debug("Starting Interaction"))
+                                        .Then(NeoTasks.InteractWithObject(() => treasure, false, new() {
+                                            TimeLimitMS = 3000
+                                        }))
+                                        .Then(_ => module.Debug("Interaction Done"))
+                                );
+
+                                vnav.Stop();
+                            }
+
+                            if (isFinalNode)
+                            {
+                                if (isFinalPath)
+                                {
+                                    running = false;
+                                    return true;
+                                }
+
+                                pathIndex++;
+                                nodeIndex = 0;
+                                OnPathChanged(module, vnav, lifestream);
                                 return true;
                             }
 
-                            pathIndex++;
-                            nodeIndex = 0;
-                            OnPathChanged(module, vnav, lifestream);
+                            nodeIndex++;
+                            vnav.PathfindAndMoveTo(currentNode, false);
                             return true;
                         }
 
-                        nodeIndex++;
-                        vnav.PathfindAndMoveTo(currentNode, false);
-                        return true;
-                    }
-
-                    return false;
-                }, new() { TimeLimitMS = int.MaxValue })
-            )
-            .ConditionalWait(_ => Svc.Targets.Target != null, 1000)
-        );
+                        return false;
+                    }, new() { TimeLimitMS = int.MaxValue }))
+                    .Then(() => Chain.Create("Interact")
+                        .Wait(300)
+                        .Then(NeoTasks.InteractWithObject(() => treasure, false, new() { TimeLimitMS = 3000 }))
+                        .Then(_ => treasure = null)
+                    );
+            });
     }
 
     public void Draw(TreasureModule module)
@@ -271,11 +288,11 @@ public class TreasureHunt
         {
             case 0:
                 module.Warning("0:start");
-                Plugin.Chain.Submit(
-                    () => Chain.Create("Treasure hunt phase 1 setup")
-                        .Then(new ReturnChain(new Vector3(804.38f, 70.86f, -691.59f), module.GetIPCProvider<YesAlready>(), module.GetIPCProvider<VNavmesh>()))
-                        .Then(new MountChain(module.plugin.config.TeleporterConfig.Mount))
-                );
+                // Plugin.Chain.Submit(
+                //     () => Chain.Create("Treasure hunt phase 1 setup")
+                //         .Then(new ReturnChain(new Vector3(804.38f, 70.86f, -691.59f), module.GetIPCProvider<YesAlready>(), module.GetIPCProvider<VNavmesh>()))
+                //         .Then(new MountChain(module.plugin.config.TeleporterConfig.Mount))
+                // );
                 break;
             case 1:
                 module.Warning("1:start");

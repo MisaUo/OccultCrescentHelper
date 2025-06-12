@@ -107,7 +107,7 @@ public class Activity
 
             bool isFate = data.type == EventType.Fate;
 
-            return Chain.Create("Illegal:Pathfinding")
+            var chain = Chain.Create("Illegal:Pathfinding")
                 .ConditionalWait(_ => !isFate && module.config.ShouldDelayCriticalEncounters, Random.Shared.Next(10000, 15001))
                 .Then(_ => vnav.Stop())
                 .ConditionalThen(
@@ -126,13 +126,23 @@ public class Activity
                     new MountChain(module.plugin.config.TeleporterConfig.Mount)
                 )))
                 .Then(new PathfindingChain(vnav, getPosition(), data, false, 20f, 10f))
-                .WaitToStartPathfinding(vnav)
-                // Fate
-                .ConditionalThen(_ => isFate, GetFatePathfindingWatcher(states, vnav))
-                .ConditionalThen(_ => isFate, _ => state = ActivityState.Participating)
-                // Critical Encounter
-                .ConditionalThen(_ => !isFate, GetCriticalEncounterPathfindingWatcher(states, vnav))
-                .ConditionalThen(_ => !isFate, _ => state = ActivityState.WaitingToStartCriticalEncoutner);
+                .WaitToStartPathfinding(vnav);
+
+            if (isFate)
+            {
+                chain
+                    .Then(GetFatePathfindingWatcher(states, vnav))
+                    .Then(_ => state = ActivityState.Participating);
+            }
+            else
+            {
+                chain
+                    .Then(GetCriticalEncounterPathfindingWatcher(states, vnav))
+                    .Then(_ => state = ActivityState.WaitingToStartCriticalEncoutner);
+            }
+
+
+            return chain;
         };
     }
 
