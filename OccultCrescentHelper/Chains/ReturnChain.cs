@@ -60,8 +60,6 @@ public class ReturnChain : RetryChainFactory
 
             if (approachAetherye && vnav != null)
             {
-                chain = ApplyBuffs(chain);
-
                 chain
                     .Wait(500)
                     .Then(_ => vnav.MoveToPath([destination], false))
@@ -71,7 +69,7 @@ public class ReturnChain : RetryChainFactory
         }
         else if (vnav != null)
         {
-
+            chain = ApplyBuffs(chain);
 
             chain
                 .Then(new PathfindAndMoveToChain(vnav, destination))
