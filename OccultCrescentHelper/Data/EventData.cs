@@ -28,6 +28,8 @@ public struct EventData
 
     public Func<Vector3, List<IProwlerAction>> pathFactory;
 
+    public float? radius;
+
     public static readonly Dictionary<uint, EventData> Fates = new Dictionary<uint, EventData>
     {
         {

@@ -18,9 +18,7 @@ using OccultCrescentHelper.Data;
 using OccultCrescentHelper.Enums;
 using OccultCrescentHelper.Modules.CriticalEncounters;
 using OccultCrescentHelper.Modules.Fates;
-using OccultCrescentHelper.Modules.Mount;
 using OccultCrescentHelper.Modules.StateManager;
-using OccultCrescentHelper.Modules.Teleporter;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
@@ -393,14 +391,17 @@ public class Activity
 
     public bool IsInZone()
     {
-        float radius = 0f;
-        if (data.type == EventType.Fate)
+        float radius = data.radius ?? 0f;
+        if (radius == 0f)
         {
-            radius = module.GetModule<FatesModule>().fates[data.id].Radius;
-        }
-        else
-        {
-            radius = module.GetModule<CriticalEncountersModule>().criticalEncounters[data.id].Unknown4;
+            if (data.type == EventType.Fate)
+            {
+                radius = module.GetModule<FatesModule>().fates[data.id].Radius;
+            }
+            else
+            {
+                radius = module.GetModule<CriticalEncountersModule>().criticalEncounters[data.id].Unknown4;
+            }
         }
 
         return Vector3.Distance(Player.Position, getPosition()) <= radius;
