@@ -49,7 +49,7 @@ public class Automator
                 var critical = module.GetModule<CriticalEncountersModule>();
                 var encounter = critical.criticalEncounters.Values.Where((ev) => ev.State != DynamicEventState.Inactive).Last();
                 var data = EventData.CriticalEncounters[encounter.DynamicEventId];
-                activity = Activity.ForCriticalEncounter(encounter, data, lifestream, vnav, module, critical);
+                activity = new CriticalEncounter(data, lifestream, vnav, module, critical);
 
                 if (activity != null)
                 {
@@ -72,7 +72,7 @@ public class Automator
             }
         }
 
-        if (activity != null && !activity.isValid())
+        if (activity != null && !activity.IsValid())
         {
             Plugin.Chain.Abort();
             vnav.Stop();
@@ -155,7 +155,7 @@ public class Automator
                 continue;
             }
 
-            return Activity.ForCriticalEncounter(encounter, data, lifestream, vnav, module, source);
+            return new CriticalEncounter(data, lifestream, vnav, module, source);
         }
 
         return null;
@@ -179,7 +179,7 @@ public class Automator
                 continue;
             }
 
-            return Activity.ForFate(fate, data, lifestream, vnav, module);
+            return new Fate(data, lifestream, vnav, module, fate);
         }
 
         return null;
