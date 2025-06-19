@@ -5,14 +5,6 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OccultCrescentHelper", "OccultCrescentHelper\BOCCHI.csproj", "{13C812E9-0D42-4B95-8646-40EEBF30636F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FFXIVClientStructs", "FFXIVClientStructs", "{7E31C5B6-FE7E-4206-A2DF-8428DDF2E6A7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFXIVClientStructs", "FFXIVClientStructs\FFXIVClientStructs\FFXIVClientStructs.csproj", "{C6B08A4C-02AD-413C-B980-119A79E3B3FB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteropGenerator.Runtime", "FFXIVClientStructs\InteropGenerator.Runtime\InteropGenerator.Runtime.csproj", "{AA1087E2-858C-4B9F-8314-91FA67C9358C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFXIVClientStructs.Generators", "FFXIVClientStructs\FFXIVClientStructs.Generators\FFXIVClientStructs.Generators.csproj", "{8A51B9F7-5F94-44A3-AA60-648FF94C009F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -74,11 +66,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{C6B08A4C-02AD-413C-B980-119A79E3B3FB} = {7E31C5B6-FE7E-4206-A2DF-8428DDF2E6A7}
-		{AA1087E2-858C-4B9F-8314-91FA67C9358C} = {7E31C5B6-FE7E-4206-A2DF-8428DDF2E6A7}
-		{8A51B9F7-5F94-44A3-AA60-648FF94C009F} = {7E31C5B6-FE7E-4206-A2DF-8428DDF2E6A7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B17E85B1-5F60-4440-9F9A-3DDE877E8CDF}

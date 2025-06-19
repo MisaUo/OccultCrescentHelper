@@ -6,7 +6,6 @@
         <PackageProjectUrl>https://github.com/OhKannaDuh/OccultCrescentHelper</PackageProjectUrl>
         <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
         <IsPackable>false</IsPackable>
-        <Use_Dalamud_FFXIVClientStructs>false</Use_Dalamud_FFXIVClientStructs>
         <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
@@ -45,19 +44,5 @@
             <HintPath>$(DalamudLibPath)Dalamud.Common.dll</HintPath>
             <Private>False</Private>
         </Reference>
-    </ItemGroup>
-    <!-- FFXIVClientStructs -->
-    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-        <Reference Include="FFXIVClientStructs" Condition="Exists('bin\Debug\FFXIVClientStructs.dll')">
-            <HintPath>bin\Debug\FFXIVClientStructs.dll</HintPath>
-        </Reference>
-        <Reference Include="InteropGenerator.Runtime" Condition="Exists('bin\Debug\InteropGenerator.Runtime.dll')">
-            <HintPath>bin\Debug\InteropGenerator.Runtime.dll</HintPath>
-        </Reference>
-    </ItemGroup>
-    <ItemGroup Condition="'$(Configuration)' == 'Release'">
-        <ProjectReference Include="..\FFXIVClientStructs\FFXIVClientStructs\FFXIVClientStructs.csproj" Private="true" />
-        <ProjectReference Include="..\FFXIVClientStructs\InteropGenerator.Runtime\InteropGenerator.Runtime.csproj" Private="true" />
-        <ProjectReference Include="..\FFXIVClientStructs\InteropGenerator\InteropGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
 </Project>

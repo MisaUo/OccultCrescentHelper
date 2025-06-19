@@ -16,7 +16,7 @@ dotnet build -c Release
 
 # Create release on github
 gh release create "$TAG" --title "$TAG" --generate-notes
-gh release upload "$TAG" OccultCrescentHelper/bin/Release/OccultCrescentHelper/latest.zip --clobber
+gh release upload "$TAG" OccultCrescentHelper/bin/Release/BOCCHI/latest.zip --clobber
 
 # Update plugin manifest
 gh repo clone plugins
