@@ -14,16 +14,18 @@ namespace OccultCrescentHelper.Commands;
 [OcelotCommand]
 public class OCHIllegalCommand : OcelotCommand
 {
-    public override string command => "/ochillegal";
+    public override string command => "/bocchiillegal";
 
     public override string description => @"
 Manage och automator/illegal mode.
- - /ochillegal (Toggles the automator lens window)
- - /ochillegal on (Enables illegal mode (Automation))
- - /ochillegal off (Disables illegal mode (Automation))
- - /ochillegal toggle (Toggles illegal mode (Automation))
+ - /bocchiillegal (Toggles the automator lens window)
+ - /bocchiillegal on (Enables illegal mode (Automation))
+ - /bocchiillegal off (Disables illegal mode (Automation))
+ - /bocchiillegal toggle (Toggles illegal mode (Automation))
 --------------------------------
 ".Trim();
+
+    public override IReadOnlyList<string> aliases => ["/ochillegal", "/bocchillegal"];
 
     public override IReadOnlyList<string> validArguments => ["on", "off", "toggle"];
 

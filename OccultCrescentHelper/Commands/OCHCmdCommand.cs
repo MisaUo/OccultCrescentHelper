@@ -13,16 +13,18 @@ namespace OccultCrescentHelper.Commands;
 [OcelotCommand]
 public class OCHCmdCommand : OcelotCommand
 {
-    public override string command => "/ochcmd";
+    public override string command => "/bocchicmd";
 
     public override string description => @"
 Utility command.
  - Flag commands clear active flag before trying to place a new one
-   - /ochcmd flag-active-ce (Place a flag marker on the current Critical Engagement)
-   - /ochcmd flag-active-fate (Place a flag marker on a current Fate)
-   - /ochcmd flag-active-non-pot-fate (Place a flag marker on a current fate that isn't a pot fate)
+   - /bocchicmd flag-active-ce (Place a flag marker on the current Critical Engagement)
+   - /bocchicmd flag-active-fate (Place a flag marker on a current Fate)
+   - /bocchicmd flag-active-non-pot-fate (Place a flag marker on a current fate that isn't a pot fate)
 --------------------------------
 ".Trim();
+
+    public override IReadOnlyList<string> aliases => ["/ochcmd"];
 
     public override IReadOnlyList<string> validArguments => ["flag-active-ce", "flag-active-fate", "flag-active-non-pot-fate"];
 

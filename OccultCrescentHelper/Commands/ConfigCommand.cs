@@ -7,15 +7,15 @@ namespace OccultCrescentHelper.Commands;
 [OcelotCommand]
 public class ConfigCommand : OcelotCommand
 {
-    public override string command => "/ochc";
+    public override string command => "/bocchicfg";
 
     public override string description => @"
 Opens Occult Crescent Helper config ui
- - /ochc : Opens the config ui
+ - /bocchicfg : Opens the config ui
 --------------------------------
 ".Trim();
 
-    public override IReadOnlyList<string> aliases => ["/occultcrescenthelperconfig"];
+    public override IReadOnlyList<string> aliases => ["/bocchic", "/ochcfg", "/ochc", "/occultcrescenthelperconfig"];
 
     private readonly Plugin plugin;
 
