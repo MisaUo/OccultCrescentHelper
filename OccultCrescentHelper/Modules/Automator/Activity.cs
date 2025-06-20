@@ -100,14 +100,14 @@ public abstract class Activity
             {
                 case NavigationType.WalkToEvent:
                     chain
-                        .ConditionalThen(_ => module._config.TeleporterConfig.ShouldMount, ChainHelper.MountChain())
+                        .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain())
                         .Then(new PathfindingChain(vnav, GetPosition(), data, false));
                     break;
 
                 case NavigationType.ReturnThenWalkToEvent:
                     chain
                         .Then(ChainHelper.ReturnChain())
-                        .ConditionalThen(_ => module._config.TeleporterConfig.ShouldMount, ChainHelper.MountChain())
+                        .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain())
                         .Then(new PathfindingChain(vnav, GetPosition(), data, false));
                     break;
 
@@ -122,7 +122,7 @@ public abstract class Activity
 
                 case NavigationType.WalkToClosestShardAndTeleportToEventShardThenWalkToEvent:
                     chain
-                        .ConditionalThen(_ => module._config.TeleporterConfig.ShouldMount, ChainHelper.MountChain())
+                        .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain())
                         .Then(new PathfindingChain(vnav, playerShard.position, data, false))
                         .WaitUntilNear(vnav, playerShard.position, 4f)
                         .Then(ChainHelper.TeleportChain(activityShard.aethernet))
@@ -383,6 +383,16 @@ public abstract class Activity
         }
 
         return Vector3.Distance(Player.Position, GetPosition()) <= radius;
+    }
+
+    private bool ShouldMountToPathfindTo(Vector3 destination)
+    {
+        if (!module._config.TeleporterConfig.ShouldMount)
+        {
+            return false;
+        }
+
+        return Vector3.Distance(Player.Position, destination) <= 20f;
     }
 
     public abstract bool IsValid();
