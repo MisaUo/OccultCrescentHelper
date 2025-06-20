@@ -44,6 +44,7 @@ public class AutomatorModule : Module<Plugin, Config>
             return;
         }
 
+        automator.Refresh();
         config.Enabled = false;
         plugin.config.Save();
     }

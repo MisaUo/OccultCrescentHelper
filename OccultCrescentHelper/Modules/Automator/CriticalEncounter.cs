@@ -27,7 +27,12 @@ public class CriticalEncounter : Activity
             return true;
         }
 
-        if (encounter.State == DynamicEventState.Warmup || encounter.State == DynamicEventState.Battle)
+        if (encounter.State == DynamicEventState.Warmup)
+        {
+            return Player.DistanceTo(GetPosition()) <= 30f;
+        }
+
+        if (encounter.State == DynamicEventState.Battle)
         {
             return Player.Status.Has(PlayerStatus.HoofingIt);
         }

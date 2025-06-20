@@ -185,4 +185,10 @@ public class Automator
         return null;
     }
 
+    public void Refresh()
+    {
+        activity = null;
+        idleTime = 0;
+        firstTick = true;
+    }
 }
