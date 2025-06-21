@@ -123,8 +123,8 @@ public abstract class Activity
                 case NavigationType.WalkToClosestShardAndTeleportToEventShardThenWalkToEvent:
                     chain
                         .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain())
-                        .Then(new PathfindingChain(vnav, playerShard.position, data, false))
-                        .WaitUntilNear(vnav, playerShard.position, 4f)
+                        .ConditionalThen(_ => Player.DistanceTo(playerShard.position) > AethernetData.DISTANCE, new PathfindingChain(vnav, playerShard.position, data, false))
+                        .WaitUntilNear(vnav, playerShard.position, AethernetData.DISTANCE)
                         .Then(ChainHelper.TeleportChain(activityShard.aethernet))
                         .Debug("Waiting for lifestream to not be 'busy'")
                         .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new() { TimeLimitMS = 30000 }))

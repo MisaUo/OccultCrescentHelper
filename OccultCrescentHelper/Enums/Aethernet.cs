@@ -19,6 +19,8 @@ public enum Aethernet : uint
 
 public class AethernetData
 {
+    public static readonly float DISTANCE = 4f;
+
     public Aethernet aethernet;
     public uint dataId;
     public Vector3 position;

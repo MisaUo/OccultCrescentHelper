@@ -7,6 +7,7 @@ using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using OccultCrescentHelper.Data;
+using OccultCrescentHelper.Enums;
 using OccultCrescentHelper.Modules.Buff;
 using OccultCrescentHelper.Modules.Buff.Chains;
 using Ocelot.Chain;
@@ -62,8 +63,8 @@ public class ReturnChain : RetryChainFactory
             {
                 chain
                     .Wait(500)
-                    .Then(_ => vnav.MoveToPath([destination], false))
-                    .WaitUntilNear(vnav, destination, 4f)
+                    .ConditionalThen(_ => Player.DistanceTo(destination) > AethernetData.DISTANCE, _ => vnav.MoveToPath([destination], false))
+                    .WaitUntilNear(vnav, destination, AethernetData.DISTANCE)
                     .Then(_ => vnav.Stop());
             }
         }
@@ -72,8 +73,8 @@ public class ReturnChain : RetryChainFactory
             chain = ApplyBuffs(chain);
 
             chain
-                .Then(new PathfindAndMoveToChain(vnav, destination))
-                .WaitUntilNear(vnav, destination, 4f)
+                .ConditionalThen(_ => Player.DistanceTo(destination) > AethernetData.DISTANCE, new PathfindAndMoveToChain(vnav, destination))
+                .WaitUntilNear(vnav, destination, AethernetData.DISTANCE)
                 .Then(_ => vnav.Stop());
         }
 
@@ -100,9 +101,10 @@ public class ReturnChain : RetryChainFactory
                     })
                     .BreakIf(() => closestKnowledgeCrystal == null)
                     .Then(_ => vnav.MoveToPath([position], false))
-                    .WaitUntilNear(vnav, position, 4f)
+                    .WaitUntilNear(vnav, position, AethernetData.DISTANCE)
                     .Then(_ => vnav.Stop())
-                    .Then(new AllBuffsChain(buffs));
+                    .Then(new AllBuffsChain(buffs))
+                    .Wait(2500);
             });
         }
 
