@@ -63,8 +63,7 @@ public class ReturnChain : RetryChainFactory
             {
                 chain
                     .Wait(500)
-                    .ConditionalThen(_ => Player.DistanceTo(destination) > AethernetData.DISTANCE, _ => vnav.MoveToPath([destination], false))
-                    .WaitUntilNear(vnav, destination, AethernetData.DISTANCE)
+                    .Then(ChainHelper.MoveToAndWait(destination, AethernetData.DISTANCE))
                     .Then(_ => vnav.Stop());
             }
         }
@@ -73,8 +72,7 @@ public class ReturnChain : RetryChainFactory
             chain = ApplyBuffs(chain);
 
             chain
-                .ConditionalThen(_ => Player.DistanceTo(destination) > AethernetData.DISTANCE, new PathfindAndMoveToChain(vnav, destination))
-                .WaitUntilNear(vnav, destination, AethernetData.DISTANCE)
+                .Then(ChainHelper.PathfindToAndWait(destination, AethernetData.DISTANCE))
                 .Then(_ => vnav.Stop());
         }
 

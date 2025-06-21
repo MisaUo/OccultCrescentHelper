@@ -1,11 +1,15 @@
 using System;
+using System.Numerics;
 using ECommons.DalamudServices;
+using ECommons.GameHelpers;
 using OccultCrescentHelper.Data;
 using OccultCrescentHelper.Enums;
 using OccultCrescentHelper.Modules.Buff;
 using OccultCrescentHelper.Modules.Mount;
 using OccultCrescentHelper.Modules.Mount.Chains;
 using OccultCrescentHelper.Modules.Teleporter;
+using Ocelot.Chain;
+using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
 using Ocelot.Modules;
 
@@ -63,5 +67,27 @@ public class ChainHelper
     public static MountChain MountChain()
     {
         return new MountChain(modules.GetModule<MountModule>().config);
+    }
+
+    public static Func<Chain> PathfindToAndWait(Vector3 destination, float distance)
+    {
+        var vnav = ipc.GetProvider<VNavmesh>();
+        return () => Chain.Create()
+            .ConditionalThen(_ => Player.DistanceTo(destination) > AethernetData.DISTANCE, _ =>
+                Chain.Create()
+                    .Then(new PathfindAndMoveToChain(vnav, destination))
+                    .WaitUntilNear(vnav, destination, distance)
+        );
+    }
+
+    public static Func<Chain> MoveToAndWait(Vector3 destination, float distance)
+    {
+        var vnav = ipc.GetProvider<VNavmesh>();
+        return () => Chain.Create()
+            .ConditionalThen(_ => Player.DistanceTo(destination) > AethernetData.DISTANCE, _ =>
+                Chain.Create()
+                    .Then(_ => vnav.MoveToPath([destination], false))
+                    .WaitUntilNear(vnav, destination, distance)
+        );
     }
 }

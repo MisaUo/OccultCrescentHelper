@@ -1,5 +1,4 @@
 using Dalamud.Game.ClientState.Conditions;
-using ECommons.Automation.LegacyTaskManager;
 using ECommons.Automation.NeoTaskManager;
 using OccultCrescentHelper.Enums;
 using OccultCrescentHelper.Modules.Teleporter;
@@ -28,6 +27,7 @@ public class TeleportChain : ChainFactory
     {
         return chain
             .Then(_ => lifestream.Abort())
+            .Then(new TaskManagerTask(() => ZoneHelper.GetNearbyAethernetShards(AethernetData.DISTANCE).Count > 0, new() { TimeLimitMS = 15000 }))
             .Then(_ => module.GetIPCProvider<VNavmesh>()?.Stop())
             .Then(_ => lifestream.AethernetTeleportByPlaceNameId((uint)aethernet))
             .WaitToCycleCondition(ConditionFlag.BetweenAreas)

@@ -19,7 +19,6 @@ using OccultCrescentHelper.Modules.CriticalEncounters;
 using OccultCrescentHelper.Modules.Fates;
 using OccultCrescentHelper.Modules.StateManager;
 using Ocelot.Chain;
-using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
 
 namespace OccultCrescentHelper.Modules.Automator;
@@ -93,6 +92,8 @@ public abstract class Activity
             bool isFate = data.type == EventType.Fate;
             var navType = SmartNavigation.Decide(Player.Position, GetPosition(), activityShard);
 
+            module.Debug("Selected navigation type: " + navType.ToString());
+
             var chain = Chain.Create("Illegal:Pathfinding")
                 .ConditionalWait(_ => !isFate && module.config.ShouldDelayCriticalEncounters, Random.Shared.Next(10000, 15001));
 
@@ -123,8 +124,7 @@ public abstract class Activity
                 case NavigationType.WalkToClosestShardAndTeleportToEventShardThenWalkToEvent:
                     chain
                         .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain())
-                        .ConditionalThen(_ => Player.DistanceTo(playerShard.position) > AethernetData.DISTANCE, new PathfindingChain(vnav, playerShard.position, data, false))
-                        .WaitUntilNear(vnav, playerShard.position, AethernetData.DISTANCE)
+                        .Then(ChainHelper.PathfindToAndWait(playerShard.position, AethernetData.DISTANCE))
                         .Then(ChainHelper.TeleportChain(activityShard.aethernet))
                         .Debug("Waiting for lifestream to not be 'busy'")
                         .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new() { TimeLimitMS = 30000 }))
