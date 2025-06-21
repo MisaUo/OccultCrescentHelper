@@ -42,5 +42,7 @@ public class MountChain : RetryChainFactory
             || player.IsDead;
     }
 
+    public override int GetThrottle() => 2000;
+
     public override bool IsComplete() => Svc.Condition[ConditionFlag.Mounted];
 }

@@ -73,10 +73,11 @@ public class ChainHelper
     {
         var vnav = ipc.GetProvider<VNavmesh>();
         return () => Chain.Create()
-            .ConditionalThen(_ => Player.DistanceTo(destination) > AethernetData.DISTANCE, _ =>
+            .ConditionalThen(_ => Player.DistanceTo(destination) > distance, _ =>
                 Chain.Create()
                     .Then(new PathfindAndMoveToChain(vnav, destination))
                     .WaitUntilNear(vnav, destination, distance)
+                    .Then(_ => vnav.Stop())
         );
     }
 
@@ -84,10 +85,11 @@ public class ChainHelper
     {
         var vnav = ipc.GetProvider<VNavmesh>();
         return () => Chain.Create()
-            .ConditionalThen(_ => Player.DistanceTo(destination) > AethernetData.DISTANCE, _ =>
+            .ConditionalThen(_ => Player.DistanceTo(destination) > distance, _ =>
                 Chain.Create()
                     .Then(_ => vnav.MoveToPath([destination], false))
                     .WaitUntilNear(vnav, destination, distance)
+                    .Then(_ => vnav.Stop())
         );
     }
 }

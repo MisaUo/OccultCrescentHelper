@@ -63,17 +63,14 @@ public class ReturnChain : RetryChainFactory
             {
                 chain
                     .Wait(500)
-                    .Then(ChainHelper.MoveToAndWait(destination, AethernetData.DISTANCE))
-                    .Then(_ => vnav.Stop());
+                    .Then(ChainHelper.MoveToAndWait(destination, AethernetData.DISTANCE));
             }
         }
         else if (vnav != null)
         {
             chain = ApplyBuffs(chain);
 
-            chain
-                .Then(ChainHelper.PathfindToAndWait(destination, AethernetData.DISTANCE))
-                .Then(_ => vnav.Stop());
+            chain.Then(ChainHelper.PathfindToAndWait(destination, AethernetData.DISTANCE));
         }
 
 
