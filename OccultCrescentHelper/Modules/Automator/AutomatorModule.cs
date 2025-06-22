@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Dalamud.Plugin.Services;
+using ECommons.DalamudServices;
 using Ocelot;
 using Ocelot.IPC;
 using Ocelot.Modules;
@@ -64,16 +65,18 @@ public class AutomatorModule : Module<Plugin, Config>
 
     }
 
+    public void EnableIllegalMode()
+    {
+        config.Enabled = true;
+        Svc.Chat.Print("[BOCCHI] Illegal Mode On");
+    }
+
     public void DisableIllegalMode()
     {
         config.Enabled = false;
         plugin.ipc.GetProvider<VNavmesh>()?.Stop();
         Plugin.Chain.Abort();
+        Svc.Chat.Print("[BOCCHI] Illegal Mode Off");
 
-    }
-
-    public void EnableIllegalMode()
-    {
-        config.Enabled = true;
     }
 }

@@ -9,7 +9,7 @@ namespace OccultCrescentHelper.Modules.Automator;
 public class AutomatorWindow : OcelotWindow
 {
     public AutomatorWindow(Plugin plugin, Config config)
-        : base(plugin, config, "OCH Automator Lens")
+        : base(plugin, config, "OCH Illegal Lens")
     {
         TitleBarButtons.Add(new() {
             Click = (m) => {
@@ -37,7 +37,7 @@ public class AutomatorWindow : OcelotWindow
         var automator = plugin.modules.GetModule<AutomatorModule>();
         if (automator == null || !automator.enabled)
         {
-            ImGui.TextUnformatted("Automator is not enabled.");
+            ImGui.TextUnformatted("Illegal Mode is not enabled.");
             return;
         }
 
