@@ -30,5 +30,7 @@ git add manifest.json
 git commit -m"$commit_message"
 git push origin master
 
+node generate_discord_message.js
+
 cd ..
 rm -rf plugins
