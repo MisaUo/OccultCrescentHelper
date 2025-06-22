@@ -1,7 +1,6 @@
 using Dalamud.Interface;
 using ImGuiNET;
 using OccultCrescentHelper.Data;
-using Ocelot.IPC;
 using Ocelot.Windows;
 
 namespace OccultCrescentHelper.Modules.Automator;
@@ -19,17 +18,7 @@ public class AutomatorWindow : OcelotWindow
                     return;
                 }
 
-                var automatorModule = plugin.modules.GetModule<AutomatorModule>();
-                if (!automatorModule.config.Enabled)
-                {
-                    automatorModule.config.Enabled = true;
-                }
-                else
-                {
-                    automatorModule.config.Enabled = false;
-                    plugin.ipc.GetProvider<VNavmesh>()?.Stop();
-                    Plugin.Chain.Abort();
-                }
+                AutomatorModule.ToggleIllegalMode(plugin);
             },
             Icon = FontAwesomeIcon.Skull,
             IconOffset = new(2, 2),

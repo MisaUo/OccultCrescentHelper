@@ -2,7 +2,6 @@
 using ImGuiNET;
 using OccultCrescentHelper.Data;
 using OccultCrescentHelper.Modules.Automator;
-using Ocelot.IPC;
 using Ocelot.Windows;
 
 namespace OccultCrescentHelper.Windows;
@@ -24,15 +23,7 @@ public class MainWindow : OcelotMainWindow
                     return;
                 }
 
-                if (plugin.modules.TryGetModule<AutomatorModule>(out var automator) && automator != null)
-                {
-                    automator.config.Enabled = false;
-                }
-
-                plugin.ipc.GetProvider<VNavmesh>()?.Stop();
-                Plugin.Chain.Abort();
-
-
+                plugin.modules.GetModule<AutomatorModule>().DisableIllegalMode();
             },
             Icon = FontAwesomeIcon.Stop,
             IconOffset = new(2, 2),
@@ -46,17 +37,7 @@ public class MainWindow : OcelotMainWindow
                     return;
                 }
 
-                var automatorModule = plugin.modules.GetModule<AutomatorModule>();
-                if (!automatorModule.config.Enabled)
-                {
-                    automatorModule.config.Enabled = true;
-                }
-                else
-                {
-                    automatorModule.config.Enabled = false;
-                    plugin.ipc.GetProvider<VNavmesh>()?.Stop();
-                    Plugin.Chain.Abort();
-                }
+                AutomatorModule.ToggleIllegalMode(plugin);
             },
             Icon = FontAwesomeIcon.Skull,
             IconOffset = new(2, 2),

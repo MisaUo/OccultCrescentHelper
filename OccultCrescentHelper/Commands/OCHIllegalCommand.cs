@@ -53,13 +53,13 @@ Manage och automator/illegal mode.
             switch (arguments)
             {
                 case "on":
-                    automator.config.Enabled = true;
+                    automator.EnableIllegalMode();
                     break;
                 case "off":
-                    automator.config.Enabled = false;
+                    automator.DisableIllegalMode();
                     break;
                 case "toggle":
-                    automator.config.Enabled = !automator.config.Enabled;
+                    AutomatorModule.ToggleIllegalMode(plugin);
                     break;
             }
 

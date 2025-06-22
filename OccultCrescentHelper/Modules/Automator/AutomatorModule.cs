@@ -1,6 +1,7 @@
-
 using System.Collections.Generic;
 using Dalamud.Plugin.Services;
+using Ocelot;
+using Ocelot.IPC;
 using Ocelot.Modules;
 
 namespace OccultCrescentHelper.Modules.Automator;
@@ -47,5 +48,32 @@ public class AutomatorModule : Module<Plugin, Config>
         automator.Refresh();
         config.Enabled = false;
         plugin.config.Save();
+    }
+
+    public static void ToggleIllegalMode(OcelotPlugin plugin)
+    {
+        var module = plugin.modules.GetModule<AutomatorModule>();
+        if (!module.config.Enabled)
+        {
+            module.EnableIllegalMode();
+        }
+        else
+        {
+            module.DisableIllegalMode();
+        }
+
+    }
+
+    public void DisableIllegalMode()
+    {
+        config.Enabled = false;
+        plugin.ipc.GetProvider<VNavmesh>()?.Stop();
+        Plugin.Chain.Abort();
+
+    }
+
+    public void EnableIllegalMode()
+    {
+        config.Enabled = true;
     }
 }
