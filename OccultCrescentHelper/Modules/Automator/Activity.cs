@@ -9,9 +9,7 @@ using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;
-using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.Character;
-using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using OccultCrescentHelper.Chains;
 using OccultCrescentHelper.Data;
 using OccultCrescentHelper.Enums;
@@ -23,20 +21,19 @@ using Ocelot.IPC;
 
 namespace OccultCrescentHelper.Modules.Automator;
 
-
 public abstract class Activity
 {
     public readonly EventData data;
 
-    private Lifestream lifestream;
+    protected Lifestream lifestream;
 
-    private VNavmesh vnav;
+    protected VNavmesh vnav;
 
-    private AutomatorModule module;
+    protected AutomatorModule module;
 
     public ActivityState state = ActivityState.Idle;
 
-    private Dictionary<ActivityState, Func<StateManagerModule, Func<Chain>?>> handlers;
+    protected Dictionary<ActivityState, Func<StateManagerModule, Func<Chain>?>> handlers;
 
     public Activity(EventData data, Lifestream lifestream, VNavmesh vnav, AutomatorModule module)
     {
@@ -48,7 +45,6 @@ public abstract class Activity
         handlers = new() {
             { ActivityState.Idle, GetIdleChain },
             { ActivityState.Pathfinding, GetPathfindingChain },
-            { ActivityState.WaitingToStartCriticalEncounter, GetWaitingToStartCriticalEncounterChain },
             { ActivityState.Participating, GetParticipatingChain },
             { ActivityState.Done, GetDoneChain },
         };
@@ -71,7 +67,7 @@ public abstract class Activity
         return handlers[state](states);
     }
 
-    public Func<Chain>? GetIdleChain(StateManagerModule states)
+    public Func<Chain> GetIdleChain(StateManagerModule states)
     {
         return () => {
             return Chain.Create("Illegal:Idle")
@@ -81,7 +77,7 @@ public abstract class Activity
         };
     }
 
-    public Func<Chain>? GetPathfindingChain(StateManagerModule states)
+    public Func<Chain> GetPathfindingChain(StateManagerModule states)
     {
         return () => {
             var yes = module.GetIPCProvider<YesAlready>();
@@ -133,60 +129,16 @@ public abstract class Activity
             }
 
             chain
-                // Fate
-                .ConditionalThen(_ => isFate, GetFatePathfindingWatcher(states, vnav))
-                .ConditionalThen(_ => isFate, _ => state = ActivityState.Participating)
-                // Critical Encounter
-                .ConditionalThen(_ => !isFate, GetCriticalEncounterPathfindingWatcher(states, vnav))
-                .ConditionalThen(_ => !isFate, _ => state = ActivityState.WaitingToStartCriticalEncounter);
+                .Then(GetPathfindingWatcher(states, vnav))
+                // Cringe
+                .Then(_ => state = isFate ? ActivityState.Participating : ActivityState.WaitingToStartCriticalEncounter);
 
             return chain;
         };
     }
 
-    public unsafe Func<Chain>? GetWaitingToStartCriticalEncounterChain(StateManagerModule states)
-    {
-        return () => {
-            return Chain.Create("Illegal:WaitingToStartCriticalEncounter")
-                .Then(new TaskManagerTask(() => {
-                    if (!IsValid())
-                        throw new Exception("The critical encounter appears to have started without you.");
 
-                    var critical = module.GetModule<CriticalEncountersModule>();
-                    var encounter = critical.criticalEncounters[data.id];
-
-                    if (encounter.State == DynamicEventState.Battle &&
-                        states.GetState() != State.InCriticalEncounter)
-                    {
-                        throw new Exception("The critical encounter appears to have started without you.");
-                    }
-
-                    if (!vnav.IsRunning() && states.GetState() == State.InCombat)
-                    {
-                        if (Svc.Condition[ConditionFlag.Mounted])
-                        {
-                            ActionManager.Instance()->UseAction(
-                                ActionType.Mount,
-                                module.plugin.config.MountConfig.Mount
-                            );
-                        }
-
-                        if (module.config.ShouldToggleAiProvider)
-                        {
-                            module.config.AiProvider.On();
-                        }
-                    }
-
-                    return states.GetState() == State.InCriticalEncounter;
-                },
-                new() {
-                    TimeLimitMS = 180000
-                }))
-                .Then(_ => state = ActivityState.Participating);
-        };
-    }
-
-    public Func<Chain>? GetParticipatingChain(StateManagerModule states)
+    protected Func<Chain>? GetParticipatingChain(StateManagerModule states)
     {
         return () => {
             return Chain.Create("Illegal:Participating")
@@ -204,91 +156,9 @@ public abstract class Activity
         };
     }
 
-    public Func<Chain>? GetDoneChain(StateManagerModule states)
+    protected Func<Chain>? GetDoneChain(StateManagerModule states)
     {
         return null;
-    }
-
-    private unsafe TaskManagerTask GetFatePathfindingWatcher(StateManagerModule states, VNavmesh vnav)
-    {
-        Vector3 lastTargetPos = Vector3.Zero;
-
-        return new(() => {
-            if (EzThrottler.Throttle("FatePathfindingWatcher.EnemyScan", 100))
-            {
-                Svc.Targets.Target ??= GetClosestEnemy();
-            }
-
-            // module.GetModule<MountModule>().MaintainMount();
-
-            var target = Svc.Targets.Target;
-            if (target != null)
-            {
-                if (Vector3.Distance(target.Position, lastTargetPos) > 5f)
-                {
-                    vnav.PathfindAndMoveTo(target.Position, false);
-                    lastTargetPos = target.Position;
-                }
-
-                if (states.GetState() == State.InFate)
-                {
-                    if (Vector3.Distance(Player.Position, target.Position) <= module.config.EngagementRange)
-                    {
-                        // Dismount
-                        if (Svc.Condition[ConditionFlag.Mounted])
-                        {
-                            ActionManager.Instance()->UseAction(ActionType.Mount, module.plugin.config.MountConfig.Mount);
-                        }
-
-                        vnav.Stop();
-
-                        return true;
-                    }
-                }
-            }
-
-            if (!vnav.IsRunning())
-            {
-                throw new VnavmeshStoppedException();
-            }
-
-            return false;
-        }, new() { TimeLimitMS = 180000, ShowError = false });
-    }
-
-    private TaskManagerTask GetCriticalEncounterPathfindingWatcher(StateManagerModule states, VNavmesh vnav)
-    {
-        return new(() => {
-            if (!IsValid())
-            {
-                throw new Exception("Activity is no longer valid.");
-            }
-
-            if (IsInZone())
-            {
-                if (vnav.IsRunning())
-                {
-                    vnav.Stop();
-                }
-
-                return true;
-            }
-
-            if (!vnav.IsRunning())
-            {
-                throw new VnavmeshStoppedException();
-            }
-
-            var critical = module.GetModule<CriticalEncountersModule>();
-            var encounter = critical.criticalEncounters[data.id];
-
-            if (encounter.State != DynamicEventState.Register)
-            {
-                throw new Exception("This event started without you");
-            }
-
-            return false;
-        }, new() { TimeLimitMS = 180000, ShowError = false });
     }
 
     private List<IGameObject> GetEnemies()
@@ -304,19 +174,17 @@ public abstract class Activity
             .ToList();
     }
 
-    private int GetEnemyCount()
+    protected int GetEnemyCount()
     {
         return GetEnemies().Count();
     }
 
-    private IGameObject? GetClosestEnemy()
+    protected IGameObject? GetClosestEnemy()
     {
         return GetEnemies().FirstOrDefault();
     }
 
-
-
-    private IGameObject? GetCentralMostEnemy()
+    protected IGameObject? GetCentralMostEnemy()
     {
         var enemies = GetEnemies();
 
@@ -394,6 +262,8 @@ public abstract class Activity
 
         return Vector3.Distance(Player.Position, destination) <= 20f;
     }
+
+    protected abstract TaskManagerTask GetPathfindingWatcher(StateManagerModule states, VNavmesh vnav);
 
     public abstract bool IsValid();
 
