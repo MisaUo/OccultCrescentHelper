@@ -17,9 +17,9 @@ namespace OccultCrescentHelper.Modules.Automator;
 
 public class CriticalEncounter : Activity
 {
-    private CriticalEncountersModule critical;
+    private readonly CriticalEncountersModule critical;
 
-    private DynamicEvent encounter => critical.criticalEncounters[data.id];
+    private DynamicEvent Encounter => critical.criticalEncounters[data.id];
 
     private bool finalDestination = false;
 
@@ -44,7 +44,7 @@ public class CriticalEncounter : Activity
                 // Get all players in the zone
                 var playersInZone = Svc.Objects
                     .Where(o => o.ObjectKind == ObjectKind.Player)
-                    .Where(o => Vector3.Distance(o.Position, GetPosition()) <= 30f)
+                    .Where(o => Vector3.Distance(o.Position, GetPosition()) <= GetRadius())
                     .ToList();
 
                 if (playersInZone.Count > 4)
@@ -145,17 +145,17 @@ public class CriticalEncounter : Activity
 
     public override bool IsValid()
     {
-        if (encounter.State == DynamicEventState.Register)
+        if (Encounter.State == DynamicEventState.Register)
         {
             return true;
         }
 
-        if (encounter.State == DynamicEventState.Warmup)
+        if (Encounter.State == DynamicEventState.Warmup)
         {
-            return Player.DistanceTo(GetPosition()) <= 30f;
+            return Player.DistanceTo(GetPosition()) <= GetRadius();
         }
 
-        if (encounter.State == DynamicEventState.Battle)
+        if (Encounter.State == DynamicEventState.Battle)
         {
             return Player.Status.Has(PlayerStatus.HoofingIt);
         }
@@ -163,7 +163,13 @@ public class CriticalEncounter : Activity
         return true;
     }
 
-    public override Vector3 GetPosition() => encounter.MapMarker.Position;
+    protected override float GetRadius()
+    {
+        // This is kind of an assumption, but it seems accurate enough for most encounters.
+        return Encounter.Unknown4;
+    }
+
+    public override Vector3 GetPosition() => Encounter.MapMarker.Position;
 
     private bool IsCloseToZone(float radius = 50f)
     {

@@ -8,6 +8,7 @@ using ECommons.GameHelpers;
 using ECommons.Throttlers;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using OccultCrescentHelper.Data;
+using OccultCrescentHelper.Modules.Fates;
 using OccultCrescentHelper.Modules.StateManager;
 using Ocelot.IPC;
 
@@ -38,7 +39,7 @@ public class Fate : Activity
                         Svc.Targets.Target = enemy;
                     }
                 }
-                
+
             }
 
             var target = Svc.Targets.Target;
@@ -74,6 +75,11 @@ public class Fate : Activity
 
             return false;
         }, new() { TimeLimitMS = 180000, ShowError = false });
+    }
+
+    protected override float GetRadius()
+    {
+        return module.GetModule<FatesModule>().fates[data.id].Radius;
     }
 
     public override bool IsValid() => Svc.Fates.Contains(fate);

@@ -13,8 +13,6 @@ using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using OccultCrescentHelper.Chains;
 using OccultCrescentHelper.Data;
 using OccultCrescentHelper.Enums;
-using OccultCrescentHelper.Modules.CriticalEncounters;
-using OccultCrescentHelper.Modules.Fates;
 using OccultCrescentHelper.Modules.StateManager;
 using Ocelot.Chain;
 using Ocelot.IPC;
@@ -237,20 +235,9 @@ public abstract class Activity
 
     public bool IsInZone()
     {
-        float radius = data.radius ?? 0f;
-        if (radius == 0f)
-        {
-            if (data.type == EventType.Fate)
-            {
-                radius = module.GetModule<FatesModule>().fates[data.id].Radius;
-            }
-            else
-            {
-                radius = module.GetModule<CriticalEncountersModule>().criticalEncounters[data.id].Unknown4;
-            }
-        }
+        float radius = data.radius ?? GetRadius();
 
-        return Vector3.Distance(Player.Position, GetPosition()) <= radius;
+        return Player.DistanceTo(GetPosition()) <= radius;
     }
 
     private bool ShouldMountToPathfindTo(Vector3 destination)
@@ -262,6 +249,8 @@ public abstract class Activity
 
         return Vector3.Distance(Player.Position, destination) <= 20f;
     }
+
+    protected abstract float GetRadius();
 
     protected abstract TaskManagerTask GetPathfindingWatcher(StateManagerModule states, VNavmesh vnav);
 
