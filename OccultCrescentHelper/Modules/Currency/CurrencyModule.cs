@@ -1,28 +1,31 @@
-
 using Dalamud.Plugin.Services;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Currency;
+namespace BOCCHI.Modules.Currency;
 
 [OcelotModule(5, 3)]
 public class CurrencyModule : Module<Plugin, Config>
 {
-    public override CurrencyConfig config {
-        get => _config.CurrencyConfig;
-    }
-
-    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
+    private readonly Panel panel = new();
 
     public readonly CurrencyTracker tracker = new();
-
-    private Panel panel = new();
 
     public CurrencyModule(Plugin plugin, Config config)
         : base(plugin, config) { }
 
-    public override void Tick(IFramework framework) => tracker.Tick(framework);
+    public override CurrencyConfig config => _config.CurrencyConfig;
 
-    public override void OnTerritoryChanged(ushort _) => tracker.Reset();
+    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
+
+    public override void Tick(IFramework framework)
+    {
+        tracker.Tick(framework);
+    }
+
+    public override void OnTerritoryChanged(ushort _)
+    {
+        tracker.Reset();
+    }
 
     public override bool DrawMainUi()
     {

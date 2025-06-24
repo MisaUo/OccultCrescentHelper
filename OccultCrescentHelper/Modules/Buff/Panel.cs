@@ -3,7 +3,7 @@ using ECommons.ImGuiMethods;
 using ImGuiNET;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.Buff;
+namespace BOCCHI.Modules.Buff;
 
 public class Panel
 {
@@ -14,15 +14,10 @@ public class Panel
             var isNearKnowledgeCrystal = ZoneHelper.IsNearKnowledgeCrystal();
             var isQueued = module.buffs.IsQueued();
 
-            if (ImGuiEx.IconButton(FontAwesomeIcon.Redo, "Button##ApplyBuffs", enabled: isNearKnowledgeCrystal && !isQueued))
-            {
-                module.buffs.QueueBuffs();
-            }
+            if (ImGuiEx.IconButton(FontAwesomeIcon.Redo, "Button##ApplyBuffs",
+                                   enabled: isNearKnowledgeCrystal && !isQueued)) module.buffs.QueueBuffs();
 
-            if (ImGui.IsItemHovered())
-            {
-                ImGui.SetTooltip(module.T("panel.button.tooltip"));
-            }
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip(module.T("panel.button.tooltip"));
         });
     }
 }

@@ -1,10 +1,11 @@
-﻿using Dalamud.Interface;
+﻿using System.Numerics;
+using BOCCHI.Data;
+using BOCCHI.Modules.Automator;
+using Dalamud.Interface;
 using ImGuiNET;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Modules.Automator;
 using Ocelot.Windows;
 
-namespace OccultCrescentHelper.Windows;
+namespace BOCCHI.Windows;
 
 [OcelotMainWindow]
 public class MainWindow : OcelotMainWindow
@@ -16,32 +17,26 @@ public class MainWindow : OcelotMainWindow
     {
         base.PostInitialize();
 
-        TitleBarButtons.Add(new() {
-            Click = (m) => {
-                if (m != ImGuiMouseButton.Left)
-                {
-                    return;
-                }
+        TitleBarButtons.Add(new TitleBarButton {
+            Click = m => {
+                if (m != ImGuiMouseButton.Left) return;
 
                 plugin.modules.GetModule<AutomatorModule>().DisableIllegalMode();
             },
             Icon = FontAwesomeIcon.Stop,
-            IconOffset = new(2, 2),
-            ShowTooltip = () => ImGui.SetTooltip("Emergency Stop"),
+            IconOffset = new Vector2(2, 2),
+            ShowTooltip = () => ImGui.SetTooltip("Emergency Stop")
         });
 
-        TitleBarButtons.Add(new() {
-            Click = (m) => {
-                if (m != ImGuiMouseButton.Left)
-                {
-                    return;
-                }
+        TitleBarButtons.Add(new TitleBarButton {
+            Click = m => {
+                if (m != ImGuiMouseButton.Left) return;
 
                 AutomatorModule.ToggleIllegalMode(plugin);
             },
             Icon = FontAwesomeIcon.Skull,
-            IconOffset = new(2, 2),
-            ShowTooltip = () => ImGui.SetTooltip("Toggle Illegal Mode"),
+            IconOffset = new Vector2(2, 2),
+            ShowTooltip = () => ImGui.SetTooltip("Toggle Illegal Mode")
         });
     }
 

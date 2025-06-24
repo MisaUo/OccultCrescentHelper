@@ -2,11 +2,14 @@ using ImGuiNET;
 using Ocelot;
 using Ocelot.Chain;
 
-namespace OccultCrescentHelper.Modules.Debug.Panels;
+namespace BOCCHI.Modules.Debug.Panels;
 
 public class ChainManagerPanel : Panel
 {
-    public override string GetName() => "Chain Manager";
+    public override string GetName()
+    {
+        return "Chain Manager";
+    }
 
     public override void Draw(DebugModule module)
     {
@@ -19,10 +22,7 @@ public class ChainManagerPanel : Panel
 
             foreach (var pair in instances)
             {
-                if (pair.Value.CurrentChain == null)
-                {
-                    continue;
-                }
+                if (pair.Value.CurrentChain == null) continue;
 
                 OcelotUI.Title($"{pair.Key}:");
                 OcelotUI.Indent(() => {

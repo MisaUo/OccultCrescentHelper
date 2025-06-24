@@ -1,4 +1,4 @@
-namespace OccultCrescentHelper.Enums;
+namespace BOCCHI.Enums;
 
 public enum Demiatma
 {
@@ -7,5 +7,5 @@ public enum Demiatma
     Malachite = 47746,
     Realgar = 47747,
     CaputMortuum = 47748,
-    Orpiment = 47749,
+    Orpiment = 47749
 }

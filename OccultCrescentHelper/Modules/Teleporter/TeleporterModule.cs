@@ -1,23 +1,20 @@
-using ImGuiNET;
-using OccultCrescentHelper.Modules.StateManager;
+using BOCCHI.Modules.StateManager;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Teleporter;
+namespace BOCCHI.Modules.Teleporter;
 
 [OcelotModule(1)]
 public class TeleporterModule : Module<Plugin, Config>
 {
-    public override TeleporterConfig config {
-        get => _config.TeleporterConfig;
-    }
-
     public readonly Teleporter teleporter;
 
     public TeleporterModule(Plugin plugin, Config config)
         : base(plugin, config)
     {
-        teleporter = new(this);
+        teleporter = new Teleporter(this);
     }
+
+    public override TeleporterConfig config => _config.TeleporterConfig;
 
     public override void Initialize()
     {
@@ -37,5 +34,8 @@ public class TeleporterModule : Module<Plugin, Config>
         }
     }
 
-    public bool IsReady() => teleporter.IsReady();
+    public bool IsReady()
+    {
+        return teleporter.IsReady();
+    }
 }

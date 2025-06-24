@@ -1,21 +1,24 @@
 using System;
 using System.Linq;
 using System.Numerics;
+using BOCCHI.Data;
+using BOCCHI.Modules.CriticalEncounters;
+using BOCCHI.Modules.Teleporter;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using ImGuiNET;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Modules.CriticalEncounters;
-using OccultCrescentHelper.Modules.Teleporter;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.Debug.Panels;
+namespace BOCCHI.Modules.Debug.Panels;
 
 public class CriticalEncountersPanel : Panel
 {
-    public override string GetName() => "Critical Encounters";
+    public override string GetName()
+    {
+        return "Critical Encounters";
+    }
 
-    public unsafe override void Draw(DebugModule module)
+    public override void Draw(DebugModule module)
     {
         OcelotUI.Title("Critical Encounters:");
         OcelotUI.Indent(() => {
@@ -28,14 +31,14 @@ public class CriticalEncountersPanel : Panel
                 if (ev.State == DynamicEventState.Inactive)
                 {
                     ImGui.SameLine();
-                    ImGui.TextUnformatted($"(Inactive)");
+                    ImGui.TextUnformatted("(Inactive)");
                 }
 
                 if (ev.State == DynamicEventState.Register)
                 {
-                    DateTime start = DateTimeOffset.FromUnixTimeSeconds(ev.StartTimestamp).DateTime;
-                    TimeSpan timeUntilStart = start - DateTime.UtcNow;
-                    string formattedTime = $"{timeUntilStart.Minutes:D2}:{timeUntilStart.Seconds:D2}";
+                    var start = DateTimeOffset.FromUnixTimeSeconds(ev.StartTimestamp).DateTime;
+                    var timeUntilStart = start - DateTime.UtcNow;
+                    var formattedTime = $"{timeUntilStart.Minutes:D2}:{timeUntilStart.Seconds:D2}";
 
                     ImGui.SameLine();
                     ImGui.TextUnformatted($"(Preparing: {formattedTime})");
@@ -44,7 +47,7 @@ public class CriticalEncountersPanel : Panel
                 if (ev.State == DynamicEventState.Warmup)
                 {
                     ImGui.SameLine();
-                    ImGui.TextUnformatted($"(Starting)");
+                    ImGui.TextUnformatted("(Starting)");
                 }
 
                 if (ev.State == DynamicEventState.Battle)
@@ -55,32 +58,20 @@ public class CriticalEncountersPanel : Panel
 
                 if (module.TryGetModule<TeleporterModule>(out var teleporter) && teleporter!.IsReady())
                 {
-                    Vector3 start = ev.MapMarker.Position;
+                    var start = ev.MapMarker.Position;
 
                     teleporter.teleporter.Button(data.aethernet, start, data.Name, $"ce_{data.id}", data);
                 }
 
-                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.config.EventDropConfig));
+                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.Config.EventDropConfig));
 
-                if (data.pathFactory != null)
-                {
-                    ImGui.TextColored(new Vector4(0.5f, 1.0f, 0.5f, 1.0f), "Has custom path");
-                }
+                if (data.pathFactory != null) ImGui.TextColored(new Vector4(0.5f, 1.0f, 0.5f, 1.0f), "Has custom path");
 
-                if (data.id != EventData.CriticalEncounters.Keys.Max())
-                {
-                    OcelotUI.VSpace();
-                }
+                if (data.id != EventData.CriticalEncounters.Keys.Max()) OcelotUI.VSpace();
 
-                if (ImGui.CollapsingHeader($"Event Data##{data.id}"))
-                {
-                    PrintEvent(ev);
-                }
+                if (ImGui.CollapsingHeader($"Event Data##{data.id}")) PrintEvent(ev);
 
-                if (ImGui.CollapsingHeader($"Map Marker Data##{data.id}"))
-                {
-                    PrintMapMarker(ev.MapMarker);
-                }
+                if (ImGui.CollapsingHeader($"Map Marker Data##{data.id}")) PrintMapMarker(ev.MapMarker);
             }
         });
     }
@@ -209,7 +200,8 @@ public class CriticalEncountersPanel : Panel
 
         OcelotUI.Title("Map Marker:");
         ImGui.SameLine();
-        ImGui.TextUnformatted($"X: {ev.MapMarker.X}, Y: {ev.MapMarker.Y}, IconId: {ev.MapMarker.IconId}"); // example, adjust fields accordingly
+        ImGui.TextUnformatted(
+            $"X: {ev.MapMarker.X}, Y: {ev.MapMarker.Y}, IconId: {ev.MapMarker.IconId}"); // example, adjust fields accordingly
 
         OcelotUI.Title("Event Container Pointer:");
         ImGui.SameLine();

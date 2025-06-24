@@ -1,7 +1,7 @@
 using Ocelot.Config.Attributes;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.WindowManager;
+namespace BOCCHI.Modules.WindowManager;
 
 [Title("modules.window_manager.title")]
 public class WindowManagerConfig : ModuleConfig

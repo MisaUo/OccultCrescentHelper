@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using ECommons.DalamudServices;
 
-namespace OccultCrescentHelper.Data;
+namespace BOCCHI.Data;
 
 public static class ZoneData
 {
@@ -24,7 +24,7 @@ public static class ZoneData
     // Zone functions
     public static bool IsInSouthHorn()
     {
-        return Svc.ClientState.TerritoryType == ZoneData.SOUTHHORN;
+        return Svc.ClientState.TerritoryType == SOUTHHORN;
     }
 
     public static bool IsInOccultCrescent()
@@ -36,10 +36,7 @@ public static class ZoneData
     public static bool IsInForkedTowerBlood()
     {
         var player = Svc.ClientState.LocalPlayer;
-        if (player == null)
-        {
-            return false;
-        }
+        if (player == null) return false;
 
         return player.StatusList.HasAny(
             PlayerStatus.DutiesAsAssigned,

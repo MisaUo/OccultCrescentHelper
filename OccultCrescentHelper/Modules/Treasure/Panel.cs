@@ -3,7 +3,7 @@ using ECommons.GameHelpers;
 using ImGuiNET;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.Treasure;
+namespace BOCCHI.Modules.Treasure;
 
 public class Panel
 {
@@ -19,13 +19,10 @@ public class Panel
 
             if (ImGui.BeginTable("Treasure", 2, ImGuiTableFlags.SizingFixedFit))
             {
-                int index = 0;
+                var index = 0;
                 foreach (var treasure in module.treasures)
                 {
-                    if (!treasure.IsValid())
-                    {
-                        continue;
-                    }
+                    if (!treasure.IsValid()) continue;
 
                     var pos = treasure.GetPosition();
 
@@ -38,10 +35,7 @@ public class Panel
                     });
 
                     ImGui.TableNextColumn();
-                    if (ImGui.Button($"Target###{index}"))
-                    {
-                        treasure.Target();
-                    }
+                    if (ImGui.Button($"Target###{index}")) treasure.Target();
 
                     index++;
                 }

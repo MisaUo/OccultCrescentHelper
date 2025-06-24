@@ -1,12 +1,12 @@
-using OccultCrescentHelper.Data;
+using BOCCHI.Data;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 
-namespace OccultCrescentHelper.Modules.Buff.Chains;
+namespace BOCCHI.Modules.Buff.Chains;
 
 public class KnightBuffChain : BuffChain
 {
-    private BuffModule module;
+    private readonly BuffModule module;
 
     public KnightBuffChain(BuffModule module)
         : base(Job.Knight, PlayerStatus.EnduringFortitude, 32)

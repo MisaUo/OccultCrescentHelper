@@ -1,4 +1,4 @@
-namespace OccultCrescentHelper.Enums;
+namespace BOCCHI.Enums;
 
 public enum JobId
 {
@@ -14,5 +14,5 @@ public enum JobId
     Cannoneer = 9,
     Chemist = 10,
     Oracle = 11,
-    Thief = 12,
+    Thief = 12
 }

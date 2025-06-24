@@ -5,12 +5,12 @@ using Dalamud.Game.Text.SeStringHandling;
 using ECommons.DalamudServices;
 using ClientLanguage = Dalamud.Game.ClientLanguage;
 
-namespace OccultCrescentHelper.Modules.Exp;
+namespace BOCCHI.Modules.Exp;
 
 public class ExpTracker
 {
-    private float exp = 0f;
     private readonly string pattern;
+    private float exp;
 
     private DateTime startTime = DateTime.UtcNow;
 
@@ -20,15 +20,15 @@ public class ExpTracker
         pattern = getExpMessagePattern(Svc.ClientState.ClientLanguage);
     }
 
-    public void OnTerritoryChange(ushort _) => Reset();
+    public void OnTerritoryChange(ushort _)
+    {
+        Reset();
+    }
 
     public void OnChatMessage(XivChatType type, int timestamp, SeString sender, SeString message, bool isHandled)
     {
         var match = Regex.Match(message.ToString(), pattern);
-        if (match.Success)
-        {
-            exp += int.Parse(match.Groups[1].Value);
-        }
+        if (match.Success) exp += int.Parse(match.Groups[1].Value);
     }
 
     public void Reset()
@@ -50,9 +50,10 @@ public class ExpTracker
     {
         return clientLanguage switch {
             ClientLanguage.English => @"You gain (\d+) Phantom .+? experience points\.",
-            ClientLanguage.French =>  @"Vous gagnez (\d+) points d'expérience de soutien en .+? fantôme",
-            ClientLanguage.German =>  @"Du erhältst (\d+) Phantomroutine als Phantom",
-            ClientLanguage.Japanese =>  @".+?」に(\d+)ポイントのサポート経験値を得た。",
+            ClientLanguage.French => @"Vous gagnez (\d+) points d'expérience de soutien en .+? fantôme",
+            ClientLanguage.German => @"Du erhältst (\d+) Phantomroutine als Phantom",
+            ClientLanguage.Japanese => @".+?」に(\d+)ポイントのサポート経験値を得た。",
+            _ => throw new ArgumentOutOfRangeException(nameof(clientLanguage), clientLanguage, null)
         };
     }
 }

@@ -1,8 +1,9 @@
+using Dalamud.Interface;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.Currency;
+namespace BOCCHI.Modules.Currency;
 
 public class Panel
 {
@@ -17,10 +18,7 @@ public class Panel
                 ImGui.TableNextRow();
 
                 ImGui.TableNextColumn();
-                if (ImGuiEx.IconButton(Dalamud.Interface.FontAwesomeIcon.Redo, $"Reset##Silver"))
-                {
-                    module.tracker.ResetSilver();
-                }
+                if (ImGuiEx.IconButton(FontAwesomeIcon.Redo, "Reset##Silver")) module.tracker.ResetSilver();
 
                 ImGui.TableNextColumn();
                 ImGui.TextUnformatted(module.T("panel.silver.label"));
@@ -32,10 +30,7 @@ public class Panel
                 ImGui.TableNextRow();
 
                 ImGui.TableNextColumn();
-                if (ImGuiEx.IconButton(Dalamud.Interface.FontAwesomeIcon.Redo, $"Reset##Gold"))
-                {
-                    module.tracker.ResetGold();
-                }
+                if (ImGuiEx.IconButton(FontAwesomeIcon.Redo, "Reset##Gold")) module.tracker.ResetGold();
 
                 ImGui.TableNextColumn();
                 ImGui.TextUnformatted(module.T("panel.gold.label"));

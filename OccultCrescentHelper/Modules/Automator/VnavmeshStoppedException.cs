@@ -1,7 +1,5 @@
 using System;
 
-namespace OccultCrescentHelper.Modules.Automator;
+namespace BOCCHI.Modules.Automator;
 
-public class VnavmeshStoppedException : Exception
-{
-}
+public class VnavmeshStoppedException : Exception { }

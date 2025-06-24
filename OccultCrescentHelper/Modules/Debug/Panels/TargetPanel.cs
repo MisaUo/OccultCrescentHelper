@@ -1,24 +1,21 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
-using ECommons.GameFunctions;
-using ECommons.GameHelpers;
-using ECommons.Throttlers;
+using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using ImGuiNET;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.Debug.Panels;
+namespace BOCCHI.Modules.Debug.Panels;
 
 public class TargetPanel : Panel
 {
-    public override string GetName() => "Target";
+    public override string GetName()
+    {
+        return "Target";
+    }
 
-    public unsafe override void Draw(DebugModule module)
+    public override unsafe void Draw(DebugModule module)
     {
         OcelotUI.Indent(() => {
-            IGameObject? target = Svc.Targets.Target;
+            var target = Svc.Targets.Target;
             if (target == null)
             {
                 ImGui.TextUnformatted("No target selected.");
@@ -26,7 +23,7 @@ public class TargetPanel : Panel
             }
 
             // Try to cast to internal GameObject
-            var obj = (FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject*)target.Address;
+            var obj = (GameObject*)target.Address;
 
             if (obj == null)
             {
@@ -81,8 +78,6 @@ public class TargetPanel : Panel
             Draw("IsDead()", obj->IsDead());
             Draw("IsNotMounted()", obj->IsNotMounted());
             Draw("IsCharacter()", obj->IsCharacter());
-
-
         });
     }
 

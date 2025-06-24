@@ -1,16 +1,27 @@
-using Action = System.Action;
+using System.Collections.Generic;
+using System.Linq;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game.Fate;
-using System.Collections.Generic;
-using System.Linq;
+using Action = System.Action;
 
-namespace OccultCrescentHelper.Modules.StateManager;
+namespace BOCCHI.Modules.StateManager;
 
 public class StateManager
 {
+    private readonly Dictionary<State, Action> handlers;
     private State state = State.Idle;
+
+    public StateManager()
+    {
+        handlers = new Dictionary<State, Action> {
+            { State.Idle, HandleIdle },
+            { State.InCombat, HandleInCombat },
+            { State.InFate, HandleInFate },
+            { State.InCriticalEncounter, HandleInCriticalEncounter }
+        };
+    }
 
     public event Action? OnEnterIdle;
     public event Action? OnExitIdle;
@@ -24,24 +35,9 @@ public class StateManager
     public event Action? OnEnterInCriticalEncounter;
     public event Action? OnExitInCriticalEncounter;
 
-    private Dictionary<State, Action> handlers;
-
-    public StateManager()
-    {
-        handlers = new() {
-            {State.Idle, HandleIdle },
-            {State.InCombat, HandleInCombat },
-            {State.InFate, HandleInFate },
-            {State.InCriticalEncounter, HandleInCriticalEncounter },
-        };
-    }
-
     public void Tick(IFramework _)
     {
-        if (Svc.ClientState.LocalPlayer?.IsDead ?? true)
-        {
-            return;
-        }
+        if (Svc.ClientState.LocalPlayer?.IsDead ?? true) return;
 
         handlers[state]();
     }
@@ -61,11 +57,7 @@ public class StateManager
             return;
         }
 
-        if (IsInCriticalEncounter())
-        {
-            ChangeState(State.InCriticalEncounter);
-            return;
-        }
+        if (IsInCriticalEncounter()) ChangeState(State.InCriticalEncounter);
     }
 
     private void HandleInCombat()
@@ -83,29 +75,17 @@ public class StateManager
         }
 
 
-        if (!IsInCombat())
-        {
-            ChangeState(State.Idle);
-            return;
-        }
+        if (!IsInCombat()) ChangeState(State.Idle);
     }
 
     public void HandleInFate()
     {
-        if (!IsInFate())
-        {
-            ChangeState(IsInCombat() ? State.InCombat : State.Idle);
-            return;
-        }
+        if (!IsInFate()) ChangeState(IsInCombat() ? State.InCombat : State.Idle);
     }
 
     public void HandleInCriticalEncounter()
     {
-        if (!IsInCriticalEncounter())
-        {
-            ChangeState(IsInCombat() ? State.InCriticalEncounter : State.Idle);
-            return;
-        }
+        if (!IsInCriticalEncounter()) ChangeState(IsInCombat() ? State.InCriticalEncounter : State.Idle);
     }
 
     private void ChangeState(State newState)
@@ -143,12 +123,24 @@ public class StateManager
         }
     }
 
-    private bool IsInCombat() => Svc.Condition[ConditionFlag.InCombat];
+    private bool IsInCombat()
+    {
+        return Svc.Condition[ConditionFlag.InCombat];
+    }
 
-    private unsafe bool IsInFate() => FateManager.Instance()->CurrentFate is not null;
+    private unsafe bool IsInFate()
+    {
+        return FateManager.Instance()->CurrentFate is not null;
+    }
 
     // 1778 = Hoofing It (Unable to mount)
-    private bool IsInCriticalEncounter() => Svc.ClientState.LocalPlayer?.StatusList.Any(s => s.StatusId == 1778) ?? false;
+    private bool IsInCriticalEncounter()
+    {
+        return Svc.ClientState.LocalPlayer?.StatusList.Any(s => s.StatusId == 1778) ?? false;
+    }
 
-    public State GetState() => state;
+    public State GetState()
+    {
+        return state;
+    }
 }

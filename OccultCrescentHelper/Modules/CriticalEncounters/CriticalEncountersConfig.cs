@@ -1,7 +1,7 @@
 using Ocelot.Config.Attributes;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.CriticalEncounters;
+namespace BOCCHI.Modules.CriticalEncounters;
 
 [Title("modules.critical_encounters.title")]
 public class CriticalEncountersConfig : ModuleConfig

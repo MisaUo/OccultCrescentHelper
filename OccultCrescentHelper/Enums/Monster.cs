@@ -1,4 +1,4 @@
-namespace OccultCrescentHelper.Enums;
+namespace BOCCHI.Enums;
 
 public enum Monster
 {
@@ -30,5 +30,5 @@ public enum Monster
     NymianPotaladus,
     OccultKnight,
     RepairedLion = 18124,
-    TradeTortoise,
+    TradeTortoise
 }

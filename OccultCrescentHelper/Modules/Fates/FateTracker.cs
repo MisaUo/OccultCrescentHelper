@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using BOCCHI.Data;
 using Dalamud.Game.ClientState.Fates;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
-using OccultCrescentHelper.Data;
 
-namespace OccultCrescentHelper.Modules.Fates;
+namespace BOCCHI.Modules.Fates;
 
 public class FateTracker
 {
@@ -22,10 +22,7 @@ public class FateTracker
 
         foreach (var fate in fates.Values)
         {
-            if (fate.Progress == 0)
-            {
-                continue;
-            }
+            if (fate.Progress == 0) continue;
 
             if (!this.progress.TryGetValue(fate.FateId, out var progress))
             {
@@ -34,23 +31,15 @@ public class FateTracker
             }
 
             if (progress.samples.Count == 0 || progress.samples[^1].Progress != fate.Progress)
-            {
                 progress.AddProgress(fate.Progress);
-            }
 
-            if (fate.Progress == 100)
-            {
-                this.progress.Remove(fate.FateId);
-            }
+            if (fate.Progress == 100) this.progress.Remove(fate.FateId);
         }
 
 
         // Remove non-active fates
         var active = fates.Select(f => f.Key).ToHashSet();
         var obsolete = progress.Keys.Where(id => !active.Contains(id)).ToList();
-        foreach (var id in obsolete)
-        {
-            progress.Remove(id);
-        }
+        foreach (var id in obsolete) progress.Remove(id);
     }
 }

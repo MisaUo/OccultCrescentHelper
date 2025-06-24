@@ -1,13 +1,20 @@
 using System.Collections.Generic;
-using Ocelot.Modules;
+using BOCCHI.Modules.Debug;
 using Ocelot.Commands;
-using OccultCrescentHelper.Modules.Debug;
+using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Commands;
+namespace BOCCHI.Commands;
 
 [OcelotCommand]
 public class MainCommand : OcelotCommand
 {
+    private readonly Plugin plugin;
+
+    public MainCommand(Plugin plugin)
+    {
+        this.plugin = plugin;
+    }
+
     public override string command => "/bocchi";
 
     public override string description => @"
@@ -21,14 +28,6 @@ Opens Occult Crescent Helper main ui
     public override IReadOnlyList<string> aliases => ["/och", "/occultcrescenthelper"];
 
     public override IReadOnlyList<string> validArguments => ["config", "cfg", "debug"];
-
-
-    private readonly Plugin plugin;
-
-    public MainCommand(Plugin plugin)
-    {
-        this.plugin = plugin;
-    }
 
 
     public override void Command(string command, string arguments)

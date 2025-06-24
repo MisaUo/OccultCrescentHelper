@@ -1,10 +1,10 @@
 using System.Linq;
+using BOCCHI.Data;
+using BOCCHI.Modules.Teleporter;
 using ImGuiNET;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Modules.Teleporter;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.Fates;
+namespace BOCCHI.Modules.Fates;
 
 public class Panel
 {
@@ -20,15 +20,9 @@ public class Panel
 
             foreach (var fate in module.fates.Values)
             {
-                if (fate == null)
-                {
-                    continue;
-                }
+                if (fate == null) continue;
 
-                if (!EventData.Fates.TryGetValue(fate.FateId, out var data))
-                {
-                    continue;
-                }
+                if (!EventData.Fates.TryGetValue(fate.FateId, out var data)) continue;
 
                 ImGui.TextUnformatted($"{data.Name} ({fate.Progress}%)");
 
@@ -44,16 +38,12 @@ public class Panel
                 }
 
                 if (module.TryGetModule<TeleporterModule>(out var teleporter) && teleporter!.IsReady())
-                {
-                    teleporter.teleporter.Button(data.aethernet, data.start ?? fate.Position, data.Name, $"fate_{fate.FateId}", data);
-                }
+                    teleporter.teleporter.Button(data.aethernet, data.start ?? fate.Position, data.Name,
+                                                 $"fate_{fate.FateId}", data);
 
-                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.config.EventDropConfig));
+                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.Config.EventDropConfig));
 
-                if (!fate.Equals(module.fates.Values.Last()))
-                {
-                    OcelotUI.VSpace();
-                }
+                if (!fate.Equals(module.fates.Values.Last())) OcelotUI.VSpace();
             }
         });
     }

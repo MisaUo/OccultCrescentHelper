@@ -1,14 +1,14 @@
 using System;
 using System.Numerics;
+using BOCCHI.Modules.EventDrop;
 using Dalamud.Interface.Textures;
 using Dalamud.Interface.Textures.TextureWraps;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using ImGuiNET;
 using Lumina.Excel.Sheets;
-using OccultCrescentHelper.Modules.EventDrop;
 
-namespace OccultCrescentHelper.Data;
+namespace BOCCHI.Data;
 
 public struct EventIconRenderer
 {
@@ -24,10 +24,7 @@ public struct EventIconRenderer
 
         if (data.notes != null && config.ShowNoteDrops)
         {
-            if (rendered > 0)
-            {
-                ImGui.SameLine();
-            }
+            if (rendered > 0) ImGui.SameLine();
 
             Notes(data);
             rendered++;
@@ -35,10 +32,7 @@ public struct EventIconRenderer
 
         if (data.soulshard != null && config.ShowSoulShardDrops)
         {
-            if (rendered > 0)
-            {
-                ImGui.SameLine();
-            }
+            if (rendered > 0) ImGui.SameLine();
 
             SoulShard(data);
             rendered++;
@@ -64,17 +58,14 @@ public struct EventIconRenderer
 
             var label = $"Needed ({needed})";
             ;
-            if (needed <= 0)
-            {
-                label = $"Not Needed ({count})";
-            }
+            if (needed <= 0) label = $"Not Needed ({count})";
 
             ImGui.TextUnformatted($"{itemData.Name}: {label}");
             ImGui.EndTooltip();
         }
     }
 
-    public static unsafe void Notes(EventData data)
+    public static void Notes(EventData data)
     {
         var itemData = Svc.Data.GetExcelSheet<Item>().GetRow((uint)data.notes!);
 
@@ -90,7 +81,7 @@ public struct EventIconRenderer
         }
     }
 
-    private static unsafe void SoulShard(EventData data)
+    private static void SoulShard(EventData data)
     {
         var itemData = Svc.Data.GetExcelSheet<Item>().GetRow((uint)data.soulshard!);
 
@@ -113,7 +104,7 @@ public struct EventIconRenderer
 
         ImGui.BeginChild($"ImageBorder##{id}", new Vector2(50, 50), true, ImGuiWindowFlags.NoScrollbar);
 
-        ImGui.Image(icon.ImGuiHandle, new System.Numerics.Vector2(48, 48));
+        ImGui.Image(icon.ImGuiHandle, new Vector2(48, 48));
 
         ImGui.EndChild();
 

@@ -1,7 +1,7 @@
 using Ocelot.Config.Attributes;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Treasure;
+namespace BOCCHI.Modules.Treasure;
 
 [Title("modules.treasure.title")]
 public class TreasureConfig : ModuleConfig
@@ -15,6 +15,7 @@ public class TreasureConfig : ModuleConfig
     [Label("modules.treasure.draw.bronze.label")]
     [Tooltip("modules.treasure.draw.bronze.tooltip")]
     public bool DrawLineToBronzeChests { get; set; } = true;
+
     public bool ShouldDrawLineToBronzeChests => IsPropertyEnabled(nameof(DrawLineToBronzeChests));
 
     [Checkbox]
@@ -22,6 +23,7 @@ public class TreasureConfig : ModuleConfig
     [Label("modules.treasure.draw.silver.label")]
     [Tooltip("modules.treasure.draw.silver.tooltip")]
     public bool DrawLineToSilverChests { get; set; } = true;
+
     public bool ShouldDrawLineToSilverChests => IsPropertyEnabled(nameof(DrawLineToSilverChests));
 
     [Checkbox]
@@ -31,6 +33,7 @@ public class TreasureConfig : ModuleConfig
     [DependsOn(nameof(Enabled))]
     [Label("modules.treasure.hunt.show_button.label")]
     public bool EnableTreasureHunt { get; set; } = false;
+
     public bool ShouldEnableTreasureHunt => IsPropertyEnabled(nameof(EnableTreasureHunt));
 
     [FloatRange(10f, 100f)]

@@ -1,25 +1,27 @@
 using System.Numerics;
-using OccultCrescentHelper.Data;
+using BOCCHI.Data;
+using OccultCrescentHelper.Chains;
 using Ocelot.Chain;
 using Ocelot.IPC;
 
-namespace OccultCrescentHelper.Chains;
+namespace BOCCHI.Chains;
 
 public class PathfindingChain : ChainFactory
 {
-    private VNavmesh vnav;
+    private readonly EventData data;
 
-    private Vector3 destination;
+    private readonly Vector3 destination;
 
-    private EventData data;
+    private readonly float? maxRadius;
 
-    private bool useCustomPaths = false;
+    private readonly float? minRadius;
 
-    private float? maxRadius = null;
+    private readonly bool useCustomPaths;
+    private readonly VNavmesh vnav;
 
-    private float? minRadius = null;
-
-    public PathfindingChain(VNavmesh vnav, Vector3 destination, EventData data, bool useCustomPaths, float? maxRadius = null, float? minRadius = null)
+    public PathfindingChain(
+        VNavmesh vnav, Vector3 destination, EventData data, bool useCustomPaths, float? maxRadius = null,
+        float? minRadius = null)
     {
         this.vnav = vnav;
         this.destination = destination;
@@ -34,10 +36,10 @@ public class PathfindingChain : ChainFactory
         if (useCustomPaths && data.pathFactory != null)
         {
             return Chain.Create("Prowler")
-                .Then(new ProwlerChain(vnav, data.pathFactory, destination));
+                        .Then(new ProwlerChain(vnav, data.pathFactory, destination));
         }
 
         return Chain.Create("Pathfinding")
-            .Then(PathfindAndMoveToChain.RandomNearby(vnav, destination, maxRadius ?? 1f, minRadius ?? 0f));
+                    .Then(PathfindAndMoveToChain.RandomNearby(vnav, destination, maxRadius ?? 1f, minRadius ?? 0f));
     }
 }

@@ -1,46 +1,48 @@
 using System;
 using System.Numerics;
+using BOCCHI.Data;
+using BOCCHI.Enums;
+using BOCCHI.Modules.Buff;
+using BOCCHI.Modules.Mount;
+using BOCCHI.Modules.Mount.Chains;
+using BOCCHI.Modules.Teleporter;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Enums;
-using OccultCrescentHelper.Modules.Buff;
-using OccultCrescentHelper.Modules.Mount;
-using OccultCrescentHelper.Modules.Mount.Chains;
-using OccultCrescentHelper.Modules.Teleporter;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Chains;
+namespace BOCCHI.Chains;
 
 public class ChainHelper
 {
-    private static ChainHelper _instance = null;
+    private static ChainHelper Instance = null!;
 
-    private static ChainHelper instance {
-        get {
-            if (_instance == null)
-            {
-                throw new InvalidOperationException("ChainHelper has not been initialized. Call Initialize(plugin) first.");
-            }
-            return _instance;
-        }
-    }
-
-    private Plugin plugin;
-
-    private static ModuleManager modules => instance.plugin.modules;
-
-    private static IPCManager ipc => instance.plugin.ipc;
+    private readonly Plugin plugin;
 
     private ChainHelper(Plugin plugin)
     {
         this.plugin = plugin;
     }
 
-    public static void Initialize(Plugin plugin) => _instance ??= new ChainHelper(plugin);
+    private static ChainHelper instance {
+        get {
+            if (Instance == null)
+                throw new InvalidOperationException(
+                    "ChainHelper has not been initialized. Call Initialize(plugin) first.");
+            return Instance;
+        }
+    }
+
+    private static ModuleManager modules => instance.plugin.modules;
+
+    private static IPCManager ipc => instance.plugin.ipc;
+
+    public static void Initialize(Plugin plugin)
+    {
+        Instance ??= new ChainHelper(plugin);
+    }
 
     public static ReturnChain ReturnChain(bool approachAetherye = true)
     {
@@ -51,7 +53,7 @@ public class ChainHelper
             buffs,
             ipc.GetProvider<YesAlready>(),
             ipc.GetProvider<VNavmesh>(),
-            approachAetherye: approachAetherye
+            approachAetherye
         );
     }
 
@@ -73,23 +75,23 @@ public class ChainHelper
     {
         var vnav = ipc.GetProvider<VNavmesh>();
         return () => Chain.Create()
-            .ConditionalThen(_ => Player.DistanceTo(destination) > distance, _ =>
-                Chain.Create()
-                    .Then(new PathfindAndMoveToChain(vnav, destination))
-                    .WaitUntilNear(vnav, destination, distance)
-                    .Then(_ => vnav.Stop())
-        );
+                          .ConditionalThen(_ => Player.DistanceTo(destination) > distance, _ =>
+                                               Chain.Create()
+                                                    .Then(new PathfindAndMoveToChain(vnav, destination))
+                                                    .WaitUntilNear(vnav, destination, distance)
+                                                    .Then(_ => vnav.Stop())
+                          );
     }
 
     public static Func<Chain> MoveToAndWait(Vector3 destination, float distance)
     {
         var vnav = ipc.GetProvider<VNavmesh>();
         return () => Chain.Create()
-            .ConditionalThen(_ => Player.DistanceTo(destination) > distance, _ =>
-                Chain.Create()
-                    .Then(_ => vnav.MoveToPath([destination], false))
-                    .WaitUntilNear(vnav, destination, distance)
-                    .Then(_ => vnav.Stop())
-        );
+                          .ConditionalThen(_ => Player.DistanceTo(destination) > distance, _ =>
+                                               Chain.Create()
+                                                    .Then(_ => vnav.MoveToPath([destination], false))
+                                                    .WaitUntilNear(vnav, destination, distance)
+                                                    .Then(_ => vnav.Stop())
+                          );
     }
 }

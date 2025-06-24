@@ -1,7 +1,7 @@
 using Ocelot.Config.Attributes;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Carrots;
+namespace BOCCHI.Modules.Carrots;
 
 [Title("modules.carrots.title")]
 public class CarrotsConfig : ModuleConfig
@@ -15,5 +15,6 @@ public class CarrotsConfig : ModuleConfig
     [Label("modules.carrots.draw.label")]
     [Tooltip("modules.carrots.draw.tooltip")]
     public bool DrawLineToCarrots { get; set; } = true;
+
     public bool ShouldDrawLineToCarrots => IsPropertyEnabled(nameof(DrawLineToCarrots));
 }

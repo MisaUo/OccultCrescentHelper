@@ -1,11 +1,12 @@
 using System;
 using Ocelot.Config.Attributes;
+using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.EventDrop;
+namespace BOCCHI.Modules.EventDrop;
 
 [Serializable]
 [Title("modules.event_drop.title")]
-public class EventDropConfig : Ocelot.Modules.ModuleConfig
+public class EventDropConfig : ModuleConfig
 {
     [Checkbox]
     [Label("modules.event_drop.demiatma.label")]

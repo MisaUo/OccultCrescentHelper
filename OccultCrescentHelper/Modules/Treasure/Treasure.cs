@@ -1,11 +1,11 @@
 using System.Linq;
 using System.Numerics;
+using BOCCHI.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
-using OccultCrescentHelper.Enums;
 using XIVTreasure = Lumina.Excel.Sheets.Treasure;
 
-namespace OccultCrescentHelper.Modules.Treasure;
+namespace BOCCHI.Modules.Treasure;
 
 public class Treasure
 {
@@ -16,13 +16,25 @@ public class Treasure
         gameObject = obj;
     }
 
-    private XIVTreasure? GetData() => Svc.Data.GetExcelSheet<XIVTreasure>().ToList().FirstOrDefault(t => t.RowId == gameObject.DataId);
+    private XIVTreasure? GetData()
+    {
+        return Svc.Data.GetExcelSheet<XIVTreasure>().ToList().FirstOrDefault(t => t.RowId == gameObject.DataId);
+    }
 
-    public bool IsValid() => gameObject != null && gameObject.IsValid() && !gameObject.IsDead && gameObject.IsTargetable;
+    public bool IsValid()
+    {
+        return gameObject != null && gameObject.IsValid() && !gameObject.IsDead && gameObject.IsTargetable;
+    }
 
-    public Vector3 GetPosition() => gameObject.Position;
+    public Vector3 GetPosition()
+    {
+        return gameObject.Position;
+    }
 
-    public uint? GetModelId() => GetData()?.SGB.RowId;
+    public uint? GetModelId()
+    {
+        return GetData()?.SGB.RowId;
+    }
 
     public TreasureType GetTreasureType()
     {
@@ -63,5 +75,8 @@ public class Treasure
         }
     }
 
-    public void Target() => Svc.Targets.Target = gameObject;
+    public void Target()
+    {
+        Svc.Targets.Target = gameObject;
+    }
 }

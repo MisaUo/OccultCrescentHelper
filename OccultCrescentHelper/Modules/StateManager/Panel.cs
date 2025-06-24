@@ -1,16 +1,13 @@
 using ImGuiNET;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.StateManager;
+namespace BOCCHI.Modules.StateManager;
 
 public class Panel
 {
     public bool Draw(StateManagerModule module)
     {
-        if (!module.config.ShowDebug)
-        {
-            return false;
-        }
+        if (!module.config.ShowDebug) return false;
 
         OcelotUI.Title($"{module.T("panel.title")}:");
         OcelotUI.Indent(() => ImGui.TextUnformatted($"{module.T("panel.state.label")}: {module.GetStateText()}"));

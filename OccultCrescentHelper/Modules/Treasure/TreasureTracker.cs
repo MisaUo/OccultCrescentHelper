@@ -5,7 +5,7 @@ using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
 
-namespace OccultCrescentHelper.Modules.Treasure;
+namespace BOCCHI.Modules.Treasure;
 
 public class TreasureTracker
 {
@@ -16,11 +16,11 @@ public class TreasureTracker
         var pos = Svc.ClientState.LocalPlayer!.Position;
 
         treasures = Svc
-            .Objects.Where(o => o != null)
-            .Where(o => o.ObjectKind == ObjectKind.Treasure)
-            .OrderBy(o => Vector3.Distance(o.Position, pos))
-            .Select(o => new Treasure(o))
-            .Where(t => t.IsValid())
-            .ToList();
+                    .Objects.Where(o => o != null)
+                    .Where(o => o.ObjectKind == ObjectKind.Treasure)
+                    .OrderBy(o => Vector3.Distance(o.Position, pos))
+                    .Select(o => new Treasure(o))
+                    .Where(t => t.IsValid())
+                    .ToList();
     }
 }

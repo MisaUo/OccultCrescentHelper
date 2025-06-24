@@ -1,12 +1,13 @@
 using System.Linq;
 using Dalamud.Game.ClientState.Statuses;
 
-namespace OccultCrescentHelper.Data;
+namespace BOCCHI.Data;
 
 public enum PlayerStatus : uint
 {
     // Generic
     HoofingIt = 1778,
+
     // Zone Specific
     DutiesAsAssigned = 4228,
     EnduringFortitude = 4233,
@@ -29,7 +30,6 @@ public enum PlayerStatus : uint
     PhantomThief = 4369
 }
 
-
 public static class StatusListExtensions
 {
     public static bool Has(this StatusList current, PlayerStatus status)
@@ -40,12 +40,8 @@ public static class StatusListExtensions
     public static bool HasAny(this StatusList current, params PlayerStatus[] statuses)
     {
         foreach (var status in statuses)
-        {
             if (current.Any(s => s.StatusId == (uint)status))
-            {
                 return true;
-            }
-        }
 
         return false;
     }
@@ -53,12 +49,8 @@ public static class StatusListExtensions
     public static bool HasAll(this StatusList current, params PlayerStatus[] statuses)
     {
         foreach (var status in statuses)
-        {
             if (!current.Any(s => s.StatusId == (uint)status))
-            {
                 return false;
-            }
-        }
 
         return true;
     }

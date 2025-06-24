@@ -1,28 +1,25 @@
-
 using System;
+using BOCCHI.Memory;
 using Dalamud.Memory;
-using OccultCrescentHelper.Memory;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.InstanceIdentifier;
+namespace BOCCHI.Modules.InstanceIdentifier;
 
 [OcelotModule(mainOrder: int.MinValue)]
 public class InstanceIdentifierModule : Module<Plugin, Config>
 {
-    public override InstanceIdentifierConfig config {
-        get => _config.InstanceIdentifierConfig;
-    }
-
-    public override bool enabled => config.Show;
-
-    private Panel panel = new();
-
-    public string instance { get; private set; } = "Unknown";
+    private readonly Panel panel = new();
 
     public InitZone hook = new();
 
     public InstanceIdentifierModule(Plugin plugin, Config config)
         : base(plugin, config) { }
+
+    public override InstanceIdentifierConfig config => _config.InstanceIdentifierConfig;
+
+    public override bool enabled => config.Show;
+
+    public string instance { get; private set; } = "Unknown";
 
     public override void PostInitialize()
     {
@@ -48,5 +45,8 @@ public class InstanceIdentifierModule : Module<Plugin, Config>
         return true;
     }
 
-    public override void Dispose() => hook.Disable();
+    public override void Dispose()
+    {
+        hook.Disable();
+    }
 }

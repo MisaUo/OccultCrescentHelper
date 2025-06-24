@@ -1,8 +1,7 @@
-using Lumina.Excel.Sheets;
 using Ocelot.Config.Attributes;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Teleporter;
+namespace BOCCHI.Modules.Teleporter;
 
 [Title("modules.teleporter.title")]
 public class TeleporterConfig : ModuleConfig
@@ -29,6 +28,7 @@ public class TeleporterConfig : ModuleConfig
     [Label("modules.teleporter.use_custom_paths.label")]
     [Tooltip("modules.teleporter.use_custom_paths.tooltip")]
     public bool UseCustomPaths { get; set; } = true;
+
     public bool ShouldUseCustomPaths => IsPropertyEnabled(nameof(UseCustomPaths));
 
     [Checkbox]

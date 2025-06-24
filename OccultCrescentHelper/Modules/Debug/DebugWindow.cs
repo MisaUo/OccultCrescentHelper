@@ -1,8 +1,8 @@
-﻿using ImGuiNET;
-using OccultCrescentHelper.Data;
+﻿using BOCCHI.Data;
+using ImGuiNET;
 using Ocelot.Windows;
 
-namespace OccultCrescentHelper.Modules.Debug;
+namespace BOCCHI.Modules.Debug;
 
 #if DEBUG_BUILD
 [OcelotWindow]
@@ -10,8 +10,7 @@ namespace OccultCrescentHelper.Modules.Debug;
 public class DebugWindow : OcelotWindow
 {
     public DebugWindow(Plugin plugin, Config config)
-        : base(plugin, config, "OCH Debug")
-    { }
+        : base(plugin, config, "OCH Debug") { }
 
     public override void Draw()
     {
@@ -21,9 +20,6 @@ public class DebugWindow : OcelotWindow
             return;
         }
 
-        if (plugin.modules.TryGetModule<DebugModule>(out var module) && module != null)
-        {
-            module.DrawPanels();
-        }
+        if (plugin.modules.TryGetModule<DebugModule>(out var module) && module != null) module.DrawPanels();
     }
 }

@@ -1,7 +1,7 @@
 using Ocelot.Config.Attributes;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Fates;
+namespace BOCCHI.Modules.Fates;
 
 [Title("modules.fates.title")]
 public class FatesConfig : ModuleConfig

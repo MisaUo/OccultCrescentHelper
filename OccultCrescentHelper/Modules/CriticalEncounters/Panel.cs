@@ -1,13 +1,12 @@
 using System;
 using System.Linq;
-using System.Numerics;
+using BOCCHI.Data;
+using BOCCHI.Modules.Teleporter;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using ImGuiNET;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Modules.Teleporter;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.CriticalEncounters;
+namespace BOCCHI.Modules.CriticalEncounters;
 
 public class Panel
 {
@@ -24,15 +23,9 @@ public class Panel
 
             foreach (var ev in module.criticalEncounters.Values)
             {
-                if (ev.State == DynamicEventState.Inactive)
-                {
-                    continue;
-                }
+                if (ev.State == DynamicEventState.Inactive) continue;
 
-                if (!EventData.CriticalEncounters.TryGetValue(ev.DynamicEventId, out var data))
-                {
-                    continue;
-                }
+                if (!EventData.CriticalEncounters.TryGetValue(ev.DynamicEventId, out var data)) continue;
 
                 ImGui.TextUnformatted(ev.Name.ToString());
                 if (ev.EventType >= 4)
@@ -43,9 +36,9 @@ public class Panel
 
                 if (ev.State == DynamicEventState.Register)
                 {
-                    DateTime start = DateTimeOffset.FromUnixTimeSeconds(ev.StartTimestamp).DateTime;
-                    TimeSpan timeUntilStart = start - DateTime.UtcNow;
-                    string formattedTime = $"{timeUntilStart.Minutes:D2}:{timeUntilStart.Seconds:D2}";
+                    var start = DateTimeOffset.FromUnixTimeSeconds(ev.StartTimestamp).DateTime;
+                    var timeUntilStart = start - DateTime.UtcNow;
+                    var formattedTime = $"{timeUntilStart.Minutes:D2}:{timeUntilStart.Seconds:D2}";
 
                     ImGui.SameLine();
                     ImGui.TextUnformatted($"({module.T("panel.register")}: {formattedTime})");
@@ -75,25 +68,22 @@ public class Panel
 
                 if (ev.State != DynamicEventState.Register)
                 {
-                    OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.config.EventDropConfig));
+                    OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.Config.EventDropConfig));
                     continue;
                 }
 
                 if (module.TryGetModule<TeleporterModule>(out var teleporter) && teleporter!.IsReady())
                 {
-                    Vector3 start = ev.MapMarker.Position;
+                    var start = ev.MapMarker.Position;
 
                     teleporter.teleporter.Button(data.aethernet, start, data.Name, $"ce_{ev.DynamicEventId}", data);
                 }
 
-                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.config.EventDropConfig));
+                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.Config.EventDropConfig));
             }
         });
     }
 
 
-    private void HandlerTower(DynamicEvent ev)
-    {
-
-    }
+    private void HandlerTower(DynamicEvent ev) { }
 }

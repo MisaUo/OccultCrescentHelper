@@ -1,4 +1,4 @@
-namespace OccultCrescentHelper.Modules.Automator;
+namespace BOCCHI.Modules.Automator;
 
 public enum ActivityState
 {
@@ -6,7 +6,7 @@ public enum ActivityState
     Pathfinding,
     WaitingToStartCriticalEncounter,
     Participating,
-    Done,
+    Done
 }
 
 public static class ActivityStateExtensions
@@ -19,8 +19,7 @@ public static class ActivityStateExtensions
             ActivityState.WaitingToStartCriticalEncounter => "Waiting to Start (CE)",
             ActivityState.Participating => "Participating",
             ActivityState.Done => "Done",
-            _ => "Unknown",
+            _ => "Unknown"
         };
     }
 }
-

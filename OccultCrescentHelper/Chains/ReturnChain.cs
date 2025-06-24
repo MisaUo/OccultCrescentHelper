@@ -1,36 +1,37 @@
 using System.Linq;
 using System.Numerics;
+using BOCCHI.Data;
+using BOCCHI.Enums;
+using BOCCHI.Modules.Buff;
+using BOCCHI.Modules.Buff.Chains;
 using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using FFXIVClientStructs.FFXIV.Client.Game;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Enums;
-using OccultCrescentHelper.Modules.Buff;
-using OccultCrescentHelper.Modules.Buff.Chains;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
 
-namespace OccultCrescentHelper.Chains;
+namespace BOCCHI.Chains;
 
 public class ReturnChain : RetryChainFactory
 {
-    private bool approachAetherye = false;
+    private readonly bool approachAetherye;
 
-    private Vector3 destination = Vector3.Zero;
+    private readonly BuffModule buffs;
 
-    private YesAlready? yes;
+    private readonly Vector3 destination = Vector3.Zero;
 
-    private VNavmesh? vnav;
+    private readonly VNavmesh? vnav;
 
-    private BuffModule buffs;
+    private readonly YesAlready? yes;
 
-    private bool complete = false;
+    private bool complete;
 
-    public ReturnChain(Vector3 destination, BuffModule buffs, YesAlready? yes = null, VNavmesh? vnav = null, bool approachAetherye = true)
+    public ReturnChain(
+        Vector3 destination, BuffModule buffs, YesAlready? yes = null, VNavmesh? vnav = null,
+        bool approachAetherye = true)
     {
         this.destination = destination;
         this.yes = yes;
@@ -39,7 +40,7 @@ public class ReturnChain : RetryChainFactory
         this.buffs = buffs;
     }
 
-    protected unsafe override Chain Create(Chain chain)
+    protected override Chain Create(Chain chain)
     {
         chain.BreakIf(() => Svc.ClientState.LocalPlayer?.IsDead == true);
 
@@ -82,36 +83,41 @@ public class ReturnChain : RetryChainFactory
         if (buffs.ShouldRefreshBuffs() && vnav != null)
         {
             chain.Then(() => {
-                IGameObject? closestKnowledgeCrystal = ZoneHelper.GetNearbyKnowledgeCrystal(60f).FirstOrDefault();
-                Vector3 position = closestKnowledgeCrystal?.Position ?? Vector3.Zero;
+                var closestKnowledgeCrystal = ZoneHelper.GetNearbyKnowledgeCrystal(60f).FirstOrDefault();
+                var position = closestKnowledgeCrystal?.Position ?? Vector3.Zero;
 
                 return Chain.Create("Go to Crystal and Buff")
-                    .BreakIf(() => !buffs.buffs.ShouldRefresh(buffs))
-                    .Wait(500)
-                    .Then(_ => {
-                        if (Svc.Condition[ConditionFlag.Mounted])
-                        {
-                            ActionManager.Instance()->UseAction(ActionType.Mount, buffs.plugin.config.MountConfig.Mount);
-                        }
-                    })
-                    .BreakIf(() => closestKnowledgeCrystal == null)
-                    .Then(_ => vnav.MoveToPath([position], false))
-                    .WaitUntilNear(vnav, position, AethernetData.DISTANCE)
-                    .Then(_ => vnav.Stop())
-                    .Then(new AllBuffsChain(buffs))
-                    .Wait(2500);
+                            .BreakIf(() => !buffs.buffs.ShouldRefresh(buffs))
+                            .Wait(500)
+                            .Then(_ => {
+                                if (Svc.Condition[ConditionFlag.Mounted])
+                                    ActionManager.Instance()->UseAction(
+                                        ActionType.Mount, buffs.plugin.Config.MountConfig.Mount);
+                            })
+                            .BreakIf(() => closestKnowledgeCrystal == null)
+                            .Then(_ => vnav.MoveToPath([position], false))
+                            .WaitUntilNear(vnav, position, AethernetData.DISTANCE)
+                            .Then(_ => vnav.Stop())
+                            .Then(new AllBuffsChain(buffs))
+                            .Wait(2500);
             });
         }
 
         return chain;
     }
 
-    public override bool IsComplete() => complete;
+    public override bool IsComplete()
+    {
+        return complete;
+    }
 
-    public override int GetMaxAttempts() => 5;
+    public override int GetMaxAttempts()
+    {
+        return 5;
+    }
 
     public override TaskManagerConfiguration? Config()
     {
-        return new() { TimeLimitMS = 60000 };
+        return new TaskManagerConfiguration { TimeLimitMS = 60000 };
     }
 }

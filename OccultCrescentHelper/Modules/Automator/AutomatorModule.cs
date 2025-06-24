@@ -5,22 +5,16 @@ using Ocelot;
 using Ocelot.IPC;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Automator;
+namespace BOCCHI.Modules.Automator;
 
 [OcelotModule]
 public class AutomatorModule : Module<Plugin, Config>
 {
-    public override AutomatorConfig config {
-        get => _config.AutomatorConfig;
-    }
-
-    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
-
     public readonly Automator automator = new();
 
-    public readonly Panel panel = new();
+    private readonly List<uint> occultCrescentTerritoryIds = [1252];
 
-    private List<uint> occultCrescentTerritoryIds = [1252];
+    public readonly Panel panel = new();
 
     public AutomatorModule(Plugin plugin, Config config)
         : base(plugin, config)
@@ -29,8 +23,15 @@ public class AutomatorModule : Module<Plugin, Config>
         config.Save();
     }
 
+    public override AutomatorConfig config => _config.AutomatorConfig;
 
-    public override void Tick(IFramework framework) => automator.Tick(this, framework);
+    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
+
+
+    public override void Tick(IFramework framework)
+    {
+        automator.Tick(this, framework);
+    }
 
 
     public override bool DrawMainUi()
@@ -41,28 +42,20 @@ public class AutomatorModule : Module<Plugin, Config>
 
     public override void OnTerritoryChanged(ushort id)
     {
-        if (occultCrescentTerritoryIds.Contains(id))
-        {
-            return;
-        }
+        if (occultCrescentTerritoryIds.Contains(id)) return;
 
         automator.Refresh();
         config.Enabled = false;
-        plugin.config.Save();
+        plugin.Config.Save();
     }
 
     public static void ToggleIllegalMode(OcelotPlugin plugin)
     {
         var module = plugin.modules.GetModule<AutomatorModule>();
         if (!module.config.Enabled)
-        {
             module.EnableIllegalMode();
-        }
         else
-        {
             module.DisableIllegalMode();
-        }
-
     }
 
     public void EnableIllegalMode()
@@ -77,6 +70,5 @@ public class AutomatorModule : Module<Plugin, Config>
         plugin.ipc.GetProvider<VNavmesh>()?.Stop();
         Plugin.Chain.Abort();
         Svc.Chat.Print("[BOCCHI] Illegal Mode Off");
-
     }
 }

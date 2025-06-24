@@ -9,23 +9,23 @@ using ECommons.Throttlers;
 using ImGuiNET;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.Debug.Panels;
+namespace BOCCHI.Modules.Debug.Panels;
 
 public class EnemyPanel : Panel
 {
-    public override string GetName() => "Nearby Enemies";
-
     private List<IGameObject> enemies = [];
+
+    public override string GetName()
+    {
+        return "Nearby Enemies";
+    }
 
     public override void Draw(DebugModule module)
     {
         OcelotUI.Indent(() => {
             foreach (var enemy in enemies)
             {
-                if (enemy.Name.ToString().StartsWith("Crescent"))
-                {
-                    continue;
-                }
+                if (enemy.Name.ToString().StartsWith("Crescent")) continue;
 
                 if (ImGui.CollapsingHeader($"{enemy.Name} - {enemy.DataId}##{enemy.ObjectIndex}"))
                 {
@@ -48,13 +48,9 @@ public class EnemyPanel : Panel
                         ImGui.Text($"TargetObjectId: {enemy.TargetObjectId:X}");
 
                         if (enemy.TargetObject is { } target)
-                        {
                             ImGui.Text($"TargetObject: {target.Name.TextValue} ({target.GameObjectId:X})");
-                        }
                         else
-                        {
-                            ImGui.Text($"TargetObject: None");
-                        }
+                            ImGui.Text("TargetObject: None");
 
                         ImGui.Text($"IsValid(): {enemy.IsValid()}");
                         ImGui.Text($"Address: 0x{enemy.Address.ToInt64():X}");
@@ -70,14 +66,14 @@ public class EnemyPanel : Panel
         {
             // DoThing();
             enemies = Svc.Objects
-                .Where(o =>
-                    o != null &&
-                    o.IsHostile() &&
-                    o.IsTargetable &&
-                    o.Name.TextValue.Length > 0
-                )
-                .OrderBy(o => Vector3.Distance(o.Position, Player.Position))
-                .ToList();
+                         .Where(o =>
+                                    o != null &&
+                                    o.IsHostile() &&
+                                    o.IsTargetable &&
+                                    o.Name.TextValue.Length > 0
+                         )
+                         .OrderBy(o => Vector3.Distance(o.Position, Player.Position))
+                         .ToList();
         }
     }
 }

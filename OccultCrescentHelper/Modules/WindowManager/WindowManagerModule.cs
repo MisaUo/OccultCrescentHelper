@@ -1,40 +1,30 @@
-
 using System.Collections.Generic;
-using OccultCrescentHelper.Modules.StateManager;
+using BOCCHI.Modules.StateManager;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.WindowManager;
+namespace BOCCHI.Modules.WindowManager;
 
 [OcelotModule]
 public class WindowManagerModule : Module<Plugin, Config>
 {
-    public override WindowManagerConfig config {
-        get => _config.WindowManagerConfig;
-    }
+    private readonly List<uint> occultCrescentTerritoryIds = [1252];
+
+    private bool configClosed;
+
+    private bool mainClosed;
 
     public WindowManagerModule(Plugin plugin, Config config)
         : base(plugin, config) { }
 
-
-    private List<uint> occultCrescentTerritoryIds = [1252];
-
-    private bool mainClosed = false;
-
-    private bool configClosed = false;
+    public override WindowManagerConfig config => _config.WindowManagerConfig;
 
 
     public override void PostInitialize()
     {
-        if (config.OpenMainOnStartUp)
-        {
-            plugin.windows.OpenMainUI();
-        }
+        if (config.OpenMainOnStartUp) plugin.windows.OpenMainUI();
 
 
-        if (config.OpenConfigOnStartUp)
-        {
-            plugin.windows.OpenConfigUI();
-        }
+        if (config.OpenConfigOnStartUp) plugin.windows.OpenConfigUI();
 
         GetModule<StateManagerModule>().OnEnterInCombat += EnterCombat;
         GetModule<StateManagerModule>().OnEnterInCriticalEncounter += EnterCombat;
@@ -46,30 +36,17 @@ public class WindowManagerModule : Module<Plugin, Config>
     {
         if (occultCrescentTerritoryIds.Contains(id))
         {
-            if (config.OpenMainOnEnter)
-            {
-                plugin.windows.OpenMainUI();
-            }
+            if (config.OpenMainOnEnter) plugin.windows.OpenMainUI();
 
 
-            if (config.OpenConfigOnEnter)
-            {
-                plugin.windows.OpenConfigUI();
-            }
+            if (config.OpenConfigOnEnter) plugin.windows.OpenConfigUI();
         }
         else
         {
-            if (config.CloseMainOnExit)
-            {
-                plugin.windows.CloseMainUI();
-            }
+            if (config.CloseMainOnExit) plugin.windows.CloseMainUI();
 
 
-            if (config.CloseConfigOnExit)
-            {
-                plugin.windows.CloseConfigUI();
-            }
-
+            if (config.CloseConfigOnExit) plugin.windows.CloseConfigUI();
         }
     }
 
@@ -80,6 +57,7 @@ public class WindowManagerModule : Module<Plugin, Config>
             plugin.windows.CloseMainUI();
             mainClosed = true;
         }
+
         if (config.HideConfigInCombat && plugin.windows.IsConfigUIOpen())
         {
             plugin.windows.CloseConfigUI();

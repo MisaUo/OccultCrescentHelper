@@ -1,4 +1,4 @@
-namespace OccultCrescentHelper.Modules.Debug.Panels;
+namespace BOCCHI.Modules.Debug.Panels;
 
 public abstract class Panel
 {

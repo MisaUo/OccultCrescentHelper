@@ -1,9 +1,10 @@
+using System.Numerics;
+using BOCCHI.Data;
 using Dalamud.Interface;
 using ImGuiNET;
-using OccultCrescentHelper.Data;
 using Ocelot.Windows;
 
-namespace OccultCrescentHelper.Modules.Automator;
+namespace BOCCHI.Modules.Automator;
 
 [OcelotWindow]
 public class AutomatorWindow : OcelotWindow
@@ -11,18 +12,15 @@ public class AutomatorWindow : OcelotWindow
     public AutomatorWindow(Plugin plugin, Config config)
         : base(plugin, config, "OCH Illegal Lens")
     {
-        TitleBarButtons.Add(new() {
-            Click = (m) => {
-                if (m != ImGuiMouseButton.Left)
-                {
-                    return;
-                }
+        TitleBarButtons.Add(new TitleBarButton {
+            Click = m => {
+                if (m != ImGuiMouseButton.Left) return;
 
                 AutomatorModule.ToggleIllegalMode(plugin);
             },
             Icon = FontAwesomeIcon.Skull,
-            IconOffset = new(2, 2),
-            ShowTooltip = () => ImGui.SetTooltip("Toggle Illegal Mode"),
+            IconOffset = new Vector2(2, 2),
+            ShowTooltip = () => ImGui.SetTooltip("Toggle Illegal Mode")
         });
     }
 

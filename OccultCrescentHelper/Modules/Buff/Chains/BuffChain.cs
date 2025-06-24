@@ -1,21 +1,20 @@
 using System.Linq;
+using BOCCHI.Data;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
-using OccultCrescentHelper.Data;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 
-namespace OccultCrescentHelper.Modules.Buff.Chains;
+namespace BOCCHI.Modules.Buff.Chains;
 
 public class BuffChain : ChainFactory
 {
-    private Job job;
+    private readonly uint action;
+    private readonly Job job;
 
-    private PlayerStatus status;
-
-    private uint action;
+    private readonly PlayerStatus status;
 
     public BuffChain(Job job, PlayerStatus status, uint action)
     {
@@ -24,14 +23,17 @@ public class BuffChain : ChainFactory
         this.action = action;
     }
 
-    protected unsafe override Chain Create(Chain chain)
+    protected override Chain Create(Chain chain)
     {
         chain
             .Then(_ => PublicContentOccultCrescent.ChangeSupportJob((byte)job.id))
             .WaitUntilStatus((uint)job.status)
             .WaitGcd()
             .UseAction(ActionType.GeneralAction, action)
-            .Then(new TaskManagerTask(() => Svc.ClientState.LocalPlayer?.StatusList.Any(s => s.StatusId == (uint)status && s.RemainingTime >= 1780) == true, new() { TimeLimitMS = 3000 }))
+            .Then(new TaskManagerTask(
+                      () => Svc.ClientState.LocalPlayer?.StatusList.Any(s => s.StatusId == (uint)status &&
+                                                                             s.RemainingTime >= 1780) == true,
+                      new TaskManagerConfiguration { TimeLimitMS = 3000 }))
             .WaitGcd();
 
         return chain;

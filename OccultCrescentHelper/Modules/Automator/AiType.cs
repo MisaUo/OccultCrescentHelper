@@ -1,11 +1,11 @@
 using ECommons.Automation;
 
-namespace OccultCrescentHelper.Modules.Automator;
+namespace BOCCHI.Modules.Automator;
 
 public enum AiType
 {
     VBM, // Boss Mod
-    BMR, // Bossmod Reborn
+    BMR  // Bossmod Reborn
 }
 
 public static class AiProviderExtensions

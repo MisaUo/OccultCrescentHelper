@@ -1,28 +1,26 @@
 ﻿using System;
+using BOCCHI.Modules.Automator;
+using BOCCHI.Modules.Buff;
+using BOCCHI.Modules.Carrots;
+using BOCCHI.Modules.CriticalEncounters;
+using BOCCHI.Modules.Currency;
+using BOCCHI.Modules.EventDrop;
+using BOCCHI.Modules.Exp;
+using BOCCHI.Modules.Fates;
+using BOCCHI.Modules.InstanceIdentifier;
+using BOCCHI.Modules.Mount;
+using BOCCHI.Modules.StateManager;
+using BOCCHI.Modules.Teleporter;
+using BOCCHI.Modules.Treasure;
+using BOCCHI.Modules.WindowManager;
 using ECommons.DalamudServices;
-using OccultCrescentHelper.Modules.EventDrop;
-using OccultCrescentHelper.Modules.Teleporter;
-using OccultCrescentHelper.Modules.Treasure;
-using OccultCrescentHelper.Modules.Carrots;
-using OccultCrescentHelper.Modules.Currency;
-using OccultCrescentHelper.Modules.CriticalEncounters;
-using OccultCrescentHelper.Modules.Fates;
 using Ocelot;
-using OccultCrescentHelper.Modules.Exp;
-using OccultCrescentHelper.Modules.WindowManager;
-using OccultCrescentHelper.Modules.StateManager;
-using OccultCrescentHelper.Modules.InstanceIdentifier;
-using OccultCrescentHelper.Modules.Automator;
-using OccultCrescentHelper.Modules.Buff;
-using OccultCrescentHelper.Modules.Mount;
 
-namespace OccultCrescentHelper;
+namespace BOCCHI;
 
 [Serializable]
 public class Config : IOcelotConfig
 {
-    public int Version { get; set; } = 1;
-
     public TreasureConfig TreasureConfig { get; set; } = new();
 
     public CarrotsConfig CarrotsConfig { get; set; } = new();
@@ -50,6 +48,10 @@ public class Config : IOcelotConfig
     public AutomatorConfig AutomatorConfig { get; set; } = new();
 
     public MountConfig MountConfig { get; set; } = new();
+    public int Version { get; set; } = 1;
 
-    public void Save() => Svc.PluginInterface.SavePluginConfig(this);
+    public void Save()
+    {
+        Svc.PluginInterface.SavePluginConfig(this);
+    }
 }

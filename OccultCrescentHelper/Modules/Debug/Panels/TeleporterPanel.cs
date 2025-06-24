@@ -1,14 +1,17 @@
 using System.Linq;
+using BOCCHI.Enums;
+using BOCCHI.Modules.Teleporter;
 using ImGuiNET;
-using OccultCrescentHelper.Enums;
-using OccultCrescentHelper.Modules.Teleporter;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.Debug.Panels;
+namespace BOCCHI.Modules.Debug.Panels;
 
 public class TeleporterPanel : Panel
 {
-    public override string GetName() => "Teleporter";
+    public override string GetName()
+    {
+        return "Teleporter";
+    }
 
     public override void Draw(DebugModule module)
     {
@@ -17,7 +20,7 @@ public class TeleporterPanel : Panel
             OcelotUI.Title("Teleporter:");
             OcelotUI.Indent(() => {
                 var shards = teleporter.teleporter.GetNearbyAethernetShards();
-                if (shards.Count() > 0)
+                if (shards.Count > 0)
                 {
                     OcelotUI.Title("Nearby Aethernet Shards:");
                     OcelotUI.Indent(() => {
@@ -29,10 +32,7 @@ public class TeleporterPanel : Panel
                     });
                 }
 
-                if (ImGui.Button("Test Return"))
-                {
-                    teleporter.teleporter.Return();
-                }
+                if (ImGui.Button("Test Return")) teleporter.teleporter.Return();
             });
         }
     }

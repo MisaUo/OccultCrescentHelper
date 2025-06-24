@@ -1,4 +1,4 @@
-namespace OccultCrescentHelper.Enums;
+namespace BOCCHI.Enums;
 
 public enum MonsterNote
 {
@@ -11,5 +11,5 @@ public enum MonsterNote
     DeadStars = 47735,
     MarbleDragon = 47736,
     Magitaur = 47737,
-    PersistentPots = 47738,
+    PersistentPots = 47738
 }

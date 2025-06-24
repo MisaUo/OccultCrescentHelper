@@ -4,15 +4,14 @@ using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
 
-namespace OccultCrescentHelper.Chains;
+namespace BOCCHI.Chains;
 
 public class FollowPathChain : ChainFactory
 {
-    private VNavmesh vnav;
+    private readonly List<Vector3> path;
 
-    private Vector3 start;
-
-    private List<Vector3> path;
+    private readonly Vector3 start;
+    private readonly VNavmesh vnav;
 
     public FollowPathChain(VNavmesh vnav, Vector3 start, List<Vector3> path)
     {
@@ -24,8 +23,8 @@ public class FollowPathChain : ChainFactory
     protected override Chain Create(Chain chain)
     {
         return chain
-            .PathfindAndMoveTo(vnav, start)
-            .WaitUntilNear(vnav, start)
-            .Then(_ => vnav.FollowPath(path, false));
+               .PathfindAndMoveTo(vnav, start)
+               .WaitUntilNear(vnav, start)
+               .Then(_ => vnav.FollowPath(path, false));
     }
 }

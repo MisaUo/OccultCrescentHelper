@@ -1,20 +1,20 @@
-
 using System;
 using Dalamud.Plugin.Services;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.StateManager;
+namespace BOCCHI.Modules.StateManager;
 
 [OcelotModule(mainOrder: -1)]
 public class StateManagerModule : Module<Plugin, Config>
 {
-    public override StateManagerConfig config {
-        get => _config.StateManagerConfig;
-    }
+    private readonly Panel panel = new();
 
-    private Panel panel = new();
+    private readonly StateManager state = new();
 
-    private StateManager state = new();
+    public StateManagerModule(Plugin plugin, Config config)
+        : base(plugin, config) { }
+
+    public override StateManagerConfig config => _config.StateManagerConfig;
 
     public event Action? OnEnterIdle {
         add => state.OnEnterIdle += value;
@@ -56,14 +56,23 @@ public class StateManagerModule : Module<Plugin, Config>
         remove => state.OnExitInCriticalEncounter -= value;
     }
 
-    public StateManagerModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+    public override void Tick(IFramework framework)
+    {
+        state.Tick(framework);
+    }
 
-    public override void Tick(IFramework framework) => state.Tick(framework);
+    public override bool DrawMainUi()
+    {
+        return panel.Draw(this);
+    }
 
-    public override bool DrawMainUi() => panel.Draw(this);
+    public State GetState()
+    {
+        return state.GetState();
+    }
 
-    public State GetState() => state.GetState();
-
-    public string GetStateText() => state.GetState().ToString();
+    public string GetStateText()
+    {
+        return state.GetState().ToString();
+    }
 }
