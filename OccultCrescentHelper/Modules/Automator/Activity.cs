@@ -99,15 +99,15 @@ public abstract class Activity
             {
                 case NavigationType.WalkToEvent:
                     chain
-                        .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain())
-                        .Then(new PathfindingChain(vnav, GetPosition(), data, false));
+                        .Then(new PathfindingChain(vnav, GetPosition(), data, false))
+                        .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain());
                     break;
 
                 case NavigationType.ReturnThenWalkToEvent:
                     chain
                         .Then(ChainHelper.ReturnChain())
-                        .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain())
-                        .Then(new PathfindingChain(vnav, GetPosition(), data, false));
+                        .Then(new PathfindingChain(vnav, GetPosition(), data, false))
+                        .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain());
                     break;
 
                 case NavigationType.ReturnThenTeleportToEventshard:
@@ -116,17 +116,18 @@ public abstract class Activity
                         .Then(ChainHelper.TeleportChain(activityShard.aethernet))
                         .Debug("Waiting for lifestream to not be 'busy'")
                         .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new TaskManagerConfiguration { TimeLimitMS = 30000 }))
-                        .Then(new PathfindingChain(vnav, GetPosition(), data, false));
+                        .Then(new PathfindingChain(vnav, GetPosition(), data, false))
+                        .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain());
                     break;
 
                 case NavigationType.WalkToClosestShardAndTeleportToEventShardThenWalkToEvent:
                     chain
-                        .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain())
                         .Then(ChainHelper.PathfindToAndWait(playerShard.position, AethernetData.DISTANCE))
                         .Then(ChainHelper.TeleportChain(activityShard.aethernet))
                         .Debug("Waiting for lifestream to not be 'busy'")
                         .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new TaskManagerConfiguration { TimeLimitMS = 30000 }))
-                        .Then(new PathfindingChain(vnav, GetPosition(), data, false));
+                        .Then(new PathfindingChain(vnav, GetPosition(), data, false))
+                        .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain());
                     break;
             }
 
