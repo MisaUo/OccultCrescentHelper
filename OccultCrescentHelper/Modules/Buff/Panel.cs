@@ -15,8 +15,7 @@ public class Panel
             var isNearKnowledgeCrystal = ZoneHelper.IsNearKnowledgeCrystal();
             var isQueued = module.buffs.IsQueued();
 
-            if (ImGuiEx.IconButton(FontAwesomeIcon.Redo, "Button##ApplyBuffs",
-                    enabled: isNearKnowledgeCrystal && !isQueued))
+            if (ImGuiEx.IconButton(FontAwesomeIcon.Redo, "Button##ApplyBuffs", enabled: isNearKnowledgeCrystal && !isQueued))
             {
                 module.buffs.QueueBuffs();
             }
