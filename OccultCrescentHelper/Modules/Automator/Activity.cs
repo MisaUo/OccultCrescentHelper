@@ -247,7 +247,7 @@ public abstract class Activity
             return false;
         }
 
-        return Vector3.Distance(Player.Position, destination) <= 20f;
+        return Vector3.Distance(Player.Position, destination) > 20f;
     }
 
     protected abstract float GetRadius();
