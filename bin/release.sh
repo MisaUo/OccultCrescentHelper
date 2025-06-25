@@ -17,20 +17,3 @@ dotnet build -c Release
 # Create release on github
 gh release create "$TAG" --title "$TAG" --generate-notes
 gh release upload "$TAG" OccultCrescentHelper/bin/Release/BOCCHI/latest.zip --clobber
-
-# Update plugin manifest
-gh repo clone plugins
-cd plugins
-npm install
-
-manifest_output=$(node generate_manifest.js)
-commit_message=$(echo "$manifest_output" | awk '/^Suggested commit message:/{getline; print}')
-
-git add manifest.json
-git commit -m"$commit_message"
-git push origin master
-
-node generate_discord_message.js
-
-cd ..
-rm -rf plugins
