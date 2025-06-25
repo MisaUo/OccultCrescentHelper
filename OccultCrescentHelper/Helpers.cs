@@ -18,8 +18,7 @@ public static class Helpers
         var width = Device.Instance()->Width;
         var height = Device.Instance()->Height;
 
-        if (!CameraHelper.WorldLineToScreen(start, end, view, projection, nearPlane, width, height, out var screenStart,
-                out var screenEnd))
+        if (!CameraHelper.WorldLineToScreen(start, end, view, projection, nearPlane, width, height, out var screenStart, out var screenEnd))
         {
             return;
         }

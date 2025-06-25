@@ -6,15 +6,6 @@ namespace BOCCHI.Modules.Buff;
 [OcelotModule(5, 2)]
 public class BuffModule : Module<Plugin, Config>
 {
-    public readonly BuffManager buffs = new();
-
-    private readonly Panel panel = new();
-
-    public BuffModule(Plugin plugin, Config config)
-        : base(plugin, config)
-    {
-    }
-
     public override BuffConfig config
     {
         get => _config.BuffConfig;
@@ -23,6 +14,15 @@ public class BuffModule : Module<Plugin, Config>
     public override bool enabled
     {
         get => config.IsPropertyEnabled(nameof(config.Enabled));
+    }
+
+    public readonly BuffManager buffs = new();
+
+    private Panel panel = new();
+
+    public BuffModule(Plugin plugin, Config config)
+        : base(plugin, config)
+    {
     }
 
     public override void Tick(IFramework framework)

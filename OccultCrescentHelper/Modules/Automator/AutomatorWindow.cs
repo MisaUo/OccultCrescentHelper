@@ -14,7 +14,7 @@ public class AutomatorWindow : OcelotWindow
     {
         TitleBarButtons.Add(new TitleBarButton
         {
-            Click = m =>
+            Click = (m) =>
             {
                 if (m != ImGuiMouseButton.Left)
                 {

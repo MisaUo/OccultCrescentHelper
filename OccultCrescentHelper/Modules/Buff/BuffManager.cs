@@ -12,9 +12,7 @@ namespace BOCCHI.Modules.Buff;
 
 public class BuffManager
 {
-    private bool applyBuffsOnNextTick;
-
-    public int lowestTimer = int.MaxValue;
+    private bool applyBuffsOnNextTick = false;
 
     public void QueueBuffs()
     {
@@ -25,6 +23,8 @@ public class BuffManager
     {
         return applyBuffsOnNextTick;
     }
+
+    public int lowestTimer = int.MaxValue;
 
     public void Tick(IFramework _, BuffModule module)
     {
@@ -40,7 +40,7 @@ public class BuffManager
         }
     }
 
-    public void ApplyBuffs(BuffModule module)
+    public unsafe void ApplyBuffs(BuffModule module)
     {
         var manager = ChainManager.Get("OCH##BuffManager");
         if (manager.IsRunning)
@@ -94,7 +94,7 @@ public class BuffManager
 
     public bool ShouldRefresh(BuffModule module)
     {
-        if (!module.enabled)
+        if (module.enabled == false)
         {
             return false;
         }

@@ -10,20 +10,7 @@ namespace BOCCHI.Modules.StateManager;
 
 public class StateManager
 {
-    private readonly Dictionary<State, Action> handlers;
-
     private State state = State.Idle;
-
-    public StateManager()
-    {
-        handlers = new Dictionary<State, Action>
-        {
-            { State.Idle, HandleIdle },
-            { State.InCombat, HandleInCombat },
-            { State.InFate, HandleInFate },
-            { State.InCriticalEncounter, HandleInCriticalEncounter },
-        };
-    }
 
     public event Action? OnEnterIdle;
 
@@ -40,6 +27,19 @@ public class StateManager
     public event Action? OnEnterInCriticalEncounter;
 
     public event Action? OnExitInCriticalEncounter;
+
+    private Dictionary<State, Action> handlers;
+
+    public StateManager()
+    {
+        handlers = new Dictionary<State, Action>
+        {
+            { State.Idle, HandleIdle },
+            { State.InCombat, HandleInCombat },
+            { State.InFate, HandleInFate },
+            { State.InCriticalEncounter, HandleInCriticalEncounter },
+        };
+    }
 
     public void Tick(IFramework _)
     {
@@ -69,6 +69,7 @@ public class StateManager
         if (IsInCriticalEncounter())
         {
             ChangeState(State.InCriticalEncounter);
+            return;
         }
     }
 
@@ -90,6 +91,7 @@ public class StateManager
         if (!IsInCombat())
         {
             ChangeState(State.Idle);
+            return;
         }
     }
 
@@ -98,6 +100,7 @@ public class StateManager
         if (!IsInFate())
         {
             ChangeState(IsInCombat() ? State.InCombat : State.Idle);
+            return;
         }
     }
 
@@ -106,6 +109,7 @@ public class StateManager
         if (!IsInCriticalEncounter())
         {
             ChangeState(IsInCombat() ? State.InCriticalEncounter : State.Idle);
+            return;
         }
     }
 

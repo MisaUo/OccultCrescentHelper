@@ -10,19 +10,6 @@ namespace BOCCHI.Modules.Automator;
 [OcelotModule]
 public class AutomatorModule : Module<Plugin, Config>
 {
-    public readonly Automator automator = new();
-
-    private readonly List<uint> occultCrescentTerritoryIds = [1252];
-
-    public readonly Panel panel = new();
-
-    public AutomatorModule(Plugin plugin, Config config)
-        : base(plugin, config)
-    {
-        config.AutomatorConfig.Enabled = false;
-        config.Save();
-    }
-
     public override AutomatorConfig config
     {
         get => _config.AutomatorConfig;
@@ -31,6 +18,19 @@ public class AutomatorModule : Module<Plugin, Config>
     public override bool enabled
     {
         get => config.IsPropertyEnabled(nameof(config.Enabled));
+    }
+
+    public readonly Automator automator = new();
+
+    public readonly Panel panel = new();
+
+    private List<uint> occultCrescentTerritoryIds = [1252];
+
+    public AutomatorModule(Plugin plugin, Config config)
+        : base(plugin, config)
+    {
+        config.AutomatorConfig.Enabled = false;
+        config.Save();
     }
 
 
@@ -55,7 +55,7 @@ public class AutomatorModule : Module<Plugin, Config>
 
         automator.Refresh();
         config.Enabled = false;
-        plugin.Config.Save();
+        plugin.config.Save();
     }
 
     public static void ToggleIllegalMode(OcelotPlugin plugin)

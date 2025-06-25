@@ -7,21 +7,22 @@ namespace BOCCHI.Modules.WindowManager;
 [OcelotModule]
 public class WindowManagerModule : Module<Plugin, Config>
 {
-    private readonly List<uint> occultCrescentTerritoryIds = [1252];
-
-    private bool configClosed;
-
-    private bool mainClosed;
+    public override WindowManagerConfig config
+    {
+        get => _config.WindowManagerConfig;
+    }
 
     public WindowManagerModule(Plugin plugin, Config config)
         : base(plugin, config)
     {
     }
 
-    public override WindowManagerConfig config
-    {
-        get => _config.WindowManagerConfig;
-    }
+
+    private List<uint> occultCrescentTerritoryIds = [1252];
+
+    private bool mainClosed = false;
+
+    private bool configClosed = false;
 
 
     public override void PostInitialize()

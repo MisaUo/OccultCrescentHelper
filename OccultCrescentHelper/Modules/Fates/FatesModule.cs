@@ -9,15 +9,6 @@ namespace BOCCHI.Modules.Fates;
 [OcelotModule(7, 5)]
 public class FatesModule : Module<Plugin, Config>
 {
-    private readonly Panel panel = new();
-
-    public readonly FateTracker tracker = new();
-
-    public FatesModule(Plugin plugin, Config config)
-        : base(plugin, config)
-    {
-    }
-
     public override FatesConfig config
     {
         get => _config.FatesConfig;
@@ -28,6 +19,8 @@ public class FatesModule : Module<Plugin, Config>
         get => config.IsPropertyEnabled(nameof(config.Enabled));
     }
 
+    public readonly FateTracker tracker = new();
+
     public Dictionary<uint, IFate> fates
     {
         get => tracker.fates;
@@ -36,6 +29,13 @@ public class FatesModule : Module<Plugin, Config>
     public Dictionary<uint, EventProgress> progress
     {
         get => tracker.progress;
+    }
+
+    private Panel panel = new();
+
+    public FatesModule(Plugin plugin, Config config)
+        : base(plugin, config)
+    {
     }
 
     public override void Tick(IFramework framework)

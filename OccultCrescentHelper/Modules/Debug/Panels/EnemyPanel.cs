@@ -13,12 +13,12 @@ namespace BOCCHI.Modules.Debug.Panels;
 
 public class EnemyPanel : Panel
 {
-    private List<IGameObject> enemies = [];
-
     public override string GetName()
     {
         return "Nearby Enemies";
     }
+
+    private List<IGameObject> enemies = [];
 
     public override void Draw(DebugModule module)
     {
@@ -58,7 +58,7 @@ public class EnemyPanel : Panel
                         }
                         else
                         {
-                            ImGui.Text("TargetObject: None");
+                            ImGui.Text($"TargetObject: None");
                         }
 
                         ImGui.Text($"IsValid(): {enemy.IsValid()}");

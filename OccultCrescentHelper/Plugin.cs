@@ -4,12 +4,9 @@ using BOCCHI.Chains;
 using BOCCHI.Data;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Plugin;
-using DotNetEnv;
 using ECommons;
 using ECommons.DalamudServices;
 using ECommons.Reflection;
-using FFXIVClientStructs.Interop.Generated;
-using InteropGenerator.Runtime;
 using Ocelot;
 using Ocelot.Chain;
 
@@ -17,10 +14,27 @@ namespace BOCCHI;
 
 public sealed class Plugin : OcelotPlugin
 {
+    public override string Name
+    {
+        get => "Occult Crescent Helper";
+    }
+
+    public Config config { get; init; }
+
+    public override IOcelotConfig _config
+    {
+        get => config;
+    }
+
+    public static ChainQueue Chain
+    {
+        get => ChainManager.Get("OCH##main");
+    }
+
     public Plugin(IDalamudPluginInterface plugin)
         : base(plugin, Module.DalamudReflector)
     {
-        Config = plugin.GetPluginConfig() as Config ?? new Config();
+        config = plugin.GetPluginConfig() as Config ?? new Config();
 
         I18N.SetDirectory(plugin.AssemblyLocation.Directory?.FullName!);
         I18N.LoadFromFile("en", "Translations/en.json");
@@ -37,38 +51,19 @@ public sealed class Plugin : OcelotPlugin
         ChainManager.Initialize();
         ChainHelper.Initialize(this);
 
-        Env.Load(Svc.PluginInterface.AssemblyLocation.Directory + "/.env");
-    }
-
-    public override string Name
-    {
-        get => "Occult Crescent Helper";
-    }
-
-    public Config Config { get; init; }
-
-    public override IOcelotConfig _config
-    {
-        get => Config;
-    }
-
-    public static ChainQueue Chain
-    {
-        get => ChainManager.Get("OCH##main");
+        DotNetEnv.Env.Load(Svc.PluginInterface.AssemblyLocation.Directory + "/.env");
     }
 
     private void InitializeClientStructs()
     {
-        var gameVersion = DalamudReflector.TryGetDalamudStartInfo(out var ver)
-            ? ver.GameVersion!.ToString()
-            : "unknown";
-        Resolver.GetInstance.Setup(
+        var gameVersion = DalamudReflector.TryGetDalamudStartInfo(out var ver) ? ver.GameVersion!.ToString() : "unknown";
+        InteropGenerator.Runtime.Resolver.GetInstance.Setup(
             Svc.SigScanner.SearchBase,
             gameVersion,
             new FileInfo(Svc.PluginInterface.ConfigDirectory.FullName + "/cs.json")
         );
-        Addresses.Register();
-        Resolver.GetInstance.Resolve();
+        FFXIVClientStructs.Interop.Generated.Addresses.Register();
+        InteropGenerator.Runtime.Resolver.GetInstance.Resolve();
     }
 
 

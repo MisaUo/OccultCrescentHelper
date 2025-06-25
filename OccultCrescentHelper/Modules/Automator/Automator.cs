@@ -15,16 +15,16 @@ namespace BOCCHI.Modules.Automator;
 
 public class Automator
 {
-    private bool firstTick = true;
-
-    private int idleTime;
-
     private bool IsChainActive
     {
         get => ChainManager.Active().Count > 0;
     }
 
-    public Activity? activity { get; private set; }
+    public Activity? activity { get; private set; } = null;
+
+    private int idleTime = 0;
+
+    private bool firstTick = true;
 
     public void Tick(AutomatorModule module, IFramework framework)
     {
@@ -50,8 +50,7 @@ public class Automator
             if (states.GetState() == State.InCriticalEncounter)
             {
                 var critical = module.GetModule<CriticalEncountersModule>();
-                var encounter = critical.criticalEncounters.Values
-                    .Last(ev => ev.State != DynamicEventState.Inactive);
+                var encounter = critical.criticalEncounters.Values.Where((ev) => ev.State != DynamicEventState.Inactive).Last();
                 var data = EventData.CriticalEncounters[encounter.DynamicEventId];
                 activity = new CriticalEncounter(data, lifestream, vnav, module, critical);
 
@@ -144,8 +143,7 @@ public class Automator
 
         foreach (var encounter in source.criticalEncounters.Values)
         {
-            if (!module.config.CriticalEncountersMap.TryGetValue(encounter.DynamicEventId, out var enabled) ||
-                !enabled)
+            if (!module.config.CriticalEncountersMap.TryGetValue(encounter.DynamicEventId, out var enabled) || !enabled)
             {
                 continue;
             }
@@ -177,7 +175,7 @@ public class Automator
         {
             if (
                 fate == null
-                || !module.config.FatesMap[fate.FateId]
+                || !module.config.FatesMap[fate.FateId] == true
                 || !EventData.Fates.TryGetValue(fate.FateId, out var data)
             )
             {

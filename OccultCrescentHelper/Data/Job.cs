@@ -4,6 +4,16 @@ namespace BOCCHI.Data;
 
 public class Job
 {
+    public readonly JobId id;
+
+    public readonly PlayerStatus status;
+
+    public Job(JobId id, PlayerStatus status)
+    {
+        this.id = id;
+        this.status = status;
+    }
+
     public readonly static Job Freelancer = new(JobId.Freelancer, PlayerStatus.PhantomFreelancer);
 
     public readonly static Job Knight = new(JobId.Knight, PlayerStatus.PhantomKnight);
@@ -29,14 +39,4 @@ public class Job
     public readonly static Job Oracle = new(JobId.Oracle, PlayerStatus.PhantomOracle);
 
     public readonly static Job Thief = new(JobId.Thief, PlayerStatus.PhantomThief);
-
-    public readonly JobId id;
-
-    public readonly PlayerStatus status;
-
-    public Job(JobId id, PlayerStatus status)
-    {
-        this.id = id;
-        this.status = status;
-    }
 }

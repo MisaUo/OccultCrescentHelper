@@ -17,14 +17,7 @@ namespace BOCCHI.Chains;
 
 public class ChainHelper
 {
-    private static ChainHelper _instance = null!;
-
-    private readonly Plugin plugin;
-
-    private ChainHelper(Plugin plugin)
-    {
-        this.plugin = plugin;
-    }
+    private static ChainHelper _instance = null;
 
     private static ChainHelper instance
     {
@@ -32,13 +25,14 @@ public class ChainHelper
         {
             if (_instance == null)
             {
-                throw new InvalidOperationException(
-                    "ChainHelper has not been initialized. Call Initialize(plugin) first.");
+                throw new InvalidOperationException("ChainHelper has not been initialized. Call Initialize(plugin) first.");
             }
 
             return _instance;
         }
     }
+
+    private Plugin plugin;
 
     private static ModuleManager modules
     {
@@ -48,6 +42,11 @@ public class ChainHelper
     private static IPCManager ipc
     {
         get => instance.plugin.ipc;
+    }
+
+    private ChainHelper(Plugin plugin)
+    {
+        this.plugin = plugin;
     }
 
     public static void Initialize(Plugin plugin)

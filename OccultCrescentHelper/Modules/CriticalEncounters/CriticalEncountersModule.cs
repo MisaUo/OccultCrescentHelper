@@ -9,15 +9,6 @@ namespace BOCCHI.Modules.CriticalEncounters;
 [OcelotModule(8, 6)]
 public class CriticalEncountersModule : Module<Plugin, Config>
 {
-    private readonly Panel panel = new();
-
-    public readonly CriticalEncounterTracker tracker = new();
-
-    public CriticalEncountersModule(Plugin plugin, Config config)
-        : base(plugin, config)
-    {
-    }
-
     public override CriticalEncountersConfig config
     {
         get => _config.CriticalEncountersConfig;
@@ -28,6 +19,8 @@ public class CriticalEncountersModule : Module<Plugin, Config>
         get => config.IsPropertyEnabled(nameof(config.Enabled));
     }
 
+    public readonly CriticalEncounterTracker tracker = new();
+
     public Dictionary<uint, DynamicEvent> criticalEncounters
     {
         get => tracker.criticalEncounters;
@@ -36,6 +29,13 @@ public class CriticalEncountersModule : Module<Plugin, Config>
     public Dictionary<uint, EventProgress> progress
     {
         get => tracker.progress;
+    }
+
+    private Panel panel = new();
+
+    public CriticalEncountersModule(Plugin plugin, Config config)
+        : base(plugin, config)
+    {
     }
 
     public override void Tick(IFramework framework)

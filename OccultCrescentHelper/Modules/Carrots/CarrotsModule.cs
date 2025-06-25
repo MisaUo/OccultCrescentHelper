@@ -7,17 +7,6 @@ namespace BOCCHI.Modules.Carrots;
 [OcelotModule(4, 2)]
 public class CarrotsModule : Module<Plugin, Config>
 {
-    private readonly Panel panel = new();
-
-    private readonly Radar radar = new();
-
-    private readonly CarrotsTracker tracker = new();
-
-    public CarrotsModule(Plugin plugin, Config config)
-        : base(plugin, config)
-    {
-    }
-
     public override CarrotsConfig config
     {
         get => _config.CarrotsConfig;
@@ -28,9 +17,20 @@ public class CarrotsModule : Module<Plugin, Config>
         get => config.IsPropertyEnabled(nameof(config.Enabled));
     }
 
+    private readonly CarrotsTracker tracker = new();
+
     public List<Carrot> carrots
     {
         get => tracker.carrots;
+    }
+
+    private readonly Panel panel = new();
+
+    private readonly Radar radar = new();
+
+    public CarrotsModule(Plugin plugin, Config config)
+        : base(plugin, config)
+    {
     }
 
     public override void Tick(IFramework framework)

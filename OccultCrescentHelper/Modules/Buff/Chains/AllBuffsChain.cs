@@ -6,9 +6,9 @@ namespace BOCCHI.Modules.Buff.Chains;
 
 public unsafe class AllBuffsChain : ChainFactory
 {
-    private readonly BuffModule module;
+    private BuffModule module;
 
-    private readonly byte startingJobId;
+    private byte startingJobId;
 
     public AllBuffsChain(BuffModule module)
     {
@@ -16,7 +16,7 @@ public unsafe class AllBuffsChain : ChainFactory
         startingJobId = PublicContentOccultCrescent.GetState()->CurrentSupportJob;
     }
 
-    protected override Chain Create(Chain chain)
+    protected override unsafe Chain Create(Chain chain)
     {
         chain
             .Then(new KnightBuffChain(module))

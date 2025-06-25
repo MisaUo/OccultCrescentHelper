@@ -21,6 +21,8 @@ namespace BOCCHI;
 [Serializable]
 public class Config : IOcelotConfig
 {
+    public int Version { get; set; } = 1;
+
     public TreasureConfig TreasureConfig { get; set; } = new();
 
     public CarrotsConfig CarrotsConfig { get; set; } = new();
@@ -48,8 +50,6 @@ public class Config : IOcelotConfig
     public AutomatorConfig AutomatorConfig { get; set; } = new();
 
     public MountConfig MountConfig { get; set; } = new();
-
-    public int Version { get; set; } = 1;
 
     public void Save()
     {

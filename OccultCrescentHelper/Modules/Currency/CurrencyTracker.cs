@@ -6,15 +6,22 @@ namespace BOCCHI.Modules.Currency;
 
 public class CurrencyTracker
 {
-    private float gainedGold;
+    private enum Currency
+    {
+        Silver = 45043,
 
-    private float gainedSilver;
+        Gold = 45044,
+    }
+
+    private float lastGold = 0f;
+
+    private float gainedGold = 0f;
 
     private DateTime goldStartTime = DateTime.UtcNow;
 
-    private float lastGold;
+    private float lastSilver = 0f;
 
-    private float lastSilver;
+    private float gainedSilver = 0f;
 
     private DateTime silverStartTime = DateTime.UtcNow;
 
@@ -100,12 +107,5 @@ public class CurrencyTracker
     private unsafe float GetSilver()
     {
         return InventoryManager.Instance()->GetInventoryItemCount((uint)Currency.Silver);
-    }
-
-    private enum Currency
-    {
-        Silver = 45043,
-
-        Gold = 45044,
     }
 }

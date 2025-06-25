@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using BOCCHI.Data;
-using BOCCHI.Enums;
 using BOCCHI.Modules.CriticalEncounters;
 using BOCCHI.Modules.Fates;
 using ECommons.DalamudServices;
@@ -14,13 +13,6 @@ namespace BOCCHI.Commands;
 [OcelotCommand]
 public class OCHCmdCommand : OcelotCommand
 {
-    private readonly Plugin plugin;
-
-    public OCHCmdCommand(Plugin plugin)
-    {
-        this.plugin = plugin;
-    }
-
     public override string command
     {
         get => "/bocchicmd";
@@ -46,6 +38,13 @@ Utility command.
     public override IReadOnlyList<string> validArguments
     {
         get => ["flag-active-ce", "flag-active-fate", "flag-active-non-pot-fate"];
+    }
+
+    private readonly Plugin plugin;
+
+    public OCHCmdCommand(Plugin plugin)
+    {
+        this.plugin = plugin;
     }
 
     public override unsafe void Command(string command, string arguments)
@@ -102,7 +101,7 @@ Utility command.
                 continue;
             }
 
-            if (ignorePots && data.notes == MonsterNote.PersistentPots)
+            if (ignorePots && data.notes == Enums.MonsterNote.PersistentPots)
             {
                 continue;
             }

@@ -95,15 +95,9 @@ public class TreasureHunt
         new(new Vector3(386.95f, 96.82f, -451.35f), 3),
     ];
 
-    private volatile float distance;
-
-    private int nodeIndex;
-
     private List<Vector3> path = [];
 
-    private bool running;
-
-    private volatile IGameObject? treasure;
+    private int nodeIndex = 0;
 
     private Vector3 currentNode
     {
@@ -115,7 +109,13 @@ public class TreasureHunt
         get => nodeIndex >= path.Count - 1;
     }
 
-    public void Tick(TreasureModule module)
+    private bool running = false;
+
+    private volatile float distance = 0f;
+
+    private volatile IGameObject? treasure = null;
+
+    public unsafe void Tick(TreasureModule module)
     {
         if (!running)
         {
@@ -164,8 +164,7 @@ public class TreasureHunt
                     }
 
                     var treasures = Svc.Objects
-                        .Where(o => o != null && o?.ObjectKind == ObjectKind.Treasure &&
-                                    o.IsValid() && !o.IsDead && o.IsTargetable)
+                        .Where(o => o != null && o?.ObjectKind == ObjectKind.Treasure && o.IsValid() && !o.IsDead && o.IsTargetable)
                         .ToList();
 
                     var distance = Vector3.Distance(Player.Position, currentNode);
@@ -184,13 +183,11 @@ public class TreasureHunt
 
                             Plugin.Chain.SubmitFront(() => Chain.Create("Interact")
                                 .Then(_ => module.Debug("Starting Interaction"))
-                                .Then(NeoTasks.InteractWithObject(
-                                    () => treasure, false,
-                                    new TaskManagerConfiguration
-                                    {
-                                        TimeLimitMS = 3000,
-                                        TimeoutSilently = true,
-                                    }))
+                                .Then(NeoTasks.InteractWithObject(() => treasure, false, new TaskManagerConfiguration
+                                {
+                                    TimeLimitMS = 3000,
+                                    TimeoutSilently = true,
+                                }))
                                 .Then(_ => module.Debug("Interaction Done"))
                             );
 
@@ -212,9 +209,7 @@ public class TreasureHunt
                 }, new TaskManagerConfiguration { TimeLimitMS = int.MaxValue }))
                 .Then(() => Chain.Create("Interact")
                     .Wait(300)
-                    .Then(NeoTasks.InteractWithObject(
-                        () => treasure, false,
-                        new TaskManagerConfiguration { TimeLimitMS = 3000 }))
+                    .Then(NeoTasks.InteractWithObject(() => treasure, false, new TaskManagerConfiguration { TimeLimitMS = 3000 }))
                     .Then(_ => treasure = null)
                 );
         });
@@ -241,7 +236,7 @@ public class TreasureHunt
                 nodeIndex = 0;
                 running = !running;
                 distance = 0f;
-                if (!running)
+                if (running == false)
                 {
                     vnav.Stop();
                     Plugin.Chain.Abort();
@@ -306,8 +301,7 @@ public class TreasureHunt
         }
 
         var start = path.First();
-        module.Debug(
-            $"Generated path with {path.Count} nodes, starting at ({startIndex}) {start.X:f2}, {start.Y:f2}, {start.Z:f2}");
+        module.Debug($"Generated path with {path.Count} nodes, starting at ({startIndex}) {start.X:f2}, {start.Y:f2}, {start.Z:f2}");
 
         return path;
     }

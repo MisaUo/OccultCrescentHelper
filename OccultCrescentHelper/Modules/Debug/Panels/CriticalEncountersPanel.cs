@@ -18,7 +18,7 @@ public class CriticalEncountersPanel : Panel
         return "Critical Encounters";
     }
 
-    public override void Draw(DebugModule module)
+    public override unsafe void Draw(DebugModule module)
     {
         OcelotUI.Title("Critical Encounters:");
         OcelotUI.Indent(() =>
@@ -32,7 +32,7 @@ public class CriticalEncountersPanel : Panel
                 if (ev.State == DynamicEventState.Inactive)
                 {
                     ImGui.SameLine();
-                    ImGui.TextUnformatted("(Inactive)");
+                    ImGui.TextUnformatted($"(Inactive)");
                 }
 
                 if (ev.State == DynamicEventState.Register)
@@ -48,7 +48,7 @@ public class CriticalEncountersPanel : Panel
                 if (ev.State == DynamicEventState.Warmup)
                 {
                     ImGui.SameLine();
-                    ImGui.TextUnformatted("(Starting)");
+                    ImGui.TextUnformatted($"(Starting)");
                 }
 
                 if (ev.State == DynamicEventState.Battle)
@@ -64,7 +64,7 @@ public class CriticalEncountersPanel : Panel
                     teleporter.teleporter.Button(data.aethernet, start, data.Name, $"ce_{data.id}", data);
                 }
 
-                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.Config.EventDropConfig));
+                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.config.EventDropConfig));
 
                 if (data.pathFactory != null)
                 {
@@ -213,8 +213,7 @@ public class CriticalEncountersPanel : Panel
 
         OcelotUI.Title("Map Marker:");
         ImGui.SameLine();
-        ImGui.TextUnformatted(
-            $"X: {ev.MapMarker.X}, Y: {ev.MapMarker.Y}, IconId: {ev.MapMarker.IconId}"); // example, adjust fields accordingly
+        ImGui.TextUnformatted($"X: {ev.MapMarker.X}, Y: {ev.MapMarker.Y}, IconId: {ev.MapMarker.IconId}"); // example, adjust fields accordingly
 
         OcelotUI.Title("Event Container Pointer:");
         ImGui.SameLine();

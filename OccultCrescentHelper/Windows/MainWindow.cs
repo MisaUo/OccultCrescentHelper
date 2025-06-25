@@ -21,7 +21,7 @@ public class MainWindow : OcelotMainWindow
 
         TitleBarButtons.Add(new TitleBarButton
         {
-            Click = m =>
+            Click = (m) =>
             {
                 if (m != ImGuiMouseButton.Left)
                 {
@@ -37,7 +37,7 @@ public class MainWindow : OcelotMainWindow
 
         TitleBarButtons.Add(new TitleBarButton
         {
-            Click = m =>
+            Click = (m) =>
             {
                 if (m != ImGuiMouseButton.Left)
                 {

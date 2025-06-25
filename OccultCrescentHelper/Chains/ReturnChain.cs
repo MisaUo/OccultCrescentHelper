@@ -17,24 +17,19 @@ namespace BOCCHI.Chains;
 
 public class ReturnChain : RetryChainFactory
 {
-    private readonly bool approachAetherye;
+    private bool approachAetherye = false;
 
-    private readonly BuffModule buffs;
+    private Vector3 destination = Vector3.Zero;
 
-    private readonly Vector3 destination = Vector3.Zero;
+    private YesAlready? yes;
 
-    private readonly VNavmesh? vnav;
+    private VNavmesh? vnav;
 
-    private readonly YesAlready? yes;
+    private BuffModule buffs;
 
-    private bool complete;
+    private bool complete = false;
 
-    public ReturnChain(
-        Vector3 destination,
-        BuffModule buffs,
-        YesAlready? yes = null,
-        VNavmesh? vnav = null,
-        bool approachAetherye = true)
+    public ReturnChain(Vector3 destination, BuffModule buffs, YesAlready? yes = null, VNavmesh? vnav = null, bool approachAetherye = true)
     {
         this.destination = destination;
         this.yes = yes;
@@ -43,7 +38,7 @@ public class ReturnChain : RetryChainFactory
         this.buffs = buffs;
     }
 
-    protected override Chain Create(Chain chain)
+    protected override unsafe Chain Create(Chain chain)
     {
         chain.BreakIf(() => Svc.ClientState.LocalPlayer?.IsDead == true);
 
@@ -77,6 +72,7 @@ public class ReturnChain : RetryChainFactory
             chain.Then(ChainHelper.PathfindToAndWait(destination, AethernetData.DISTANCE));
         }
 
+
         return chain.Then(_ => complete = true);
     }
 
@@ -96,8 +92,7 @@ public class ReturnChain : RetryChainFactory
                     {
                         if (Svc.Condition[ConditionFlag.Mounted])
                         {
-                            ActionManager.Instance()->UseAction(
-                                ActionType.Mount, buffs.plugin.Config.MountConfig.Mount);
+                            ActionManager.Instance()->UseAction(ActionType.Mount, buffs.plugin.config.MountConfig.Mount);
                         }
                     })
                     .BreakIf(() => closestKnowledgeCrystal == null)

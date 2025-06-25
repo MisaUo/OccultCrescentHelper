@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace BOCCHI;
 
-public static class CameraHelper
+public static unsafe class CameraHelper
 {
     public static bool WorldLineToScreen(
         Vector3 startWorld,
@@ -49,11 +49,11 @@ public static class CameraHelper
         // Convert NDC to screen coordinates
         screenStart = new Vector2(
             (startNDC.X + 1f) * 0.5f * screenWidth,
-            (1f - ((startNDC.Y + 1f) * 0.5f)) * screenHeight);
+            (1f - (startNDC.Y + 1f) * 0.5f) * screenHeight);
 
         screenEnd = new Vector2(
             (endNDC.X + 1f) * 0.5f * screenWidth,
-            (1f - ((endNDC.Y + 1f) * 0.5f)) * screenHeight);
+            (1f - (endNDC.Y + 1f) * 0.5f) * screenHeight);
 
         return true;
     }
@@ -84,12 +84,7 @@ public static class CameraHelper
         return true;
     }
 
-    public static Vector3 WorldToScreen(
-        Vector3 pointWorld,
-        Matrix4x4 viewMatrix,
-        Matrix4x4 projectionMatrix,
-        uint windowWidth,
-        uint windowHeight)
+    public static Vector3 WorldToScreen(Vector3 pointWorld, Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix, uint windowWidth, uint windowHeight)
     {
         var pointWorld4 = new Vector4(pointWorld, 1f);
         var pointView = Vector4.Transform(pointWorld4, viewMatrix);
@@ -108,7 +103,7 @@ public static class CameraHelper
             pointNDC.Z);
 
         var screenX = (clampedNDC.X + 1f) * 0.5f * windowWidth;
-        var screenY = (1f - ((clampedNDC.Y + 1f) * 0.5f)) * windowHeight;
+        var screenY = (1f - (clampedNDC.Y + 1f) * 0.5f) * windowHeight;
 
         return new Vector3(screenX, screenY, clampedNDC.Z);
     }

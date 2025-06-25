@@ -7,19 +7,14 @@ namespace BOCCHI.Modules.StateManager;
 [OcelotModule(mainOrder: -1)]
 public class StateManagerModule : Module<Plugin, Config>
 {
-    private readonly Panel panel = new();
-
-    private readonly StateManager state = new();
-
-    public StateManagerModule(Plugin plugin, Config config)
-        : base(plugin, config)
-    {
-    }
-
     public override StateManagerConfig config
     {
         get => _config.StateManagerConfig;
     }
+
+    private Panel panel = new();
+
+    private StateManager state = new();
 
     public event Action? OnEnterIdle
     {
@@ -67,6 +62,11 @@ public class StateManagerModule : Module<Plugin, Config>
     {
         add => state.OnExitInCriticalEncounter += value;
         remove => state.OnExitInCriticalEncounter -= value;
+    }
+
+    public StateManagerModule(Plugin plugin, Config config)
+        : base(plugin, config)
+    {
     }
 
     public override void Tick(IFramework framework)

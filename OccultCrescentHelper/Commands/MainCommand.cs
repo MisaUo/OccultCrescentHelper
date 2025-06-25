@@ -8,13 +8,6 @@ namespace BOCCHI.Commands;
 [OcelotCommand]
 public class MainCommand : OcelotCommand
 {
-    private readonly Plugin plugin;
-
-    public MainCommand(Plugin plugin)
-    {
-        this.plugin = plugin;
-    }
-
     public override string command
     {
         get => "/bocchi";
@@ -39,6 +32,14 @@ Opens Occult Crescent Helper main ui
     public override IReadOnlyList<string> validArguments
     {
         get => ["config", "cfg", "debug"];
+    }
+
+
+    private readonly Plugin plugin;
+
+    public MainCommand(Plugin plugin)
+    {
+        this.plugin = plugin;
     }
 
 

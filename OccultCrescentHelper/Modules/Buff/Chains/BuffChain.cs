@@ -11,11 +11,11 @@ namespace BOCCHI.Modules.Buff.Chains;
 
 public class BuffChain : ChainFactory
 {
-    private readonly uint action;
+    private Job job;
 
-    private readonly Job job;
+    private PlayerStatus status;
 
-    private readonly PlayerStatus status;
+    private uint action;
 
     public BuffChain(Job job, PlayerStatus status, uint action)
     {
@@ -24,16 +24,14 @@ public class BuffChain : ChainFactory
         this.action = action;
     }
 
-    protected override Chain Create(Chain chain)
+    protected override unsafe Chain Create(Chain chain)
     {
         chain
             .Then(_ => PublicContentOccultCrescent.ChangeSupportJob((byte)job.id))
             .WaitUntilStatus((uint)job.status)
             .WaitGcd()
             .UseAction(ActionType.GeneralAction, action)
-            .Then(new TaskManagerTask(
-                () => Svc.ClientState.LocalPlayer?.StatusList.Any(s => s.StatusId == (uint)status &&
-                                                                       s.RemainingTime >= 1780) == true,
+            .Then(new TaskManagerTask(() => Svc.ClientState.LocalPlayer?.StatusList.Any(s => s.StatusId == (uint)status && s.RemainingTime >= 1780) == true,
                 new TaskManagerConfiguration { TimeLimitMS = 3000 }))
             .WaitGcd();
 

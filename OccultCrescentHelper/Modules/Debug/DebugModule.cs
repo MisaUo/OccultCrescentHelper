@@ -13,7 +13,7 @@ namespace BOCCHI.Modules.Debug;
 #endif
 public class DebugModule : Module<Plugin, Config>
 {
-    private readonly List<Panel> panels = new()
+    private List<Panel> panels = new()
     {
         new TeleporterPanel(),
         new VnavmeshPanel(),

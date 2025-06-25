@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using BOCCHI.Data;
-using BOCCHI.Enums;
 using BOCCHI.Modules.Automator;
 using BOCCHI.Modules.CriticalEncounters;
 using BOCCHI.Modules.Fates;
@@ -15,13 +14,6 @@ namespace BOCCHI.Commands;
 [OcelotCommand]
 public class OCHIllegalCommand : OcelotCommand
 {
-    private readonly Plugin plugin;
-
-    public OCHIllegalCommand(Plugin plugin)
-    {
-        this.plugin = plugin;
-    }
-
     public override string command
     {
         get => "/bocchiillegal";
@@ -47,6 +39,13 @@ Manage och automator/illegal mode.
     public override IReadOnlyList<string> validArguments
     {
         get => ["on", "off", "toggle"];
+    }
+
+    private readonly Plugin plugin;
+
+    public OCHIllegalCommand(Plugin plugin)
+    {
+        this.plugin = plugin;
     }
 
     public override void Command(string command, string arguments)
@@ -77,7 +76,7 @@ Manage och automator/illegal mode.
                     break;
             }
 
-            plugin.Config.Save();
+            plugin.config.Save();
         });
     }
 
@@ -119,7 +118,7 @@ Manage och automator/illegal mode.
                 continue;
             }
 
-            if (ignorePots && data.notes == MonsterNote.PersistentPots)
+            if (ignorePots && data.notes == Enums.MonsterNote.PersistentPots)
             {
                 continue;
             }

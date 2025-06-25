@@ -3,7 +3,6 @@ using System.Numerics;
 using BOCCHI.Data;
 using BOCCHI.Modules.Fates;
 using BOCCHI.Modules.StateManager;
-using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Fates;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
@@ -16,7 +15,7 @@ namespace BOCCHI.Modules.Automator;
 
 public class Fate : Activity
 {
-    private readonly IFate fate;
+    private IFate fate;
 
     public Fate(EventData data, Lifestream lifestream, VNavmesh vnav, AutomatorModule module, IFate fate)
         : base(data, lifestream, vnav, module)
@@ -56,10 +55,9 @@ public class Fate : Activity
                     if (Vector3.Distance(Player.Position, target.Position) <= module.config.EngagementRange)
                     {
                         // Dismount
-                        if (Svc.Condition[ConditionFlag.Mounted])
+                        if (Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.Mounted])
                         {
-                            ActionManager.Instance()->UseAction(ActionType.Mount,
-                                module.plugin.Config.MountConfig.Mount);
+                            ActionManager.Instance()->UseAction(ActionType.Mount, module.plugin.config.MountConfig.Mount);
                         }
 
                         vnav.Stop();

@@ -7,15 +7,6 @@ namespace BOCCHI.Modules.Exp;
 [OcelotModule(6, 4)]
 public class ExpModule : Module<Plugin, Config>
 {
-    private readonly Panel panel = new();
-
-    public readonly ExpTracker tracker = new();
-
-    public ExpModule(Plugin plugin, Config config)
-        : base(plugin, config)
-    {
-    }
-
     public override ExpConfig config
     {
         get => _config.ExpConfig;
@@ -26,6 +17,15 @@ public class ExpModule : Module<Plugin, Config>
         get => config.IsPropertyEnabled(nameof(config.Enabled));
     }
 
+    public readonly ExpTracker tracker = new();
+
+    private Panel panel = new();
+
+    public ExpModule(Plugin plugin, Config config)
+        : base(plugin, config)
+    {
+    }
+
 
     public override bool DrawMainUi()
     {
@@ -33,12 +33,7 @@ public class ExpModule : Module<Plugin, Config>
         return true;
     }
 
-    public override void OnChatMessage(
-        XivChatType type,
-        int timestamp,
-        SeString sender,
-        SeString message,
-        bool isHandled)
+    public override void OnChatMessage(XivChatType type, int timestamp, SeString sender, SeString message, bool isHandled)
     {
         tracker.OnChatMessage(type, timestamp, sender, message, isHandled);
     }

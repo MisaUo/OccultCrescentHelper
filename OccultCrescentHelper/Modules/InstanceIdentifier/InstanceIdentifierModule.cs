@@ -8,15 +8,6 @@ namespace BOCCHI.Modules.InstanceIdentifier;
 [OcelotModule(mainOrder: int.MinValue)]
 public class InstanceIdentifierModule : Module<Plugin, Config>
 {
-    private readonly Panel panel = new();
-
-    public InitZone hook = new();
-
-    public InstanceIdentifierModule(Plugin plugin, Config config)
-        : base(plugin, config)
-    {
-    }
-
     public override InstanceIdentifierConfig config
     {
         get => _config.InstanceIdentifierConfig;
@@ -27,7 +18,16 @@ public class InstanceIdentifierModule : Module<Plugin, Config>
         get => config.Show;
     }
 
+    private Panel panel = new();
+
     public string instance { get; private set; } = "Unknown";
+
+    public InitZone hook = new();
+
+    public InstanceIdentifierModule(Plugin plugin, Config config)
+        : base(plugin, config)
+    {
+    }
 
     public override void PostInitialize()
     {

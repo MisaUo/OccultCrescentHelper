@@ -4,7 +4,6 @@ using System.Numerics;
 using BOCCHI.Data;
 using BOCCHI.Modules.CriticalEncounters;
 using BOCCHI.Modules.StateManager;
-using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Objects.Enums;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
@@ -20,24 +19,19 @@ public class CriticalEncounter : Activity
 {
     private readonly CriticalEncountersModule critical;
 
-    private bool finalDestination;
+    private DynamicEvent Encounter
+    {
+        get => critical.criticalEncounters[data.id];
+    }
 
-    public CriticalEncounter(
-        EventData data,
-        Lifestream lifestream,
-        VNavmesh vnav,
-        AutomatorModule module,
-        CriticalEncountersModule critical)
+    private bool finalDestination = false;
+
+    public CriticalEncounter(EventData data, Lifestream lifestream, VNavmesh vnav, AutomatorModule module, CriticalEncountersModule critical)
         : base(data, lifestream, vnav, module)
     {
         this.critical = critical;
 
         handlers.Add(ActivityState.WaitingToStartCriticalEncounter, GetWaitingToStartCriticalEncounterChain);
-    }
-
-    private DynamicEvent Encounter
-    {
-        get => critical.criticalEncounters[data.id];
     }
 
     protected override TaskManagerTask GetPathfindingWatcher(StateManagerModule states, VNavmesh vnav)
@@ -66,12 +60,11 @@ public class CriticalEncounter : Activity
 
                     // Choose a random point within the bounding box of players
                     var rand = new Random();
-                    var randX = (float)(minX + (rand.NextDouble() * (maxX - minX)));
-                    var randY = (float)(minY + (rand.NextDouble() * (maxY - minY)));
+                    var randX = (float)(minX + rand.NextDouble() * (maxX - minX));
+                    var randY = (float)(minY + rand.NextDouble() * (maxY - minY));
                     var randomPoint = new Vector3(randX, GetPosition().Y, randY);
 
-                    module.Debug(
-                        $"Pathfinding to random point: {randomPoint} (MinX: {minX}, MaxX: {maxX}, MinY: {minY}, MaxY: {maxY})");
+                    module.Debug($"Pathfinding to random point: {randomPoint} (MinX: {minX}, MaxX: {maxX}, MinY: {minY}, MaxY: {maxY})");
 
                     vnav.PathfindAndMoveTo(randomPoint, false);
                     finalDestination = true;
@@ -120,8 +113,7 @@ public class CriticalEncounter : Activity
                     {
                         if (!IsValid())
                         {
-                            throw new Exception(
-                                "The critical encounter appears to have started without you.");
+                            throw new Exception("The critical encounter appears to have started without you.");
                         }
 
                         var critical = module.GetModule<CriticalEncountersModule>();
@@ -130,18 +122,17 @@ public class CriticalEncounter : Activity
                         if (encounter.State == DynamicEventState.Battle &&
                             states.GetState() != State.InCriticalEncounter)
                         {
-                            throw new Exception(
-                                "The critical encounter appears to have started without you.");
+                            throw new Exception("The critical encounter appears to have started without you.");
                         }
 
                         if (!vnav.IsRunning() && states.GetState() == State.InCombat)
                         {
                             // Unmount if we're in combat, and activate our AI provider
-                            if (Svc.Condition[ConditionFlag.Mounted])
+                            if (Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.Mounted])
                             {
                                 ActionManager.Instance()->UseAction(
                                     ActionType.Mount,
-                                    module.plugin.Config.MountConfig.Mount
+                                    module.plugin.config.MountConfig.Mount
                                 );
                             }
 

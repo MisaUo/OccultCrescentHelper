@@ -6,17 +6,17 @@ namespace BOCCHI.Modules.Teleporter;
 [OcelotModule(1)]
 public class TeleporterModule : Module<Plugin, Config>
 {
+    public override TeleporterConfig config
+    {
+        get => _config.TeleporterConfig;
+    }
+
     public readonly Teleporter teleporter;
 
     public TeleporterModule(Plugin plugin, Config config)
         : base(plugin, config)
     {
         teleporter = new Teleporter(this);
-    }
-
-    public override TeleporterConfig config
-    {
-        get => _config.TeleporterConfig;
     }
 
     public override void Initialize()

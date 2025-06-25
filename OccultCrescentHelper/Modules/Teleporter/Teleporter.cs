@@ -8,7 +8,6 @@ using BOCCHI.Enums;
 using BOCCHI.Modules.Automator;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Interface;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
@@ -55,14 +54,13 @@ public class Teleporter
             return;
         }
 
-        if (ImGuiEx.IconButton(FontAwesomeIcon.Running, $"{name}##{id}"))
+        if (ImGuiEx.IconButton(Dalamud.Interface.FontAwesomeIcon.Running, $"{name}##{id}"))
         {
             Svc.Log.Info($"Pathfinding to {name} at {destination}");
 
             Plugin.Chain.Submit(() => Chain.Create("Pathfinding")
-                .Then(new PathfindingChain(vnav, destination, ev,
-                    module.config.ShouldUseCustomPaths, 20f))
                 .ConditionalThen(_ => module.config.ShouldMount, ChainHelper.MountChain())
+                .Then(new PathfindingChain(vnav, destination, ev, module.config.ShouldUseCustomPaths, 20f))
                 .WaitUntilNear(vnav, destination, 205f)
             );
         }
@@ -73,8 +71,7 @@ public class Teleporter
         }
 
 
-        if (!module.TryGetIPCProvider<Lifestream>(out var lifestream) || lifestream == null ||
-            !lifestream.IsReady())
+        if (!module.TryGetIPCProvider<Lifestream>(out var lifestream) || lifestream == null || !lifestream.IsReady())
         {
             return;
         }
@@ -84,8 +81,7 @@ public class Teleporter
 
     private void TeleportButton(Aethernet aethernet, Vector3 destination, string name, string id, EventData ev)
     {
-        if (!module.TryGetIPCProvider<Lifestream>(out var lifestream) || lifestream == null ||
-            !lifestream.IsReady())
+        if (!module.TryGetIPCProvider<Lifestream>(out var lifestream) || lifestream == null || !lifestream.IsReady())
         {
             return;
         }
@@ -93,16 +89,14 @@ public class Teleporter
         var isNearShards = ZoneHelper.GetNearbyAethernetShards().Count() > 0;
         var isNearCurrentShard = ZoneHelper.IsNearAethernetShard(aethernet);
 
-        if (ImGuiEx.IconButton(FontAwesomeIcon.LocationArrow, $"{name}##{id}",
-                enabled: isNearShards && !isNearCurrentShard))
+        if (ImGuiEx.IconButton(Dalamud.Interface.FontAwesomeIcon.LocationArrow, $"{name}##{id}", enabled: isNearShards && !isNearCurrentShard))
         {
             var factory = () =>
             {
                 var chain = Chain.Create("Teleport Sequence")
                     .Then(ChainHelper.TeleportChain(aethernet))
                     .Debug("Waiting for lifestream to not be 'busy'")
-                    .Then(new TaskManagerTask(() => !lifestream.IsBusy(),
-                        new TaskManagerConfiguration { TimeLimitMS = 30000 }));
+                    .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new TaskManagerConfiguration { TimeLimitMS = 30000 }));
 
                 if (module.TryGetIPCProvider<VNavmesh>(out var vnav) && vnav != null && vnav.IsReady())
                 {
@@ -122,11 +116,11 @@ public class Teleporter
         {
             if (!isNearShards)
             {
-                ImGui.SetTooltip("You must be near an aetheryte to teleport");
+                ImGui.SetTooltip($"You must be near an aetheryte to teleport");
             }
             else if (isNearCurrentShard)
             {
-                ImGui.SetTooltip("You're already at this aetheryte");
+                ImGui.SetTooltip($"You're already at this aetheryte");
             }
             else
             {
@@ -184,7 +178,7 @@ public class Teleporter
     [Obsolete("Use ZoneHelper.GetClosestAethernetShard")]
     private Aethernet GetClosestAethernet(Vector3 position)
     {
-        return AethernetData.All().OrderBy(data => Vector3.Distance(position, data.position)).First()!.aethernet;
+        return AethernetData.All().OrderBy((data) => Vector3.Distance(position, data.position)).First()!.aethernet;
     }
 
     [Obsolete("Use ZoneHelper.GetNearbyAethernetShards")]
@@ -195,7 +189,7 @@ public class Teleporter
         return Svc.Objects
             .Where(o => o != null)
             .Where(o => o.ObjectKind == ObjectKind.EventObj)
-            .Where(o => AethernetData.All().Select(datum => datum.dataId).Contains(o.DataId))
+            .Where(o => AethernetData.All().Select((datum) => datum.dataId).Contains(o.DataId))
             .Where(o => Vector3.Distance(o.Position, playerPos) <= 4.5f)
             .ToList();
     }

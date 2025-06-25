@@ -9,9 +9,9 @@ namespace BOCCHI.Modules.Exp;
 
 public class ExpTracker
 {
-    private readonly string pattern;
+    private float exp = 0f;
 
-    private float exp;
+    private readonly string pattern;
 
     private DateTime startTime = DateTime.UtcNow;
 
@@ -60,7 +60,6 @@ public class ExpTracker
             ClientLanguage.French => @"Vous gagnez (\d+) points d'expérience de soutien en .+? fantôme",
             ClientLanguage.German => @"Du erhältst (\d+) Phantomroutine als Phantom",
             ClientLanguage.Japanese => @".+?」に(\d+)ポイントのサポート経験値を得た。",
-            _ => throw new ArgumentOutOfRangeException(nameof(clientLanguage), clientLanguage, null),
         };
     }
 }

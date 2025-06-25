@@ -28,8 +28,7 @@ public static class SmartNavigation
         var costToWalkFromEventShardToEvent = Vector3.Distance(closestToDestination.position, destination);
         var costToWalkToEventDirectly = Vector3.Distance(playerPosition, destination);
 
-        var costToReturnThenWalk =
-            RETURN_BASE_COST + Vector3.Distance(Aethernet.BaseCamp.GetData().position, destination);
+        var costToReturnThenWalk = RETURN_BASE_COST + Vector3.Distance(Aethernet.BaseCamp.GetData().position, destination);
         var costToReturnTeleportThenWalk = RETURN_BASE_COST + costToWalkFromEventShardToEvent;
         var costToWalkToShardThenEvent = costToWalkToNearestShard + costToWalkFromEventShardToEvent;
 

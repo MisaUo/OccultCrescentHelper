@@ -7,22 +7,25 @@ using Ocelot.Chain.ChainEx;
 
 namespace BOCCHI.Modules.Mount.Chains;
 
-public class MountChain(MountConfig config) : RetryChainFactory
+public class MountChain : RetryChainFactory
 {
-    private bool isFirstThrottle = true;
+    private MountConfig config;
+
+    public MountChain(MountConfig config)
+    {
+        this.config = config;
+    }
 
     protected override unsafe Chain Create(Chain chain)
     {
         return chain
             .BreakIf(Breaker)
-            .ConditionalThen(_ => !config.MountRoulette,
-                _ => ActionManager.Instance()->UseAction(ActionType.Mount, config.Mount))
+            .ConditionalThen(_ => !config.MountRoulette, _ => ActionManager.Instance()->UseAction(ActionType.Mount, config.Mount))
             // Mount Roulette
-            .ConditionalThen(_ => config.MountRoulette,
-                _ => ActionManager.Instance()->UseAction(ActionType.GeneralAction, 9));
+            .ConditionalThen(_ => config.MountRoulette, _ => ActionManager.Instance()->UseAction(ActionType.GeneralAction, 9));
     }
 
-    private static bool Breaker()
+    private bool Breaker()
     {
         var player = Svc.ClientState.LocalPlayer;
         if (player == null)
@@ -41,13 +44,7 @@ public class MountChain(MountConfig config) : RetryChainFactory
 
     public override int GetThrottle()
     {
-        if (isFirstThrottle)
-        {
-            isFirstThrottle = false;
-            return 500;
-        }
-
-        return 5000;
+        return 2000;
     }
 
     public override bool IsComplete()

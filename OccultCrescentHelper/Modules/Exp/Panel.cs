@@ -1,4 +1,3 @@
-using Dalamud.Interface;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
 using Ocelot;
@@ -12,7 +11,7 @@ public class Panel
         OcelotUI.Title($"{module.T("panel.title")}:");
         OcelotUI.Indent(() =>
         {
-            if (ImGuiEx.IconButton(FontAwesomeIcon.Redo, "Reset##Exp"))
+            if (ImGuiEx.IconButton(Dalamud.Interface.FontAwesomeIcon.Redo, $"Reset##Exp"))
             {
                 module.tracker.Reset();
             }
