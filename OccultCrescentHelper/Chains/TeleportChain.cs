@@ -19,6 +19,5 @@ public class TeleportChain(Aethernet aethernet, Lifestream lifestream, Teleporte
                .Then(_ => module.GetIPCProvider<VNavmesh>()?.Stop())
                .Then(_ => lifestream.AethernetTeleportByPlaceNameId((uint)aethernet))
                .WaitToCycleCondition(ConditionFlag.BetweenAreas);
-        //.ConditionalThen(_ => module.config.ShouldMount, ChainHelper.MountChain());
     }
 }
