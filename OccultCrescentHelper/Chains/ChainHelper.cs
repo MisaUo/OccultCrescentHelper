@@ -29,8 +29,11 @@ public class ChainHelper
     private static ChainHelper instance {
         get {
             if (_instance == null)
+            {
                 throw new InvalidOperationException(
                     "ChainHelper has not been initialized. Call Initialize(plugin) first.");
+            }
+
             return _instance;
         }
     }

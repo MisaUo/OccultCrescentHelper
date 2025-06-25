@@ -164,6 +164,6 @@ public class Teleporter
 
     public bool IsReady()
     {
-        return module.TryGetIPCProvider<Lifestream>(out var _);
+        return module.TryGetIPCProvider<Lifestream>(out _);
     }
 }

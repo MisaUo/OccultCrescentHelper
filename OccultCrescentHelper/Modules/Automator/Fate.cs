@@ -53,8 +53,10 @@ public class Fate : Activity
                     {
                         // Dismount
                         if (Svc.Condition[ConditionFlag.Mounted])
+                        {
                             ActionManager.Instance()->UseAction(ActionType.Mount,
                                                                 module.plugin.Config.MountConfig.Mount);
+                        }
 
                         vnav.Stop();
 

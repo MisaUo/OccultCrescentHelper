@@ -74,7 +74,6 @@ public class ReturnChain : RetryChainFactory
             chain.Then(ChainHelper.PathfindToAndWait(destination, AethernetData.DISTANCE));
         }
 
-
         return chain.Then(_ => complete = true);
     }
 
@@ -91,8 +90,10 @@ public class ReturnChain : RetryChainFactory
                             .Wait(500)
                             .Then(_ => {
                                 if (Svc.Condition[ConditionFlag.Mounted])
+                                {
                                     ActionManager.Instance()->UseAction(
                                         ActionType.Mount, buffs.plugin.Config.MountConfig.Mount);
+                                }
                             })
                             .BreakIf(() => closestKnowledgeCrystal == null)
                             .Then(_ => vnav.MoveToPath([position], false))

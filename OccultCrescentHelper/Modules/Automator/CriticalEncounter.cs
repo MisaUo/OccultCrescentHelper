@@ -94,16 +94,20 @@ public class CriticalEncounter : Activity
             return Chain.Create("Illegal:WaitingToStartCriticalEncounter")
                         .Then(new TaskManagerTask(() => {
                                                       if (!IsValid())
+                                                      {
                                                           throw new Exception(
                                                               "The critical encounter appears to have started without you.");
+                                                      }
 
                                                       var critical = module.GetModule<CriticalEncountersModule>();
                                                       var encounter = critical.criticalEncounters[data.id];
 
                                                       if (encounter.State == DynamicEventState.Battle &&
                                                           states.GetState() != State.InCriticalEncounter)
+                                                      {
                                                           throw new Exception(
                                                               "The critical encounter appears to have started without you.");
+                                                      }
 
                                                       if (!vnav.IsRunning() && states.GetState() == State.InCombat)
                                                       {

@@ -38,8 +38,10 @@ public class Panel
                 }
 
                 if (module.TryGetModule<TeleporterModule>(out var teleporter) && teleporter!.IsReady())
+                {
                     teleporter.teleporter.Button(data.aethernet, data.start ?? fate.Position, data.Name,
                                                  $"fate_{fate.FateId}", data);
+                }
 
                 OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.Config.EventDropConfig));
 

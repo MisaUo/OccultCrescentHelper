@@ -154,9 +154,11 @@ public abstract class Activity
                         .Then(new TaskManagerTask(() => {
                             if (module.config.ShouldForceTarget &&
                                 EzThrottler.Throttle("Participating.ForceTarget", 100))
+                            {
                                 Svc.Targets.Target ??= module.config.ShouldForceTargetCentralEnemy
                                                            ? GetCentralMostEnemy()
                                                            : GetClosestEnemy();
+                            }
 
                             return states.GetState() == State.Idle;
                         }, new TaskManagerConfiguration { TimeLimitMS = int.MaxValue }))
