@@ -24,14 +24,15 @@ public class BuffChain : ChainFactory
         this.action = action;
     }
 
-    protected unsafe override Chain Create(Chain chain)
+    protected override unsafe Chain Create(Chain chain)
     {
         chain
             .Then(_ => PublicContentOccultCrescent.ChangeSupportJob((byte)job.id))
             .WaitUntilStatus((uint)job.status)
             .WaitGcd()
             .UseAction(ActionType.GeneralAction, action)
-            .Then(new TaskManagerTask(() => Svc.ClientState.LocalPlayer?.StatusList.Any(s => s.StatusId == (uint)status && s.RemainingTime >= 1780) == true, new() { TimeLimitMS = 3000 }))
+            .Then(new TaskManagerTask(() => Svc.ClientState.LocalPlayer?.StatusList.Any(s => s.StatusId == (uint)status && s.RemainingTime >= 1780) == true,
+                                      new TaskManagerConfiguration { TimeLimitMS = 3000 }))
             .WaitGcd();
 
         return chain;

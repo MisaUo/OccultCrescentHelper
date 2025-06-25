@@ -11,9 +11,13 @@ namespace OccultCrescentHelper.Enums;
 public enum Aethernet : uint
 {
     BaseCamp = 4944,
+
     TheWanderersHaven = 4936,
+
     CrystallizedCaverns = 4929,
+
     Eldergrowth = 4930,
+
     Stonemarsh = 4942,
 }
 
@@ -22,14 +26,16 @@ public class AethernetData
     public static readonly float DISTANCE = 4f;
 
     public Aethernet aethernet;
+
     public uint dataId;
+
     public Vector3 position;
 
     public static List<AethernetData> All()
     {
         return ((Aethernet[])System.Enum.GetValues(typeof(Aethernet)))
-            .Select(a => a.GetData())
-            .ToList();
+               .Select(a => a.GetData())
+               .ToList();
     }
 
     public static AethernetData GetClosestTo(Vector3 to)

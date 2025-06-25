@@ -8,7 +8,9 @@ namespace OccultCrescentHelper.Modules.Mount;
 [Title("modules.mount.title")]
 public class MountConfig : ModuleConfig
 {
-    public override string ProviderNamespace => "OccultCrescentHelper.Modules.Mount";
+    public override string ProviderNamespace {
+        get => "OccultCrescentHelper.Modules.Mount";
+    }
 
     [ExcelSheet(typeof(ExcelMount), nameof(MountProvider))]
     [IllegalModeCompatible]

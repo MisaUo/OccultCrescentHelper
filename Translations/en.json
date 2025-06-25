@@ -165,7 +165,7 @@
                 "label": "Close main UI on exit",
                 "tooltip": "Closes the main UI when you leave an Occult Crescent zone."
             },
-            "main_in_combat" : {
+            "main_in_combat": {
                 "label": "Close main UI in combat",
                 "tooltip": "Close the main UI when you enter combat."
             },
@@ -362,7 +362,7 @@
             },
             "panel": {
                 "title": "Illegal Mode",
-                "activity":{
+                "activity": {
                     "label": "Activity",
                     "none": "None"
                 },

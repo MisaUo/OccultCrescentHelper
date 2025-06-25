@@ -16,7 +16,7 @@ public class TeleporterModule : Module<Plugin, Config>
     public TeleporterModule(Plugin plugin, Config config)
         : base(plugin, config)
     {
-        teleporter = new(this);
+        teleporter = new Teleporter(this);
     }
 
     public override void Initialize()
@@ -37,5 +37,8 @@ public class TeleporterModule : Module<Plugin, Config>
         }
     }
 
-    public bool IsReady() => teleporter.IsReady();
+    public bool IsReady()
+    {
+        return teleporter.IsReady();
+    }
 }

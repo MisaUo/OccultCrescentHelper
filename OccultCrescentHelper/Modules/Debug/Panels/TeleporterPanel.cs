@@ -8,7 +8,10 @@ namespace OccultCrescentHelper.Modules.Debug.Panels;
 
 public class TeleporterPanel : Panel
 {
-    public override string GetName() => "Teleporter";
+    public override string GetName()
+    {
+        return "Teleporter";
+    }
 
     public override void Draw(DebugModule module)
     {

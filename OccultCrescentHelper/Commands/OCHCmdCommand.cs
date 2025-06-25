@@ -13,9 +13,12 @@ namespace OccultCrescentHelper.Commands;
 [OcelotCommand]
 public class OCHCmdCommand : OcelotCommand
 {
-    public override string command => "/bocchicmd";
+    public override string command {
+        get => "/bocchicmd";
+    }
 
-    public override string description => @"
+    public override string description {
+        get => @"
 Utility command.
  - Flag commands clear active flag before trying to place a new one
    - /bocchicmd flag-active-ce (Place a flag marker on the current Critical Engagement)
@@ -23,10 +26,15 @@ Utility command.
    - /bocchicmd flag-active-non-pot-fate (Place a flag marker on a current fate that isn't a pot fate)
 --------------------------------
 ".Trim();
+    }
 
-    public override IReadOnlyList<string> aliases => ["/ochcmd"];
+    public override IReadOnlyList<string> aliases {
+        get => ["/ochcmd"];
+    }
 
-    public override IReadOnlyList<string> validArguments => ["flag-active-ce", "flag-active-fate", "flag-active-non-pot-fate"];
+    public override IReadOnlyList<string> validArguments {
+        get => ["flag-active-ce", "flag-active-fate", "flag-active-non-pot-fate"];
+    }
 
     private readonly Plugin plugin;
 
@@ -35,17 +43,17 @@ Utility command.
         this.plugin = plugin;
     }
 
-    public unsafe override void Command(string command, string arguments)
+    public override unsafe void Command(string command, string arguments)
     {
         Svc.Framework.RunOnTick(() => {
-            AgentMap* map = AgentMap.Instance();
+            var map = AgentMap.Instance();
             map->IsFlagMarkerSet = false;
 
             switch (arguments)
             {
                 case "flag-active-ce": FlagActiveCe(map); break;
-                case "flag-active-fate": FlagActiveFate(map, ignorePots: false); break;
-                case "flag-active-non-pot-fate": FlagActiveFate(map, ignorePots: true); break;
+                case "flag-active-fate": FlagActiveFate(map, false); break;
+                case "flag-active-non-pot-fate": FlagActiveFate(map, true); break;
             }
         });
     }
@@ -96,6 +104,5 @@ Utility command.
             map->SetFlagMapMarker(Svc.ClientState.TerritoryType, Svc.ClientState.MapId, data.start ?? fate.Position);
             return;
         }
-
     }
 }

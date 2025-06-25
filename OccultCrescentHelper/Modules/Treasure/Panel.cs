@@ -19,7 +19,7 @@ public class Panel
 
             if (ImGui.BeginTable("Treasure", 2, ImGuiTableFlags.SizingFixedFit))
             {
-                int index = 0;
+                var index = 0;
                 foreach (var treasure in module.treasures)
                 {
                     if (!treasure.IsValid())

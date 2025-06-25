@@ -8,7 +8,10 @@ namespace OccultCrescentHelper.Modules.Debug.Panels;
 
 public class StatusPanel : Panel
 {
-    public override string GetName() => "Statuses";
+    public override string GetName()
+    {
+        return "Statuses";
+    }
 
     public override void Draw(DebugModule module)
     {

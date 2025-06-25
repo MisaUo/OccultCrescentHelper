@@ -1,4 +1,5 @@
-﻿using Dalamud.Interface;
+﻿using System.Numerics;
+using Dalamud.Interface;
 using ImGuiNET;
 using OccultCrescentHelper.Data;
 using OccultCrescentHelper.Modules.Automator;
@@ -16,7 +17,7 @@ public class MainWindow : OcelotMainWindow
     {
         base.PostInitialize();
 
-        TitleBarButtons.Add(new() {
+        TitleBarButtons.Add(new TitleBarButton {
             Click = (m) => {
                 if (m != ImGuiMouseButton.Left)
                 {
@@ -26,11 +27,11 @@ public class MainWindow : OcelotMainWindow
                 plugin.modules.GetModule<AutomatorModule>().DisableIllegalMode();
             },
             Icon = FontAwesomeIcon.Stop,
-            IconOffset = new(2, 2),
+            IconOffset = new Vector2(2, 2),
             ShowTooltip = () => ImGui.SetTooltip("Emergency Stop"),
         });
 
-        TitleBarButtons.Add(new() {
+        TitleBarButtons.Add(new TitleBarButton {
             Click = (m) => {
                 if (m != ImGuiMouseButton.Left)
                 {
@@ -40,7 +41,7 @@ public class MainWindow : OcelotMainWindow
                 AutomatorModule.ToggleIllegalMode(plugin);
             },
             Icon = FontAwesomeIcon.Skull,
-            IconOffset = new(2, 2),
+            IconOffset = new Vector2(2, 2),
             ShowTooltip = () => ImGui.SetTooltip("Toggle Illegal Mode"),
         });
     }

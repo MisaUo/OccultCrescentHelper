@@ -26,15 +26,15 @@ public class EventProgress
         var first = samples.First();
         var last = samples.Last();
 
-        float deltaProgress = last.Progress - first.Progress;
-        double deltaSeconds = (last.Timestamp - first.Timestamp).TotalSeconds;
+        var deltaProgress = last.Progress - first.Progress;
+        var deltaSeconds = (last.Timestamp - first.Timestamp).TotalSeconds;
 
         if (deltaProgress <= 0 || deltaSeconds <= 0)
             return null;
 
-        float remainingProgress = 100f - last.Progress;
-        double ratePerSecond = deltaProgress / deltaSeconds;
-        double estimatedSecondsRemaining = remainingProgress / ratePerSecond;
+        var remainingProgress = 100f - last.Progress;
+        var ratePerSecond = deltaProgress / deltaSeconds;
+        var estimatedSecondsRemaining = remainingProgress / ratePerSecond;
 
         return TimeSpan.FromSeconds(estimatedSecondsRemaining);
     }

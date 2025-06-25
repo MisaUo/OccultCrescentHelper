@@ -13,9 +13,12 @@ namespace OccultCrescentHelper.Modules.Debug.Panels;
 
 public class CriticalEncountersPanel : Panel
 {
-    public override string GetName() => "Critical Encounters";
+    public override string GetName()
+    {
+        return "Critical Encounters";
+    }
 
-    public unsafe override void Draw(DebugModule module)
+    public override unsafe void Draw(DebugModule module)
     {
         OcelotUI.Title("Critical Encounters:");
         OcelotUI.Indent(() => {
@@ -33,9 +36,9 @@ public class CriticalEncountersPanel : Panel
 
                 if (ev.State == DynamicEventState.Register)
                 {
-                    DateTime start = DateTimeOffset.FromUnixTimeSeconds(ev.StartTimestamp).DateTime;
-                    TimeSpan timeUntilStart = start - DateTime.UtcNow;
-                    string formattedTime = $"{timeUntilStart.Minutes:D2}:{timeUntilStart.Seconds:D2}";
+                    var start = DateTimeOffset.FromUnixTimeSeconds(ev.StartTimestamp).DateTime;
+                    var timeUntilStart = start - DateTime.UtcNow;
+                    var formattedTime = $"{timeUntilStart.Minutes:D2}:{timeUntilStart.Seconds:D2}";
 
                     ImGui.SameLine();
                     ImGui.TextUnformatted($"(Preparing: {formattedTime})");
@@ -55,7 +58,7 @@ public class CriticalEncountersPanel : Panel
 
                 if (module.TryGetModule<TeleporterModule>(out var teleporter) && teleporter!.IsReady())
                 {
-                    Vector3 start = ev.MapMarker.Position;
+                    var start = ev.MapMarker.Position;
 
                     teleporter.teleporter.Button(data.aethernet, start, data.Name, $"ce_{data.id}", data);
                 }

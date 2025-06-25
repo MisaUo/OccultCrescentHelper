@@ -39,7 +39,7 @@ public class ReturnChain : RetryChainFactory
         this.buffs = buffs;
     }
 
-    protected unsafe override Chain Create(Chain chain)
+    protected override unsafe Chain Create(Chain chain)
     {
         chain.BreakIf(() => Svc.ClientState.LocalPlayer?.IsDead == true);
 
@@ -82,36 +82,42 @@ public class ReturnChain : RetryChainFactory
         if (buffs.ShouldRefreshBuffs() && vnav != null)
         {
             chain.Then(() => {
-                IGameObject? closestKnowledgeCrystal = ZoneHelper.GetNearbyKnowledgeCrystal(60f).FirstOrDefault();
-                Vector3 position = closestKnowledgeCrystal?.Position ?? Vector3.Zero;
+                var closestKnowledgeCrystal = ZoneHelper.GetNearbyKnowledgeCrystal(60f).FirstOrDefault();
+                var position = closestKnowledgeCrystal?.Position ?? Vector3.Zero;
 
                 return Chain.Create("Go to Crystal and Buff")
-                    .BreakIf(() => !buffs.buffs.ShouldRefresh(buffs))
-                    .Wait(500)
-                    .Then(_ => {
-                        if (Svc.Condition[ConditionFlag.Mounted])
-                        {
-                            ActionManager.Instance()->UseAction(ActionType.Mount, buffs.plugin.config.MountConfig.Mount);
-                        }
-                    })
-                    .BreakIf(() => closestKnowledgeCrystal == null)
-                    .Then(_ => vnav.MoveToPath([position], false))
-                    .WaitUntilNear(vnav, position, AethernetData.DISTANCE)
-                    .Then(_ => vnav.Stop())
-                    .Then(new AllBuffsChain(buffs))
-                    .Wait(2500);
+                            .BreakIf(() => !buffs.buffs.ShouldRefresh(buffs))
+                            .Wait(500)
+                            .Then(_ => {
+                                if (Svc.Condition[ConditionFlag.Mounted])
+                                {
+                                    ActionManager.Instance()->UseAction(ActionType.Mount, buffs.plugin.config.MountConfig.Mount);
+                                }
+                            })
+                            .BreakIf(() => closestKnowledgeCrystal == null)
+                            .Then(_ => vnav.MoveToPath([position], false))
+                            .WaitUntilNear(vnav, position, AethernetData.DISTANCE)
+                            .Then(_ => vnav.Stop())
+                            .Then(new AllBuffsChain(buffs))
+                            .Wait(2500);
             });
         }
 
         return chain;
     }
 
-    public override bool IsComplete() => complete;
+    public override bool IsComplete()
+    {
+        return complete;
+    }
 
-    public override int GetMaxAttempts() => 5;
+    public override int GetMaxAttempts()
+    {
+        return 5;
+    }
 
     public override TaskManagerConfiguration? Config()
     {
-        return new() { TimeLimitMS = 60000 };
+        return new TaskManagerConfiguration { TimeLimitMS = 60000 };
     }
 }

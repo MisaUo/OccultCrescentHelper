@@ -16,7 +16,7 @@ public unsafe class AllBuffsChain : ChainFactory
         startingJobId = PublicContentOccultCrescent.GetState()->CurrentSupportJob;
     }
 
-    protected unsafe override Chain Create(Chain chain)
+    protected override unsafe Chain Create(Chain chain)
     {
         chain
             .Then(new KnightBuffChain(module))

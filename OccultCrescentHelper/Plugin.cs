@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Plugin;
 using ECommons;
@@ -19,9 +20,13 @@ public sealed class Plugin : OcelotPlugin
 
     public Config config { get; init; }
 
-    public override IOcelotConfig _config => config;
+    public override IOcelotConfig _config {
+        get => config;
+    }
 
-    public static ChainQueue Chain => ChainManager.Get("OCH##main");
+    public static ChainQueue Chain {
+        get => ChainManager.Get("OCH##main");
+    }
 
     public Plugin(IDalamudPluginInterface plugin)
         : base(plugin, Module.DalamudReflector)
@@ -44,7 +49,6 @@ public sealed class Plugin : OcelotPlugin
         ChainHelper.Initialize(this);
 
         DotNetEnv.Env.Load(Svc.PluginInterface.AssemblyLocation.Directory + "/.env");
-
     }
 
     private void InitializeClientStructs()
@@ -53,7 +57,7 @@ public sealed class Plugin : OcelotPlugin
         InteropGenerator.Runtime.Resolver.GetInstance.Setup(
             Svc.SigScanner.SearchBase,
             gameVersion,
-            new(Svc.PluginInterface.ConfigDirectory.FullName + "/cs.json")
+            new FileInfo(Svc.PluginInterface.ConfigDirectory.FullName + "/cs.json")
         );
         FFXIVClientStructs.Interop.Generated.Addresses.Register();
         InteropGenerator.Runtime.Resolver.GetInstance.Resolve();
@@ -61,16 +65,18 @@ public sealed class Plugin : OcelotPlugin
 
 
     public override bool ShouldTick()
-        => ZoneData.IsInOccultCrescent()
-        && !(
-            Svc.Condition[ConditionFlag.BetweenAreas] ||
-            Svc.Condition[ConditionFlag.BetweenAreas51] ||
-            Svc.Condition[ConditionFlag.OccupiedInCutSceneEvent] ||
-            Svc.Condition[ConditionFlag.OccupiedInEvent] ||
-            Svc.Condition[ConditionFlag.WatchingCutscene] ||
-            Svc.Condition[ConditionFlag.WatchingCutscene78] ||
-            Svc.ClientState.LocalPlayer?.IsTargetable != true
-        );
+    {
+        return ZoneData.IsInOccultCrescent()
+               && !(
+                       Svc.Condition[ConditionFlag.BetweenAreas] ||
+                       Svc.Condition[ConditionFlag.BetweenAreas51] ||
+                       Svc.Condition[ConditionFlag.OccupiedInCutSceneEvent] ||
+                       Svc.Condition[ConditionFlag.OccupiedInEvent] ||
+                       Svc.Condition[ConditionFlag.WatchingCutscene] ||
+                       Svc.Condition[ConditionFlag.WatchingCutscene78] ||
+                       Svc.ClientState.LocalPlayer?.IsTargetable != true
+                   );
+    }
 
     public override void Dispose()
     {

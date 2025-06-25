@@ -24,11 +24,11 @@ public class Fate : Activity
         this.fate = fate;
     }
 
-    protected unsafe override TaskManagerTask GetPathfindingWatcher(StateManagerModule states, VNavmesh vnav)
+    protected override unsafe TaskManagerTask GetPathfindingWatcher(StateManagerModule states, VNavmesh vnav)
     {
-        Vector3 lastTargetPos = Vector3.Zero;
+        var lastTargetPos = Vector3.Zero;
 
-        return new(() => {
+        return new TaskManagerTask(() => {
             if (EzThrottler.Throttle("FatePathfindingWatcher.EnemyScan", 100))
             {
                 if (Svc.Targets.Target == null)
@@ -39,7 +39,6 @@ public class Fate : Activity
                         Svc.Targets.Target = enemy;
                     }
                 }
-
             }
 
             var target = Svc.Targets.Target;
@@ -74,7 +73,7 @@ public class Fate : Activity
             }
 
             return false;
-        }, new() { TimeLimitMS = 180000, ShowError = false });
+        }, new TaskManagerConfiguration { TimeLimitMS = 180000, ShowError = false });
     }
 
     protected override float GetRadius()
@@ -82,7 +81,13 @@ public class Fate : Activity
         return module.GetModule<FatesModule>().fates[data.id].Radius;
     }
 
-    public override bool IsValid() => Svc.Fates.Contains(fate);
+    public override bool IsValid()
+    {
+        return Svc.Fates.Contains(fate);
+    }
 
-    public override Vector3 GetPosition() => data.start ?? fate.Position;
+    public override Vector3 GetPosition()
+    {
+        return data.start ?? fate.Position;
+    }
 }

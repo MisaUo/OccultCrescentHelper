@@ -14,8 +14,15 @@ public class BuffManager
 {
     private bool applyBuffsOnNextTick = false;
 
-    public void QueueBuffs() => applyBuffsOnNextTick = true;
-    public bool IsQueued() => applyBuffsOnNextTick;
+    public void QueueBuffs()
+    {
+        applyBuffsOnNextTick = true;
+    }
+
+    public bool IsQueued()
+    {
+        return applyBuffsOnNextTick;
+    }
 
     public int lowestTimer = int.MaxValue;
 
@@ -92,6 +99,6 @@ public class BuffManager
             return false;
         }
 
-        return lowestTimer <= (module.config.ReapplyThreshold * 60);
+        return lowestTimer <= module.config.ReapplyThreshold * 60;
     }
 }

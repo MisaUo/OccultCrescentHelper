@@ -1,4 +1,3 @@
-
 using System;
 using Dalamud.Plugin.Services;
 using Ocelot.Modules;
@@ -59,11 +58,23 @@ public class StateManagerModule : Module<Plugin, Config>
     public StateManagerModule(Plugin plugin, Config config)
         : base(plugin, config) { }
 
-    public override void Tick(IFramework framework) => state.Tick(framework);
+    public override void Tick(IFramework framework)
+    {
+        state.Tick(framework);
+    }
 
-    public override bool DrawMainUi() => panel.Draw(this);
+    public override bool DrawMainUi()
+    {
+        return panel.Draw(this);
+    }
 
-    public State GetState() => state.GetState();
+    public State GetState()
+    {
+        return state.GetState();
+    }
 
-    public string GetStateText() => state.GetState().ToString();
+    public string GetStateText()
+    {
+        return state.GetState().ToString();
+    }
 }

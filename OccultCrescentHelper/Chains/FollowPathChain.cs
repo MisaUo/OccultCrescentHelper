@@ -24,8 +24,8 @@ public class FollowPathChain : ChainFactory
     protected override Chain Create(Chain chain)
     {
         return chain
-            .PathfindAndMoveTo(vnav, start)
-            .WaitUntilNear(vnav, start)
-            .Then(_ => vnav.FollowPath(path, false));
+               .PathfindAndMoveTo(vnav, start)
+               .WaitUntilNear(vnav, start)
+               .Then(_ => vnav.FollowPath(path, false));
     }
 }

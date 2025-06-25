@@ -51,5 +51,8 @@ public class Config : IOcelotConfig
 
     public MountConfig MountConfig { get; set; } = new();
 
-    public void Save() => Svc.PluginInterface.SavePluginConfig(this);
+    public void Save()
+    {
+        Svc.PluginInterface.SavePluginConfig(this);
+    }
 }

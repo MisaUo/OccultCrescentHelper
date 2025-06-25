@@ -6,7 +6,13 @@ namespace OccultCrescentHelper.Modules.Mount;
 
 public class MountProvider : ExcelSheetItemProvider<ExcelMount>
 {
-    public unsafe override bool Filter(ExcelMount item) => PlayerState.Instance()->IsMountUnlocked(item.RowId);
+    public override unsafe bool Filter(ExcelMount item)
+    {
+        return PlayerState.Instance()->IsMountUnlocked(item.RowId);
+    }
 
-    public override string GetLabel(ExcelMount item) => System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(item.Singular.ToString());
+    public override string GetLabel(ExcelMount item)
+    {
+        return System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(item.Singular.ToString());
+    }
 }

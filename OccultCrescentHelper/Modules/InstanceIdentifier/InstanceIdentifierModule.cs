@@ -1,4 +1,3 @@
-
 using System;
 using Dalamud.Memory;
 using OccultCrescentHelper.Memory;
@@ -13,7 +12,9 @@ public class InstanceIdentifierModule : Module<Plugin, Config>
         get => _config.InstanceIdentifierConfig;
     }
 
-    public override bool enabled => config.Show;
+    public override bool enabled {
+        get => config.Show;
+    }
 
     private Panel panel = new();
 
@@ -48,5 +49,8 @@ public class InstanceIdentifierModule : Module<Plugin, Config>
         return true;
     }
 
-    public override void Dispose() => hook.Disable();
+    public override void Dispose()
+    {
+        hook.Disable();
+    }
 }

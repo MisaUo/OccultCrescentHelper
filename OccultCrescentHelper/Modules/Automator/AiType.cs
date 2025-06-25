@@ -5,6 +5,7 @@ namespace OccultCrescentHelper.Modules.Automator;
 public enum AiType
 {
     VBM, // Boss Mod
+
     BMR, // Bossmod Reborn
 }
 
@@ -15,7 +16,7 @@ public static class AiProviderExtensions
         return provider switch {
             AiType.VBM => "Boss Mod by veyn, xan_0",
             AiType.BMR => "BossMod Reborn by The Combat Reborn team",
-            _ => provider.ToString()
+            _ => provider.ToString(),
         };
     }
 

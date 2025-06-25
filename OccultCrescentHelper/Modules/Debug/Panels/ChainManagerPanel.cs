@@ -6,7 +6,10 @@ namespace OccultCrescentHelper.Modules.Debug.Panels;
 
 public class ChainManagerPanel : Panel
 {
-    public override string GetName() => "Chain Manager";
+    public override string GetName()
+    {
+        return "Chain Manager";
+    }
 
     public override void Draw(DebugModule module)
     {

@@ -19,23 +19,23 @@ public static unsafe class CameraHelper
         screenStart = default;
         screenEnd = default;
 
-        Vector4 start4 = new Vector4(startWorld, 1f);
-        Vector4 end4 = new Vector4(endWorld, 1f);
+        var start4 = new Vector4(startWorld, 1f);
+        var end4 = new Vector4(endWorld, 1f);
 
-        Vector4 startView = Vector4.Transform(start4, viewMatrix);
-        Vector4 endView = Vector4.Transform(end4, viewMatrix);
+        var startView = Vector4.Transform(start4, viewMatrix);
+        var endView = Vector4.Transform(end4, viewMatrix);
 
         if (!ClipLineToNearPlane(ref startView, ref endView, nearPlane))
             return false;
 
-        Vector4 startClip = Vector4.Transform(startView, projectionMatrix);
-        Vector4 endClip = Vector4.Transform(endView, projectionMatrix);
+        var startClip = Vector4.Transform(startView, projectionMatrix);
+        var endClip = Vector4.Transform(endView, projectionMatrix);
 
         if (startClip.W == 0 || endClip.W == 0)
             return false;
 
-        Vector3 startNDC = new Vector3(startClip.X, startClip.Y, startClip.Z) / startClip.W;
-        Vector3 endNDC = new Vector3(endClip.X, endClip.Y, endClip.Z) / endClip.W;
+        var startNDC = new Vector3(startClip.X, startClip.Y, startClip.Z) / startClip.W;
+        var endNDC = new Vector3(endClip.X, endClip.Y, endClip.Z) / endClip.W;
 
         startNDC.X = Math.Clamp(startNDC.X, -1f, 1f);
         startNDC.Y = Math.Clamp(startNDC.Y, -1f, 1f);
@@ -56,22 +56,22 @@ public static unsafe class CameraHelper
 
     private static bool ClipLineToNearPlane(ref Vector4 startView, ref Vector4 endView, float nearPlane)
     {
-        float zNear = -nearPlane;
+        var zNear = -nearPlane;
 
-        bool startBehind = startView.Z > zNear;
-        bool endBehind = endView.Z > zNear;
+        var startBehind = startView.Z > zNear;
+        var endBehind = endView.Z > zNear;
 
         if (startBehind && endBehind)
             return false;
 
         if (startBehind)
         {
-            float t = (zNear - startView.Z) / (endView.Z - startView.Z);
+            var t = (zNear - startView.Z) / (endView.Z - startView.Z);
             startView = Vector4.Lerp(startView, endView, t);
         }
         else if (endBehind)
         {
-            float t = (zNear - startView.Z) / (endView.Z - startView.Z);
+            var t = (zNear - startView.Z) / (endView.Z - startView.Z);
             endView = Vector4.Lerp(startView, endView, t);
         }
 
@@ -80,22 +80,22 @@ public static unsafe class CameraHelper
 
     public static Vector3 WorldToScreen(Vector3 pointWorld, Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix, uint windowWidth, uint windowHeight)
     {
-        Vector4 pointWorld4 = new Vector4(pointWorld, 1f);
-        Vector4 pointView = Vector4.Transform(pointWorld4, viewMatrix);
-        Vector4 pointClip = Vector4.Transform(pointView, projectionMatrix);
+        var pointWorld4 = new Vector4(pointWorld, 1f);
+        var pointView = Vector4.Transform(pointWorld4, viewMatrix);
+        var pointClip = Vector4.Transform(pointView, projectionMatrix);
 
         if (pointClip.W <= 0)
             return new Vector3(-1, -1, -1); // behind camera sentinel
 
-        Vector3 pointNDC = new Vector3(pointClip.X, pointClip.Y, pointClip.Z) / pointClip.W;
+        var pointNDC = new Vector3(pointClip.X, pointClip.Y, pointClip.Z) / pointClip.W;
 
-        Vector3 clampedNDC = new Vector3(
+        var clampedNDC = new Vector3(
             Math.Clamp(pointNDC.X, -1, 1),
             Math.Clamp(pointNDC.Y, -1, 1),
             pointNDC.Z);
 
-        float screenX = (clampedNDC.X + 1f) * 0.5f * windowWidth;
-        float screenY = (1f - (clampedNDC.Y + 1f) * 0.5f) * windowHeight;
+        var screenX = (clampedNDC.X + 1f) * 0.5f * windowWidth;
+        var screenY = (1f - (clampedNDC.Y + 1f) * 0.5f) * windowHeight;
 
         return new Vector3(screenX, screenY, clampedNDC.Z);
     }

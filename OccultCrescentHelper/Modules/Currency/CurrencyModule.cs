@@ -1,4 +1,3 @@
-
 using Dalamud.Plugin.Services;
 using Ocelot.Modules;
 
@@ -11,7 +10,9 @@ public class CurrencyModule : Module<Plugin, Config>
         get => _config.CurrencyConfig;
     }
 
-    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
+    public override bool enabled {
+        get => config.IsPropertyEnabled(nameof(config.Enabled));
+    }
 
     public readonly CurrencyTracker tracker = new();
 
@@ -20,9 +21,15 @@ public class CurrencyModule : Module<Plugin, Config>
     public CurrencyModule(Plugin plugin, Config config)
         : base(plugin, config) { }
 
-    public override void Tick(IFramework framework) => tracker.Tick(framework);
+    public override void Tick(IFramework framework)
+    {
+        tracker.Tick(framework);
+    }
 
-    public override void OnTerritoryChanged(ushort _) => tracker.Reset();
+    public override void OnTerritoryChanged(ushort _)
+    {
+        tracker.Reset();
+    }
 
     public override bool DrawMainUi()
     {

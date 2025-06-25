@@ -13,7 +13,10 @@ namespace OccultCrescentHelper.Modules.Debug.Panels;
 
 public class EnemyPanel : Panel
 {
-    public override string GetName() => "Nearby Enemies";
+    public override string GetName()
+    {
+        return "Nearby Enemies";
+    }
 
     private List<IGameObject> enemies = [];
 
@@ -70,14 +73,14 @@ public class EnemyPanel : Panel
         {
             // DoThing();
             enemies = Svc.Objects
-                .Where(o =>
-                    o != null &&
-                    o.IsHostile() &&
-                    o.IsTargetable &&
-                    o.Name.TextValue.Length > 0
-                )
-                .OrderBy(o => Vector3.Distance(o.Position, Player.Position))
-                .ToList();
+                         .Where(o =>
+                                    o != null &&
+                                    o.IsHostile() &&
+                                    o.IsTargetable &&
+                                    o.Name.TextValue.Length > 0
+                         )
+                         .OrderBy(o => Vector3.Distance(o.Position, Player.Position))
+                         .ToList();
         }
     }
 }

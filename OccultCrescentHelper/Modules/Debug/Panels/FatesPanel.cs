@@ -16,7 +16,10 @@ public class FatesPanel : Panel
 {
     public Dictionary<uint, Vector3> FateLocations = [];
 
-    public FatesPanel() => ProcessLgbData(Svc.ClientState.TerritoryType);
+    public FatesPanel()
+    {
+        ProcessLgbData(Svc.ClientState.TerritoryType);
+    }
 
     public void ProcessLgbData(ushort id)
     {
@@ -61,7 +64,10 @@ public class FatesPanel : Panel
         }
     }
 
-    public override string GetName() => "Fates";
+    public override string GetName()
+    {
+        return "Fates";
+    }
 
     public override void Draw(DebugModule module)
     {
@@ -93,5 +99,8 @@ public class FatesPanel : Panel
         });
     }
 
-    public override void OnTerritoryChanged(ushort id, DebugModule module) => ProcessLgbData(id);
+    public override void OnTerritoryChanged(ushort id, DebugModule module)
+    {
+        ProcessLgbData(id);
+    }
 }

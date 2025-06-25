@@ -14,7 +14,9 @@ public class AutomatorModule : Module<Plugin, Config>
         get => _config.AutomatorConfig;
     }
 
-    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
+    public override bool enabled {
+        get => config.IsPropertyEnabled(nameof(config.Enabled));
+    }
 
     public readonly Automator automator = new();
 
@@ -30,7 +32,10 @@ public class AutomatorModule : Module<Plugin, Config>
     }
 
 
-    public override void Tick(IFramework framework) => automator.Tick(this, framework);
+    public override void Tick(IFramework framework)
+    {
+        automator.Tick(this, framework);
+    }
 
 
     public override bool DrawMainUi()
@@ -62,7 +67,6 @@ public class AutomatorModule : Module<Plugin, Config>
         {
             module.DisableIllegalMode();
         }
-
     }
 
     public void EnableIllegalMode()
@@ -77,6 +81,5 @@ public class AutomatorModule : Module<Plugin, Config>
         plugin.ipc.GetProvider<VNavmesh>()?.Stop();
         Plugin.Chain.Abort();
         Svc.Chat.Print("[BOCCHI] Illegal Mode Off");
-
     }
 }

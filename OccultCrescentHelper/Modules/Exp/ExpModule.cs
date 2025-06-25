@@ -1,4 +1,3 @@
-
 using System;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
@@ -13,7 +12,9 @@ public class ExpModule : Module<Plugin, Config>
         get => _config.ExpConfig;
     }
 
-    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
+    public override bool enabled {
+        get => config.IsPropertyEnabled(nameof(config.Enabled));
+    }
 
     public readonly ExpTracker tracker = new();
 
@@ -30,8 +31,12 @@ public class ExpModule : Module<Plugin, Config>
     }
 
     public override void OnChatMessage(XivChatType type, int timestamp, SeString sender, SeString message, bool isHandled)
-        => tracker.OnChatMessage(type, timestamp, sender, message, isHandled);
+    {
+        tracker.OnChatMessage(type, timestamp, sender, message, isHandled);
+    }
 
-    public override void OnTerritoryChanged(ushort id) => tracker.OnTerritoryChange(id);
-
+    public override void OnTerritoryChanged(ushort id)
+    {
+        tracker.OnTerritoryChange(id);
+    }
 }

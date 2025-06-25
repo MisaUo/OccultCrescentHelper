@@ -1,3 +1,4 @@
+using System.Numerics;
 using Dalamud.Interface;
 using ImGuiNET;
 using OccultCrescentHelper.Data;
@@ -11,7 +12,7 @@ public class AutomatorWindow : OcelotWindow
     public AutomatorWindow(Plugin plugin, Config config)
         : base(plugin, config, "OCH Illegal Lens")
     {
-        TitleBarButtons.Add(new() {
+        TitleBarButtons.Add(new TitleBarButton {
             Click = (m) => {
                 if (m != ImGuiMouseButton.Left)
                 {
@@ -21,7 +22,7 @@ public class AutomatorWindow : OcelotWindow
                 AutomatorModule.ToggleIllegalMode(plugin);
             },
             Icon = FontAwesomeIcon.Skull,
-            IconOffset = new(2, 2),
+            IconOffset = new Vector2(2, 2),
             ShowTooltip = () => ImGui.SetTooltip("Toggle Illegal Mode"),
         });
     }

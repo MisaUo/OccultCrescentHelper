@@ -13,26 +13,30 @@ public class StateManager
     private State state = State.Idle;
 
     public event Action? OnEnterIdle;
+
     public event Action? OnExitIdle;
 
     public event Action? OnEnterInCombat;
+
     public event Action? OnExitInCombat;
 
     public event Action? OnEnterInFate;
+
     public event Action? OnExitInFate;
 
     public event Action? OnEnterInCriticalEncounter;
+
     public event Action? OnExitInCriticalEncounter;
 
     private Dictionary<State, Action> handlers;
 
     public StateManager()
     {
-        handlers = new() {
-            {State.Idle, HandleIdle },
-            {State.InCombat, HandleInCombat },
-            {State.InFate, HandleInFate },
-            {State.InCriticalEncounter, HandleInCriticalEncounter },
+        handlers = new Dictionary<State, Action> {
+            { State.Idle, HandleIdle },
+            { State.InCombat, HandleInCombat },
+            { State.InFate, HandleInFate },
+            { State.InCriticalEncounter, HandleInCriticalEncounter },
         };
     }
 
@@ -143,12 +147,24 @@ public class StateManager
         }
     }
 
-    private bool IsInCombat() => Svc.Condition[ConditionFlag.InCombat];
+    private bool IsInCombat()
+    {
+        return Svc.Condition[ConditionFlag.InCombat];
+    }
 
-    private unsafe bool IsInFate() => FateManager.Instance()->CurrentFate is not null;
+    private unsafe bool IsInFate()
+    {
+        return FateManager.Instance()->CurrentFate is not null;
+    }
 
     // 1778 = Hoofing It (Unable to mount)
-    private bool IsInCriticalEncounter() => Svc.ClientState.LocalPlayer?.StatusList.Any(s => s.StatusId == 1778) ?? false;
+    private bool IsInCriticalEncounter()
+    {
+        return Svc.ClientState.LocalPlayer?.StatusList.Any(s => s.StatusId == 1778) ?? false;
+    }
 
-    public State GetState() => state;
+    public State GetState()
+    {
+        return state;
+    }
 }

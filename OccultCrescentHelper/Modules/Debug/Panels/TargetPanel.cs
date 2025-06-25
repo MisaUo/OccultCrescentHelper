@@ -13,12 +13,15 @@ namespace OccultCrescentHelper.Modules.Debug.Panels;
 
 public class TargetPanel : Panel
 {
-    public override string GetName() => "Target";
+    public override string GetName()
+    {
+        return "Target";
+    }
 
-    public unsafe override void Draw(DebugModule module)
+    public override unsafe void Draw(DebugModule module)
     {
         OcelotUI.Indent(() => {
-            IGameObject? target = Svc.Targets.Target;
+            var target = Svc.Targets.Target;
             if (target == null)
             {
                 ImGui.TextUnformatted("No target selected.");
@@ -81,8 +84,6 @@ public class TargetPanel : Panel
             Draw("IsDead()", obj->IsDead());
             Draw("IsNotMounted()", obj->IsNotMounted());
             Draw("IsCharacter()", obj->IsCharacter());
-
-
         });
     }
 

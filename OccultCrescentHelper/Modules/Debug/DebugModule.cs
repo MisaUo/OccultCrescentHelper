@@ -47,7 +47,13 @@ public class DebugModule : Module<Plugin, Config>
         }
     }
 
-    public override void Tick(IFramework _) => panels.Each(p => p.Tick(this));
+    public override void Tick(IFramework _)
+    {
+        panels.Each(p => p.Tick(this));
+    }
 
-    public override void OnTerritoryChanged(ushort id) => panels.Each(p => p.OnTerritoryChanged(id, this));
+    public override void OnTerritoryChanged(ushort id)
+    {
+        panels.Each(p => p.OnTerritoryChanged(id, this));
+    }
 }

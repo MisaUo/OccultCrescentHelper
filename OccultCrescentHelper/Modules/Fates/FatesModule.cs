@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using Dalamud.Game.ClientState.Fates;
 using Dalamud.Plugin.Services;
@@ -14,20 +13,29 @@ public class FatesModule : Module<Plugin, Config>
         get => _config.FatesConfig;
     }
 
-    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
+    public override bool enabled {
+        get => config.IsPropertyEnabled(nameof(config.Enabled));
+    }
 
     public readonly FateTracker tracker = new();
 
-    public Dictionary<uint, IFate> fates => tracker.fates;
+    public Dictionary<uint, IFate> fates {
+        get => tracker.fates;
+    }
 
-    public Dictionary<uint, EventProgress> progress => tracker.progress;
+    public Dictionary<uint, EventProgress> progress {
+        get => tracker.progress;
+    }
 
     private Panel panel = new();
 
     public FatesModule(Plugin plugin, Config config)
         : base(plugin, config) { }
 
-    public override void Tick(IFramework framework) => tracker.Tick(framework);
+    public override void Tick(IFramework framework)
+    {
+        tracker.Tick(framework);
+    }
 
     public override bool DrawMainUi()
     {

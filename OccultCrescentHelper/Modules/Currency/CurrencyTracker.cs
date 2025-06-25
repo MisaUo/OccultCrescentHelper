@@ -9,6 +9,7 @@ public class CurrencyTracker
     private enum Currency
     {
         Silver = 45043,
+
         Gold = 45044,
     }
 
@@ -31,11 +32,11 @@ public class CurrencyTracker
 
     public void Tick(IFramework _)
     {
-        float currentGold = GetGold();
-        float currentSilver = GetSilver();
+        var currentGold = GetGold();
+        var currentSilver = GetSilver();
 
-        float goldDelta = currentGold - lastGold;
-        float silverDelta = currentSilver - lastSilver;
+        var goldDelta = currentGold - lastGold;
+        var silverDelta = currentSilver - lastSilver;
 
         if (goldDelta > 0)
             gainedGold += goldDelta;
@@ -47,7 +48,10 @@ public class CurrencyTracker
         lastSilver = currentSilver;
     }
 
-    public void TerritoryChanged(ushort _) => Reset();
+    public void TerritoryChanged(ushort _)
+    {
+        Reset();
+    }
 
     public void ResetSilver()
     {
@@ -87,7 +91,13 @@ public class CurrencyTracker
         return gainedSilver / elapsed;
     }
 
-    private unsafe float GetGold() => InventoryManager.Instance()->GetInventoryItemCount((uint)Currency.Gold);
+    private unsafe float GetGold()
+    {
+        return InventoryManager.Instance()->GetInventoryItemCount((uint)Currency.Gold);
+    }
 
-    private unsafe float GetSilver() => InventoryManager.Instance()->GetInventoryItemCount((uint)Currency.Silver);
+    private unsafe float GetSilver()
+    {
+        return InventoryManager.Instance()->GetInventoryItemCount((uint)Currency.Silver);
+    }
 }

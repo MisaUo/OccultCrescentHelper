@@ -36,6 +36,7 @@ public class Radar
                     {
                         Helpers.DrawLine(pos, treasure.GetPosition(), 3f, treasure.GetColor());
                     }
+
                     break;
 
                 case TreasureType.Silver:
@@ -43,6 +44,7 @@ public class Radar
                     {
                         Helpers.DrawLine(pos, treasure.GetPosition(), 3f, treasure.GetColor());
                     }
+
                     break;
             }
         }

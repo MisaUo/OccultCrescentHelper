@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using OccultCrescentHelper.Modules.StateManager;
 using Ocelot.Modules;
@@ -69,7 +68,6 @@ public class WindowManagerModule : Module<Plugin, Config>
             {
                 plugin.windows.CloseConfigUI();
             }
-
         }
     }
 
@@ -80,6 +78,7 @@ public class WindowManagerModule : Module<Plugin, Config>
             plugin.windows.CloseMainUI();
             mainClosed = true;
         }
+
         if (config.HideConfigInCombat && plugin.windows.IsConfigUIOpen())
         {
             plugin.windows.CloseConfigUI();

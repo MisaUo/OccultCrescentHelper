@@ -3,7 +3,6 @@ using Ocelot;
 
 namespace OccultCrescentHelper.Modules.Carrots;
 
-
 public class Panel
 {
     public void Draw(CarrotsModule module)

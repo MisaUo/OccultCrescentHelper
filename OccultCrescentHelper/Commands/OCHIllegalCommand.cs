@@ -14,9 +14,12 @@ namespace OccultCrescentHelper.Commands;
 [OcelotCommand]
 public class OCHIllegalCommand : OcelotCommand
 {
-    public override string command => "/bocchiillegal";
+    public override string command {
+        get => "/bocchiillegal";
+    }
 
-    public override string description => @"
+    public override string description {
+        get => @"
 Manage och automator/illegal mode.
  - /bocchiillegal (Toggles the automator lens window)
  - /bocchiillegal on (Enables illegal mode (Automation))
@@ -24,10 +27,15 @@ Manage och automator/illegal mode.
  - /bocchiillegal toggle (Toggles illegal mode (Automation))
 --------------------------------
 ".Trim();
+    }
 
-    public override IReadOnlyList<string> aliases => ["/ochillegal", "/bocchillegal"];
+    public override IReadOnlyList<string> aliases {
+        get => ["/ochillegal", "/bocchillegal"];
+    }
 
-    public override IReadOnlyList<string> validArguments => ["on", "off", "toggle"];
+    public override IReadOnlyList<string> validArguments {
+        get => ["on", "off", "toggle"];
+    }
 
     private readonly Plugin plugin;
 
@@ -113,6 +121,5 @@ Manage och automator/illegal mode.
             map->SetFlagMapMarker(Svc.ClientState.TerritoryType, Svc.ClientState.MapId, data.start ?? fate.Position);
             return;
         }
-
     }
 }

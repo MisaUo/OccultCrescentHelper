@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using System.Numerics;
 using Dalamud.Plugin.Services;
@@ -13,19 +12,23 @@ public class TreasureModule : Module<Plugin, Config>
         get => _config.TreasureConfig;
     }
 
-    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
+    public override bool enabled {
+        get => config.IsPropertyEnabled(nameof(config.Enabled));
+    }
 
-    public static Vector4 bronze = new Vector4(0.804f, 0.498f, 0.196f, 1f);
+    public static Vector4 bronze = new(0.804f, 0.498f, 0.196f, 1f);
 
-    public static Vector4 silver = new Vector4(0.753f, 0.753f, 0.753f, 1f);
+    public static Vector4 silver = new(0.753f, 0.753f, 0.753f, 1f);
 
-    public static Vector4 unknown = new Vector4(0.6f, 0.2f, 0.8f, 1f);
+    public static Vector4 unknown = new(0.6f, 0.2f, 0.8f, 1f);
 
     private readonly TreasureTracker tracker = new();
 
     private readonly TreasureHunt hunter = new();
 
-    public List<Treasure> treasures => tracker.treasures;
+    public List<Treasure> treasures {
+        get => tracker.treasures;
+    }
 
     private readonly Panel panel = new();
 
@@ -40,7 +43,10 @@ public class TreasureModule : Module<Plugin, Config>
         hunter.Tick(this);
     }
 
-    public override void Draw() => radar.Draw(this);
+    public override void Draw()
+    {
+        radar.Draw(this);
+    }
 
     public override bool DrawMainUi()
     {

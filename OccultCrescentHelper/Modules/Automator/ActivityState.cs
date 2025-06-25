@@ -3,9 +3,13 @@ namespace OccultCrescentHelper.Modules.Automator;
 public enum ActivityState
 {
     Idle,
+
     Pathfinding,
+
     WaitingToStartCriticalEncounter,
+
     Participating,
+
     Done,
 }
 
@@ -23,4 +27,3 @@ public static class ActivityStateExtensions
         };
     }
 }
-

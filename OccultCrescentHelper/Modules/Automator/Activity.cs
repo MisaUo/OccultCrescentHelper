@@ -40,7 +40,7 @@ public abstract class Activity
         this.vnav = vnav;
         this.module = module;
 
-        handlers = new() {
+        handlers = new Dictionary<ActivityState, Func<StateManagerModule, Func<Chain>?>> {
             { ActivityState.Idle, GetIdleChain },
             { ActivityState.Pathfinding, GetPathfindingChain },
             { ActivityState.Participating, GetParticipatingChain },
@@ -50,7 +50,7 @@ public abstract class Activity
         var states = module.GetModule<StateManagerModule>();
         if (states.GetState() == State.InFate || states.GetState() == State.InCriticalEncounter)
         {
-            this.state = ActivityState.Participating;
+            state = ActivityState.Participating;
         }
     }
 
@@ -69,9 +69,10 @@ public abstract class Activity
     {
         return () => {
             return Chain.Create("Illegal:Idle")
-                .ConditionalThen(_ => module.config.ShouldToggleAiProvider && !Svc.Condition[ConditionFlag.InCombat], _ => module.config.AiProvider.Off())
-                .Then(_ => vnav.Stop())
-                .Then(_ => state = ActivityState.Pathfinding);
+                        .ConditionalThen(_ => module.config.ShouldToggleAiProvider && !Svc.Condition[ConditionFlag.InCombat],
+                                         _ => module.config.AiProvider.Off())
+                        .Then(_ => vnav.Stop())
+                        .Then(_ => state = ActivityState.Pathfinding);
         };
     }
 
@@ -83,13 +84,13 @@ public abstract class Activity
             var playerShard = AethernetData.All().OrderBy((data) => Vector3.Distance(Player.Position, data.position)).First();
             var activityShard = GetAethernetData();
 
-            bool isFate = data.type == EventType.Fate;
+            var isFate = data.type == EventType.Fate;
             var navType = SmartNavigation.Decide(Player.Position, GetPosition(), activityShard);
 
             module.Debug("Selected navigation type: " + navType.ToString());
 
             var chain = Chain.Create("Illegal:Pathfinding")
-                .ConditionalWait(_ => !isFate && module.config.ShouldDelayCriticalEncounters, Random.Shared.Next(10000, 15001));
+                             .ConditionalWait(_ => !isFate && module.config.ShouldDelayCriticalEncounters, Random.Shared.Next(10000, 15001));
 
             switch (navType)
             {
@@ -111,7 +112,7 @@ public abstract class Activity
                         .Then(ChainHelper.ReturnChain())
                         .Then(ChainHelper.TeleportChain(activityShard.aethernet))
                         .Debug("Waiting for lifestream to not be 'busy'")
-                        .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new() { TimeLimitMS = 30000 }))
+                        .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new TaskManagerConfiguration { TimeLimitMS = 30000 }))
                         .Then(new PathfindingChain(vnav, GetPosition(), data, false));
                     break;
 
@@ -121,7 +122,7 @@ public abstract class Activity
                         .Then(ChainHelper.PathfindToAndWait(playerShard.position, AethernetData.DISTANCE))
                         .Then(ChainHelper.TeleportChain(activityShard.aethernet))
                         .Debug("Waiting for lifestream to not be 'busy'")
-                        .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new() { TimeLimitMS = 30000 }))
+                        .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new TaskManagerConfiguration { TimeLimitMS = 30000 }))
                         .Then(new PathfindingChain(vnav, GetPosition(), data, false));
                     break;
             }
@@ -140,17 +141,17 @@ public abstract class Activity
     {
         return () => {
             return Chain.Create("Illegal:Participating")
-                .ConditionalThen(_ => module.config.ShouldToggleAiProvider, _ => module.config.AiProvider.On())
-                .Then(_ => vnav.Stop())
-                .Then(new TaskManagerTask(() => {
-                    if (module.config.ShouldForceTarget && EzThrottler.Throttle("Participating.ForceTarget", 100))
-                    {
-                        Svc.Targets.Target ??= module.config.ShouldForceTargetCentralEnemy ? GetCentralMostEnemy() : GetClosestEnemy();
-                    }
+                        .ConditionalThen(_ => module.config.ShouldToggleAiProvider, _ => module.config.AiProvider.On())
+                        .Then(_ => vnav.Stop())
+                        .Then(new TaskManagerTask(() => {
+                            if (module.config.ShouldForceTarget && EzThrottler.Throttle("Participating.ForceTarget", 100))
+                            {
+                                Svc.Targets.Target ??= module.config.ShouldForceTargetCentralEnemy ? GetCentralMostEnemy() : GetClosestEnemy();
+                            }
 
-                    return states.GetState() == State.Idle;
-                }, new() { TimeLimitMS = int.MaxValue }))
-                .Then(_ => state = ActivityState.Done);
+                            return states.GetState() == State.Idle;
+                        }, new TaskManagerConfiguration { TimeLimitMS = int.MaxValue }))
+                        .Then(_ => state = ActivityState.Done);
         };
     }
 
@@ -162,14 +163,14 @@ public abstract class Activity
     private List<IGameObject> GetEnemies()
     {
         return Svc.Objects
-            .Where(o =>
-                o != null &&
-                o.ObjectKind == ObjectKind.BattleNpc &&
-                IsActivityTarget(o) &&
-                o.IsTargetable
-            )
-            .OrderBy(o => Vector3.Distance(o.Position, Player.Position))
-            .ToList();
+                  .Where(o =>
+                             o != null &&
+                             o.ObjectKind == ObjectKind.BattleNpc &&
+                             IsActivityTarget(o) &&
+                             o.IsTargetable
+                  )
+                  .OrderBy(o => Vector3.Distance(o.Position, Player.Position))
+                  .ToList();
     }
 
     protected int GetEnemyCount()
@@ -196,8 +197,8 @@ public abstract class Activity
         );
 
         return enemies
-            .OrderBy(o => Vector3.Distance(o.Position, centroid))
-            .FirstOrDefault();
+               .OrderBy(o => Vector3.Distance(o.Position, centroid))
+               .FirstOrDefault();
     }
 
     private unsafe bool IsActivityTarget(IGameObject? obj)
@@ -231,11 +232,13 @@ public abstract class Activity
     }
 
     public AethernetData GetAethernetData()
-        => data.aethernet?.GetData() ?? AethernetData.All().OrderBy((data) => Vector3.Distance(GetPosition(), data.position)).First();
+    {
+        return data.aethernet?.GetData() ?? AethernetData.All().OrderBy((data) => Vector3.Distance(GetPosition(), data.position)).First();
+    }
 
     public bool IsInZone()
     {
-        float radius = data.radius ?? GetRadius();
+        var radius = data.radius ?? GetRadius();
 
         return Player.DistanceTo(GetPosition()) <= radius;
     }

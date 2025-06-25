@@ -113,7 +113,7 @@ public struct EventIconRenderer
 
         ImGui.BeginChild($"ImageBorder##{id}", new Vector2(50, 50), true, ImGuiWindowFlags.NoScrollbar);
 
-        ImGui.Image(icon.ImGuiHandle, new System.Numerics.Vector2(48, 48));
+        ImGui.Image(icon.ImGuiHandle, new Vector2(48, 48));
 
         ImGui.EndChild();
 

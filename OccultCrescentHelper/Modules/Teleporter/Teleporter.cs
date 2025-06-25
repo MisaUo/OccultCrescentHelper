@@ -57,11 +57,10 @@ public class Teleporter
         {
             Svc.Log.Info($"Pathfinding to {name} at {destination}");
 
-            Plugin.Chain.Submit(
-                () => Chain.Create("Pathfinding")
-                    .ConditionalThen(_ => module.config.ShouldMount, ChainHelper.MountChain())
-                    .Then(new PathfindingChain(vnav, destination, ev, module.config.ShouldUseCustomPaths, 20f))
-                    .WaitUntilNear(vnav, destination, 205f)
+            Plugin.Chain.Submit(() => Chain.Create("Pathfinding")
+                                           .ConditionalThen(_ => module.config.ShouldMount, ChainHelper.MountChain())
+                                           .Then(new PathfindingChain(vnav, destination, ev, module.config.ShouldUseCustomPaths, 20f))
+                                           .WaitUntilNear(vnav, destination, 205f)
             );
         }
 
@@ -91,12 +90,11 @@ public class Teleporter
 
         if (ImGuiEx.IconButton(Dalamud.Interface.FontAwesomeIcon.LocationArrow, $"{name}##{id}", enabled: isNearShards && !isNearCurrentShard))
         {
-
             var factory = () => {
                 var chain = Chain.Create("Teleport Sequence")
-                    .Then(ChainHelper.TeleportChain(aethernet))
-                        .Debug("Waiting for lifestream to not be 'busy'")
-                        .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new() { TimeLimitMS = 30000 }));
+                                 .Then(ChainHelper.TeleportChain(aethernet))
+                                 .Debug("Waiting for lifestream to not be 'busy'")
+                                 .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new TaskManagerConfiguration { TimeLimitMS = 30000 }));
 
                 if (module.TryGetIPCProvider<VNavmesh>(out var vnav) && vnav != null && vnav.IsReady())
                 {
@@ -177,7 +175,9 @@ public class Teleporter
 
     [Obsolete("Use ZoneHelper.GetClosestAethernetShard")]
     private Aethernet GetClosestAethernet(Vector3 position)
-        => AethernetData.All().OrderBy((data) => Vector3.Distance(position, data.position)).First()!.aethernet;
+    {
+        return AethernetData.All().OrderBy((data) => Vector3.Distance(position, data.position)).First()!.aethernet;
+    }
 
     [Obsolete("Use ZoneHelper.GetNearbyAethernetShards")]
     public IList<IGameObject> GetNearbyAethernetShards()
@@ -185,15 +185,21 @@ public class Teleporter
         var playerPos = Svc.ClientState.LocalPlayer?.Position ?? Vector3.Zero;
 
         return Svc.Objects
-            .Where(o => o != null)
-            .Where(o => o.ObjectKind == ObjectKind.EventObj)
-            .Where(o => AethernetData.All().Select((datum) => datum.dataId).Contains(o.DataId))
-            .Where(o => Vector3.Distance(o.Position, playerPos) <= 4.5f)
-            .ToList();
+                  .Where(o => o != null)
+                  .Where(o => o.ObjectKind == ObjectKind.EventObj)
+                  .Where(o => AethernetData.All().Select((datum) => datum.dataId).Contains(o.DataId))
+                  .Where(o => Vector3.Distance(o.Position, playerPos) <= 4.5f)
+                  .ToList();
     }
 
     [Obsolete("use ZoneHelper.IsNearAethernetShard")]
-    private bool IsNear(Aethernet aethernet) => GetNearbyAethernetShards().Where(o => o.DataId == aethernet.GetData().dataId).Count() > 0;
+    private bool IsNear(Aethernet aethernet)
+    {
+        return GetNearbyAethernetShards().Where(o => o.DataId == aethernet.GetData().dataId).Count() > 0;
+    }
 
-    public bool IsReady() => module.TryGetIPCProvider<Lifestream>(out var _);
+    public bool IsReady()
+    {
+        return module.TryGetIPCProvider<Lifestream>(out var _);
+    }
 }

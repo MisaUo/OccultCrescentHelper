@@ -10,7 +10,9 @@ public class BuffModule : Module<Plugin, Config>
         get => _config.BuffConfig;
     }
 
-    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
+    public override bool enabled {
+        get => config.IsPropertyEnabled(nameof(config.Enabled));
+    }
 
     public readonly BuffManager buffs = new();
 
@@ -19,7 +21,10 @@ public class BuffModule : Module<Plugin, Config>
     public BuffModule(Plugin plugin, Config config)
         : base(plugin, config) { }
 
-    public override void Tick(IFramework framework) => buffs.Tick(framework, this);
+    public override void Tick(IFramework framework)
+    {
+        buffs.Tick(framework, this);
+    }
 
     public override bool DrawMainUi()
     {
@@ -27,5 +32,8 @@ public class BuffModule : Module<Plugin, Config>
         return true;
     }
 
-    public bool ShouldRefreshBuffs() => buffs.ShouldRefresh(this);
+    public bool ShouldRefreshBuffs()
+    {
+        return buffs.ShouldRefresh(this);
+    }
 }
