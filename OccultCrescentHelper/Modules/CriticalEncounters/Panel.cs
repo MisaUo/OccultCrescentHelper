@@ -75,7 +75,7 @@ public class Panel
 
                 if (ev.State != DynamicEventState.Register)
                 {
-                    OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.Config.EventDropConfig));
+                    OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.config.EventDropConfig));
                     continue;
                 }
 
@@ -86,7 +86,7 @@ public class Panel
                     teleporter.teleporter.Button(data.aethernet, start, data.Name, $"ce_{ev.DynamicEventId}", data);
                 }
 
-                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.Config.EventDropConfig));
+                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.config.EventDropConfig));
             }
         });
     }

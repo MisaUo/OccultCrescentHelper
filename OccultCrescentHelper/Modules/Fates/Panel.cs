@@ -50,7 +50,7 @@ public class Panel
                         $"fate_{fate.FateId}", data);
                 }
 
-                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.Config.EventDropConfig));
+                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.config.EventDropConfig));
 
                 if (!fate.Equals(module.fates.Values.Last()))
                 {

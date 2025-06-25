@@ -85,7 +85,7 @@ public class FatesPanel : Panel
                     teleporter.teleporter.Button(data.aethernet, start, data.Name, $"fate_{data.id}", data);
                 }
 
-                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.Config.EventDropConfig));
+                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.config.EventDropConfig));
 
                 if (data.pathFactory != null)
                 {
