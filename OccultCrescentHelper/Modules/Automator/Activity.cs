@@ -12,6 +12,7 @@ using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
+using ECommons.Logging;
 using ECommons.Throttlers;
 using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using Lumina.Excel.Sheets;
@@ -31,9 +32,9 @@ public abstract class Activity
     protected readonly AutomatorModule module;
 
     protected readonly VNavmesh vnav;
-    
+
     public ActivityState state = ActivityState.Idle;
-    
+
     protected Activity(EventData data, Lifestream lifestream, VNavmesh vnav, AutomatorModule module)
     {
         this.data = data;
@@ -113,7 +114,8 @@ public abstract class Activity
                         .Debug("Waiting for lifestream to not be 'busy'")
                         .Then(new TaskManagerTask(() => !lifestream.IsBusy(),
                                                   new TaskManagerConfiguration { TimeLimitMS = 30000 }))
-                        .Then(new PathfindingChain(vnav, GetPosition(), data, false));
+                        .Then(new PathfindingChain(vnav, GetPosition(), data, false))
+                        .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain());
                     break;
 
                 case NavigationType.WalkToClosestShardAndTeleportToEventShardThenWalkToEvent:
@@ -124,7 +126,8 @@ public abstract class Activity
                         .Debug("Waiting for lifestream to not be 'busy'")
                         .Then(new TaskManagerTask(() => !lifestream.IsBusy(),
                                                   new TaskManagerConfiguration { TimeLimitMS = 30000 }))
-                        .Then(new PathfindingChain(vnav, GetPosition(), data, false));
+                        .Then(new PathfindingChain(vnav, GetPosition(), data, false))
+                        .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain());
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -247,8 +250,7 @@ public abstract class Activity
     private bool ShouldMountToPathfindTo(Vector3 destination)
     {
         if (!module._config.TeleporterConfig.ShouldMount) return false;
-
-        return Vector3.Distance(Player.Position, destination) <= 20f;
+        return Vector3.Distance(Player.Position, destination) > 20f;
     }
 
     protected abstract float GetRadius();

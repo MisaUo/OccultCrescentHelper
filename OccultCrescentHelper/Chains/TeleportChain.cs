@@ -18,7 +18,7 @@ public class TeleportChain(Aethernet aethernet, Lifestream lifestream, Teleporte
                                          new TaskManagerConfiguration { TimeLimitMS = 15000 }))
                .Then(_ => module.GetIPCProvider<VNavmesh>()?.Stop())
                .Then(_ => lifestream.AethernetTeleportByPlaceNameId((uint)aethernet))
-               .WaitToCycleCondition(ConditionFlag.BetweenAreas)
-               .ConditionalThen(_ => module.config.ShouldMount, ChainHelper.MountChain());
+               .WaitToCycleCondition(ConditionFlag.BetweenAreas);
+        //.ConditionalThen(_ => module.config.ShouldMount, ChainHelper.MountChain());
     }
 }

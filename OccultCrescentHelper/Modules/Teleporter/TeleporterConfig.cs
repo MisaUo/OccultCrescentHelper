@@ -6,7 +6,7 @@ namespace BOCCHI.Modules.Teleporter;
 [Title("modules.teleporter.title")]
 public class TeleporterConfig : ModuleConfig
 {
-    public override string ProviderNamespace => "OccultCrescentHelper.Modules.Teleporter";
+    public override string ProviderNamespace => GetType().Namespace!;
 
     [Checkbox]
     [RequiredPlugin("Lifestream")]

@@ -41,7 +41,7 @@ public class MountChain(MountConfig config) : RetryChainFactory
         if (isFirstThrottle)
         {
             isFirstThrottle = false;
-            return 2000;
+            return 500;
         }
 
         return 5000;

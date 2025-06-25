@@ -7,7 +7,7 @@ namespace BOCCHI.Modules.Automator;
 [Title("modules.automator.title")]
 public class AutomatorConfig : ModuleConfig
 {
-    public override string ProviderNamespace => "OccultCrescentHelper.Modules.Automator";
+    public override string ProviderNamespace => GetType().Namespace!;
 
     [Checkbox]
     [Illegal]

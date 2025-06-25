@@ -17,7 +17,7 @@ namespace BOCCHI.Chains;
 
 public class ChainHelper
 {
-    private static ChainHelper Instance = null!;
+    private static ChainHelper _instance = null!;
 
     private readonly Plugin plugin;
 
@@ -28,10 +28,10 @@ public class ChainHelper
 
     private static ChainHelper instance {
         get {
-            if (Instance == null)
+            if (_instance == null)
                 throw new InvalidOperationException(
                     "ChainHelper has not been initialized. Call Initialize(plugin) first.");
-            return Instance;
+            return _instance;
         }
     }
 
@@ -41,7 +41,7 @@ public class ChainHelper
 
     public static void Initialize(Plugin plugin)
     {
-        Instance ??= new ChainHelper(plugin);
+        _instance ??= new ChainHelper(plugin);
     }
 
     public static ReturnChain ReturnChain(bool approachAetherye = true)
