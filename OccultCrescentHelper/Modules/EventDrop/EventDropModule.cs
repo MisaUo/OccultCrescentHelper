@@ -1,6 +1,6 @@
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.EventDrop;
+namespace BOCCHI.Modules.EventDrop;
 
 [OcelotModule(2)]
 public class EventDropModule : Module<Plugin, Config>

@@ -1,6 +1,6 @@
 using Ocelot.Config.Handlers;
 
-namespace OccultCrescentHelper.Modules.Automator;
+namespace BOCCHI.Modules.Automator;
 
 public class AiTypeProvider : EnumProvider<AiType>
 {

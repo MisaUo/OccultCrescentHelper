@@ -1,13 +1,13 @@
 using System.Linq;
+using BOCCHI.Data;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
-using OccultCrescentHelper.Data;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 
-namespace OccultCrescentHelper.Modules.Buff.Chains;
+namespace BOCCHI.Modules.Buff.Chains;
 
 public class BuffChain : ChainFactory
 {

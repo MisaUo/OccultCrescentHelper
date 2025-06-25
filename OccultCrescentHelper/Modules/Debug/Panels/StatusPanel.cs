@@ -4,7 +4,7 @@ using ImGuiNET;
 using Lumina.Excel.Sheets;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.Debug.Panels;
+namespace BOCCHI.Modules.Debug.Panels;
 
 public class StatusPanel : Panel
 {

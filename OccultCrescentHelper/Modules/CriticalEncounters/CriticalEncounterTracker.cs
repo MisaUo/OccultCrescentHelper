@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using BOCCHI.Data;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
-using OccultCrescentHelper.Data;
 
-namespace OccultCrescentHelper.Modules.CriticalEncounters;
+namespace BOCCHI.Modules.CriticalEncounters;
 
 public class CriticalEncounterTracker
 {

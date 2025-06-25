@@ -1,6 +1,6 @@
 ﻿using Ocelot.Windows;
 
-namespace OccultCrescentHelper.Windows;
+namespace BOCCHI.Windows;
 
 [OcelotConfigWindow]
 public class ConfigWindow : OcelotConfigWindow

@@ -2,7 +2,7 @@ using System;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.Game;
 
-namespace OccultCrescentHelper.Modules.Currency;
+namespace BOCCHI.Modules.Currency;
 
 public class CurrencyTracker
 {

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
-using OccultCrescentHelper.Enums;
+using BOCCHI.Enums;
 using Ocelot.Prowler;
 
-namespace OccultCrescentHelper.Data;
+namespace BOCCHI.Data;
 
 public struct EventData
 {

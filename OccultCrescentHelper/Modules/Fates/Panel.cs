@@ -1,10 +1,10 @@
 using System.Linq;
+using BOCCHI.Data;
+using BOCCHI.Modules.Teleporter;
 using ImGuiNET;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Modules.Teleporter;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.Fates;
+namespace BOCCHI.Modules.Fates;
 
 public class Panel
 {

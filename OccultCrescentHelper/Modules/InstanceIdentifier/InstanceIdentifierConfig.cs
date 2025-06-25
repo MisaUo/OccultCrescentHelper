@@ -1,7 +1,7 @@
 using Ocelot.Config.Attributes;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.InstanceIdentifier;
+namespace BOCCHI.Modules.InstanceIdentifier;
 
 [Title("modules.instance_identifier.title")]
 public class InstanceIdentifierConfig : ModuleConfig

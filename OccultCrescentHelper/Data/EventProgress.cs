@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OccultCrescentHelper.Data;
+namespace BOCCHI.Data;
 
 public class EventProgress
 {

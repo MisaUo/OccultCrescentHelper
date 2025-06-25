@@ -1,6 +1,6 @@
-using OccultCrescentHelper.Enums;
+using BOCCHI.Enums;
 
-namespace OccultCrescentHelper.Data;
+namespace BOCCHI.Data;
 
 public class Job
 {

@@ -1,7 +1,7 @@
 using System;
 using Ocelot.Config.Attributes;
 
-namespace OccultCrescentHelper.Modules.EventDrop;
+namespace BOCCHI.Modules.EventDrop;
 
 [Serializable]
 [Title("modules.event_drop.title")]

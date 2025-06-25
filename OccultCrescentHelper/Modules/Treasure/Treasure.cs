@@ -1,11 +1,11 @@
 using System.Linq;
 using System.Numerics;
+using BOCCHI.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
-using OccultCrescentHelper.Enums;
 using XIVTreasure = Lumina.Excel.Sheets.Treasure;
 
-namespace OccultCrescentHelper.Modules.Treasure;
+namespace BOCCHI.Modules.Treasure;
 
 public class Treasure
 {

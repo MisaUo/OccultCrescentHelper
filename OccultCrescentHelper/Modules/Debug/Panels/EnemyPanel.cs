@@ -9,7 +9,7 @@ using ECommons.Throttlers;
 using ImGuiNET;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.Debug.Panels;
+namespace BOCCHI.Modules.Debug.Panels;
 
 public class EnemyPanel : Panel
 {

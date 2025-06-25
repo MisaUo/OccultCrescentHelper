@@ -1,9 +1,8 @@
-using Dalamud.Interface;
 using Ocelot.Config.Attributes;
 using Ocelot.Modules;
 using ExcelMount = Lumina.Excel.Sheets.Mount;
 
-namespace OccultCrescentHelper.Modules.Mount;
+namespace BOCCHI.Modules.Mount;
 
 [Title("modules.mount.title")]
 public class MountConfig : ModuleConfig

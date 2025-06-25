@@ -3,7 +3,7 @@ using FFXIVClientStructs.FFXIV.Client.Graphics.Kernel;
 using FFXIVClientStructs.FFXIV.Client.Graphics.Scene;
 using ImGuiNET;
 
-namespace OccultCrescentHelper;
+namespace BOCCHI;
 
 public static class Helpers
 {

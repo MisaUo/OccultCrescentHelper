@@ -1,12 +1,12 @@
-using Action = System.Action;
+using System.Collections.Generic;
+using System.Linq;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game.Fate;
-using System.Collections.Generic;
-using System.Linq;
+using Action = System.Action;
 
-namespace OccultCrescentHelper.Modules.StateManager;
+namespace BOCCHI.Modules.StateManager;
 
 public class StateManager
 {

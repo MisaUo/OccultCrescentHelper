@@ -2,22 +2,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using BOCCHI.Chains;
+using BOCCHI.Data;
+using BOCCHI.Enums;
+using BOCCHI.Modules.Automator;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
-using OccultCrescentHelper.Chains;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Enums;
-using OccultCrescentHelper.Modules.Automator;
 using Ocelot;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
 
-namespace OccultCrescentHelper.Modules.Teleporter;
+namespace BOCCHI.Modules.Teleporter;
 
 public class Teleporter
 {

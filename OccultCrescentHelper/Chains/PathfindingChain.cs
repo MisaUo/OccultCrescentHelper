@@ -1,9 +1,10 @@
 using System.Numerics;
-using OccultCrescentHelper.Data;
+using BOCCHI.Data;
+using OccultCrescentHelper.Chains;
 using Ocelot.Chain;
 using Ocelot.IPC;
 
-namespace OccultCrescentHelper.Chains;
+namespace BOCCHI.Chains;
 
 public class PathfindingChain : ChainFactory
 {

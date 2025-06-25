@@ -2,7 +2,7 @@ using System;
 using Dalamud.Plugin.Services;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.StateManager;
+namespace BOCCHI.Modules.StateManager;
 
 [OcelotModule(mainOrder: -1)]
 public class StateManagerModule : Module<Plugin, Config>

@@ -1,4 +1,4 @@
-namespace OccultCrescentHelper.Modules.Automator;
+namespace BOCCHI.Modules.Automator;
 
 public enum ActivityState
 {

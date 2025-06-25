@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using BOCCHI.Data;
+using BOCCHI.Modules.Teleporter;
 using ECommons.DalamudServices;
 using ImGuiNET;
 using Lumina.Data.Files;
 using Lumina.Excel.Sheets;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Modules.Teleporter;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.Debug.Panels;
+namespace BOCCHI.Modules.Debug.Panels;
 
 public class FatesPanel : Panel
 {

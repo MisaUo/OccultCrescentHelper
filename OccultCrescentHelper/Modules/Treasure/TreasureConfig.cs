@@ -1,7 +1,7 @@
 using Ocelot.Config.Attributes;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Treasure;
+namespace BOCCHI.Modules.Treasure;
 
 [Title("modules.treasure.title")]
 public class TreasureConfig : ModuleConfig

@@ -1,8 +1,7 @@
-using ImGuiNET;
-using OccultCrescentHelper.Modules.StateManager;
+using BOCCHI.Modules.StateManager;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Teleporter;
+namespace BOCCHI.Modules.Teleporter;
 
 [OcelotModule(1)]
 public class TeleporterModule : Module<Plugin, Config>

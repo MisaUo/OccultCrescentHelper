@@ -1,14 +1,14 @@
 using System;
 using System.Numerics;
+using BOCCHI.Modules.EventDrop;
 using Dalamud.Interface.Textures;
 using Dalamud.Interface.Textures.TextureWraps;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using ImGuiNET;
 using Lumina.Excel.Sheets;
-using OccultCrescentHelper.Modules.EventDrop;
 
-namespace OccultCrescentHelper.Data;
+namespace BOCCHI.Data;
 
 public struct EventIconRenderer
 {

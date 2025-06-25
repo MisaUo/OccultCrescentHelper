@@ -1,19 +1,19 @@
 using System;
 using System.Linq;
 using System.Numerics;
+using BOCCHI.Data;
+using BOCCHI.Modules.CriticalEncounters;
+using BOCCHI.Modules.StateManager;
 using Dalamud.Game.ClientState.Objects.Enums;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Modules.CriticalEncounters;
-using OccultCrescentHelper.Modules.StateManager;
 using Ocelot.Chain;
 using Ocelot.IPC;
 
-namespace OccultCrescentHelper.Modules.Automator;
+namespace BOCCHI.Modules.Automator;
 
 public class CriticalEncounter : Activity
 {

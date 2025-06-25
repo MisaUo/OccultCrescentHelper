@@ -3,7 +3,7 @@ using Dalamud.Hooking;
 using Dalamud.Utility.Signatures;
 using ECommons.DalamudServices;
 
-namespace OccultCrescentHelper.Memory;
+namespace BOCCHI.Memory;
 
 public class InitZone : IDisposable
 {

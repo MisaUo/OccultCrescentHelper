@@ -1,8 +1,7 @@
-using Lumina.Excel.Sheets;
 using Ocelot.Config.Attributes;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Teleporter;
+namespace BOCCHI.Modules.Teleporter;
 
 [Title("modules.teleporter.title")]
 public class TeleporterConfig : ModuleConfig

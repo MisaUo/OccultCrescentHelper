@@ -1,7 +1,7 @@
 using Ocelot.Config.Attributes;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Currency;
+namespace BOCCHI.Modules.Currency;
 
 [Title("modules.currency.title")]
 public class CurrencyConfig : ModuleConfig

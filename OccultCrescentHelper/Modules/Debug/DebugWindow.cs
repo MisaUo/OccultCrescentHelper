@@ -1,8 +1,8 @@
-﻿using ImGuiNET;
-using OccultCrescentHelper.Data;
+﻿using BOCCHI.Data;
+using ImGuiNET;
 using Ocelot.Windows;
 
-namespace OccultCrescentHelper.Modules.Debug;
+namespace BOCCHI.Modules.Debug;
 
 #if DEBUG_BUILD
 [OcelotWindow]

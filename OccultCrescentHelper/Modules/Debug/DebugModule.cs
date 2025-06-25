@@ -1,12 +1,12 @@
 using System.Collections.Generic;
+using BOCCHI.Modules.Debug.Panels;
 using Dalamud.Plugin.Services;
 using ECommons;
 using ImGuiNET;
-using OccultCrescentHelper.Modules.Debug.Panels;
 using Ocelot;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Debug;
+namespace BOCCHI.Modules.Debug;
 
 #if DEBUG_BUILD
 [OcelotModule]

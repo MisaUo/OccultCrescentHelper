@@ -1,7 +1,7 @@
 using Dalamud.Plugin.Services;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Currency;
+namespace BOCCHI.Modules.Currency;
 
 [OcelotModule(5, 3)]
 public class CurrencyModule : Module<Plugin, Config>

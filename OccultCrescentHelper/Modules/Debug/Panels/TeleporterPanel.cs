@@ -1,10 +1,10 @@
 using System.Linq;
+using BOCCHI.Enums;
+using BOCCHI.Modules.Teleporter;
 using ImGuiNET;
-using OccultCrescentHelper.Enums;
-using OccultCrescentHelper.Modules.Teleporter;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.Debug.Panels;
+namespace BOCCHI.Modules.Debug.Panels;
 
 public class TeleporterPanel : Panel
 {

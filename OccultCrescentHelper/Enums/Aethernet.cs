@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using BOCCHI.Data;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using Lumina.Excel.Sheets;
-using OccultCrescentHelper.Data;
 
-namespace OccultCrescentHelper.Enums;
+namespace BOCCHI.Enums;
 
 public enum Aethernet : uint
 {

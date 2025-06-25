@@ -1,9 +1,9 @@
 using System;
+using BOCCHI.Memory;
 using Dalamud.Memory;
-using OccultCrescentHelper.Memory;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.InstanceIdentifier;
+namespace BOCCHI.Modules.InstanceIdentifier;
 
 [OcelotModule(mainOrder: int.MinValue)]
 public class InstanceIdentifierModule : Module<Plugin, Config>

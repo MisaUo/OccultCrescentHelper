@@ -1,11 +1,11 @@
+using BOCCHI.Data;
 using Dalamud.Game.ClientState.Conditions;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
-using OccultCrescentHelper.Data;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 
-namespace OccultCrescentHelper.Modules.Mount.Chains;
+namespace BOCCHI.Modules.Mount.Chains;
 
 public class MountChain : RetryChainFactory
 {

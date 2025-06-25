@@ -12,7 +12,7 @@ using Ocelot;
 using Ocelot.Chain;
 using Ocelot.IPC;
 
-namespace OccultCrescentHelper.Modules.Treasure;
+namespace BOCCHI.Modules.Treasure;
 
 public struct TreasureNode
 {

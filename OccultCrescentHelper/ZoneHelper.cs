@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using BOCCHI.Enums;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
-using OccultCrescentHelper.Enums;
 
-namespace OccultCrescentHelper;
+namespace BOCCHI;
 
 public static class ZoneHelper
 {

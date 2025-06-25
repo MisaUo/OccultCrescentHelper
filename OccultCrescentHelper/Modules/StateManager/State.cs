@@ -1,4 +1,4 @@
-namespace OccultCrescentHelper.Modules.StateManager;
+namespace BOCCHI.Modules.StateManager;
 
 public enum State
 {

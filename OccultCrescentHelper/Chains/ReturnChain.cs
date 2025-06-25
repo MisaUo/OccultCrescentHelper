@@ -1,20 +1,19 @@
 using System.Linq;
 using System.Numerics;
+using BOCCHI.Data;
+using BOCCHI.Enums;
+using BOCCHI.Modules.Buff;
+using BOCCHI.Modules.Buff.Chains;
 using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using FFXIVClientStructs.FFXIV.Client.Game;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Enums;
-using OccultCrescentHelper.Modules.Buff;
-using OccultCrescentHelper.Modules.Buff.Chains;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
 
-namespace OccultCrescentHelper.Chains;
+namespace BOCCHI.Chains;
 
 public class ReturnChain : RetryChainFactory
 {

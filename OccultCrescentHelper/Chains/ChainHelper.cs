@@ -1,19 +1,19 @@
 using System;
 using System.Numerics;
+using BOCCHI.Data;
+using BOCCHI.Enums;
+using BOCCHI.Modules.Buff;
+using BOCCHI.Modules.Mount;
+using BOCCHI.Modules.Mount.Chains;
+using BOCCHI.Modules.Teleporter;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Enums;
-using OccultCrescentHelper.Modules.Buff;
-using OccultCrescentHelper.Modules.Mount;
-using OccultCrescentHelper.Modules.Mount.Chains;
-using OccultCrescentHelper.Modules.Teleporter;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Chains;
+namespace BOCCHI.Chains;
 
 public class ChainHelper
 {

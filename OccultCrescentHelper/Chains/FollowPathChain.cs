@@ -4,7 +4,7 @@ using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
 
-namespace OccultCrescentHelper.Chains;
+namespace BOCCHI.Chains;
 
 public class FollowPathChain : ChainFactory
 {

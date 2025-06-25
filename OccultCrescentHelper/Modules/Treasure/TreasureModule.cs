@@ -3,7 +3,7 @@ using System.Numerics;
 using Dalamud.Plugin.Services;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Treasure;
+namespace BOCCHI.Modules.Treasure;
 
 [OcelotModule(3, 1)]
 public class TreasureModule : Module<Plugin, Config>

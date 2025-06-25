@@ -1,13 +1,12 @@
 using System;
 using System.Linq;
-using System.Numerics;
+using BOCCHI.Data;
+using BOCCHI.Modules.Teleporter;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using ImGuiNET;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Modules.Teleporter;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.CriticalEncounters;
+namespace BOCCHI.Modules.CriticalEncounters;
 
 public class Panel
 {

@@ -1,7 +1,6 @@
-using ImGuiNET;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.InstanceIdentifier;
+namespace BOCCHI.Modules.InstanceIdentifier;
 
 public class Panel
 {

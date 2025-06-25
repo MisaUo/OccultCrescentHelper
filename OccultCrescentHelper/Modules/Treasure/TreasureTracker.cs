@@ -5,7 +5,7 @@ using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
 
-namespace OccultCrescentHelper.Modules.Treasure;
+namespace BOCCHI.Modules.Treasure;
 
 public class TreasureTracker
 {

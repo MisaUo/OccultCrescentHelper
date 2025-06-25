@@ -5,7 +5,7 @@ using Dalamud.Game.Text.SeStringHandling;
 using ECommons.DalamudServices;
 using ClientLanguage = Dalamud.Game.ClientLanguage;
 
-namespace OccultCrescentHelper.Modules.Exp;
+namespace BOCCHI.Modules.Exp;
 
 public class ExpTracker
 {

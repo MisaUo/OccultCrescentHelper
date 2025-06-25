@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using ECommons.DalamudServices;
 
-namespace OccultCrescentHelper.Data;
+namespace BOCCHI.Data;
 
 public static class ZoneData
 {

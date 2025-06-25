@@ -1,8 +1,8 @@
+using BOCCHI.Data;
 using Dalamud.Game.ClientState.Conditions;
 using ECommons.DalamudServices;
-using OccultCrescentHelper.Data;
 
-namespace OccultCrescentHelper.Modules.Carrots;
+namespace BOCCHI.Modules.Carrots;
 
 public class Radar
 {

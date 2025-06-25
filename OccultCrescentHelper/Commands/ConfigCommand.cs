@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Ocelot.Modules;
 using Ocelot.Commands;
+using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Commands;
+namespace BOCCHI.Commands;
 
 [OcelotCommand]
 public class ConfigCommand : OcelotCommand

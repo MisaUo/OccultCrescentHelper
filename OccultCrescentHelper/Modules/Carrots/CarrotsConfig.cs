@@ -1,7 +1,7 @@
 using Ocelot.Config.Attributes;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Carrots;
+namespace BOCCHI.Modules.Carrots;
 
 [Title("modules.carrots.title")]
 public class CarrotsConfig : ModuleConfig

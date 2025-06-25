@@ -1,10 +1,10 @@
+using BOCCHI.Data;
+using BOCCHI.Enums;
 using Dalamud.Game.ClientState.Conditions;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Enums;
 
-namespace OccultCrescentHelper.Modules.Treasure;
+namespace BOCCHI.Modules.Treasure;
 
 public class Radar
 {

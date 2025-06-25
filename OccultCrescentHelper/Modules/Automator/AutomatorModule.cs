@@ -5,7 +5,7 @@ using Ocelot;
 using Ocelot.IPC;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Automator;
+namespace BOCCHI.Modules.Automator;
 
 [OcelotModule]
 public class AutomatorModule : Module<Plugin, Config>

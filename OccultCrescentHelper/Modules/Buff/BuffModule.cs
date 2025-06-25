@@ -1,7 +1,7 @@
 using Dalamud.Plugin.Services;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Buff;
+namespace BOCCHI.Modules.Buff;
 
 [OcelotModule(5, 2)]
 public class BuffModule : Module<Plugin, Config>

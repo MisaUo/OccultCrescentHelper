@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BOCCHI.Data;
+using BOCCHI.Modules.Buff.Chains;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
 using ECommons.Throttlers;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Modules.Buff.Chains;
 using Ocelot.Chain;
 
-namespace OccultCrescentHelper.Modules.Buff;
+namespace BOCCHI.Modules.Buff;
 
 public class BuffManager
 {

@@ -1,10 +1,10 @@
 using System.Numerics;
+using BOCCHI.Data;
 using Dalamud.Interface;
 using ImGuiNET;
-using OccultCrescentHelper.Data;
 using Ocelot.Windows;
 
-namespace OccultCrescentHelper.Modules.Automator;
+namespace BOCCHI.Modules.Automator;
 
 [OcelotWindow]
 public class AutomatorWindow : OcelotWindow

@@ -1,7 +1,7 @@
 using System.Linq;
 using Dalamud.Game.ClientState.Statuses;
 
-namespace OccultCrescentHelper.Data;
+namespace BOCCHI.Data;
 
 public enum PlayerStatus : uint
 {

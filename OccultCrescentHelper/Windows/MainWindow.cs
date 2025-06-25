@@ -1,11 +1,11 @@
 ﻿using System.Numerics;
+using BOCCHI.Data;
+using BOCCHI.Modules.Automator;
 using Dalamud.Interface;
 using ImGuiNET;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Modules.Automator;
 using Ocelot.Windows;
 
-namespace OccultCrescentHelper.Windows;
+namespace BOCCHI.Windows;
 
 [OcelotMainWindow]
 public class MainWindow : OcelotMainWindow

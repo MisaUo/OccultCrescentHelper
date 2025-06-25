@@ -1,9 +1,8 @@
-using System;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Exp;
+namespace BOCCHI.Modules.Exp;
 
 [OcelotModule(6, 4)]
 public class ExpModule : Module<Plugin, Config>

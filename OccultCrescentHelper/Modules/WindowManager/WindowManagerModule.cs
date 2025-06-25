@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using OccultCrescentHelper.Modules.StateManager;
+using BOCCHI.Modules.StateManager;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.WindowManager;
+namespace BOCCHI.Modules.WindowManager;
 
 [OcelotModule]
 public class WindowManagerModule : Module<Plugin, Config>

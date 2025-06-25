@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Dalamud.Plugin.Services;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Carrots;
+namespace BOCCHI.Modules.Carrots;
 
 [OcelotModule(4, 2)]
 public class CarrotsModule : Module<Plugin, Config>

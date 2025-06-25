@@ -1,15 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
-using ECommons.GameFunctions;
-using ECommons.GameHelpers;
-using ECommons.Throttlers;
 using ImGuiNET;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.Debug.Panels;
+namespace BOCCHI.Modules.Debug.Panels;
 
 public class TargetPanel : Panel
 {

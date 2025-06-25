@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using BOCCHI.Data;
 using Dalamud.Game.ClientState.Fates;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
-using OccultCrescentHelper.Data;
 
-namespace OccultCrescentHelper.Modules.Fates;
+namespace BOCCHI.Modules.Fates;
 
 public class FateTracker
 {

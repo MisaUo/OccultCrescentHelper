@@ -1,7 +1,7 @@
 using System;
 using System.Numerics;
 
-namespace OccultCrescentHelper;
+namespace BOCCHI;
 
 public static unsafe class CameraHelper
 {

@@ -2,7 +2,7 @@ using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using Ocelot.Config.Handlers;
 using ExcelMount = Lumina.Excel.Sheets.Mount;
 
-namespace OccultCrescentHelper.Modules.Mount;
+namespace BOCCHI.Modules.Mount;
 
 public class MountProvider : ExcelSheetItemProvider<ExcelMount>
 {

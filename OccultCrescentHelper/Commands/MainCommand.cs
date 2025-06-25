@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Ocelot.Modules;
+using BOCCHI.Modules.Debug;
 using Ocelot.Commands;
-using OccultCrescentHelper.Modules.Debug;
+using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Commands;
+namespace BOCCHI.Commands;
 
 [OcelotCommand]
 public class MainCommand : OcelotCommand

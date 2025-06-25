@@ -1,12 +1,12 @@
+using BOCCHI.Enums;
+using BOCCHI.Modules.Teleporter;
 using Dalamud.Game.ClientState.Conditions;
 using ECommons.Automation.NeoTaskManager;
-using OccultCrescentHelper.Enums;
-using OccultCrescentHelper.Modules.Teleporter;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
 
-namespace OccultCrescentHelper.Chains;
+namespace BOCCHI.Chains;
 
 public class TeleportChain : ChainFactory
 {

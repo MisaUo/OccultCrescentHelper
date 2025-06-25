@@ -1,7 +1,7 @@
 using Ocelot.Chain;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Mount;
+namespace BOCCHI.Modules.Mount;
 
 [OcelotModule(int.MinValue)]
 public class MountModule : Module<Plugin, Config>

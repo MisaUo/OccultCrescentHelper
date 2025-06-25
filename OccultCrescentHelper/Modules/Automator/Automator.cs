@@ -1,17 +1,17 @@
 using System.Linq;
+using BOCCHI.Chains;
+using BOCCHI.Data;
+using BOCCHI.Enums;
+using BOCCHI.Modules.CriticalEncounters;
+using BOCCHI.Modules.Fates;
+using BOCCHI.Modules.StateManager;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
-using OccultCrescentHelper.Chains;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Enums;
-using OccultCrescentHelper.Modules.CriticalEncounters;
-using OccultCrescentHelper.Modules.Fates;
-using OccultCrescentHelper.Modules.StateManager;
 using Ocelot.Chain;
 using Ocelot.IPC;
 
-namespace OccultCrescentHelper.Modules.Automator;
+namespace BOCCHI.Modules.Automator;
 
 public class Automator
 {

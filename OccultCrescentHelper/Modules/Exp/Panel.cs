@@ -2,7 +2,7 @@ using ECommons.ImGuiMethods;
 using ImGuiNET;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.Exp;
+namespace BOCCHI.Modules.Exp;
 
 public class Panel
 {

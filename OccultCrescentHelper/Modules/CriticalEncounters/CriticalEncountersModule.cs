@@ -1,10 +1,10 @@
 using System.Collections.Generic;
+using BOCCHI.Data;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
-using OccultCrescentHelper.Data;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.CriticalEncounters;
+namespace BOCCHI.Modules.CriticalEncounters;
 
 [OcelotModule(8, 6)]
 public class CriticalEncountersModule : Module<Plugin, Config>

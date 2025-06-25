@@ -2,7 +2,7 @@ using ImGuiNET;
 using Ocelot;
 using Ocelot.Chain;
 
-namespace OccultCrescentHelper.Modules.Debug.Panels;
+namespace BOCCHI.Modules.Debug.Panels;
 
 public class ChainManagerPanel : Panel
 {

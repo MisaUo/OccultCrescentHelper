@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using BOCCHI.Chains;
+using BOCCHI.Data;
+using BOCCHI.Enums;
+using BOCCHI.Modules.StateManager;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
@@ -10,14 +14,10 @@ using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;
 using FFXIVClientStructs.FFXIV.Client.Game.Character;
-using OccultCrescentHelper.Chains;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Enums;
-using OccultCrescentHelper.Modules.StateManager;
 using Ocelot.Chain;
 using Ocelot.IPC;
 
-namespace OccultCrescentHelper.Modules.Automator;
+namespace BOCCHI.Modules.Automator;
 
 public abstract class Activity
 {

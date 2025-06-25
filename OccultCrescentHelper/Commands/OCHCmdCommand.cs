@@ -1,14 +1,14 @@
 using System.Collections.Generic;
-using Ocelot.Modules;
-using Ocelot.Commands;
+using BOCCHI.Data;
+using BOCCHI.Modules.CriticalEncounters;
+using BOCCHI.Modules.Fates;
 using ECommons.DalamudServices;
-using FFXIVClientStructs.FFXIV.Client.UI.Agent;
-using OccultCrescentHelper.Modules.CriticalEncounters;
-using OccultCrescentHelper.Modules.Fates;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
-using OccultCrescentHelper.Data;
+using FFXIVClientStructs.FFXIV.Client.UI.Agent;
+using Ocelot.Commands;
+using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Commands;
+namespace BOCCHI.Commands;
 
 [OcelotCommand]
 public class OCHCmdCommand : OcelotCommand

@@ -1,6 +1,6 @@
 using ECommons.Automation;
 
-namespace OccultCrescentHelper.Modules.Automator;
+namespace BOCCHI.Modules.Automator;
 
 public enum AiType
 {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Ocelot.Config.Attributes;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Automator;
+namespace BOCCHI.Modules.Automator;
 
 [Title("modules.automator.title")]
 public partial class AutomatorConfig : ModuleConfig

@@ -1,18 +1,17 @@
-using System;
 using System.Linq;
 using System.Numerics;
+using BOCCHI.Data;
+using BOCCHI.Modules.Fates;
+using BOCCHI.Modules.StateManager;
 using Dalamud.Game.ClientState.Fates;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;
 using FFXIVClientStructs.FFXIV.Client.Game;
-using OccultCrescentHelper.Data;
-using OccultCrescentHelper.Modules.Fates;
-using OccultCrescentHelper.Modules.StateManager;
 using Ocelot.IPC;
 
-namespace OccultCrescentHelper.Modules.Automator;
+namespace BOCCHI.Modules.Automator;
 
 public class Fate : Activity
 {

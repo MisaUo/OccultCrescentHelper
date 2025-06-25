@@ -1,7 +1,7 @@
 using Dalamud.Interface;
 using Ocelot.Config.Attributes;
 
-namespace OccultCrescentHelper;
+namespace BOCCHI;
 
 internal sealed class IllegalModeCompatibleAttribute : IconAttribute
 {

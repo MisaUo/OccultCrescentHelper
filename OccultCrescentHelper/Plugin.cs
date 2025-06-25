@@ -1,16 +1,16 @@
 ﻿using System;
 using System.IO;
+using BOCCHI.Chains;
+using BOCCHI.Data;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Plugin;
 using ECommons;
 using ECommons.DalamudServices;
 using ECommons.Reflection;
-using OccultCrescentHelper.Chains;
-using OccultCrescentHelper.Data;
 using Ocelot;
 using Ocelot.Chain;
 
-namespace OccultCrescentHelper;
+namespace BOCCHI;
 
 public sealed class Plugin : OcelotPlugin
 {

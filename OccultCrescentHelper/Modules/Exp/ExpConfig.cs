@@ -1,7 +1,7 @@
 using Ocelot.Config.Attributes;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.Exp;
+namespace BOCCHI.Modules.Exp;
 
 [Title("modules.exp.title")]
 public class ExpConfig : ModuleConfig

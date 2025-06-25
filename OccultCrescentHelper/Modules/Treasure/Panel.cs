@@ -3,7 +3,7 @@ using ECommons.GameHelpers;
 using ImGuiNET;
 using Ocelot;
 
-namespace OccultCrescentHelper.Modules.Treasure;
+namespace BOCCHI.Modules.Treasure;
 
 public class Panel
 {

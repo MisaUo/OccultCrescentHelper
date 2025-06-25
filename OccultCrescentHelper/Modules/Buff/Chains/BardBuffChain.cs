@@ -1,8 +1,8 @@
-using OccultCrescentHelper.Data;
+using BOCCHI.Data;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 
-namespace OccultCrescentHelper.Modules.Buff.Chains;
+namespace BOCCHI.Modules.Buff.Chains;
 
 public class BardBuffChain : BuffChain
 {

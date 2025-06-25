@@ -2,7 +2,7 @@ using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 
-namespace OccultCrescentHelper.Modules.Buff.Chains;
+namespace BOCCHI.Modules.Buff.Chains;
 
 public unsafe class AllBuffsChain : ChainFactory
 {
