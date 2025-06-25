@@ -9,7 +9,7 @@ public class TeleporterConfig : ModuleConfig
 {
     public override string ProviderNamespace
     {
-        get => "OccultCrescentHelper.Modules.Teleporter";
+        get => GetType().Namespace!;
     }
 
     [Checkbox]

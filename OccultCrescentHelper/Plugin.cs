@@ -14,17 +14,20 @@ namespace OccultCrescentHelper;
 
 public sealed class Plugin : OcelotPlugin
 {
-    public override string Name {
+    public override string Name
+    {
         get => "Occult Crescent Helper";
     }
 
     public Config config { get; init; }
 
-    public override IOcelotConfig _config {
+    public override IOcelotConfig _config
+    {
         get => config;
     }
 
-    public static ChainQueue Chain {
+    public static ChainQueue Chain
+    {
         get => ChainManager.Get("OCH##main");
     }
 
@@ -68,14 +71,14 @@ public sealed class Plugin : OcelotPlugin
     {
         return ZoneData.IsInOccultCrescent()
                && !(
-                       Svc.Condition[ConditionFlag.BetweenAreas] ||
-                       Svc.Condition[ConditionFlag.BetweenAreas51] ||
-                       Svc.Condition[ConditionFlag.OccupiedInCutSceneEvent] ||
-                       Svc.Condition[ConditionFlag.OccupiedInEvent] ||
-                       Svc.Condition[ConditionFlag.WatchingCutscene] ||
-                       Svc.Condition[ConditionFlag.WatchingCutscene78] ||
-                       Svc.ClientState.LocalPlayer?.IsTargetable != true
-                   );
+                   Svc.Condition[ConditionFlag.BetweenAreas] ||
+                   Svc.Condition[ConditionFlag.BetweenAreas51] ||
+                   Svc.Condition[ConditionFlag.OccupiedInCutSceneEvent] ||
+                   Svc.Condition[ConditionFlag.OccupiedInEvent] ||
+                   Svc.Condition[ConditionFlag.WatchingCutscene] ||
+                   Svc.Condition[ConditionFlag.WatchingCutscene78] ||
+                   Svc.ClientState.LocalPlayer?.IsTargetable != true
+               );
     }
 
     public override void Dispose()

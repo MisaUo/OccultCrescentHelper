@@ -10,7 +10,7 @@ public class MountConfig : ModuleConfig
 {
     public override string ProviderNamespace
     {
-        get => "OccultCrescentHelper.Modules.Mount";
+        get => GetType().Namespace!;
     }
 
     [ExcelSheet(typeof(ExcelMount), nameof(MountProvider))]

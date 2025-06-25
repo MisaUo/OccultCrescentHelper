@@ -9,7 +9,7 @@ public partial class AutomatorConfig : ModuleConfig
 {
     public override string ProviderNamespace
     {
-        get => "OccultCrescentHelper.Modules.Automator";
+        get => GetType().Namespace!;
     }
 
     [Checkbox]
