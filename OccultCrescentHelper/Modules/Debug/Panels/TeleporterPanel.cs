@@ -18,12 +18,14 @@ public class TeleporterPanel : Panel
         if (module.TryGetModule<TeleporterModule>(out var teleporter) && teleporter!.IsReady())
         {
             OcelotUI.Title("Teleporter:");
-            OcelotUI.Indent(() => {
+            OcelotUI.Indent(() =>
+            {
                 var shards = teleporter.teleporter.GetNearbyAethernetShards();
                 if (shards.Count > 0)
                 {
                     OcelotUI.Title("Nearby Aethernet Shards:");
-                    OcelotUI.Indent(() => {
+                    OcelotUI.Indent(() =>
+                    {
                         foreach (var shard in teleporter.teleporter.GetNearbyAethernetShards())
                         {
                             var data = AethernetData.All().First(o => o.dataId == shard.DataId);
@@ -32,7 +34,10 @@ public class TeleporterPanel : Panel
                     });
                 }
 
-                if (ImGui.Button("Test Return")) teleporter.teleporter.Return();
+                if (ImGui.Button("Test Return"))
+                {
+                    teleporter.teleporter.Return();
+                }
             });
         }
     }

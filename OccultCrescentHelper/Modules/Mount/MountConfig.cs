@@ -7,7 +7,10 @@ namespace BOCCHI.Modules.Mount;
 [Title("modules.mount.title")]
 public class MountConfig : ModuleConfig
 {
-    public override string ProviderNamespace => GetType().Namespace!;
+    public override string ProviderNamespace
+    {
+        get => GetType().Namespace!;
+    }
 
     [ExcelSheet(typeof(ExcelMount), nameof(MountProvider))]
     [IllegalModeCompatible]

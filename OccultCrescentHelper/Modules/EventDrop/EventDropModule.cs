@@ -6,7 +6,12 @@ namespace BOCCHI.Modules.EventDrop;
 public class EventDropModule : Module<Plugin, Config>
 {
     public EventDropModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
-    public override EventDropConfig config => _config.EventDropConfig;
+    public override EventDropConfig config
+    {
+        get => _config.EventDropConfig;
+    }
 }

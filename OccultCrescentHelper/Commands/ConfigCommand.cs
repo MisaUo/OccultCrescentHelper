@@ -14,15 +14,24 @@ public class ConfigCommand : OcelotCommand
         this.plugin = plugin;
     }
 
-    public override string command => "/bocchicfg";
+    public override string command
+    {
+        get => "/bocchicfg";
+    }
 
-    public override string description => @"
+    public override string description
+    {
+        get => @"
 Opens Occult Crescent Helper config ui
  - /bocchicfg : Opens the config ui
 --------------------------------
 ".Trim();
+    }
 
-    public override IReadOnlyList<string> aliases => ["/bocchic", "/ochcfg", "/ochc", "/occultcrescenthelperconfig"];
+    public override IReadOnlyList<string> aliases
+    {
+        get => ["/bocchic", "/ochcfg", "/ochc", "/occultcrescenthelperconfig"];
+    }
 
 
     public override void Command(string command, string arguments)

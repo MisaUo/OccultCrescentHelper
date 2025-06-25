@@ -11,33 +11,42 @@ namespace BOCCHI.Modules.StateManager;
 public class StateManager
 {
     private readonly Dictionary<State, Action> handlers;
+
     private State state = State.Idle;
 
     public StateManager()
     {
-        handlers = new Dictionary<State, Action> {
+        handlers = new Dictionary<State, Action>
+        {
             { State.Idle, HandleIdle },
             { State.InCombat, HandleInCombat },
             { State.InFate, HandleInFate },
-            { State.InCriticalEncounter, HandleInCriticalEncounter }
+            { State.InCriticalEncounter, HandleInCriticalEncounter },
         };
     }
 
     public event Action? OnEnterIdle;
+
     public event Action? OnExitIdle;
 
     public event Action? OnEnterInCombat;
+
     public event Action? OnExitInCombat;
 
     public event Action? OnEnterInFate;
+
     public event Action? OnExitInFate;
 
     public event Action? OnEnterInCriticalEncounter;
+
     public event Action? OnExitInCriticalEncounter;
 
     public void Tick(IFramework _)
     {
-        if (Svc.ClientState.LocalPlayer?.IsDead ?? true) return;
+        if (Svc.ClientState.LocalPlayer?.IsDead ?? true)
+        {
+            return;
+        }
 
         handlers[state]();
     }
@@ -57,7 +66,10 @@ public class StateManager
             return;
         }
 
-        if (IsInCriticalEncounter()) ChangeState(State.InCriticalEncounter);
+        if (IsInCriticalEncounter())
+        {
+            ChangeState(State.InCriticalEncounter);
+        }
     }
 
     private void HandleInCombat()
@@ -75,23 +87,34 @@ public class StateManager
         }
 
 
-        if (!IsInCombat()) ChangeState(State.Idle);
+        if (!IsInCombat())
+        {
+            ChangeState(State.Idle);
+        }
     }
 
     public void HandleInFate()
     {
-        if (!IsInFate()) ChangeState(IsInCombat() ? State.InCombat : State.Idle);
+        if (!IsInFate())
+        {
+            ChangeState(IsInCombat() ? State.InCombat : State.Idle);
+        }
     }
 
     public void HandleInCriticalEncounter()
     {
-        if (!IsInCriticalEncounter()) ChangeState(IsInCombat() ? State.InCriticalEncounter : State.Idle);
+        if (!IsInCriticalEncounter())
+        {
+            ChangeState(IsInCombat() ? State.InCriticalEncounter : State.Idle);
+        }
     }
 
     private void ChangeState(State newState)
     {
         if (newState == state)
+        {
             return;
+        }
 
         var oldState = state;
         Svc.Log.Info($"[StateManager] State changed from {oldState} to {newState}");

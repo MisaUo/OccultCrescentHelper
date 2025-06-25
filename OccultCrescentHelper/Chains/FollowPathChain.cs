@@ -11,6 +11,7 @@ public class FollowPathChain : ChainFactory
     private readonly List<Vector3> path;
 
     private readonly Vector3 start;
+
     private readonly VNavmesh vnav;
 
     public FollowPathChain(VNavmesh vnav, Vector3 start, List<Vector3> path)
@@ -23,8 +24,8 @@ public class FollowPathChain : ChainFactory
     protected override Chain Create(Chain chain)
     {
         return chain
-               .PathfindAndMoveTo(vnav, start)
-               .WaitUntilNear(vnav, start)
-               .Then(_ => vnav.FollowPath(path, false));
+            .PathfindAndMoveTo(vnav, start)
+            .WaitUntilNear(vnav, start)
+            .Then(_ => vnav.FollowPath(path, false));
     }
 }

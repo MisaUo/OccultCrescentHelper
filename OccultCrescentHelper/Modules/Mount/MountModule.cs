@@ -7,9 +7,17 @@ namespace BOCCHI.Modules.Mount;
 public class MountModule : Module<Plugin, Config>
 {
     public MountModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
-    public static ChainQueue MountMaintainer => ChainManager.Get("OCH##MountMaintainer");
+    public static ChainQueue MountMaintainer
+    {
+        get => ChainManager.Get("OCH##MountMaintainer");
+    }
 
-    public override MountConfig config => _config.MountConfig;
+    public override MountConfig config
+    {
+        get => _config.MountConfig;
+    }
 }

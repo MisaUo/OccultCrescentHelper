@@ -14,7 +14,8 @@ public class ChainManagerPanel : Panel
     public override void Draw(DebugModule module)
     {
         OcelotUI.Title("Chain Manager:");
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             var instances = ChainManager.Active();
             OcelotUI.Title("# of instances:");
             ImGui.SameLine();
@@ -22,10 +23,14 @@ public class ChainManagerPanel : Panel
 
             foreach (var pair in instances)
             {
-                if (pair.Value.CurrentChain == null) continue;
+                if (pair.Value.CurrentChain == null)
+                {
+                    continue;
+                }
 
                 OcelotUI.Title($"{pair.Key}:");
-                OcelotUI.Indent(() => {
+                OcelotUI.Indent(() =>
+                {
                     var current = pair.Value.CurrentChain!;
                     OcelotUI.Title("Current Chain:");
                     ImGui.SameLine();

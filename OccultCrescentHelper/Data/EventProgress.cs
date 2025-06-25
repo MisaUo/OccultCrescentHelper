@@ -13,7 +13,9 @@ public class EventProgress
     public void AddProgress(float progress)
     {
         if (samples.Count >= MaxSamples)
+        {
             samples.RemoveAt(0);
+        }
 
         samples.Add(new ProgressSample(progress, DateTimeOffset.UtcNow));
     }
@@ -21,7 +23,9 @@ public class EventProgress
     public TimeSpan? EstimateTimeToCompletion()
     {
         if (samples.Count < 2)
+        {
             return null;
+        }
 
         var first = samples.First();
         var last = samples.Last();
@@ -30,7 +34,9 @@ public class EventProgress
         var deltaSeconds = (last.Timestamp - first.Timestamp).TotalSeconds;
 
         if (deltaProgress <= 0 || deltaSeconds <= 0)
+        {
             return null;
+        }
 
         var remainingProgress = 100f - last.Progress;
         var ratePerSecond = deltaProgress / deltaSeconds;

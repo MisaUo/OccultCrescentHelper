@@ -16,5 +16,8 @@ public class CarrotsConfig : ModuleConfig
     [Tooltip("modules.carrots.draw.tooltip")]
     public bool DrawLineToCarrots { get; set; } = true;
 
-    public bool ShouldDrawLineToCarrots => IsPropertyEnabled(nameof(DrawLineToCarrots));
+    public bool ShouldDrawLineToCarrots
+    {
+        get => IsPropertyEnabled(nameof(DrawLineToCarrots));
+    }
 }

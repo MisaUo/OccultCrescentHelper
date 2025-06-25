@@ -14,7 +14,10 @@ public class TeleporterModule : Module<Plugin, Config>
         teleporter = new Teleporter(this);
     }
 
-    public override TeleporterConfig config => _config.TeleporterConfig;
+    public override TeleporterConfig config
+    {
+        get => _config.TeleporterConfig;
+    }
 
     public override void Initialize()
     {

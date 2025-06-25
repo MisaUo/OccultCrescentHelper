@@ -6,6 +6,7 @@ namespace BOCCHI.Modules.Carrots;
 public class Carrot
 {
     public static Vector4 color = new(0.93f, 0.57f, 0.13f, 1f);
+
     private readonly IGameObject gameObject;
 
     public Carrot(IGameObject obj)

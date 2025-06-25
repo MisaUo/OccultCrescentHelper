@@ -14,13 +14,24 @@ public class CarrotsModule : Module<Plugin, Config>
     private readonly CarrotsTracker tracker = new();
 
     public CarrotsModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
-    public override CarrotsConfig config => _config.CarrotsConfig;
+    public override CarrotsConfig config
+    {
+        get => _config.CarrotsConfig;
+    }
 
-    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
+    public override bool enabled
+    {
+        get => config.IsPropertyEnabled(nameof(config.Enabled));
+    }
 
-    public List<Carrot> carrots => tracker.carrots;
+    public List<Carrot> carrots
+    {
+        get => tracker.carrots;
+    }
 
     public override void Tick(IFramework framework)
     {

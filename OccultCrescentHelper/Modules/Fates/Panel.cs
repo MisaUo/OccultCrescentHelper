@@ -11,7 +11,8 @@ public class Panel
     public void Draw(FatesModule module)
     {
         OcelotUI.Title($"{module.T("panel.title")}:");
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             if (module.tracker.fates.Count <= 0)
             {
                 ImGui.TextUnformatted(module.T("panel.none"));
@@ -20,9 +21,15 @@ public class Panel
 
             foreach (var fate in module.fates.Values)
             {
-                if (fate == null) continue;
+                if (fate == null)
+                {
+                    continue;
+                }
 
-                if (!EventData.Fates.TryGetValue(fate.FateId, out var data)) continue;
+                if (!EventData.Fates.TryGetValue(fate.FateId, out var data))
+                {
+                    continue;
+                }
 
                 ImGui.TextUnformatted($"{data.Name} ({fate.Progress}%)");
 
@@ -40,12 +47,15 @@ public class Panel
                 if (module.TryGetModule<TeleporterModule>(out var teleporter) && teleporter!.IsReady())
                 {
                     teleporter.teleporter.Button(data.aethernet, data.start ?? fate.Position, data.Name,
-                                                 $"fate_{fate.FateId}", data);
+                        $"fate_{fate.FateId}", data);
                 }
 
                 OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.Config.EventDropConfig));
 
-                if (!fate.Equals(module.fates.Values.Last())) OcelotUI.VSpace();
+                if (!fate.Equals(module.fates.Values.Last()))
+                {
+                    OcelotUI.VSpace();
+                }
             }
         });
     }

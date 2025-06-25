@@ -10,7 +10,8 @@ public class Panel
     public void Draw(TreasureModule module)
     {
         OcelotUI.Title($"{module.T("panel.title")}:");
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             if (module.treasures.Count <= 0)
             {
                 ImGui.TextUnformatted(module.T("panel.none"));
@@ -22,20 +23,27 @@ public class Panel
                 var index = 0;
                 foreach (var treasure in module.treasures)
                 {
-                    if (!treasure.IsValid()) continue;
+                    if (!treasure.IsValid())
+                    {
+                        continue;
+                    }
 
                     var pos = treasure.GetPosition();
 
                     ImGui.TableNextRow();
                     ImGui.TableNextColumn();
                     ImGui.TextUnformatted($"{treasure.GetName()}");
-                    OcelotUI.Indent(() => {
+                    OcelotUI.Indent(() =>
+                    {
                         ImGui.TextUnformatted($"({pos.X:F2}, {pos.Y:F2}, {pos.Z:F2})");
                         ImGui.TextUnformatted($"({Vector3.Distance(Player.Position, pos)})");
                     });
 
                     ImGui.TableNextColumn();
-                    if (ImGui.Button($"Target###{index}")) treasure.Target();
+                    if (ImGui.Button($"Target###{index}"))
+                    {
+                        treasure.Target();
+                    }
 
                     index++;
                 }

@@ -10,7 +10,9 @@ namespace BOCCHI.Modules.Debug;
 public class DebugWindow : OcelotWindow
 {
     public DebugWindow(Plugin plugin, Config config)
-        : base(plugin, config, "OCH Debug") { }
+        : base(plugin, config, "OCH Debug")
+    {
+    }
 
     public override void Draw()
     {
@@ -20,6 +22,9 @@ public class DebugWindow : OcelotWindow
             return;
         }
 
-        if (plugin.modules.TryGetModule<DebugModule>(out var module) && module != null) module.DrawPanels();
+        if (plugin.modules.TryGetModule<DebugModule>(out var module) && module != null)
+        {
+            module.DrawPanels();
+        }
     }
 }

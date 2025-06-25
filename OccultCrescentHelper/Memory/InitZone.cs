@@ -21,9 +21,15 @@ public class InitZone : IDisposable
 
     public void Dispose()
     {
-        if (_Hook?.IsEnabled == true) _Hook?.Disable();
+        if (_Hook?.IsEnabled == true)
+        {
+            _Hook?.Disable();
+        }
 
-        if (_Hook?.IsDisposed == false) _Hook?.Dispose();
+        if (_Hook?.IsDisposed == false)
+        {
+            _Hook?.Dispose();
+        }
     }
 
     public event InitZoneDelegate? OnInitZone;

@@ -24,7 +24,10 @@ public struct EventIconRenderer
 
         if (data.notes != null && config.ShowNoteDrops)
         {
-            if (rendered > 0) ImGui.SameLine();
+            if (rendered > 0)
+            {
+                ImGui.SameLine();
+            }
 
             Notes(data);
             rendered++;
@@ -32,7 +35,10 @@ public struct EventIconRenderer
 
         if (data.soulshard != null && config.ShowSoulShardDrops)
         {
-            if (rendered > 0) ImGui.SameLine();
+            if (rendered > 0)
+            {
+                ImGui.SameLine();
+            }
 
             SoulShard(data);
             rendered++;
@@ -58,7 +64,10 @@ public struct EventIconRenderer
 
             var label = $"Needed ({needed})";
             ;
-            if (needed <= 0) label = $"Not Needed ({count})";
+            if (needed <= 0)
+            {
+                label = $"Not Needed ({count})";
+            }
 
             ImGui.TextUnformatted($"{itemData.Name}: {label}");
             ImGui.EndTooltip();

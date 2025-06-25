@@ -32,10 +32,14 @@ public class CurrencyTracker
         var silverDelta = currentSilver - lastSilver;
 
         if (goldDelta > 0)
+        {
             gainedGold += goldDelta;
+        }
 
         if (silverDelta > 0)
+        {
             gainedSilver += silverDelta;
+        }
 
         lastGold = currentGold;
         lastSilver = currentSilver;
@@ -70,7 +74,9 @@ public class CurrencyTracker
     {
         var elapsed = (float)(DateTime.UtcNow - goldStartTime).TotalHours;
         if (elapsed <= 0)
+        {
             return 0;
+        }
 
         return gainedGold / elapsed;
     }
@@ -79,7 +85,9 @@ public class CurrencyTracker
     {
         var elapsed = (float)(DateTime.UtcNow - silverStartTime).TotalHours;
         if (elapsed <= 0)
+        {
             return 0;
+        }
 
         return gainedSilver / elapsed;
     }
@@ -97,6 +105,7 @@ public class CurrencyTracker
     private enum Currency
     {
         Silver = 45043,
-        Gold = 45044
+
+        Gold = 45044,
     }
 }

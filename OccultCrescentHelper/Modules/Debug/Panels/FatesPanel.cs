@@ -23,7 +23,10 @@ public class FatesPanel : Panel
 
     public void ProcessLgbData(ushort id)
     {
-        if (id == 0) return;
+        if (id == 0)
+        {
+            return;
+        }
 
         FateLocations.Clear();
 
@@ -47,14 +50,18 @@ public class FatesPanel : Panel
         var lgbFileName = "bg/" + bg![..(bg!.IndexOf("/level/", StringComparison.Ordinal) + 1)] + "level/planevent.lgb";
         var lgb = Svc.Data.GetFile<LgbFile>(lgbFileName);
         foreach (var layer in lgb?.Layers ?? [])
-        foreach (var instanceObject in layer.InstanceObjects)
-            if (locations.ContainsValue(instanceObject.InstanceId))
+        {
+            foreach (var instanceObject in layer.InstanceObjects)
             {
-                var fateId = locations.First(kv => kv.Value == instanceObject.InstanceId).Key;
-                var transform = instanceObject.Transform;
-                var pos = transform.Translation;
-                FateLocations[fateId] = new Vector3(pos.X, pos.Y, pos.Z);
+                if (locations.ContainsValue(instanceObject.InstanceId))
+                {
+                    var fateId = locations.First(kv => kv.Value == instanceObject.InstanceId).Key;
+                    var transform = instanceObject.Transform;
+                    var pos = transform.Translation;
+                    FateLocations[fateId] = new Vector3(pos.X, pos.Y, pos.Z);
+                }
             }
+        }
     }
 
     public override string GetName()
@@ -65,7 +72,8 @@ public class FatesPanel : Panel
     public override void Draw(DebugModule module)
     {
         OcelotUI.Title("Fates:");
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             foreach (var data in EventData.Fates.Values)
             {
                 ImGui.TextUnformatted(data.Name);
@@ -79,9 +87,15 @@ public class FatesPanel : Panel
 
                 OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.Config.EventDropConfig));
 
-                if (data.pathFactory != null) ImGui.TextColored(new Vector4(0.5f, 1.0f, 0.5f, 1.0f), "Has custom path");
+                if (data.pathFactory != null)
+                {
+                    ImGui.TextColored(new Vector4(0.5f, 1.0f, 0.5f, 1.0f), "Has custom path");
+                }
 
-                if (data.id != EventData.Fates.Keys.Max()) OcelotUI.VSpace();
+                if (data.id != EventData.Fates.Keys.Max())
+                {
+                    OcelotUI.VSpace();
+                }
             }
         });
     }

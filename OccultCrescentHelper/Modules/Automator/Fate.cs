@@ -28,13 +28,17 @@ public class Fate : Activity
     {
         var lastTargetPos = Vector3.Zero;
 
-        return new TaskManagerTask(() => {
+        return new TaskManagerTask(() =>
+        {
             if (EzThrottler.Throttle("FatePathfindingWatcher.EnemyScan", 100))
             {
                 if (Svc.Targets.Target == null)
                 {
                     var enemy = GetCentralMostEnemy();
-                    if (enemy != null) Svc.Targets.Target = enemy;
+                    if (enemy != null)
+                    {
+                        Svc.Targets.Target = enemy;
+                    }
                 }
             }
 
@@ -55,7 +59,7 @@ public class Fate : Activity
                         if (Svc.Condition[ConditionFlag.Mounted])
                         {
                             ActionManager.Instance()->UseAction(ActionType.Mount,
-                                                                module.plugin.Config.MountConfig.Mount);
+                                module.plugin.Config.MountConfig.Mount);
                         }
 
                         vnav.Stop();
@@ -65,7 +69,10 @@ public class Fate : Activity
                 }
             }
 
-            if (!vnav.IsRunning()) throw new VnavmeshStoppedException();
+            if (!vnav.IsRunning())
+            {
+                throw new VnavmeshStoppedException();
+            }
 
             return false;
         }, new TaskManagerConfiguration { TimeLimitMS = 180000, ShowError = false });

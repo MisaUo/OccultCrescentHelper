@@ -11,11 +11,19 @@ public class CurrencyModule : Module<Plugin, Config>
     public readonly CurrencyTracker tracker = new();
 
     public CurrencyModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
-    public override CurrencyConfig config => _config.CurrencyConfig;
+    public override CurrencyConfig config
+    {
+        get => _config.CurrencyConfig;
+    }
 
-    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
+    public override bool enabled
+    {
+        get => config.IsPropertyEnabled(nameof(config.Enabled));
+    }
 
     public override void Tick(IFramework framework)
     {

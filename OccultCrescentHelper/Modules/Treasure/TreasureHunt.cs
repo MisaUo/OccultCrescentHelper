@@ -17,6 +17,7 @@ namespace BOCCHI.Modules.Treasure;
 public struct TreasureNode
 {
     public Vector3 position;
+
     public int level;
 
     public TreasureNode(Vector3 position, int level)
@@ -30,7 +31,8 @@ public class TreasureHunt
 {
     private const float INTERACT_THRESHOLD = 2f;
 
-    private readonly List<TreasureNode> loop = [
+    private readonly List<TreasureNode> loop =
+    [
         new(new Vector3(490.41f, 62.48f, -590.57f), 1),
         new(new Vector3(617.09f, 66.31f, -703.88f), 1),
         new(new Vector3(666.54f, 79.13f, -480.36f), 2),
@@ -90,7 +92,7 @@ public class TreasureHunt
         new(new Vector3(-118.97f, 5f, -708.43f), 7),
         new(new Vector3(142.11f, 16.41f, -574.06f), 6),
         new(new Vector3(381.77f, 22.18f, -743.65f), 6),
-        new(new Vector3(386.95f, 96.82f, -451.35f), 3)
+        new(new Vector3(386.95f, 96.82f, -451.35f), 3),
     ];
 
     private volatile float distance;
@@ -103,19 +105,37 @@ public class TreasureHunt
 
     private volatile IGameObject? treasure;
 
-    private Vector3 currentNode => path[nodeIndex];
+    private Vector3 currentNode
+    {
+        get => path[nodeIndex];
+    }
 
-    private bool isFinalNode => nodeIndex >= path.Count - 1;
+    private bool isFinalNode
+    {
+        get => nodeIndex >= path.Count - 1;
+    }
 
     public void Tick(TreasureModule module)
     {
-        if (!running) return;
+        if (!running)
+        {
+            return;
+        }
 
-        if (!module.TryGetIPCProvider<VNavmesh>(out var vnav) || vnav == null) return;
+        if (!module.TryGetIPCProvider<VNavmesh>(out var vnav) || vnav == null)
+        {
+            return;
+        }
 
-        if (!module.TryGetIPCProvider<Lifestream>(out var lifestream) || lifestream == null) return;
+        if (!module.TryGetIPCProvider<Lifestream>(out var lifestream) || lifestream == null)
+        {
+            return;
+        }
 
-        if (path.Count == 0) path = GeneratePath(Player.Position, module);
+        if (path.Count == 0)
+        {
+            path = GeneratePath(Player.Position, module);
+        }
 
         MaintainWatcherChain(module, vnav, lifestream);
     }
@@ -127,75 +147,94 @@ public class TreasureHunt
 
     private void MaintainWatcherChain(TreasureModule module, VNavmesh vnav, Lifestream lifestream)
     {
-        if (Plugin.Chain.IsRunning) return;
+        if (Plugin.Chain.IsRunning)
+        {
+            return;
+        }
 
-        Plugin.Chain.Submit(() => {
+        Plugin.Chain.Submit(() =>
+        {
             var pos = $"({currentNode.X:f2}, {currentNode.Y:f2}, {currentNode.Z:f2})";
             return Chain.Create($"Treasure hunt looper ({nodeIndex + 1}/{path.Count}) ({pos})")
-                        .Then(new TaskManagerTask(() => {
-                            if (!vnav.IsRunning()) vnav.PathfindAndMoveTo(currentNode, false);
+                .Then(new TaskManagerTask(() =>
+                {
+                    if (!vnav.IsRunning())
+                    {
+                        vnav.PathfindAndMoveTo(currentNode, false);
+                    }
 
-                            var treasures = Svc.Objects
-                                               .Where(o => o != null && o?.ObjectKind == ObjectKind.Treasure &&
-                                                           o.IsValid() && !o.IsDead && o.IsTargetable)
-                                               .ToList();
+                    var treasures = Svc.Objects
+                        .Where(o => o != null && o?.ObjectKind == ObjectKind.Treasure &&
+                                    o.IsValid() && !o.IsDead && o.IsTargetable)
+                        .ToList();
 
-                            var distance = Vector3.Distance(Player.Position, currentNode);
-                            this.distance = distance;
-                            if (distance <= module.config.ChestDetectionRange)
+                    var distance = Vector3.Distance(Player.Position, currentNode);
+                    this.distance = distance;
+                    if (distance <= module.config.ChestDetectionRange)
+                    {
+                        treasure = treasures.FirstOrDefault(o => Is(o.Position, currentNode));
+                        if (treasure != null)
+                        {
+                            Svc.Targets.Target = treasure;
+
+                            if (distance > INTERACT_THRESHOLD)
                             {
-                                treasure = treasures.FirstOrDefault(o => Is(o.Position, currentNode));
-                                if (treasure != null)
-                                {
-                                    Svc.Targets.Target = treasure;
-
-                                    if (distance > INTERACT_THRESHOLD) return false;
-
-                                    Plugin.Chain.SubmitFront(() => Chain.Create("Interact")
-                                                                        .Then(_ => module.Debug("Starting Interaction"))
-                                                                        .Then(NeoTasks.InteractWithObject(
-                                                                                  () => treasure, false,
-                                                                                  new TaskManagerConfiguration {
-                                                                                      TimeLimitMS = 3000,
-                                                                                      TimeoutSilently = true
-                                                                                  }))
-                                                                        .Then(_ => module.Debug("Interaction Done"))
-                                    );
-
-                                    vnav.Stop();
-                                }
-
-                                if (isFinalNode)
-                                {
-                                    running = false;
-                                    return true;
-                                }
-
-                                nodeIndex++;
-                                vnav.PathfindAndMoveTo(currentNode, false);
-                                return true;
+                                return false;
                             }
 
-                            return false;
-                        }, new TaskManagerConfiguration { TimeLimitMS = int.MaxValue }))
-                        .Then(() => Chain.Create("Interact")
-                                         .Wait(300)
-                                         .Then(NeoTasks.InteractWithObject(
-                                                   () => treasure, false,
-                                                   new TaskManagerConfiguration { TimeLimitMS = 3000 }))
-                                         .Then(_ => treasure = null)
-                        );
+                            Plugin.Chain.SubmitFront(() => Chain.Create("Interact")
+                                .Then(_ => module.Debug("Starting Interaction"))
+                                .Then(NeoTasks.InteractWithObject(
+                                    () => treasure, false,
+                                    new TaskManagerConfiguration
+                                    {
+                                        TimeLimitMS = 3000,
+                                        TimeoutSilently = true,
+                                    }))
+                                .Then(_ => module.Debug("Interaction Done"))
+                            );
+
+                            vnav.Stop();
+                        }
+
+                        if (isFinalNode)
+                        {
+                            running = false;
+                            return true;
+                        }
+
+                        nodeIndex++;
+                        vnav.PathfindAndMoveTo(currentNode, false);
+                        return true;
+                    }
+
+                    return false;
+                }, new TaskManagerConfiguration { TimeLimitMS = int.MaxValue }))
+                .Then(() => Chain.Create("Interact")
+                    .Wait(300)
+                    .Then(NeoTasks.InteractWithObject(
+                        () => treasure, false,
+                        new TaskManagerConfiguration { TimeLimitMS = 3000 }))
+                    .Then(_ => treasure = null)
+                );
         });
     }
 
     public void Draw(TreasureModule module)
     {
-        if (!module.TryGetIPCProvider<VNavmesh>(out var vnav) || vnav == null) return;
+        if (!module.TryGetIPCProvider<VNavmesh>(out var vnav) || vnav == null)
+        {
+            return;
+        }
 
-        if (!module.TryGetIPCProvider<Lifestream>(out var lifestream) || lifestream == null) return;
+        if (!module.TryGetIPCProvider<Lifestream>(out var lifestream) || lifestream == null)
+        {
+            return;
+        }
 
         OcelotUI.Title($"{module.T("panel.hunt.title")}:");
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             if (ImGui.Button(running ? "Stop" : "Start"))
             {
                 path.Clear();
@@ -219,10 +258,14 @@ public class TreasureHunt
 
                 foreach (var pair in instances)
                 {
-                    if (pair.Value.CurrentChain == null) continue;
+                    if (pair.Value.CurrentChain == null)
+                    {
+                        continue;
+                    }
 
                     OcelotUI.Title($"{pair.Key}:");
-                    OcelotUI.Indent(() => {
+                    OcelotUI.Indent(() =>
+                    {
                         var current = pair.Value.CurrentChain!;
                         OcelotUI.LabelledValue(module.T("panel.hunt.instance.current"), distance.ToString());
                         OcelotUI.LabelledValue(module.T("panel.hunt.instance.progress"), $"{current.progress * 100}%");
@@ -238,7 +281,10 @@ public class TreasureHunt
         List<Vector3> path = new();
 
         var valid = loop.Where(node => node.level <= module.config.MaxLevel).ToList();
-        if (valid.Count <= 0) return path;
+        if (valid.Count <= 0)
+        {
+            return path;
+        }
 
         var startIndex = 0;
         var closestDistance = float.MaxValue;

@@ -11,32 +11,44 @@ namespace BOCCHI.Windows;
 public class MainWindow : OcelotMainWindow
 {
     public MainWindow(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
     public override void PostInitialize()
     {
         base.PostInitialize();
 
-        TitleBarButtons.Add(new TitleBarButton {
-            Click = m => {
-                if (m != ImGuiMouseButton.Left) return;
+        TitleBarButtons.Add(new TitleBarButton
+        {
+            Click = m =>
+            {
+                if (m != ImGuiMouseButton.Left)
+                {
+                    return;
+                }
 
                 plugin.modules.GetModule<AutomatorModule>().DisableIllegalMode();
             },
             Icon = FontAwesomeIcon.Stop,
             IconOffset = new Vector2(2, 2),
-            ShowTooltip = () => ImGui.SetTooltip("Emergency Stop")
+            ShowTooltip = () => ImGui.SetTooltip("Emergency Stop"),
         });
 
-        TitleBarButtons.Add(new TitleBarButton {
-            Click = m => {
-                if (m != ImGuiMouseButton.Left) return;
+        TitleBarButtons.Add(new TitleBarButton
+        {
+            Click = m =>
+            {
+                if (m != ImGuiMouseButton.Left)
+                {
+                    return;
+                }
 
                 AutomatorModule.ToggleIllegalMode(plugin);
             },
             Icon = FontAwesomeIcon.Skull,
             IconOffset = new Vector2(2, 2),
-            ShowTooltip = () => ImGui.SetTooltip("Toggle Illegal Mode")
+            ShowTooltip = () => ImGui.SetTooltip("Toggle Illegal Mode"),
         });
     }
 

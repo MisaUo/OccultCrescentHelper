@@ -14,15 +14,29 @@ public class FatesModule : Module<Plugin, Config>
     public readonly FateTracker tracker = new();
 
     public FatesModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
-    public override FatesConfig config => _config.FatesConfig;
+    public override FatesConfig config
+    {
+        get => _config.FatesConfig;
+    }
 
-    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
+    public override bool enabled
+    {
+        get => config.IsPropertyEnabled(nameof(config.Enabled));
+    }
 
-    public Dictionary<uint, IFate> fates => tracker.fates;
+    public Dictionary<uint, IFate> fates
+    {
+        get => tracker.fates;
+    }
 
-    public Dictionary<uint, EventProgress> progress => tracker.progress;
+    public Dictionary<uint, EventProgress> progress
+    {
+        get => tracker.progress;
+    }
 
     public override void Tick(IFramework framework)
     {

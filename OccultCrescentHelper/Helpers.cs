@@ -19,8 +19,10 @@ public static class Helpers
         var height = Device.Instance()->Height;
 
         if (!CameraHelper.WorldLineToScreen(start, end, view, projection, nearPlane, width, height, out var screenStart,
-                                            out var screenEnd))
+                out var screenEnd))
+        {
             return;
+        }
 
         var imguiColor = ImGui.ColorConvertFloat4ToU32(color);
         ImGui.GetBackgroundDrawList().AddLine(screenStart, screenEnd, imguiColor, thickness);

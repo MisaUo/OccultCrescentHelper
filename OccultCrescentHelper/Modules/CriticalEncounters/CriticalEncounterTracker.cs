@@ -23,9 +23,13 @@ public class CriticalEncounterTracker
             .ToDictionary(ev => (uint)ev.DynamicEventId, ev => ev);
 
         foreach (var ev in criticalEncounters.Values)
+        {
             if (ev.State == DynamicEventState.Battle)
             {
-                if (ev.Progress == 0) continue;
+                if (ev.Progress == 0)
+                {
+                    continue;
+                }
 
                 if (!this.progress.TryGetValue(ev.DynamicEventId, out var progress))
                 {
@@ -34,11 +38,19 @@ public class CriticalEncounterTracker
                 }
 
                 if (progress.samples.Count == 0 || progress.samples[^1].Progress != ev.Progress)
+                {
                     progress.AddProgress(ev.Progress);
+                }
 
-                if (ev.Progress == 100) this.progress.Remove(ev.DynamicEventId);
+                if (ev.Progress == 100)
+                {
+                    this.progress.Remove(ev.DynamicEventId);
+                }
             }
             else
+            {
                 progress.Remove(ev.DynamicEventId);
+            }
+        }
     }
 }

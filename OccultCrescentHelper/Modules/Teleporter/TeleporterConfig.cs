@@ -6,7 +6,10 @@ namespace BOCCHI.Modules.Teleporter;
 [Title("modules.teleporter.title")]
 public class TeleporterConfig : ModuleConfig
 {
-    public override string ProviderNamespace => GetType().Namespace!;
+    public override string ProviderNamespace
+    {
+        get => GetType().Namespace!;
+    }
 
     [Checkbox]
     [RequiredPlugin("Lifestream")]
@@ -29,7 +32,10 @@ public class TeleporterConfig : ModuleConfig
     [Tooltip("modules.teleporter.use_custom_paths.tooltip")]
     public bool UseCustomPaths { get; set; } = true;
 
-    public bool ShouldUseCustomPaths => IsPropertyEnabled(nameof(UseCustomPaths));
+    public bool ShouldUseCustomPaths
+    {
+        get => IsPropertyEnabled(nameof(UseCustomPaths));
+    }
 
     [Checkbox]
     [Label("modules.teleporter.return_after_fate.label")]

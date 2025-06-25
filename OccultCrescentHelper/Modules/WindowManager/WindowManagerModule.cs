@@ -14,17 +14,28 @@ public class WindowManagerModule : Module<Plugin, Config>
     private bool mainClosed;
 
     public WindowManagerModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
-    public override WindowManagerConfig config => _config.WindowManagerConfig;
+    public override WindowManagerConfig config
+    {
+        get => _config.WindowManagerConfig;
+    }
 
 
     public override void PostInitialize()
     {
-        if (config.OpenMainOnStartUp) plugin.windows.OpenMainUI();
+        if (config.OpenMainOnStartUp)
+        {
+            plugin.windows.OpenMainUI();
+        }
 
 
-        if (config.OpenConfigOnStartUp) plugin.windows.OpenConfigUI();
+        if (config.OpenConfigOnStartUp)
+        {
+            plugin.windows.OpenConfigUI();
+        }
 
         GetModule<StateManagerModule>().OnEnterInCombat += EnterCombat;
         GetModule<StateManagerModule>().OnEnterInCriticalEncounter += EnterCombat;
@@ -36,17 +47,29 @@ public class WindowManagerModule : Module<Plugin, Config>
     {
         if (occultCrescentTerritoryIds.Contains(id))
         {
-            if (config.OpenMainOnEnter) plugin.windows.OpenMainUI();
+            if (config.OpenMainOnEnter)
+            {
+                plugin.windows.OpenMainUI();
+            }
 
 
-            if (config.OpenConfigOnEnter) plugin.windows.OpenConfigUI();
+            if (config.OpenConfigOnEnter)
+            {
+                plugin.windows.OpenConfigUI();
+            }
         }
         else
         {
-            if (config.CloseMainOnExit) plugin.windows.CloseMainUI();
+            if (config.CloseMainOnExit)
+            {
+                plugin.windows.CloseMainUI();
+            }
 
 
-            if (config.CloseConfigOnExit) plugin.windows.CloseConfigUI();
+            if (config.CloseConfigOnExit)
+            {
+                plugin.windows.CloseConfigUI();
+            }
         }
     }
 

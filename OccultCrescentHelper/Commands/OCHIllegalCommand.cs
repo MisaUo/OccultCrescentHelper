@@ -22,9 +22,14 @@ public class OCHIllegalCommand : OcelotCommand
         this.plugin = plugin;
     }
 
-    public override string command => "/bocchiillegal";
+    public override string command
+    {
+        get => "/bocchiillegal";
+    }
 
-    public override string description => @"
+    public override string description
+    {
+        get => @"
 Manage och automator/illegal mode.
  - /bocchiillegal (Toggles the automator lens window)
  - /bocchiillegal on (Enables illegal mode (Automation))
@@ -32,10 +37,17 @@ Manage och automator/illegal mode.
  - /bocchiillegal toggle (Toggles illegal mode (Automation))
 --------------------------------
 ".Trim();
+    }
 
-    public override IReadOnlyList<string> aliases => ["/ochillegal", "/bocchillegal"];
+    public override IReadOnlyList<string> aliases
+    {
+        get => ["/ochillegal", "/bocchillegal"];
+    }
 
-    public override IReadOnlyList<string> validArguments => ["on", "off", "toggle"];
+    public override IReadOnlyList<string> validArguments
+    {
+        get => ["on", "off", "toggle"];
+    }
 
     public override void Command(string command, string arguments)
     {
@@ -45,8 +57,12 @@ Manage och automator/illegal mode.
             return;
         }
 
-        Svc.Framework.RunOnTick(() => {
-            if (!plugin.modules.TryGetModule<AutomatorModule>(out var automator) || automator == null) return;
+        Svc.Framework.RunOnTick(() =>
+        {
+            if (!plugin.modules.TryGetModule<AutomatorModule>(out var automator) || automator == null)
+            {
+                return;
+            }
 
             switch (arguments)
             {
@@ -67,11 +83,17 @@ Manage och automator/illegal mode.
 
     private unsafe void FlagActiveCe(AgentMap* map)
     {
-        if (!plugin.modules.TryGetModule<CriticalEncountersModule>(out var source) || source == null) return;
+        if (!plugin.modules.TryGetModule<CriticalEncountersModule>(out var source) || source == null)
+        {
+            return;
+        }
 
         foreach (var encounter in source.criticalEncounters.Values)
         {
-            if (encounter.EventType >= 4 || encounter.State != DynamicEventState.Register) continue;
+            if (encounter.EventType >= 4 || encounter.State != DynamicEventState.Register)
+            {
+                continue;
+            }
 
             map->SetFlagMapMarker(Svc.ClientState.TerritoryType, Svc.ClientState.MapId, encounter.MapMarker.Position);
             return;
@@ -80,15 +102,27 @@ Manage och automator/illegal mode.
 
     private unsafe void FlagActiveFate(AgentMap* map, bool ignorePots)
     {
-        if (!plugin.modules.TryGetModule<FatesModule>(out var source) || source == null) return;
+        if (!plugin.modules.TryGetModule<FatesModule>(out var source) || source == null)
+        {
+            return;
+        }
 
         foreach (var fate in source.fates.Values)
         {
-            if (fate == null) continue;
+            if (fate == null)
+            {
+                continue;
+            }
 
-            if (!EventData.Fates.TryGetValue(fate.FateId, out var data)) continue;
+            if (!EventData.Fates.TryGetValue(fate.FateId, out var data))
+            {
+                continue;
+            }
 
-            if (ignorePots && data.notes == MonsterNote.PersistentPots) continue;
+            if (ignorePots && data.notes == MonsterNote.PersistentPots)
+            {
+                continue;
+            }
 
             map->SetFlagMapMarker(Svc.ClientState.TerritoryType, Svc.ClientState.MapId, data.start ?? fate.Position);
             return;

@@ -13,17 +13,26 @@ public class InstanceIdentifierModule : Module<Plugin, Config>
     public InitZone hook = new();
 
     public InstanceIdentifierModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
-    public override InstanceIdentifierConfig config => _config.InstanceIdentifierConfig;
+    public override InstanceIdentifierConfig config
+    {
+        get => _config.InstanceIdentifierConfig;
+    }
 
-    public override bool enabled => config.Show;
+    public override bool enabled
+    {
+        get => config.Show;
+    }
 
     public string instance { get; private set; } = "Unknown";
 
     public override void PostInitialize()
     {
-        hook.OnInitZone += (a1, a2, a3) => {
+        hook.OnInitZone += (a1, a2, a3) =>
+        {
             try
             {
                 instance = MemoryHelper.Read<ushort>(a3).ToString();

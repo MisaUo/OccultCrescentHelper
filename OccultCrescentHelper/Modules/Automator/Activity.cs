@@ -42,45 +42,53 @@ public abstract class Activity
         this.vnav = vnav;
         this.module = module;
 
-        handlers = new Dictionary<ActivityState, Func<StateManagerModule, Func<Chain>?>> {
+        handlers = new Dictionary<ActivityState, Func<StateManagerModule, Func<Chain>?>>
+        {
             { ActivityState.Idle, GetIdleChain },
             { ActivityState.Pathfinding, GetPathfindingChain },
             { ActivityState.Participating, GetParticipatingChain },
-            { ActivityState.Done, GetDoneChain }
+            { ActivityState.Done, GetDoneChain },
         };
 
         var states = module.GetModule<StateManagerModule>();
         if (states.GetState() == State.InFate || states.GetState() == State.InCriticalEncounter)
+        {
             state = ActivityState.Participating;
+        }
     }
 
 
     public Func<Chain>? GetChain(StateManagerModule states)
     {
-        if (!IsValid()) return null;
+        if (!IsValid())
+        {
+            return null;
+        }
 
         return handlers[state](states);
     }
 
     public Func<Chain> GetIdleChain(StateManagerModule states)
     {
-        return () => {
+        return () =>
+        {
             return Chain.Create("Illegal:Idle")
-                        .ConditionalThen(
-                            _ => module.config.ShouldToggleAiProvider && !Svc.Condition[ConditionFlag.InCombat],
-                            _ => module.config.AiProvider.Off())
-                        .Then(_ => vnav.Stop())
-                        .Then(_ => state = ActivityState.Pathfinding);
+                .ConditionalThen(
+                    _ => module.config.ShouldToggleAiProvider && !Svc.Condition[ConditionFlag.InCombat],
+                    _ => module.config.AiProvider.Off())
+                .Then(_ => vnav.Stop())
+                .Then(_ => state = ActivityState.Pathfinding);
         };
     }
 
     public Func<Chain> GetPathfindingChain(StateManagerModule states)
     {
-        return () => {
+        return () =>
+        {
             var yes = module.GetIPCProvider<YesAlready>();
 
             var playerShard = AethernetData.All().OrderBy(data => Vector3.Distance(Player.Position, data.position))
-                                           .First();
+                .First();
             var activityShard = GetAethernetData();
 
             var isFate = data.type == EventType.Fate;
@@ -89,8 +97,8 @@ public abstract class Activity
             module.Debug("Selected navigation type: " + navType);
 
             var chain = Chain.Create("Illegal:Pathfinding")
-                             .ConditionalWait(_ => !isFate && module.config.ShouldDelayCriticalEncounters,
-                                              Random.Shared.Next(10000, 15001));
+                .ConditionalWait(_ => !isFate && module.config.ShouldDelayCriticalEncounters,
+                    Random.Shared.Next(10000, 15001));
 
             switch (navType)
             {
@@ -113,7 +121,7 @@ public abstract class Activity
                         .Then(ChainHelper.TeleportChain(activityShard.aethernet))
                         .Debug("Waiting for lifestream to not be 'busy'")
                         .Then(new TaskManagerTask(() => !lifestream.IsBusy(),
-                                                  new TaskManagerConfiguration { TimeLimitMS = 30000 }))
+                            new TaskManagerConfiguration { TimeLimitMS = 30000 }))
                         .Then(new PathfindingChain(vnav, GetPosition(), data, false))
                         .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain());
                     break;
@@ -125,7 +133,7 @@ public abstract class Activity
                         .Then(ChainHelper.TeleportChain(activityShard.aethernet))
                         .Debug("Waiting for lifestream to not be 'busy'")
                         .Then(new TaskManagerTask(() => !lifestream.IsBusy(),
-                                                  new TaskManagerConfiguration { TimeLimitMS = 30000 }))
+                            new TaskManagerConfiguration { TimeLimitMS = 30000 }))
                         .Then(new PathfindingChain(vnav, GetPosition(), data, false))
                         .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain());
                     break;
@@ -137,8 +145,8 @@ public abstract class Activity
                 .Then(GetPathfindingWatcher(states, vnav))
                 // Cringe
                 .Then(_ => state = isFate
-                                       ? ActivityState.Participating
-                                       : ActivityState.WaitingToStartCriticalEncounter);
+                    ? ActivityState.Participating
+                    : ActivityState.WaitingToStartCriticalEncounter);
 
             return chain;
         };
@@ -147,22 +155,24 @@ public abstract class Activity
 
     protected Func<Chain>? GetParticipatingChain(StateManagerModule states)
     {
-        return () => {
+        return () =>
+        {
             return Chain.Create("Illegal:Participating")
-                        .ConditionalThen(_ => module.config.ShouldToggleAiProvider, _ => module.config.AiProvider.On())
-                        .Then(_ => vnav.Stop())
-                        .Then(new TaskManagerTask(() => {
-                            if (module.config.ShouldForceTarget &&
-                                EzThrottler.Throttle("Participating.ForceTarget", 100))
-                            {
-                                Svc.Targets.Target ??= module.config.ShouldForceTargetCentralEnemy
-                                                           ? GetCentralMostEnemy()
-                                                           : GetClosestEnemy();
-                            }
+                .ConditionalThen(_ => module.config.ShouldToggleAiProvider, _ => module.config.AiProvider.On())
+                .Then(_ => vnav.Stop())
+                .Then(new TaskManagerTask(() =>
+                {
+                    if (module.config.ShouldForceTarget &&
+                        EzThrottler.Throttle("Participating.ForceTarget", 100))
+                    {
+                        Svc.Targets.Target ??= module.config.ShouldForceTargetCentralEnemy
+                            ? GetCentralMostEnemy()
+                            : GetClosestEnemy();
+                    }
 
-                            return states.GetState() == State.Idle;
-                        }, new TaskManagerConfiguration { TimeLimitMS = int.MaxValue }))
-                        .Then(_ => state = ActivityState.Done);
+                    return states.GetState() == State.Idle;
+                }, new TaskManagerConfiguration { TimeLimitMS = int.MaxValue }))
+                .Then(_ => state = ActivityState.Done);
         };
     }
 
@@ -174,14 +184,14 @@ public abstract class Activity
     private List<IGameObject> GetEnemies()
     {
         return Svc.Objects
-                  .Where(o =>
-                             o != null &&
-                             o.ObjectKind == ObjectKind.BattleNpc &&
-                             IsActivityTarget(o) &&
-                             o.IsTargetable
-                  )
-                  .OrderBy(o => Vector3.Distance(o.Position, Player.Position))
-                  .ToList();
+            .Where(o =>
+                o != null &&
+                o.ObjectKind == ObjectKind.BattleNpc &&
+                IsActivityTarget(o) &&
+                o.IsTargetable
+            )
+            .OrderBy(o => Vector3.Distance(o.Position, Player.Position))
+            .ToList();
     }
 
     protected int GetEnemyCount()
@@ -199,7 +209,9 @@ public abstract class Activity
         var enemies = GetEnemies();
 
         if (enemies.Count == 0)
+        {
             return null;
+        }
 
         var centroid = new Vector3(
             enemies.Average(o => o.Position.X),
@@ -208,13 +220,16 @@ public abstract class Activity
         );
 
         return enemies
-               .OrderBy(o => Vector3.Distance(o.Position, centroid))
-               .FirstOrDefault();
+            .OrderBy(o => Vector3.Distance(o.Position, centroid))
+            .FirstOrDefault();
     }
 
     private unsafe bool IsActivityTarget(IGameObject? obj)
     {
-        if (obj == null) return false;
+        if (obj == null)
+        {
+            return false;
+        }
 
         try
         {
@@ -223,7 +238,10 @@ public abstract class Activity
             var id = battleChara->EventId.EntryId;
             var count = Svc.Data.GetExcelSheet<DynamicEvent>().Count();
 
-            if (data.type == EventType.Fate) return battleChara->FateId == data.id;
+            if (data.type == EventType.Fate)
+            {
+                return battleChara->FateId == data.id;
+            }
 
             var isRelatedToCurrentEvent = battleChara->EventId.EntryId == Player.BattleChara->EventId.EntryId;
 
@@ -251,7 +269,11 @@ public abstract class Activity
 
     private bool ShouldMountToPathfindTo(Vector3 destination)
     {
-        if (!module._config.TeleporterConfig.ShouldMount) return false;
+        if (!module._config.TeleporterConfig.ShouldMount)
+        {
+            return false;
+        }
+
         return Vector3.Distance(Player.Position, destination) > 20f;
     }
 

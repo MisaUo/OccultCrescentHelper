@@ -13,7 +13,8 @@ public class Panel
     public void Draw(CriticalEncountersModule module)
     {
         OcelotUI.Title($"{module.T("panel.title")}:");
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             var active = module.criticalEncounters.Values.Where(ev => ev.State != DynamicEventState.Inactive).Count();
             if (active <= 0)
             {
@@ -23,9 +24,15 @@ public class Panel
 
             foreach (var ev in module.criticalEncounters.Values)
             {
-                if (ev.State == DynamicEventState.Inactive) continue;
+                if (ev.State == DynamicEventState.Inactive)
+                {
+                    continue;
+                }
 
-                if (!EventData.CriticalEncounters.TryGetValue(ev.DynamicEventId, out var data)) continue;
+                if (!EventData.CriticalEncounters.TryGetValue(ev.DynamicEventId, out var data))
+                {
+                    continue;
+                }
 
                 ImGui.TextUnformatted(ev.Name.ToString());
                 if (ev.EventType >= 4)
@@ -85,5 +92,7 @@ public class Panel
     }
 
 
-    private void HandlerTower(DynamicEvent ev) { }
+    private void HandlerTower(DynamicEvent ev)
+    {
+    }
 }

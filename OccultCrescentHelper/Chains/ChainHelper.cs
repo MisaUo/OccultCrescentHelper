@@ -26,8 +26,10 @@ public class ChainHelper
         this.plugin = plugin;
     }
 
-    private static ChainHelper instance {
-        get {
+    private static ChainHelper instance
+    {
+        get
+        {
             if (_instance == null)
             {
                 throw new InvalidOperationException(
@@ -38,9 +40,15 @@ public class ChainHelper
         }
     }
 
-    private static ModuleManager modules => instance.plugin.modules;
+    private static ModuleManager modules
+    {
+        get => instance.plugin.modules;
+    }
 
-    private static IPCManager ipc => instance.plugin.ipc;
+    private static IPCManager ipc
+    {
+        get => instance.plugin.ipc;
+    }
 
     public static void Initialize(Plugin plugin)
     {
@@ -78,23 +86,23 @@ public class ChainHelper
     {
         var vnav = ipc.GetProvider<VNavmesh>();
         return () => Chain.Create()
-                          .ConditionalThen(_ => Player.DistanceTo(destination) > distance, _ =>
-                                               Chain.Create()
-                                                    .Then(new PathfindAndMoveToChain(vnav, destination))
-                                                    .WaitUntilNear(vnav, destination, distance)
-                                                    .Then(_ => vnav.Stop())
-                          );
+            .ConditionalThen(_ => Player.DistanceTo(destination) > distance, _ =>
+                Chain.Create()
+                    .Then(new PathfindAndMoveToChain(vnav, destination))
+                    .WaitUntilNear(vnav, destination, distance)
+                    .Then(_ => vnav.Stop())
+            );
     }
 
     public static Func<Chain> MoveToAndWait(Vector3 destination, float distance)
     {
         var vnav = ipc.GetProvider<VNavmesh>();
         return () => Chain.Create()
-                          .ConditionalThen(_ => Player.DistanceTo(destination) > distance, _ =>
-                                               Chain.Create()
-                                                    .Then(_ => vnav.MoveToPath([destination], false))
-                                                    .WaitUntilNear(vnav, destination, distance)
-                                                    .Then(_ => vnav.Stop())
-                          );
+            .ConditionalThen(_ => Player.DistanceTo(destination) > distance, _ =>
+                Chain.Create()
+                    .Then(_ => vnav.MoveToPath([destination], false))
+                    .WaitUntilNear(vnav, destination, distance)
+                    .Then(_ => vnav.Stop())
+            );
     }
 }

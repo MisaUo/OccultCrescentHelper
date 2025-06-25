@@ -23,13 +23,24 @@ public class TreasureModule : Module<Plugin, Config>
     private readonly TreasureTracker tracker = new();
 
     public TreasureModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
-    public override TreasureConfig config => _config.TreasureConfig;
+    public override TreasureConfig config
+    {
+        get => _config.TreasureConfig;
+    }
 
-    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
+    public override bool enabled
+    {
+        get => config.IsPropertyEnabled(nameof(config.Enabled));
+    }
 
-    public List<Treasure> treasures => tracker.treasures;
+    public List<Treasure> treasures
+    {
+        get => tracker.treasures;
+    }
 
     public override void Tick(IFramework framework)
     {
@@ -46,7 +57,10 @@ public class TreasureModule : Module<Plugin, Config>
     {
         panel.Draw(this);
 
-        if (config.ShouldEnableTreasureHunt) hunter.Draw(this);
+        if (config.ShouldEnableTreasureHunt)
+        {
+            hunter.Draw(this);
+        }
 
         return true;
     }

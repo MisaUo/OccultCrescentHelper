@@ -3,23 +3,28 @@ namespace BOCCHI.Modules.Automator;
 public enum ActivityState
 {
     Idle,
+
     Pathfinding,
+
     WaitingToStartCriticalEncounter,
+
     Participating,
-    Done
+
+    Done,
 }
 
 public static class ActivityStateExtensions
 {
     public static string ToLabel(this ActivityState state)
     {
-        return state switch {
+        return state switch
+        {
             ActivityState.Idle => "Idle",
             ActivityState.Pathfinding => "Pathfinding",
             ActivityState.WaitingToStartCriticalEncounter => "Waiting to Start (CE)",
             ActivityState.Participating => "Participating",
             ActivityState.Done => "Done",
-            _ => "Unknown"
+            _ => "Unknown",
         };
     }
 }

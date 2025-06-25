@@ -11,11 +11,19 @@ public class BuffModule : Module<Plugin, Config>
     private readonly Panel panel = new();
 
     public BuffModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
-    public override BuffConfig config => _config.BuffConfig;
+    public override BuffConfig config
+    {
+        get => _config.BuffConfig;
+    }
 
-    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
+    public override bool enabled
+    {
+        get => config.IsPropertyEnabled(nameof(config.Enabled));
+    }
 
     public override void Tick(IFramework framework)
     {

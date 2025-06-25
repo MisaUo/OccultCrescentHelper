@@ -8,9 +8,12 @@ namespace BOCCHI.Modules.Automator;
 public enum NavigationType
 {
     WalkToEvent,
+
     ReturnThenWalkToEvent,
+
     ReturnThenTeleportToEventshard,
-    WalkToClosestShardAndTeleportToEventShardThenWalkToEvent
+
+    WalkToClosestShardAndTeleportToEventShardThenWalkToEvent,
 }
 
 public static class SmartNavigation
@@ -30,11 +33,12 @@ public static class SmartNavigation
         var costToReturnTeleportThenWalk = RETURN_BASE_COST + costToWalkFromEventShardToEvent;
         var costToWalkToShardThenEvent = costToWalkToNearestShard + costToWalkFromEventShardToEvent;
 
-        var costs = new Dictionary<NavigationType, float> {
+        var costs = new Dictionary<NavigationType, float>
+        {
             { NavigationType.WalkToEvent, costToWalkToEventDirectly },
             { NavigationType.ReturnThenWalkToEvent, costToReturnThenWalk },
             { NavigationType.ReturnThenTeleportToEventshard, costToReturnTeleportThenWalk },
-            { NavigationType.WalkToClosestShardAndTeleportToEventShardThenWalkToEvent, costToWalkToShardThenEvent }
+            { NavigationType.WalkToClosestShardAndTeleportToEventShardThenWalkToEvent, costToWalkToShardThenEvent },
         };
 
         return costs.OrderBy(kv => kv.Value).First().Key;

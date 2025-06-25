@@ -10,6 +10,7 @@ namespace BOCCHI.Modules.Exp;
 public class ExpTracker
 {
     private readonly string pattern;
+
     private float exp;
 
     private DateTime startTime = DateTime.UtcNow;
@@ -28,7 +29,10 @@ public class ExpTracker
     public void OnChatMessage(XivChatType type, int timestamp, SeString sender, SeString message, bool isHandled)
     {
         var match = Regex.Match(message.ToString(), pattern);
-        if (match.Success) exp += int.Parse(match.Groups[1].Value);
+        if (match.Success)
+        {
+            exp += int.Parse(match.Groups[1].Value);
+        }
     }
 
     public void Reset()
@@ -41,19 +45,22 @@ public class ExpTracker
     {
         var elapsed = (float)(DateTime.UtcNow - startTime).TotalHours;
         if (elapsed <= 0)
+        {
             return 0;
+        }
 
-        return (exp) / elapsed;
+        return exp / elapsed;
     }
 
     private string getExpMessagePattern(ClientLanguage clientLanguage)
     {
-        return clientLanguage switch {
+        return clientLanguage switch
+        {
             ClientLanguage.English => @"You gain (\d+) Phantom .+? experience points\.",
             ClientLanguage.French => @"Vous gagnez (\d+) points d'expérience de soutien en .+? fantôme",
             ClientLanguage.German => @"Du erhältst (\d+) Phantomroutine als Phantom",
             ClientLanguage.Japanese => @".+?」に(\d+)ポイントのサポート経験値を得た。",
-            _ => throw new ArgumentOutOfRangeException(nameof(clientLanguage), clientLanguage, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(clientLanguage), clientLanguage, null),
         };
     }
 }

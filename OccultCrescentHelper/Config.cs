@@ -48,6 +48,7 @@ public class Config : IOcelotConfig
     public AutomatorConfig AutomatorConfig { get; set; } = new();
 
     public MountConfig MountConfig { get; set; } = new();
+
     public int Version { get; set; } = 1;
 
     public void Save()

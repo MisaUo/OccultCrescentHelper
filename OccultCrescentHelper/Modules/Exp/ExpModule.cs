@@ -12,11 +12,19 @@ public class ExpModule : Module<Plugin, Config>
     public readonly ExpTracker tracker = new();
 
     public ExpModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
-    public override ExpConfig config => _config.ExpConfig;
+    public override ExpConfig config
+    {
+        get => _config.ExpConfig;
+    }
 
-    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
+    public override bool enabled
+    {
+        get => config.IsPropertyEnabled(nameof(config.Enabled));
+    }
 
 
     public override bool DrawMainUi()
@@ -26,7 +34,11 @@ public class ExpModule : Module<Plugin, Config>
     }
 
     public override void OnChatMessage(
-        XivChatType type, int timestamp, SeString sender, SeString message, bool isHandled)
+        XivChatType type,
+        int timestamp,
+        SeString sender,
+        SeString message,
+        bool isHandled)
     {
         tracker.OnChatMessage(type, timestamp, sender, message, isHandled);
     }

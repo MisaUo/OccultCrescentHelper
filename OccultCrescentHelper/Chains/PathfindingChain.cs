@@ -17,10 +17,15 @@ public class PathfindingChain : ChainFactory
     private readonly float? minRadius;
 
     private readonly bool useCustomPaths;
+
     private readonly VNavmesh vnav;
 
     public PathfindingChain(
-        VNavmesh vnav, Vector3 destination, EventData data, bool useCustomPaths, float? maxRadius = null,
+        VNavmesh vnav,
+        Vector3 destination,
+        EventData data,
+        bool useCustomPaths,
+        float? maxRadius = null,
         float? minRadius = null)
     {
         this.vnav = vnav;
@@ -36,10 +41,10 @@ public class PathfindingChain : ChainFactory
         if (useCustomPaths && data.pathFactory != null)
         {
             return Chain.Create("Prowler")
-                        .Then(new ProwlerChain(vnav, data.pathFactory, destination));
+                .Then(new ProwlerChain(vnav, data.pathFactory, destination));
         }
 
         return Chain.Create("Pathfinding")
-                    .Then(PathfindAndMoveToChain.RandomNearby(vnav, destination, maxRadius ?? 1f, minRadius ?? 0f));
+            .Then(PathfindAndMoveToChain.RandomNearby(vnav, destination, maxRadius ?? 1f, minRadius ?? 0f));
     }
 }

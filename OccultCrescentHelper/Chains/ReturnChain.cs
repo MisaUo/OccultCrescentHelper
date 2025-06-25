@@ -30,7 +30,10 @@ public class ReturnChain : RetryChainFactory
     private bool complete;
 
     public ReturnChain(
-        Vector3 destination, BuffModule buffs, YesAlready? yes = null, VNavmesh? vnav = null,
+        Vector3 destination,
+        BuffModule buffs,
+        YesAlready? yes = null,
+        VNavmesh? vnav = null,
         bool approachAetherye = true)
     {
         this.destination = destination;
@@ -81,26 +84,28 @@ public class ReturnChain : RetryChainFactory
     {
         if (buffs.ShouldRefreshBuffs() && vnav != null)
         {
-            chain.Then(() => {
+            chain.Then(() =>
+            {
                 var closestKnowledgeCrystal = ZoneHelper.GetNearbyKnowledgeCrystal(60f).FirstOrDefault();
                 var position = closestKnowledgeCrystal?.Position ?? Vector3.Zero;
 
                 return Chain.Create("Go to Crystal and Buff")
-                            .BreakIf(() => !buffs.buffs.ShouldRefresh(buffs))
-                            .Wait(500)
-                            .Then(_ => {
-                                if (Svc.Condition[ConditionFlag.Mounted])
-                                {
-                                    ActionManager.Instance()->UseAction(
-                                        ActionType.Mount, buffs.plugin.Config.MountConfig.Mount);
-                                }
-                            })
-                            .BreakIf(() => closestKnowledgeCrystal == null)
-                            .Then(_ => vnav.MoveToPath([position], false))
-                            .WaitUntilNear(vnav, position, AethernetData.DISTANCE)
-                            .Then(_ => vnav.Stop())
-                            .Then(new AllBuffsChain(buffs))
-                            .Wait(2500);
+                    .BreakIf(() => !buffs.buffs.ShouldRefresh(buffs))
+                    .Wait(500)
+                    .Then(_ =>
+                    {
+                        if (Svc.Condition[ConditionFlag.Mounted])
+                        {
+                            ActionManager.Instance()->UseAction(
+                                ActionType.Mount, buffs.plugin.Config.MountConfig.Mount);
+                        }
+                    })
+                    .BreakIf(() => closestKnowledgeCrystal == null)
+                    .Then(_ => vnav.MoveToPath([position], false))
+                    .WaitUntilNear(vnav, position, AethernetData.DISTANCE)
+                    .Then(_ => vnav.Stop())
+                    .Then(new AllBuffsChain(buffs))
+                    .Wait(2500);
             });
         }
 

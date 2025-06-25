@@ -23,9 +23,15 @@ public class AutomatorModule : Module<Plugin, Config>
         config.Save();
     }
 
-    public override AutomatorConfig config => _config.AutomatorConfig;
+    public override AutomatorConfig config
+    {
+        get => _config.AutomatorConfig;
+    }
 
-    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
+    public override bool enabled
+    {
+        get => config.IsPropertyEnabled(nameof(config.Enabled));
+    }
 
 
     public override void Tick(IFramework framework)
@@ -42,7 +48,10 @@ public class AutomatorModule : Module<Plugin, Config>
 
     public override void OnTerritoryChanged(ushort id)
     {
-        if (occultCrescentTerritoryIds.Contains(id)) return;
+        if (occultCrescentTerritoryIds.Contains(id))
+        {
+            return;
+        }
 
         automator.Refresh();
         config.Enabled = false;
@@ -53,9 +62,13 @@ public class AutomatorModule : Module<Plugin, Config>
     {
         var module = plugin.modules.GetModule<AutomatorModule>();
         if (!module.config.Enabled)
+        {
             module.EnableIllegalMode();
+        }
         else
+        {
             module.DisableIllegalMode();
+        }
     }
 
     public void EnableIllegalMode()

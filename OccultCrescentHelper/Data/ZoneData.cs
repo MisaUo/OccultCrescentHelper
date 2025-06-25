@@ -8,17 +8,20 @@ public static class ZoneData
 {
     public const uint SOUTHHORN = 1252;
 
-    public static readonly List<uint> zoneIds = [
-        SOUTHHORN
+    public readonly static List<uint> zoneIds =
+    [
+        SOUTHHORN,
     ];
 
     // This can and should be filled using layout files or excel data
-    public static readonly Dictionary<uint, Vector3> aetherytes = new() {
-        { SOUTHHORN, new Vector3(830.75f, 72.98f, -695.98f) }
+    public readonly static Dictionary<uint, Vector3> aetherytes = new()
+    {
+        { SOUTHHORN, new Vector3(830.75f, 72.98f, -695.98f) },
     };
 
-    public static readonly Dictionary<uint, Vector3> startingLocations = new() {
-        { SOUTHHORN, new Vector3(850.33f, 72.99f, -704.07f) }
+    public readonly static Dictionary<uint, Vector3> startingLocations = new()
+    {
+        { SOUTHHORN, new Vector3(850.33f, 72.99f, -704.07f) },
     };
 
     // Zone functions
@@ -36,7 +39,10 @@ public static class ZoneData
     public static bool IsInForkedTowerBlood()
     {
         var player = Svc.ClientState.LocalPlayer;
-        if (player == null) return false;
+        if (player == null)
+        {
+            return false;
+        }
 
         return player.StatusList.HasAny(
             PlayerStatus.DutiesAsAssigned,

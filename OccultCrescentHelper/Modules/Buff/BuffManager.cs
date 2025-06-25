@@ -34,13 +34,19 @@ public class BuffManager
             ApplyBuffs(module);
         }
 
-        if (EzThrottler.Throttle("BuffManager.Tick.GetLowestBuffTimer", 1000)) lowestTimer = GetLowestBuffTimer(module);
+        if (EzThrottler.Throttle("BuffManager.Tick.GetLowestBuffTimer", 1000))
+        {
+            lowestTimer = GetLowestBuffTimer(module);
+        }
     }
 
     public void ApplyBuffs(BuffModule module)
     {
         var manager = ChainManager.Get("OCH##BuffManager");
-        if (manager.IsRunning) return;
+        if (manager.IsRunning)
+        {
+            return;
+        }
 
         manager.Submit(new AllBuffsChain(module));
     }
@@ -56,24 +62,42 @@ public class BuffManager
 
         List<uint> buffs = [];
 
-        if (module.config.ApplyEnduringFortitude) buffs.Add((uint)PlayerStatus.EnduringFortitude);
+        if (module.config.ApplyEnduringFortitude)
+        {
+            buffs.Add((uint)PlayerStatus.EnduringFortitude);
+        }
 
-        if (module.config.ApplyFleetfooted) buffs.Add((uint)PlayerStatus.Fleetfooted);
+        if (module.config.ApplyFleetfooted)
+        {
+            buffs.Add((uint)PlayerStatus.Fleetfooted);
+        }
 
-        if (module.config.ApplyRomeosBallad) buffs.Add((uint)PlayerStatus.RomeosBallad);
+        if (module.config.ApplyRomeosBallad)
+        {
+            buffs.Add((uint)PlayerStatus.RomeosBallad);
+        }
 
         var statuses = player.StatusList.Where(s => buffs.Contains(s.StatusId)).ToList();
-        if (statuses.Count == 0) return 0;
+        if (statuses.Count == 0)
+        {
+            return 0;
+        }
 
         var min = int.MaxValue;
-        foreach (var status in statuses) min = Math.Min((int)status.RemainingTime, min);
+        foreach (var status in statuses)
+        {
+            min = Math.Min((int)status.RemainingTime, min);
+        }
 
         return min;
     }
 
     public bool ShouldRefresh(BuffModule module)
     {
-        if (!module.enabled) return false;
+        if (!module.enabled)
+        {
+            return false;
+        }
 
         return lowestTimer <= module.config.ReapplyThreshold * 60;
     }

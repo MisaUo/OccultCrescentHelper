@@ -23,7 +23,11 @@ public class CriticalEncounter : Activity
     private bool finalDestination;
 
     public CriticalEncounter(
-        EventData data, Lifestream lifestream, VNavmesh vnav, AutomatorModule module, CriticalEncountersModule critical)
+        EventData data,
+        Lifestream lifestream,
+        VNavmesh vnav,
+        AutomatorModule module,
+        CriticalEncountersModule critical)
         : base(data, lifestream, vnav, module)
     {
         this.critical = critical;
@@ -31,20 +35,27 @@ public class CriticalEncounter : Activity
         handlers.Add(ActivityState.WaitingToStartCriticalEncounter, GetWaitingToStartCriticalEncounterChain);
     }
 
-    private DynamicEvent Encounter => critical.criticalEncounters[data.id];
+    private DynamicEvent Encounter
+    {
+        get => critical.criticalEncounters[data.id];
+    }
 
     protected override TaskManagerTask GetPathfindingWatcher(StateManagerModule states, VNavmesh vnav)
     {
-        return new TaskManagerTask(() => {
-            if (!IsValid()) throw new Exception("Activity is no longer valid.");
+        return new TaskManagerTask(() =>
+        {
+            if (!IsValid())
+            {
+                throw new Exception("Activity is no longer valid.");
+            }
 
             if (!finalDestination && IsCloseToZone())
             {
                 // Get all players in the zone
                 var playersInZone = Svc.Objects
-                                       .Where(o => o.ObjectKind == ObjectKind.Player)
-                                       .Where(o => Vector3.Distance(o.Position, GetPosition()) <= GetRadius())
-                                       .ToList();
+                    .Where(o => o.ObjectKind == ObjectKind.Player)
+                    .Where(o => Vector3.Distance(o.Position, GetPosition()) <= GetRadius())
+                    .ToList();
 
                 if (playersInZone.Count > 4)
                 {
@@ -69,7 +80,10 @@ public class CriticalEncounter : Activity
 
             if (!finalDestination && IsInZone())
             {
-                if (vnav.IsRunning()) vnav.Stop();
+                if (vnav.IsRunning())
+                {
+                    vnav.Stop();
+                }
 
                 return true;
             }
@@ -77,11 +91,20 @@ public class CriticalEncounter : Activity
             var critical = module.GetModule<CriticalEncountersModule>();
             var encounter = critical.criticalEncounters[data.id];
 
-            if (encounter.State != DynamicEventState.Register) throw new Exception("This event started without you");
+            if (encounter.State != DynamicEventState.Register)
+            {
+                throw new Exception("This event started without you");
+            }
 
-            if (finalDestination) return !vnav.IsRunning();
+            if (finalDestination)
+            {
+                return !vnav.IsRunning();
+            }
 
-            if (!vnav.IsRunning()) throw new VnavmeshStoppedException();
+            if (!vnav.IsRunning())
+            {
+                throw new VnavmeshStoppedException();
+            }
 
             return false;
         }, new TaskManagerConfiguration { TimeLimitMS = 180000, ShowError = false });
@@ -90,56 +113,70 @@ public class CriticalEncounter : Activity
 
     public unsafe Func<Chain> GetWaitingToStartCriticalEncounterChain(StateManagerModule states)
     {
-        return () => {
+        return () =>
+        {
             return Chain.Create("Illegal:WaitingToStartCriticalEncounter")
-                        .Then(new TaskManagerTask(() => {
-                                                      if (!IsValid())
-                                                      {
-                                                          throw new Exception(
-                                                              "The critical encounter appears to have started without you.");
-                                                      }
+                .Then(new TaskManagerTask(() =>
+                    {
+                        if (!IsValid())
+                        {
+                            throw new Exception(
+                                "The critical encounter appears to have started without you.");
+                        }
 
-                                                      var critical = module.GetModule<CriticalEncountersModule>();
-                                                      var encounter = critical.criticalEncounters[data.id];
+                        var critical = module.GetModule<CriticalEncountersModule>();
+                        var encounter = critical.criticalEncounters[data.id];
 
-                                                      if (encounter.State == DynamicEventState.Battle &&
-                                                          states.GetState() != State.InCriticalEncounter)
-                                                      {
-                                                          throw new Exception(
-                                                              "The critical encounter appears to have started without you.");
-                                                      }
+                        if (encounter.State == DynamicEventState.Battle &&
+                            states.GetState() != State.InCriticalEncounter)
+                        {
+                            throw new Exception(
+                                "The critical encounter appears to have started without you.");
+                        }
 
-                                                      if (!vnav.IsRunning() && states.GetState() == State.InCombat)
-                                                      {
-                                                          // Unmount if we're in combat, and activate our AI provider
-                                                          if (Svc.Condition[ConditionFlag.Mounted])
-                                                          {
-                                                              ActionManager.Instance()->UseAction(
-                                                                  ActionType.Mount,
-                                                                  module.plugin.Config.MountConfig.Mount
-                                                              );
-                                                          }
+                        if (!vnav.IsRunning() && states.GetState() == State.InCombat)
+                        {
+                            // Unmount if we're in combat, and activate our AI provider
+                            if (Svc.Condition[ConditionFlag.Mounted])
+                            {
+                                ActionManager.Instance()->UseAction(
+                                    ActionType.Mount,
+                                    module.plugin.Config.MountConfig.Mount
+                                );
+                            }
 
-                                                          if (module.config.ShouldToggleAiProvider)
-                                                              module.config.AiProvider.On();
-                                                      }
+                            if (module.config.ShouldToggleAiProvider)
+                            {
+                                module.config.AiProvider.On();
+                            }
+                        }
 
-                                                      return states.GetState() == State.InCriticalEncounter;
-                                                  },
-                                                  new TaskManagerConfiguration {
-                                                      TimeLimitMS = 180000
-                                                  }))
-                        .Then(_ => state = ActivityState.Participating);
+                        return states.GetState() == State.InCriticalEncounter;
+                    },
+                    new TaskManagerConfiguration
+                    {
+                        TimeLimitMS = 180000,
+                    }))
+                .Then(_ => state = ActivityState.Participating);
         };
     }
 
     public override bool IsValid()
     {
-        if (Encounter.State == DynamicEventState.Register) return true;
+        if (Encounter.State == DynamicEventState.Register)
+        {
+            return true;
+        }
 
-        if (Encounter.State == DynamicEventState.Warmup) return Player.DistanceTo(GetPosition()) <= GetRadius();
+        if (Encounter.State == DynamicEventState.Warmup)
+        {
+            return Player.DistanceTo(GetPosition()) <= GetRadius();
+        }
 
-        if (Encounter.State == DynamicEventState.Battle) return Player.Status.Has(PlayerStatus.HoofingIt);
+        if (Encounter.State == DynamicEventState.Battle)
+        {
+            return Player.Status.Has(PlayerStatus.HoofingIt);
+        }
 
         return true;
     }

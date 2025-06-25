@@ -14,7 +14,8 @@ public class TargetPanel : Panel
 
     public override unsafe void Draw(DebugModule module)
     {
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             var target = Svc.Targets.Target;
             if (target == null)
             {

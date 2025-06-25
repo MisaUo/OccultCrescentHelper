@@ -21,7 +21,8 @@ public class CriticalEncountersPanel : Panel
     public override void Draw(DebugModule module)
     {
         OcelotUI.Title("Critical Encounters:");
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             foreach (var data in EventData.CriticalEncounters.Values)
             {
                 var ev = module.GetModule<CriticalEncountersModule>().criticalEncounters[data.id];
@@ -65,13 +66,25 @@ public class CriticalEncountersPanel : Panel
 
                 OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.Config.EventDropConfig));
 
-                if (data.pathFactory != null) ImGui.TextColored(new Vector4(0.5f, 1.0f, 0.5f, 1.0f), "Has custom path");
+                if (data.pathFactory != null)
+                {
+                    ImGui.TextColored(new Vector4(0.5f, 1.0f, 0.5f, 1.0f), "Has custom path");
+                }
 
-                if (data.id != EventData.CriticalEncounters.Keys.Max()) OcelotUI.VSpace();
+                if (data.id != EventData.CriticalEncounters.Keys.Max())
+                {
+                    OcelotUI.VSpace();
+                }
 
-                if (ImGui.CollapsingHeader($"Event Data##{data.id}")) PrintEvent(ev);
+                if (ImGui.CollapsingHeader($"Event Data##{data.id}"))
+                {
+                    PrintEvent(ev);
+                }
 
-                if (ImGui.CollapsingHeader($"Map Marker Data##{data.id}")) PrintMapMarker(ev.MapMarker);
+                if (ImGui.CollapsingHeader($"Map Marker Data##{data.id}"))
+                {
+                    PrintMapMarker(ev.MapMarker);
+                }
             }
         });
     }

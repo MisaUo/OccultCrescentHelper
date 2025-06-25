@@ -26,13 +26,17 @@ public static class CameraHelper
         var endView = Vector4.Transform(end4, viewMatrix);
 
         if (!ClipLineToNearPlane(ref startView, ref endView, nearPlane))
+        {
             return false;
+        }
 
         var startClip = Vector4.Transform(startView, projectionMatrix);
         var endClip = Vector4.Transform(endView, projectionMatrix);
 
         if (startClip.W == 0 || endClip.W == 0)
+        {
             return false;
+        }
 
         var startNDC = new Vector3(startClip.X, startClip.Y, startClip.Z) / startClip.W;
         var endNDC = new Vector3(endClip.X, endClip.Y, endClip.Z) / endClip.W;
@@ -62,7 +66,9 @@ public static class CameraHelper
         var endBehind = endView.Z > zNear;
 
         if (startBehind && endBehind)
+        {
             return false;
+        }
 
         if (startBehind)
         {
@@ -79,14 +85,20 @@ public static class CameraHelper
     }
 
     public static Vector3 WorldToScreen(
-        Vector3 pointWorld, Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix, uint windowWidth, uint windowHeight)
+        Vector3 pointWorld,
+        Matrix4x4 viewMatrix,
+        Matrix4x4 projectionMatrix,
+        uint windowWidth,
+        uint windowHeight)
     {
         var pointWorld4 = new Vector4(pointWorld, 1f);
         var pointView = Vector4.Transform(pointWorld4, viewMatrix);
         var pointClip = Vector4.Transform(pointView, projectionMatrix);
 
         if (pointClip.W <= 0)
+        {
             return new Vector3(-1, -1, -1); // behind camera sentinel
+        }
 
         var pointNDC = new Vector3(pointClip.X, pointClip.Y, pointClip.Z) / pointClip.W;
 

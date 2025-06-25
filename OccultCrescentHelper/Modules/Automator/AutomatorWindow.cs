@@ -12,15 +12,20 @@ public class AutomatorWindow : OcelotWindow
     public AutomatorWindow(Plugin plugin, Config config)
         : base(plugin, config, "OCH Illegal Lens")
     {
-        TitleBarButtons.Add(new TitleBarButton {
-            Click = m => {
-                if (m != ImGuiMouseButton.Left) return;
+        TitleBarButtons.Add(new TitleBarButton
+        {
+            Click = m =>
+            {
+                if (m != ImGuiMouseButton.Left)
+                {
+                    return;
+                }
 
                 AutomatorModule.ToggleIllegalMode(plugin);
             },
             Icon = FontAwesomeIcon.Skull,
             IconOffset = new Vector2(2, 2),
-            ShowTooltip = () => ImGui.SetTooltip("Toggle Illegal Mode")
+            ShowTooltip = () => ImGui.SetTooltip("Toggle Illegal Mode"),
         });
     }
 

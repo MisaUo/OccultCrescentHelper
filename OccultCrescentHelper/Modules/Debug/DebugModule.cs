@@ -13,7 +13,8 @@ namespace BOCCHI.Modules.Debug;
 #endif
 public class DebugModule : Module<Plugin, Config>
 {
-    private readonly List<Panel> panels = new() {
+    private readonly List<Panel> panels = new()
+    {
         new TeleporterPanel(),
         new VnavmeshPanel(),
         new FatesPanel(),
@@ -21,26 +22,32 @@ public class DebugModule : Module<Plugin, Config>
         new ChainManagerPanel(),
         new EnemyPanel(),
         new StatusPanel(),
-        new TargetPanel()
+        new TargetPanel(),
     };
 
     public DebugModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
     public override void PostInitialize()
     {
         if (plugin.windows.TryGetWindow<DebugWindow>(out var window) && window != null && !window.IsOpen)
+        {
             window.Toggle();
+        }
     }
 
     public void DrawPanels()
     {
         foreach (var panel in panels)
+        {
             if (ImGui.CollapsingHeader(panel.GetName()))
             {
                 panel.Draw(this);
                 OcelotUI.VSpace();
             }
+        }
     }
 
     public override void Tick(IFramework _)

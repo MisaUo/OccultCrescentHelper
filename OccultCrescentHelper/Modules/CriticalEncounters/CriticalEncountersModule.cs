@@ -14,15 +14,29 @@ public class CriticalEncountersModule : Module<Plugin, Config>
     public readonly CriticalEncounterTracker tracker = new();
 
     public CriticalEncountersModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
-    public override CriticalEncountersConfig config => _config.CriticalEncountersConfig;
+    public override CriticalEncountersConfig config
+    {
+        get => _config.CriticalEncountersConfig;
+    }
 
-    public override bool enabled => config.IsPropertyEnabled(nameof(config.Enabled));
+    public override bool enabled
+    {
+        get => config.IsPropertyEnabled(nameof(config.Enabled));
+    }
 
-    public Dictionary<uint, DynamicEvent> criticalEncounters => tracker.criticalEncounters;
+    public Dictionary<uint, DynamicEvent> criticalEncounters
+    {
+        get => tracker.criticalEncounters;
+    }
 
-    public Dictionary<uint, EventProgress> progress => tracker.progress;
+    public Dictionary<uint, EventProgress> progress
+    {
+        get => tracker.progress;
+    }
 
     public override void Tick(IFramework framework)
     {
