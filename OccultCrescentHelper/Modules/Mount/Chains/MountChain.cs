@@ -11,6 +11,8 @@ public class MountChain : RetryChainFactory
 {
     private MountConfig config;
 
+    private bool isFirstThrottle = true;
+
     public MountChain(MountConfig config)
     {
         this.config = config;
@@ -44,7 +46,13 @@ public class MountChain : RetryChainFactory
 
     public override int GetThrottle()
     {
-        return 2000;
+        if (isFirstThrottle)
+        {
+            isFirstThrottle = false;
+            return 500;
+        }
+
+        return 5000;
     }
 
     public override bool IsComplete()
