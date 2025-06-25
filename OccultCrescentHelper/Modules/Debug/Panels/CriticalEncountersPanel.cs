@@ -21,7 +21,8 @@ public class CriticalEncountersPanel : Panel
     public override unsafe void Draw(DebugModule module)
     {
         OcelotUI.Title("Critical Encounters:");
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             foreach (var data in EventData.CriticalEncounters.Values)
             {
                 var ev = module.GetModule<CriticalEncountersModule>().criticalEncounters[data.id];

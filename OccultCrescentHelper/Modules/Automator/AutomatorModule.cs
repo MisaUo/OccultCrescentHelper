@@ -10,11 +10,13 @@ namespace OccultCrescentHelper.Modules.Automator;
 [OcelotModule]
 public class AutomatorModule : Module<Plugin, Config>
 {
-    public override AutomatorConfig config {
+    public override AutomatorConfig config
+    {
         get => _config.AutomatorConfig;
     }
 
-    public override bool enabled {
+    public override bool enabled
+    {
         get => config.IsPropertyEnabled(nameof(config.Enabled));
     }
 

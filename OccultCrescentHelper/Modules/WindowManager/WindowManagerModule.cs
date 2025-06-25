@@ -7,12 +7,15 @@ namespace OccultCrescentHelper.Modules.WindowManager;
 [OcelotModule]
 public class WindowManagerModule : Module<Plugin, Config>
 {
-    public override WindowManagerConfig config {
+    public override WindowManagerConfig config
+    {
         get => _config.WindowManagerConfig;
     }
 
     public WindowManagerModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
 
     private List<uint> occultCrescentTerritoryIds = [1252];

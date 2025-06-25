@@ -10,7 +10,8 @@ public class Panel
     public void Draw(BuffModule module)
     {
         OcelotUI.Title($"{module.T("panel.title")}:");
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             var isNearKnowledgeCrystal = ZoneHelper.IsNearKnowledgeCrystal();
             var isQueued = module.buffs.IsQueued();
 

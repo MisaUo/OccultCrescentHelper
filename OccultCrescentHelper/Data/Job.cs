@@ -14,29 +14,29 @@ public class Job
         this.status = status;
     }
 
-    public static readonly Job Freelancer = new(JobId.Freelancer, PlayerStatus.PhantomFreelancer);
+    public readonly static Job Freelancer = new(JobId.Freelancer, PlayerStatus.PhantomFreelancer);
 
-    public static readonly Job Knight = new(JobId.Knight, PlayerStatus.PhantomKnight);
+    public readonly static Job Knight = new(JobId.Knight, PlayerStatus.PhantomKnight);
 
-    public static readonly Job Berserker = new(JobId.Berserker, PlayerStatus.PhantomBerserker);
+    public readonly static Job Berserker = new(JobId.Berserker, PlayerStatus.PhantomBerserker);
 
-    public static readonly Job Monk = new(JobId.Monk, PlayerStatus.PhantomMonk);
+    public readonly static Job Monk = new(JobId.Monk, PlayerStatus.PhantomMonk);
 
-    public static readonly Job Ranger = new(JobId.Ranger, PlayerStatus.PhantomRanger);
+    public readonly static Job Ranger = new(JobId.Ranger, PlayerStatus.PhantomRanger);
 
-    public static readonly Job Samurai = new(JobId.Samurai, PlayerStatus.PhantomSamurai);
+    public readonly static Job Samurai = new(JobId.Samurai, PlayerStatus.PhantomSamurai);
 
-    public static readonly Job Bard = new(JobId.Bard, PlayerStatus.PhantomBard);
+    public readonly static Job Bard = new(JobId.Bard, PlayerStatus.PhantomBard);
 
-    public static readonly Job Geomancer = new(JobId.Geomancer, PlayerStatus.PhantomGeomancer);
+    public readonly static Job Geomancer = new(JobId.Geomancer, PlayerStatus.PhantomGeomancer);
 
-    public static readonly Job TimeMage = new(JobId.TimeMage, PlayerStatus.PhantomTimeMage);
+    public readonly static Job TimeMage = new(JobId.TimeMage, PlayerStatus.PhantomTimeMage);
 
-    public static readonly Job Cannoneer = new(JobId.Cannoneer, PlayerStatus.PhantomCannoneer);
+    public readonly static Job Cannoneer = new(JobId.Cannoneer, PlayerStatus.PhantomCannoneer);
 
-    public static readonly Job Chemist = new(JobId.Chemist, PlayerStatus.PhantomChemist);
+    public readonly static Job Chemist = new(JobId.Chemist, PlayerStatus.PhantomChemist);
 
-    public static readonly Job Oracle = new(JobId.Oracle, PlayerStatus.PhantomOracle);
+    public readonly static Job Oracle = new(JobId.Oracle, PlayerStatus.PhantomOracle);
 
-    public static readonly Job Thief = new(JobId.Thief, PlayerStatus.PhantomThief);
+    public readonly static Job Thief = new(JobId.Thief, PlayerStatus.PhantomThief);
 }

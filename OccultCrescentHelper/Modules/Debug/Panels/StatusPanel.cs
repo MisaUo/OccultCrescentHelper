@@ -19,7 +19,8 @@ public class StatusPanel : Panel
 
 
         OcelotUI.Title("Statuses:");
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             foreach (var s in Svc.ClientState.LocalPlayer!.StatusList)
             {
                 ImGui.TextUnformatted($"{data.Where(r => r.RowId == s.StatusId).First().Name} ({s.StatusId})");

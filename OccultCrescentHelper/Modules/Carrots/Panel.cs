@@ -8,7 +8,8 @@ public class Panel
     public void Draw(CarrotsModule module)
     {
         OcelotUI.Title($"{module.T("panel.title")}:");
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             if (module.carrots.Count <= 0)
             {
                 ImGui.TextUnformatted(module.T("panel.none"));

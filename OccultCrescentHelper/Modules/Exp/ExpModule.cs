@@ -8,11 +8,13 @@ namespace OccultCrescentHelper.Modules.Exp;
 [OcelotModule(6, 4)]
 public class ExpModule : Module<Plugin, Config>
 {
-    public override ExpConfig config {
+    public override ExpConfig config
+    {
         get => _config.ExpConfig;
     }
 
-    public override bool enabled {
+    public override bool enabled
+    {
         get => config.IsPropertyEnabled(nameof(config.Enabled));
     }
 
@@ -21,7 +23,9 @@ public class ExpModule : Module<Plugin, Config>
     private Panel panel = new();
 
     public ExpModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
 
     public override bool DrawMainUi()

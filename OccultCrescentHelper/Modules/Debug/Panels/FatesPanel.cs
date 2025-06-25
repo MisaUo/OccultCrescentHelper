@@ -72,7 +72,8 @@ public class FatesPanel : Panel
     public override void Draw(DebugModule module)
     {
         OcelotUI.Title("Fates:");
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             foreach (var data in EventData.Fates.Values)
             {
                 ImGui.TextUnformatted(data.Name);

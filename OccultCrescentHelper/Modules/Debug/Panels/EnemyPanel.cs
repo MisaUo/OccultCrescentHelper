@@ -22,7 +22,8 @@ public class EnemyPanel : Panel
 
     public override void Draw(DebugModule module)
     {
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             foreach (var enemy in enemies)
             {
                 if (enemy.Name.ToString().StartsWith("Crescent"))
@@ -32,7 +33,8 @@ public class EnemyPanel : Panel
 
                 if (ImGui.CollapsingHeader($"{enemy.Name} - {enemy.DataId}##{enemy.ObjectIndex}"))
                 {
-                    OcelotUI.Indent(() => {
+                    OcelotUI.Indent(() =>
+                    {
                         ImGui.Text($"Name: {enemy.Name.TextValue}");
                         ImGui.Text($"GameObjectId: {enemy.GameObjectId:X}");
                         ImGui.Text($"EntityId: {enemy.EntityId:X}");
@@ -73,14 +75,14 @@ public class EnemyPanel : Panel
         {
             // DoThing();
             enemies = Svc.Objects
-                         .Where(o =>
-                                    o != null &&
-                                    o.IsHostile() &&
-                                    o.IsTargetable &&
-                                    o.Name.TextValue.Length > 0
-                         )
-                         .OrderBy(o => Vector3.Distance(o.Position, Player.Position))
-                         .ToList();
+                .Where(o =>
+                    o != null &&
+                    o.IsHostile() &&
+                    o.IsTargetable &&
+                    o.Name.TextValue.Length > 0
+                )
+                .OrderBy(o => Vector3.Distance(o.Position, Player.Position))
+                .ToList();
         }
     }
 }

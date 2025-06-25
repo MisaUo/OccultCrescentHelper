@@ -16,7 +16,8 @@ public class TreasureConfig : ModuleConfig
     [Tooltip("modules.treasure.draw.bronze.tooltip")]
     public bool DrawLineToBronzeChests { get; set; } = true;
 
-    public bool ShouldDrawLineToBronzeChests {
+    public bool ShouldDrawLineToBronzeChests
+    {
         get => IsPropertyEnabled(nameof(DrawLineToBronzeChests));
     }
 
@@ -26,7 +27,8 @@ public class TreasureConfig : ModuleConfig
     [Tooltip("modules.treasure.draw.silver.tooltip")]
     public bool DrawLineToSilverChests { get; set; } = true;
 
-    public bool ShouldDrawLineToSilverChests {
+    public bool ShouldDrawLineToSilverChests
+    {
         get => IsPropertyEnabled(nameof(DrawLineToSilverChests));
     }
 
@@ -38,7 +40,8 @@ public class TreasureConfig : ModuleConfig
     [Label("modules.treasure.hunt.show_button.label")]
     public bool EnableTreasureHunt { get; set; } = false;
 
-    public bool ShouldEnableTreasureHunt {
+    public bool ShouldEnableTreasureHunt
+    {
         get => IsPropertyEnabled(nameof(EnableTreasureHunt));
     }
 

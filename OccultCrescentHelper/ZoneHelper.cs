@@ -20,11 +20,11 @@ public static class ZoneHelper
         var playerPos = Svc.ClientState.LocalPlayer?.Position ?? Vector3.Zero;
 
         return Svc.Objects
-                  .Where(o => o != null)
-                  .Where(o => o.ObjectKind == ObjectKind.EventObj)
-                  .Where(o => AethernetData.All().Select((datum) => datum.dataId).Contains(o.DataId))
-                  .Where(o => Vector3.Distance(o.Position, playerPos) <= range)
-                  .ToList();
+            .Where(o => o != null)
+            .Where(o => o.ObjectKind == ObjectKind.EventObj)
+            .Where(o => AethernetData.All().Select((datum) => datum.dataId).Contains(o.DataId))
+            .Where(o => Vector3.Distance(o.Position, playerPos) <= range)
+            .ToList();
     }
 
     public static bool IsNearAethernetShard(Aethernet aethernet, float range = 4.3f)
@@ -37,11 +37,11 @@ public static class ZoneHelper
         var playerPos = Svc.ClientState.LocalPlayer?.Position ?? Vector3.Zero;
 
         return Svc.Objects
-                  .Where(o => o != null)
-                  .Where(o => o.ObjectKind == ObjectKind.EventObj)
-                  .Where(o => o.DataId == (uint)OccultObjectType.KnowledgeCrystal)
-                  .Where(o => Vector3.Distance(o.Position, playerPos) <= range)
-                  .ToList();
+            .Where(o => o != null)
+            .Where(o => o.ObjectKind == ObjectKind.EventObj)
+            .Where(o => o.DataId == (uint)OccultObjectType.KnowledgeCrystal)
+            .Where(o => Vector3.Distance(o.Position, playerPos) <= range)
+            .ToList();
     }
 
     public static bool IsNearKnowledgeCrystal(float range = 4.5f)

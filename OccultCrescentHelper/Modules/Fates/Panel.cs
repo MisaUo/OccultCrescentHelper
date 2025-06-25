@@ -11,7 +11,8 @@ public class Panel
     public void Draw(FatesModule module)
     {
         OcelotUI.Title($"{module.T("panel.title")}:");
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             if (module.tracker.fates.Count <= 0)
             {
                 ImGui.TextUnformatted(module.T("panel.none"));

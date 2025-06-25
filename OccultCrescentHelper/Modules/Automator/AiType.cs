@@ -13,7 +13,8 @@ public static class AiProviderExtensions
 {
     public static string ToLabel(this AiType provider)
     {
-        return provider switch {
+        return provider switch
+        {
             AiType.VBM => "Boss Mod by veyn, xan_0",
             AiType.BMR => "BossMod Reborn by The Combat Reborn team",
             _ => provider.ToString(),

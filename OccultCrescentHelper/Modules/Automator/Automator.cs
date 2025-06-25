@@ -15,7 +15,8 @@ namespace OccultCrescentHelper.Modules.Automator;
 
 public class Automator
 {
-    private bool IsChainActive {
+    private bool IsChainActive
+    {
         get => ChainManager.Active().Count > 0;
     }
 

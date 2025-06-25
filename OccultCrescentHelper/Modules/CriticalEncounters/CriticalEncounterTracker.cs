@@ -19,8 +19,8 @@ public class CriticalEncounterTracker
         var pos = Svc.ClientState.LocalPlayer?.Position ?? Vector3.Zero;
 
         criticalEncounters = PublicContentOccultCrescent.GetInstance()->DynamicEventContainer.Events
-                                                                                             .ToArray()
-                                                                                             .ToDictionary(ev => (uint)ev.DynamicEventId, ev => ev);
+            .ToArray()
+            .ToDictionary(ev => (uint)ev.DynamicEventId, ev => ev);
 
         foreach (var ev in criticalEncounters.Values)
         {

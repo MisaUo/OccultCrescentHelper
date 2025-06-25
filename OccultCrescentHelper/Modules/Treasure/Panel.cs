@@ -10,7 +10,8 @@ public class Panel
     public void Draw(TreasureModule module)
     {
         OcelotUI.Title($"{module.T("panel.title")}:");
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             if (module.treasures.Count <= 0)
             {
                 ImGui.TextUnformatted(module.T("panel.none"));
@@ -32,7 +33,8 @@ public class Panel
                     ImGui.TableNextRow();
                     ImGui.TableNextColumn();
                     ImGui.TextUnformatted($"{treasure.GetName()}");
-                    OcelotUI.Indent(() => {
+                    OcelotUI.Indent(() =>
+                    {
                         ImGui.TextUnformatted($"({pos.X:F2}, {pos.Y:F2}, {pos.Z:F2})");
                         ImGui.TextUnformatted($"({Vector3.Distance(Player.Position, pos)})");
                     });

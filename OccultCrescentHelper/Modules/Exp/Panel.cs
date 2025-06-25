@@ -9,7 +9,8 @@ public class Panel
     public void Draw(ExpModule module)
     {
         OcelotUI.Title($"{module.T("panel.title")}:");
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             if (ImGuiEx.IconButton(Dalamud.Interface.FontAwesomeIcon.Redo, $"Reset##Exp"))
             {
                 module.tracker.Reset();

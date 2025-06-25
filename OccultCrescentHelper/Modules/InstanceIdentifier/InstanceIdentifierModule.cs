@@ -8,11 +8,13 @@ namespace OccultCrescentHelper.Modules.InstanceIdentifier;
 [OcelotModule(mainOrder: int.MinValue)]
 public class InstanceIdentifierModule : Module<Plugin, Config>
 {
-    public override InstanceIdentifierConfig config {
+    public override InstanceIdentifierConfig config
+    {
         get => _config.InstanceIdentifierConfig;
     }
 
-    public override bool enabled {
+    public override bool enabled
+    {
         get => config.Show;
     }
 
@@ -23,11 +25,14 @@ public class InstanceIdentifierModule : Module<Plugin, Config>
     public InitZone hook = new();
 
     public InstanceIdentifierModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
     public override void PostInitialize()
     {
-        hook.OnInitZone += (a1, a2, a3) => {
+        hook.OnInitZone += (a1, a2, a3) =>
+        {
             try
             {
                 instance = MemoryHelper.Read<ushort>(a3).ToString();

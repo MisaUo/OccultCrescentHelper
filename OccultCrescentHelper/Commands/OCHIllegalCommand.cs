@@ -14,11 +14,13 @@ namespace OccultCrescentHelper.Commands;
 [OcelotCommand]
 public class OCHIllegalCommand : OcelotCommand
 {
-    public override string command {
+    public override string command
+    {
         get => "/bocchiillegal";
     }
 
-    public override string description {
+    public override string description
+    {
         get => @"
 Manage och automator/illegal mode.
  - /bocchiillegal (Toggles the automator lens window)
@@ -29,11 +31,13 @@ Manage och automator/illegal mode.
 ".Trim();
     }
 
-    public override IReadOnlyList<string> aliases {
+    public override IReadOnlyList<string> aliases
+    {
         get => ["/ochillegal", "/bocchillegal"];
     }
 
-    public override IReadOnlyList<string> validArguments {
+    public override IReadOnlyList<string> validArguments
+    {
         get => ["on", "off", "toggle"];
     }
 
@@ -52,7 +56,8 @@ Manage och automator/illegal mode.
             return;
         }
 
-        Svc.Framework.RunOnTick(() => {
+        Svc.Framework.RunOnTick(() =>
+        {
             if (!plugin.modules.TryGetModule<AutomatorModule>(out var automator) || automator == null)
             {
                 return;

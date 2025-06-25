@@ -16,11 +16,11 @@ public class TreasureTracker
         var pos = Svc.ClientState.LocalPlayer!.Position;
 
         treasures = Svc
-                    .Objects.Where(o => o != null)
-                    .Where(o => o.ObjectKind == ObjectKind.Treasure)
-                    .OrderBy(o => Vector3.Distance(o.Position, pos))
-                    .Select(o => new Treasure(o))
-                    .Where(t => t.IsValid())
-                    .ToList();
+            .Objects.Where(o => o != null)
+            .Where(o => o.ObjectKind == ObjectKind.Treasure)
+            .OrderBy(o => Vector3.Distance(o.Position, pos))
+            .Select(o => new Treasure(o))
+            .Where(t => t.IsValid())
+            .ToList();
     }
 }

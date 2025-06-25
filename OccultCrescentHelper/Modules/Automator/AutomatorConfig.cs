@@ -7,7 +7,8 @@ namespace OccultCrescentHelper.Modules.Automator;
 [Title("modules.automator.title")]
 public partial class AutomatorConfig : ModuleConfig
 {
-    public override string ProviderNamespace {
+    public override string ProviderNamespace
+    {
         get => "OccultCrescentHelper.Modules.Automator";
     }
 
@@ -28,7 +29,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.toggle_ai_provider.tooltip")]
     public bool ToggleAiProvider { get; set; } = true;
 
-    public bool ShouldToggleAiProvider {
+    public bool ShouldToggleAiProvider
+    {
         get => IsPropertyEnabled(nameof(ToggleAiProvider));
     }
 
@@ -37,7 +39,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.force_target.tooltip")]
     public bool ForceTarget { get; set; } = true;
 
-    public bool ShouldForceTarget {
+    public bool ShouldForceTarget
+    {
         get => IsPropertyEnabled(nameof(ForceTarget));
     }
 
@@ -47,7 +50,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.force_target_central_enemy.tooltip")]
     public bool ForceTargetCentralEnemy { get; set; } = true;
 
-    public bool ShouldForceTargetCentralEnemy {
+    public bool ShouldForceTargetCentralEnemy
+    {
         get => IsPropertyEnabled(nameof(ForceTargetCentralEnemy));
     }
 
@@ -62,7 +66,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.do_critical_encounters.tooltip")]
     public bool DoCriticalEncounters { get; set; } = true;
 
-    public bool ShouldDoCriticalEncounters {
+    public bool ShouldDoCriticalEncounters
+    {
         get => IsPropertyEnabled(nameof(DoCriticalEncounters));
     }
 
@@ -72,7 +77,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.delay_critical_encounters.tooltip")]
     public bool DelayCriticalEncounters { get; set; } = false;
 
-    public bool ShouldDelayCriticalEncounters {
+    public bool ShouldDelayCriticalEncounters
+    {
         get => IsPropertyEnabled(nameof(DelayCriticalEncounters));
     }
 
@@ -83,7 +89,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.ce_scourge_of_the_mind.tooltip")]
     public bool DoScourgeOfTheMind { get; set; } = true;
 
-    public bool ShouldDoScourgeOfTheMind {
+    public bool ShouldDoScourgeOfTheMind
+    {
         get => IsPropertyEnabled(nameof(DoScourgeOfTheMind));
     }
 
@@ -94,7 +101,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.ce_the_black_regiment.tooltip")]
     public bool DoTheBlackRegiment { get; set; } = true;
 
-    public bool ShouldDoTheBlackRegiment {
+    public bool ShouldDoTheBlackRegiment
+    {
         get => IsPropertyEnabled(nameof(DoTheBlackRegiment));
     }
 
@@ -105,7 +113,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.ce_the_unbridled.tooltip")]
     public bool DoTheUnbridled { get; set; } = true;
 
-    public bool ShouldDoTheUnbridled {
+    public bool ShouldDoTheUnbridled
+    {
         get => IsPropertyEnabled(nameof(DoTheUnbridled));
     }
 
@@ -116,7 +125,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.ce_crawling_death.tooltip")]
     public bool DoCrawlingDeath { get; set; } = true;
 
-    public bool ShouldDoCrawlingDeath {
+    public bool ShouldDoCrawlingDeath
+    {
         get => IsPropertyEnabled(nameof(DoCrawlingDeath));
     }
 
@@ -127,7 +137,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.ce_calamity_bound.tooltip")]
     public bool DoCalamityBound { get; set; } = true;
 
-    public bool ShouldDoCalamityBound {
+    public bool ShouldDoCalamityBound
+    {
         get => IsPropertyEnabled(nameof(DoCalamityBound));
     }
 
@@ -138,7 +149,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.ce_trial_by_claw.tooltip")]
     public bool DoTrialByClaw { get; set; } = true;
 
-    public bool ShouldDoTrialByClaw {
+    public bool ShouldDoTrialByClaw
+    {
         get => IsPropertyEnabled(nameof(DoTrialByClaw));
     }
 
@@ -149,7 +161,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.ce_from_times_bygone.tooltip")]
     public bool DoFromTimesBygone { get; set; } = true;
 
-    public bool ShouldDoFromTimesBygone {
+    public bool ShouldDoFromTimesBygone
+    {
         get => IsPropertyEnabled(nameof(DoFromTimesBygone));
     }
 
@@ -160,7 +173,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.ce_company_of_stone.tooltip")]
     public bool DoCompanyOfStone { get; set; } = true;
 
-    public bool ShouldDoCompanyOfStone {
+    public bool ShouldDoCompanyOfStone
+    {
         get => IsPropertyEnabled(nameof(DoCompanyOfStone));
     }
 
@@ -171,7 +185,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.ce_shark_attack.tooltip")]
     public bool DoSharkAttack { get; set; } = true;
 
-    public bool ShouldDoSharkAttack {
+    public bool ShouldDoSharkAttack
+    {
         get => IsPropertyEnabled(nameof(DoSharkAttack));
     }
 
@@ -182,7 +197,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.ce_on_the_hunt.tooltip")]
     public bool DoOnTheHunt { get; set; } = true;
 
-    public bool ShouldDoOnTheHunt {
+    public bool ShouldDoOnTheHunt
+    {
         get => IsPropertyEnabled(nameof(DoOnTheHunt));
     }
 
@@ -193,7 +209,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.ce_with_extreme_prejudice.tooltip")]
     public bool DoWithExtremePrejudice { get; set; } = true;
 
-    public bool ShouldDoWithExtremePrejudice {
+    public bool ShouldDoWithExtremePrejudice
+    {
         get => IsPropertyEnabled(nameof(DoWithExtremePrejudice));
     }
 
@@ -204,7 +221,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.ce_noise_complaint.tooltip")]
     public bool DoNoiseComplaint { get; set; } = true;
 
-    public bool ShouldDoNoiseComplaint {
+    public bool ShouldDoNoiseComplaint
+    {
         get => IsPropertyEnabled(nameof(DoNoiseComplaint));
     }
 
@@ -215,7 +233,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.ce_cursed_concern.tooltip")]
     public bool DoCursedConcern { get; set; } = true;
 
-    public bool ShouldDoCursedConcern {
+    public bool ShouldDoCursedConcern
+    {
         get => IsPropertyEnabled(nameof(DoCursedConcern));
     }
 
@@ -226,7 +245,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.ce_eternal_watch.tooltip")]
     public bool DoEternalWatch { get; set; } = true;
 
-    public bool ShouldDoEternalWatch {
+    public bool ShouldDoEternalWatch
+    {
         get => IsPropertyEnabled(nameof(DoEternalWatch));
     }
 
@@ -237,7 +257,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.ce_flame_of_dusk.tooltip")]
     public bool DoFlameOfDusk { get; set; } = true;
 
-    public bool ShouldDoFlameOfDusk {
+    public bool ShouldDoFlameOfDusk
+    {
         get => IsPropertyEnabled(nameof(DoFlameOfDusk));
     }
 
@@ -247,7 +268,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.do_fates.tooltip")]
     public bool DoFates { get; set; } = true;
 
-    public bool ShouldDoFates {
+    public bool ShouldDoFates
+    {
         get => IsPropertyEnabled(nameof(DoFates));
     }
 
@@ -258,7 +280,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.fate_rough_waters.tooltip")]
     public bool DoRoughWaters { get; set; } = true;
 
-    public bool ShouldDoRoughWaters {
+    public bool ShouldDoRoughWaters
+    {
         get => IsPropertyEnabled(nameof(DoRoughWaters));
     }
 
@@ -269,7 +292,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.fate_the_golden_guardian.tooltip")]
     public bool DoTheGoldenGuardian { get; set; } = true;
 
-    public bool ShouldDoTheGoldenGuardian {
+    public bool ShouldDoTheGoldenGuardian
+    {
         get => IsPropertyEnabled(nameof(DoTheGoldenGuardian));
     }
 
@@ -280,7 +304,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.fate_king_of_the_crescent.tooltip")]
     public bool DoKingOfTheCrescent { get; set; } = true;
 
-    public bool ShouldDoKingOfTheCrescent {
+    public bool ShouldDoKingOfTheCrescent
+    {
         get => IsPropertyEnabled(nameof(DoKingOfTheCrescent));
     }
 
@@ -292,7 +317,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.fate_the_winged_terror.tooltip")]
     public bool DoTheWingedTerror { get; set; } = false;
 
-    public bool ShouldDoTheWingedTerror {
+    public bool ShouldDoTheWingedTerror
+    {
         get => IsPropertyEnabled(nameof(DoTheWingedTerror));
     }
 
@@ -303,7 +329,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.fate_an_unending_duty.tooltip")]
     public bool DoAnUnendingDuty { get; set; } = true;
 
-    public bool ShouldDoAnUnendingDuty {
+    public bool ShouldDoAnUnendingDuty
+    {
         get => IsPropertyEnabled(nameof(DoAnUnendingDuty));
     }
 
@@ -314,7 +341,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.fate_brain_drain.tooltip")]
     public bool DoBrainDrain { get; set; } = true;
 
-    public bool ShouldDoBrainDrain {
+    public bool ShouldDoBrainDrain
+    {
         get => IsPropertyEnabled(nameof(DoBrainDrain));
     }
 
@@ -325,7 +353,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.fate_a_delicate_balance.tooltip")]
     public bool DoADelicateBalance { get; set; } = true;
 
-    public bool ShouldDoADelicateBalance {
+    public bool ShouldDoADelicateBalance
+    {
         get => IsPropertyEnabled(nameof(DoADelicateBalance));
     }
 
@@ -336,7 +365,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.fate_sworn_to_soil.tooltip")]
     public bool DoSwornToSoil { get; set; } = true;
 
-    public bool ShouldDoSwornToSoil {
+    public bool ShouldDoSwornToSoil
+    {
         get => IsPropertyEnabled(nameof(DoSwornToSoil));
     }
 
@@ -347,7 +377,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.fate_a_prying_eye.tooltip")]
     public bool DoAPryingEye { get; set; } = true;
 
-    public bool ShouldDoAPryingEye {
+    public bool ShouldDoAPryingEye
+    {
         get => IsPropertyEnabled(nameof(DoAPryingEye));
     }
 
@@ -358,7 +389,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.fate_fatal_allure.tooltip")]
     public bool DoFatalAllure { get; set; } = true;
 
-    public bool ShouldDoFatalAllure {
+    public bool ShouldDoFatalAllure
+    {
         get => IsPropertyEnabled(nameof(DoFatalAllure));
     }
 
@@ -369,7 +401,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.fate_serving_darkness.tooltip")]
     public bool DoServingDarkness { get; set; } = true;
 
-    public bool ShouldDoServingDarkness {
+    public bool ShouldDoServingDarkness
+    {
         get => IsPropertyEnabled(nameof(DoServingDarkness));
     }
 
@@ -381,7 +414,8 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.fate_persistent_pots.tooltip")]
     public bool DoPersistentPots { get; set; } = false;
 
-    public bool ShouldDoPersistentPots {
+    public bool ShouldDoPersistentPots
+    {
         get => IsPropertyEnabled(nameof(DoPersistentPots));
     }
 
@@ -393,12 +427,15 @@ public partial class AutomatorConfig : ModuleConfig
     [Tooltip("modules.automator.fate_pleading_pots.tooltip")]
     public bool DoPleadingPots { get; set; } = false;
 
-    public bool ShouldDoPleadingPots {
+    public bool ShouldDoPleadingPots
+    {
         get => IsPropertyEnabled(nameof(DoPleadingPots));
     }
 
-    public IReadOnlyDictionary<uint, bool> CriticalEncountersMap {
-        get => new Dictionary<uint, bool> {
+    public IReadOnlyDictionary<uint, bool> CriticalEncountersMap
+    {
+        get => new Dictionary<uint, bool>
+        {
             { 33, ShouldDoScourgeOfTheMind },
             { 34, ShouldDoTheBlackRegiment },
             { 35, ShouldDoTheUnbridled },
@@ -417,8 +454,10 @@ public partial class AutomatorConfig : ModuleConfig
         };
     }
 
-    public IReadOnlyDictionary<uint, bool> FatesMap {
-        get => new Dictionary<uint, bool> {
+    public IReadOnlyDictionary<uint, bool> FatesMap
+    {
+        get => new Dictionary<uint, bool>
+        {
             { 1962, ShouldDoRoughWaters },
             { 1963, ShouldDoTheGoldenGuardian },
             { 1964, ShouldDoKingOfTheCrescent },

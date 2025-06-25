@@ -13,7 +13,8 @@ namespace OccultCrescentHelper.Modules.Debug;
 #endif
 public class DebugModule : Module<Plugin, Config>
 {
-    private List<Panel> panels = new() {
+    private List<Panel> panels = new()
+    {
         new TeleporterPanel(),
         new VnavmeshPanel(),
         new FatesPanel(),
@@ -25,7 +26,9 @@ public class DebugModule : Module<Plugin, Config>
     };
 
     public DebugModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
     public override void PostInitialize()
     {

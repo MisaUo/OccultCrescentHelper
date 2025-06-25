@@ -9,28 +9,34 @@ namespace OccultCrescentHelper.Modules.CriticalEncounters;
 [OcelotModule(8, 6)]
 public class CriticalEncountersModule : Module<Plugin, Config>
 {
-    public override CriticalEncountersConfig config {
+    public override CriticalEncountersConfig config
+    {
         get => _config.CriticalEncountersConfig;
     }
 
-    public override bool enabled {
+    public override bool enabled
+    {
         get => config.IsPropertyEnabled(nameof(config.Enabled));
     }
 
     public readonly CriticalEncounterTracker tracker = new();
 
-    public Dictionary<uint, DynamicEvent> criticalEncounters {
+    public Dictionary<uint, DynamicEvent> criticalEncounters
+    {
         get => tracker.criticalEncounters;
     }
 
-    public Dictionary<uint, EventProgress> progress {
+    public Dictionary<uint, EventProgress> progress
+    {
         get => tracker.progress;
     }
 
     private Panel panel = new();
 
     public CriticalEncountersModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
     public override void Tick(IFramework framework)
     {

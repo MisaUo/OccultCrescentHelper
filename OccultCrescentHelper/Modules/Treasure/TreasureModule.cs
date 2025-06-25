@@ -8,11 +8,13 @@ namespace OccultCrescentHelper.Modules.Treasure;
 [OcelotModule(3, 1)]
 public class TreasureModule : Module<Plugin, Config>
 {
-    public override TreasureConfig config {
+    public override TreasureConfig config
+    {
         get => _config.TreasureConfig;
     }
 
-    public override bool enabled {
+    public override bool enabled
+    {
         get => config.IsPropertyEnabled(nameof(config.Enabled));
     }
 
@@ -26,7 +28,8 @@ public class TreasureModule : Module<Plugin, Config>
 
     private readonly TreasureHunt hunter = new();
 
-    public List<Treasure> treasures {
+    public List<Treasure> treasures
+    {
         get => tracker.treasures;
     }
 
@@ -35,7 +38,9 @@ public class TreasureModule : Module<Plugin, Config>
     private readonly Radar radar = new();
 
     public TreasureModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
     public override void Tick(IFramework framework)
     {

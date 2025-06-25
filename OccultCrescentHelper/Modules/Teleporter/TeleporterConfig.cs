@@ -7,7 +7,8 @@ namespace OccultCrescentHelper.Modules.Teleporter;
 [Title("modules.teleporter.title")]
 public class TeleporterConfig : ModuleConfig
 {
-    public override string ProviderNamespace {
+    public override string ProviderNamespace
+    {
         get => "OccultCrescentHelper.Modules.Teleporter";
     }
 
@@ -32,7 +33,8 @@ public class TeleporterConfig : ModuleConfig
     [Tooltip("modules.teleporter.use_custom_paths.tooltip")]
     public bool UseCustomPaths { get; set; } = true;
 
-    public bool ShouldUseCustomPaths {
+    public bool ShouldUseCustomPaths
+    {
         get => IsPropertyEnabled(nameof(UseCustomPaths));
     }
 

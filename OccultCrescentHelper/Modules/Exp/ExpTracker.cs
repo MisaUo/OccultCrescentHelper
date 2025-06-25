@@ -45,14 +45,17 @@ public class ExpTracker
     {
         var elapsed = (float)(DateTime.UtcNow - startTime).TotalHours;
         if (elapsed <= 0)
+        {
             return 0;
+        }
 
         return exp / elapsed;
     }
 
     private string getExpMessagePattern(ClientLanguage clientLanguage)
     {
-        return clientLanguage switch {
+        return clientLanguage switch
+        {
             ClientLanguage.English => @"You gain (\d+) Phantom .+? experience points\.",
             ClientLanguage.French => @"Vous gagnez (\d+) points d'expérience de soutien en .+? fantôme",
             ClientLanguage.German => @"Du erhältst (\d+) Phantomroutine als Phantom",

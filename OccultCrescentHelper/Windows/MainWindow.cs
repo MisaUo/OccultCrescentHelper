@@ -11,14 +11,18 @@ namespace OccultCrescentHelper.Windows;
 public class MainWindow : OcelotMainWindow
 {
     public MainWindow(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
     public override void PostInitialize()
     {
         base.PostInitialize();
 
-        TitleBarButtons.Add(new TitleBarButton {
-            Click = (m) => {
+        TitleBarButtons.Add(new TitleBarButton
+        {
+            Click = (m) =>
+            {
                 if (m != ImGuiMouseButton.Left)
                 {
                     return;
@@ -31,8 +35,10 @@ public class MainWindow : OcelotMainWindow
             ShowTooltip = () => ImGui.SetTooltip("Emergency Stop"),
         });
 
-        TitleBarButtons.Add(new TitleBarButton {
-            Click = (m) => {
+        TitleBarButtons.Add(new TitleBarButton
+        {
+            Click = (m) =>
+            {
                 if (m != ImGuiMouseButton.Left)
                 {
                     return;

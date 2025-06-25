@@ -30,10 +30,12 @@ public struct EventData
 
     public float? radius;
 
-    public static readonly Dictionary<uint, EventData> Fates = new() {
+    public readonly static Dictionary<uint, EventData> Fates = new()
+    {
         {
             1962,
-            new EventData {
+            new EventData
+            {
                 id = 1962,
                 type = EventType.Fate,
                 Name = "Rough Waters",
@@ -42,15 +44,18 @@ public struct EventData
                 // pathFactory = RoughWaters.GetPath,
                 start = new Vector3(162.00f, 56.00f, 676.00f),
             }
-        }, {
+        },
+        {
             1963,
-            new EventData {
+            new EventData
+            {
                 id = 1963,
                 type = EventType.Fate,
                 Name = "The Golden Guardian",
                 demiatma = Demiatma.Azurite,
                 monster = Monster.GildedHeadstone,
-                pathFactory = destination => [
+                pathFactory = destination =>
+                [
                     Prowler.FollowPath([
                         [303.81f, 102.83f, 309.89f],
                         [335.05f, 71.11f, 326.90f],
@@ -59,9 +64,11 @@ public struct EventData
                 ],
                 start = new Vector3(373.20f, 70.00f, 486.00f),
             }
-        }, {
+        },
+        {
             1964,
-            new EventData {
+            new EventData
+            {
                 id = 1964,
                 type = EventType.Fate,
                 Name = "King of the Crescent",
@@ -69,16 +76,19 @@ public struct EventData
                 monster = Monster.Ropross,
                 start = new Vector3(-226.10f, 116.38f, 254.00f),
             }
-        }, {
+        },
+        {
             1965,
-            new EventData {
+            new EventData
+            {
                 id = 1965,
                 type = EventType.Fate,
                 Name = "The Winged Terror",
                 demiatma = Demiatma.Realgar,
                 monster = Monster.GiantBird,
                 aethernet = Aethernet.TheWanderersHaven,
-                pathFactory = destination => [
+                pathFactory = destination =>
+                [
                     Prowler.FollowPath([
                         [-172.29f, 6.50f, -607.08f],
                         [-328.85f, 5.00f, -614.96f],
@@ -92,9 +102,11 @@ public struct EventData
                 ],
                 start = new Vector3(-548.50f, 3.00f, -595.00f),
             }
-        }, {
+        },
+        {
             1966,
-            new EventData {
+            new EventData
+            {
                 id = 1966,
                 type = EventType.Fate,
                 Name = "An Unending Duty",
@@ -103,9 +115,11 @@ public struct EventData
                 // pathFactory = AnUnendingDuty.GetPath,
                 start = new Vector3(-223.10f, 107.00f, 36.00f),
             }
-        }, {
+        },
+        {
             1967,
-            new EventData {
+            new EventData
+            {
                 id = 1967,
                 type = EventType.Fate,
                 Name = "Brain Drain",
@@ -114,9 +128,11 @@ public struct EventData
                 aethernet = Aethernet.CrystallizedCaverns,
                 start = new Vector3(-48.10f, 111.76f, -320.00f),
             }
-        }, {
+        },
+        {
             1968,
-            new EventData {
+            new EventData
+            {
                 id = 1968,
                 type = EventType.Fate,
                 Name = "A Delicate Balance",
@@ -124,9 +140,11 @@ public struct EventData
                 monster = Monster.Dehumidifier,
                 start = new Vector3(-370.00f, 75.00f, 650.00f),
             }
-        }, {
+        },
+        {
             1969,
-            new EventData {
+            new EventData
+            {
                 id = 1969,
                 type = EventType.Fate,
                 Name = "Sworn to Soil",
@@ -134,9 +152,11 @@ public struct EventData
                 monster = Monster.MadMudarch,
                 start = new Vector3(-589.10f, 96.50f, 333.00f),
             }
-        }, {
+        },
+        {
             1970,
-            new EventData {
+            new EventData
+            {
                 id = 1970,
                 type = EventType.Fate,
                 Name = "A Prying Eye",
@@ -145,9 +165,11 @@ public struct EventData
                 // pathFactory = APryingEye.GetPath,
                 start = new Vector3(-71.00f, 71.31f, 557.00f),
             }
-        }, {
+        },
+        {
             1971,
-            new EventData {
+            new EventData
+            {
                 id = 1971,
                 type = EventType.Fate,
                 Name = "Fatal Allure",
@@ -155,9 +177,11 @@ public struct EventData
                 monster = Monster.Execrator,
                 start = new Vector3(79.00f, 97.86f, 278.00f),
             }
-        }, {
+        },
+        {
             1972,
-            new EventData {
+            new EventData
+            {
                 id = 1972,
                 type = EventType.Fate,
                 Name = "Serving Darkness",
@@ -165,9 +189,11 @@ public struct EventData
                 monster = Monster.Lifereaper,
                 start = new Vector3(413.00f, 96.00f, -13.00f),
             }
-        }, {
+        },
+        {
             1976,
-            new EventData {
+            new EventData
+            {
                 id = 1976,
                 type = EventType.Fate,
                 Name = "Persistent Pots",
@@ -175,9 +201,11 @@ public struct EventData
                 notes = MonsterNote.PersistentPots,
                 start = new Vector3(200.00f, 111.73f, -215.00f),
             }
-        }, {
+        },
+        {
             1977,
-            new EventData {
+            new EventData
+            {
                 id = 1977,
                 type = EventType.Fate,
                 Name = "Pleading Pots",
@@ -188,24 +216,29 @@ public struct EventData
         },
     };
 
-    public static readonly Dictionary<uint, EventData> CriticalEncounters = new() {
+    public readonly static Dictionary<uint, EventData> CriticalEncounters = new()
+    {
         {
             48,
-            new EventData {
+            new EventData
+            {
                 id = 48,
                 type = EventType.CriticalEncounter,
                 Name = "The Forked Tower: Blood",
             }
-        }, {
+        },
+        {
             33,
-            new EventData {
+            new EventData
+            {
                 id = 33,
                 type = EventType.CriticalEncounter,
                 Name = "Scourge of the Mind",
                 demiatma = Demiatma.Azurite,
                 monster = Monster.MysteriousMindflayer,
                 aethernet = Aethernet.Eldergrowth,
-                pathFactory = destination => [
+                pathFactory = destination =>
+                [
                     Prowler.FollowPath([
                         [303.81f, 102.83f, 309.89f],
                         [335.05f, 71.11f, 326.90f],
@@ -213,9 +246,11 @@ public struct EventData
                     Prowler.Pathfind(destination),
                 ],
             }
-        }, {
+        },
+        {
             34,
-            new EventData {
+            new EventData
+            {
                 id = 34,
                 type = EventType.CriticalEncounter,
                 Name = "The Black Regiment",
@@ -224,7 +259,8 @@ public struct EventData
                 monster = Monster.BlackStar,
                 notes = MonsterNote.BlackChocobos,
                 aethernet = Aethernet.Eldergrowth,
-                pathFactory = destination => [
+                pathFactory = destination =>
+                [
                     Prowler.FollowPath([
                         [303.81f, 102.83f, 309.89f],
                         [335.05f, 71.11f, 326.90f],
@@ -232,9 +268,11 @@ public struct EventData
                     Prowler.Pathfind(destination),
                 ],
             }
-        }, {
+        },
+        {
             35,
-            new EventData {
+            new EventData
+            {
                 id = 35,
                 type = EventType.CriticalEncounter,
                 Name = "The Unbridled",
@@ -243,7 +281,8 @@ public struct EventData
                 monster = Monster.CrescentBerserker,
                 notes = MonsterNote.CrescentBerserker,
                 aethernet = Aethernet.Eldergrowth,
-                pathFactory = destination => [
+                pathFactory = destination =>
+                [
                     Prowler.FollowPath([
                         [303.81f, 102.83f, 309.89f],
                         [335.05f, 71.11f, 326.90f],
@@ -251,16 +290,19 @@ public struct EventData
                     Prowler.Pathfind(destination),
                 ],
             }
-        }, {
+        },
+        {
             36,
-            new EventData {
+            new EventData
+            {
                 id = 36,
                 type = EventType.CriticalEncounter,
                 Name = "Crawling Death",
                 demiatma = Demiatma.Azurite,
                 monster = Monster.DeathClawOccultCrescent,
                 aethernet = Aethernet.Eldergrowth,
-                pathFactory = destination => [
+                pathFactory = destination =>
+                [
                     Prowler.FollowPath([
                         [303.81f, 102.83f, 309.89f],
                         [335.05f, 71.11f, 326.90f],
@@ -268,9 +310,11 @@ public struct EventData
                     Prowler.Pathfind(destination),
                 ],
             }
-        }, {
+        },
+        {
             37,
-            new EventData {
+            new EventData
+            {
                 id = 37,
                 type = EventType.CriticalEncounter,
                 Name = "Calamity Bound",
@@ -279,9 +323,11 @@ public struct EventData
                 notes = MonsterNote.CloisterDemon,
                 aethernet = Aethernet.Stonemarsh,
             }
-        }, {
+        },
+        {
             38,
-            new EventData {
+            new EventData
+            {
                 id = 38,
                 type = EventType.CriticalEncounter,
                 Name = "Trial by Claw",
@@ -289,9 +335,11 @@ public struct EventData
                 monster = Monster.CrystalDragon,
                 aethernet = Aethernet.CrystallizedCaverns,
             }
-        }, {
+        },
+        {
             39,
-            new EventData {
+            new EventData
+            {
                 id = 39,
                 type = EventType.CriticalEncounter,
                 Name = "From Times Bygone",
@@ -301,9 +349,11 @@ public struct EventData
                 aethernet = Aethernet.Stonemarsh,
                 // pathFactory = FromTimesBygone.GetPath
             }
-        }, {
+        },
+        {
             40,
-            new EventData {
+            new EventData
+            {
                 id = 40,
                 type = EventType.CriticalEncounter,
                 Name = "Company of Stone",
@@ -312,9 +362,11 @@ public struct EventData
                 aethernet = Aethernet.BaseCamp,
                 // pathFactory = CompanyOfStone.GetPath
             }
-        }, {
+        },
+        {
             41,
-            new EventData {
+            new EventData
+            {
                 id = 41,
                 type = EventType.CriticalEncounter,
                 Name = "Shark Attack",
@@ -323,9 +375,11 @@ public struct EventData
                 notes = MonsterNote.NymianPotaladus,
                 aethernet = Aethernet.TheWanderersHaven,
             }
-        }, {
+        },
+        {
             42,
-            new EventData {
+            new EventData
+            {
                 id = 42,
                 type = EventType.CriticalEncounter,
                 Name = "On the Hunt",
@@ -334,9 +388,11 @@ public struct EventData
                 monster = Monster.LionRampant,
                 aethernet = Aethernet.Eldergrowth,
             }
-        }, {
+        },
+        {
             43,
-            new EventData {
+            new EventData
+            {
                 id = 43,
                 type = EventType.CriticalEncounter,
                 Name = "With Extreme Prejudice",
@@ -344,9 +400,11 @@ public struct EventData
                 monster = Monster.CommandUrn,
                 aethernet = Aethernet.TheWanderersHaven,
             }
-        }, {
+        },
+        {
             44,
-            new EventData {
+            new EventData
+            {
                 id = 44,
                 type = EventType.CriticalEncounter,
                 Name = "Noise Complaint",
@@ -354,9 +412,11 @@ public struct EventData
                 monster = Monster.NeoGarula,
                 aethernet = Aethernet.BaseCamp,
             }
-        }, {
+        },
+        {
             45,
-            new EventData {
+            new EventData
+            {
                 id = 45,
                 type = EventType.CriticalEncounter,
                 Name = "Cursed Concern",
@@ -365,9 +425,11 @@ public struct EventData
                 notes = MonsterNote.TradeTortoise,
                 aethernet = Aethernet.TheWanderersHaven,
             }
-        }, {
+        },
+        {
             46,
-            new EventData {
+            new EventData
+            {
                 id = 46,
                 type = EventType.CriticalEncounter,
                 Name = "Eternal Watch",
@@ -375,9 +437,11 @@ public struct EventData
                 monster = Monster.RepairedLion,
                 aethernet = Aethernet.Eldergrowth,
             }
-        }, {
+        },
+        {
             47,
-            new EventData {
+            new EventData
+            {
                 id = 47,
                 type = EventType.CriticalEncounter,
                 Name = "Flame of Dusk",

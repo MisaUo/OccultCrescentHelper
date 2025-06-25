@@ -32,7 +32,8 @@ public class StateManager
 
     public StateManager()
     {
-        handlers = new Dictionary<State, Action> {
+        handlers = new Dictionary<State, Action>
+        {
             { State.Idle, HandleIdle },
             { State.InCombat, HandleInCombat },
             { State.InFate, HandleInFate },
@@ -115,7 +116,9 @@ public class StateManager
     private void ChangeState(State newState)
     {
         if (newState == state)
+        {
             return;
+        }
 
         var oldState = state;
         Svc.Log.Info($"[StateManager] State changed from {oldState} to {newState}");

@@ -23,7 +23,7 @@ public enum Aethernet : uint
 
 public class AethernetData
 {
-    public static readonly float DISTANCE = 4f;
+    public readonly static float DISTANCE = 4f;
 
     public Aethernet aethernet;
 
@@ -34,8 +34,8 @@ public class AethernetData
     public static List<AethernetData> All()
     {
         return ((Aethernet[])System.Enum.GetValues(typeof(Aethernet)))
-               .Select(a => a.GetData())
-               .ToList();
+            .Select(a => a.GetData())
+            .ToList();
     }
 
     public static AethernetData GetClosestTo(Vector3 to)

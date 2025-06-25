@@ -10,7 +10,9 @@ namespace OccultCrescentHelper.Modules.Debug;
 public class DebugWindow : OcelotWindow
 {
     public DebugWindow(Plugin plugin, Config config)
-        : base(plugin, config, "OCH Debug") { }
+        : base(plugin, config, "OCH Debug")
+    {
+    }
 
     public override void Draw()
     {

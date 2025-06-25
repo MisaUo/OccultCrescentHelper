@@ -7,17 +7,20 @@ namespace OccultCrescentHelper.Modules.Carrots;
 [OcelotModule(4, 2)]
 public class CarrotsModule : Module<Plugin, Config>
 {
-    public override CarrotsConfig config {
+    public override CarrotsConfig config
+    {
         get => _config.CarrotsConfig;
     }
 
-    public override bool enabled {
+    public override bool enabled
+    {
         get => config.IsPropertyEnabled(nameof(config.Enabled));
     }
 
     private readonly CarrotsTracker tracker = new();
 
-    public List<Carrot> carrots {
+    public List<Carrot> carrots
+    {
         get => tracker.carrots;
     }
 
@@ -26,7 +29,9 @@ public class CarrotsModule : Module<Plugin, Config>
     private readonly Radar radar = new();
 
     public CarrotsModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
     public override void Tick(IFramework framework)
     {

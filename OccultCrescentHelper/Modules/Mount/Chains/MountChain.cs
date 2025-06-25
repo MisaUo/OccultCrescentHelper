@@ -19,10 +19,10 @@ public class MountChain : RetryChainFactory
     protected override unsafe Chain Create(Chain chain)
     {
         return chain
-               .BreakIf(Breaker)
-               .ConditionalThen(_ => !config.MountRoulette, _ => ActionManager.Instance()->UseAction(ActionType.Mount, config.Mount))
-               // Mount Roulette
-               .ConditionalThen(_ => config.MountRoulette, _ => ActionManager.Instance()->UseAction(ActionType.GeneralAction, 9));
+            .BreakIf(Breaker)
+            .ConditionalThen(_ => !config.MountRoulette, _ => ActionManager.Instance()->UseAction(ActionType.Mount, config.Mount))
+            // Mount Roulette
+            .ConditionalThen(_ => config.MountRoulette, _ => ActionManager.Instance()->UseAction(ActionType.GeneralAction, 9));
     }
 
     private bool Breaker()

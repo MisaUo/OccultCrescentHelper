@@ -13,11 +13,13 @@ namespace OccultCrescentHelper.Commands;
 [OcelotCommand]
 public class OCHCmdCommand : OcelotCommand
 {
-    public override string command {
+    public override string command
+    {
         get => "/bocchicmd";
     }
 
-    public override string description {
+    public override string description
+    {
         get => @"
 Utility command.
  - Flag commands clear active flag before trying to place a new one
@@ -28,11 +30,13 @@ Utility command.
 ".Trim();
     }
 
-    public override IReadOnlyList<string> aliases {
+    public override IReadOnlyList<string> aliases
+    {
         get => ["/ochcmd"];
     }
 
-    public override IReadOnlyList<string> validArguments {
+    public override IReadOnlyList<string> validArguments
+    {
         get => ["flag-active-ce", "flag-active-fate", "flag-active-non-pot-fate"];
     }
 
@@ -45,7 +49,8 @@ Utility command.
 
     public override unsafe void Command(string command, string arguments)
     {
-        Svc.Framework.RunOnTick(() => {
+        Svc.Framework.RunOnTick(() =>
+        {
             var map = AgentMap.Instance();
             map->IsFlagMarkerSet = false;
 

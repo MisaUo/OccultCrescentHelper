@@ -28,7 +28,8 @@ public class Fate : Activity
     {
         var lastTargetPos = Vector3.Zero;
 
-        return new TaskManagerTask(() => {
+        return new TaskManagerTask(() =>
+        {
             if (EzThrottler.Throttle("FatePathfindingWatcher.EnemyScan", 100))
             {
                 if (Svc.Targets.Target == null)

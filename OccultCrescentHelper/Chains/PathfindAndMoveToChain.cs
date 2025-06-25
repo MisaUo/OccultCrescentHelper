@@ -45,7 +45,8 @@ public class PathfindAndMoveToChain : ChainFactory
 
     public override TaskManagerConfiguration? Config()
     {
-        return new TaskManagerConfiguration {
+        return new TaskManagerConfiguration
+        {
             TimeLimitMS = 180000,
         };
     }

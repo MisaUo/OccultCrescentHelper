@@ -14,7 +14,8 @@ public class Panel
     public void Draw(CriticalEncountersModule module)
     {
         OcelotUI.Title($"{module.T("panel.title")}:");
-        OcelotUI.Indent(() => {
+        OcelotUI.Indent(() =>
+        {
             var active = module.criticalEncounters.Values.Where(ev => ev.State != DynamicEventState.Inactive).Count();
             if (active <= 0)
             {
@@ -92,5 +93,7 @@ public class Panel
     }
 
 
-    private void HandlerTower(DynamicEvent ev) { }
+    private void HandlerTower(DynamicEvent ev)
+    {
+    }
 }

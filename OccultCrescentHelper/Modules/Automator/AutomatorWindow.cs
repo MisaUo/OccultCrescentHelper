@@ -12,8 +12,10 @@ public class AutomatorWindow : OcelotWindow
     public AutomatorWindow(Plugin plugin, Config config)
         : base(plugin, config, "OCH Illegal Lens")
     {
-        TitleBarButtons.Add(new TitleBarButton {
-            Click = (m) => {
+        TitleBarButtons.Add(new TitleBarButton
+        {
+            Click = (m) =>
+            {
                 if (m != ImGuiMouseButton.Left)
                 {
                     return;

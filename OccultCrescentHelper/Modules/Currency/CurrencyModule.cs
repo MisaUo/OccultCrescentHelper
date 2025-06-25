@@ -6,11 +6,13 @@ namespace OccultCrescentHelper.Modules.Currency;
 [OcelotModule(5, 3)]
 public class CurrencyModule : Module<Plugin, Config>
 {
-    public override CurrencyConfig config {
+    public override CurrencyConfig config
+    {
         get => _config.CurrencyConfig;
     }
 
-    public override bool enabled {
+    public override bool enabled
+    {
         get => config.IsPropertyEnabled(nameof(config.Enabled));
     }
 
@@ -19,7 +21,9 @@ public class CurrencyModule : Module<Plugin, Config>
     private Panel panel = new();
 
     public CurrencyModule(Plugin plugin, Config config)
-        : base(plugin, config) { }
+        : base(plugin, config)
+    {
+    }
 
     public override void Tick(IFramework framework)
     {
