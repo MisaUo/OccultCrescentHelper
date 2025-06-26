@@ -1,3 +1,4 @@
+using Dalamud.Interface;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
 using Ocelot;
@@ -18,7 +19,7 @@ public class Panel
                 ImGui.TableNextRow();
 
                 ImGui.TableNextColumn();
-                if (ImGuiEx.IconButton(Dalamud.Interface.FontAwesomeIcon.Redo, $"Reset##Silver"))
+                if (ImGuiEx.IconButton(FontAwesomeIcon.Redo, "Reset##Silver"))
                 {
                     module.tracker.ResetSilver();
                 }
@@ -33,7 +34,7 @@ public class Panel
                 ImGui.TableNextRow();
 
                 ImGui.TableNextColumn();
-                if (ImGuiEx.IconButton(Dalamud.Interface.FontAwesomeIcon.Redo, $"Reset##Gold"))
+                if (ImGuiEx.IconButton(FontAwesomeIcon.Redo, "Reset##Gold"))
                 {
                     module.tracker.ResetGold();
                 }

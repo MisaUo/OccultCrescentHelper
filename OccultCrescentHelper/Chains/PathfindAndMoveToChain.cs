@@ -10,9 +10,9 @@ namespace BOCCHI.Chains;
 
 public class PathfindAndMoveToChain : ChainFactory
 {
-    private VNavmesh vnav;
+    private readonly Vector3 destination;
 
-    private Vector3 destination;
+    private readonly VNavmesh vnav;
 
     public PathfindAndMoveToChain(VNavmesh vnav, Vector3 destination, float maxRadius = 1f, float minRadius = 0f)
     {
@@ -20,7 +20,11 @@ public class PathfindAndMoveToChain : ChainFactory
         this.destination = destination;
     }
 
-    public static PathfindAndMoveToChain RandomNearby(VNavmesh vnav, Vector3 destination, float maxRadius = 1f, float minRadius = 0f)
+    public static PathfindAndMoveToChain RandomNearby(
+        VNavmesh vnav,
+        Vector3 destination,
+        float maxRadius = 1f,
+        float minRadius = 0f)
     {
         var angle = (float)(Random.Shared.NextDouble() * MathF.Tau);
         var distance = minRadius + (float)(Random.Shared.NextDouble() * (maxRadius - minRadius));

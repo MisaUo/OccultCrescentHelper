@@ -21,7 +21,7 @@ public class TeleporterPanel : Panel
             OcelotUI.Indent(() =>
             {
                 var shards = teleporter.teleporter.GetNearbyAethernetShards();
-                if (shards.Count() > 0)
+                if (shards.Count > 0)
                 {
                     OcelotUI.Title("Nearby Aethernet Shards:");
                     OcelotUI.Indent(() =>

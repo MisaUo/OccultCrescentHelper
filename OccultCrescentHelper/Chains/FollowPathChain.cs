@@ -8,11 +8,11 @@ namespace BOCCHI.Chains;
 
 public class FollowPathChain : ChainFactory
 {
-    private VNavmesh vnav;
+    private readonly List<Vector3> path;
 
-    private Vector3 start;
+    private readonly Vector3 start;
 
-    private List<Vector3> path;
+    private readonly VNavmesh vnav;
 
     public FollowPathChain(VNavmesh vnav, Vector3 start, List<Vector3> path)
     {

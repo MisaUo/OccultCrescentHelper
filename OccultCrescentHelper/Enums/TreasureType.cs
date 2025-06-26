@@ -11,4 +11,4 @@ public enum TreasureType
     Mimic = 4,
 
     Unknown = 5,
-};
+}

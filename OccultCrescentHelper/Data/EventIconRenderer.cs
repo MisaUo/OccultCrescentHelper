@@ -74,7 +74,7 @@ public struct EventIconRenderer
         }
     }
 
-    public static unsafe void Notes(EventData data)
+    public static void Notes(EventData data)
     {
         var itemData = Svc.Data.GetExcelSheet<Item>().GetRow((uint)data.notes!);
 
@@ -90,7 +90,7 @@ public struct EventIconRenderer
         }
     }
 
-    private static unsafe void SoulShard(EventData data)
+    private static void SoulShard(EventData data)
     {
         var itemData = Svc.Data.GetExcelSheet<Item>().GetRow((uint)data.soulshard!);
 

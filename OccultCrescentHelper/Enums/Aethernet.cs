@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -33,14 +34,14 @@ public class AethernetData
 
     public static List<AethernetData> All()
     {
-        return ((Aethernet[])System.Enum.GetValues(typeof(Aethernet)))
+        return ((Aethernet[])Enum.GetValues(typeof(Aethernet)))
             .Select(a => a.GetData())
             .ToList();
     }
 
     public static AethernetData GetClosestTo(Vector3 to)
     {
-        return All().OrderBy((data) => Vector3.Distance(to, data.position)).First();
+        return All().OrderBy(data => Vector3.Distance(to, data.position)).First();
     }
 
     public static AethernetData GetClosestToPlayer()
@@ -71,17 +72,39 @@ public static class AethernetExtensions
         switch (aethernet)
         {
             case Aethernet.BaseCamp:
-                return new AethernetData { aethernet = Aethernet.BaseCamp, dataId = 2014664, position = ZoneData.aetherytes[ZoneData.SOUTHHORN] };
+                return new AethernetData
+                {
+                    aethernet = Aethernet.BaseCamp, dataId = 2014664, position = ZoneData.aetherytes[ZoneData.SOUTHHORN],
+                };
             case Aethernet.TheWanderersHaven:
-                return new AethernetData { aethernet = Aethernet.TheWanderersHaven, dataId = 2014665, position = new Vector3(-173.02f, 8.19f, -611.14f) };
+                return new AethernetData
+                {
+                    aethernet = Aethernet.TheWanderersHaven, dataId = 2014665,
+                    position = new Vector3(-173.02f, 8.19f, -611.14f),
+                };
             case Aethernet.CrystallizedCaverns:
-                return new AethernetData { aethernet = Aethernet.CrystallizedCaverns, dataId = 2014666, position = new Vector3(-358.14f, 101.98f, -120.96f) };
+                return new AethernetData
+                {
+                    aethernet = Aethernet.CrystallizedCaverns, dataId = 2014666,
+                    position = new Vector3(-358.14f, 101.98f, -120.96f),
+                };
             case Aethernet.Eldergrowth:
-                return new AethernetData { aethernet = Aethernet.Eldergrowth, dataId = 2014667, position = new Vector3(306.94f, 105.18f, 305.65f) };
+                return new AethernetData
+                {
+                    aethernet = Aethernet.Eldergrowth, dataId = 2014667,
+                    position = new Vector3(306.94f, 105.18f, 305.65f),
+                };
             case Aethernet.Stonemarsh:
-                return new AethernetData { aethernet = Aethernet.Stonemarsh, dataId = 2014744, position = new Vector3(-384.12f, 99.20f, 281.42f) };
+                return new AethernetData
+                {
+                    aethernet = Aethernet.Stonemarsh, dataId = 2014744,
+                    position = new Vector3(-384.12f, 99.20f, 281.42f),
+                };
             default:
-                return new AethernetData { aethernet = Aethernet.BaseCamp, dataId = 2014664, position = ZoneData.aetherytes[ZoneData.SOUTHHORN] };
+                return new AethernetData
+                {
+                    aethernet = Aethernet.BaseCamp, dataId = 2014664, position = ZoneData.aetherytes[ZoneData.SOUTHHORN],
+                };
         }
     }
 }

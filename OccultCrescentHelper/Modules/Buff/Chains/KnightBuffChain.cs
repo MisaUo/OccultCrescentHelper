@@ -6,7 +6,7 @@ namespace BOCCHI.Modules.Buff.Chains;
 
 public class KnightBuffChain : BuffChain
 {
-    private BuffModule module;
+    private readonly BuffModule module;
 
     public KnightBuffChain(BuffModule module)
         : base(Job.Knight, PlayerStatus.EnduringFortitude, 32)

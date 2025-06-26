@@ -6,7 +6,7 @@ namespace BOCCHI.Modules.Buff.Chains;
 
 public class MonkBuffChain : BuffChain
 {
-    private BuffModule module;
+    private readonly BuffModule module;
 
     public MonkBuffChain(BuffModule module)
         : base(Job.Monk, PlayerStatus.Fleetfooted, 33)

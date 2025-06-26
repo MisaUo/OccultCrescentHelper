@@ -8,21 +8,8 @@ using Ocelot.IPC;
 
 namespace BOCCHI.Chains;
 
-public class TeleportChain : ChainFactory
+public class TeleportChain(Aethernet aethernet, Lifestream lifestream, TeleporterModule module) : ChainFactory
 {
-    private Aethernet aethernet;
-
-    private Lifestream lifestream;
-
-    private TeleporterModule module;
-
-    public TeleportChain(Aethernet aethernet, Lifestream lifestream, TeleporterModule module)
-    {
-        this.lifestream = lifestream;
-        this.aethernet = aethernet;
-        this.module = module;
-    }
-
     protected override Chain Create(Chain chain)
     {
         return chain
@@ -31,7 +18,6 @@ public class TeleportChain : ChainFactory
                 new TaskManagerConfiguration { TimeLimitMS = 15000 }))
             .Then(_ => module.GetIPCProvider<VNavmesh>()?.Stop())
             .Then(_ => lifestream.AethernetTeleportByPlaceNameId((uint)aethernet))
-            .WaitToCycleCondition(ConditionFlag.BetweenAreas)
-            .ConditionalThen(_ => module.config.ShouldMount, ChainHelper.MountChain());
+            .WaitToCycleCondition(ConditionFlag.BetweenAreas);
     }
 }

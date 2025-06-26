@@ -5,7 +5,7 @@ using Ocelot.Modules;
 namespace BOCCHI.Modules.Automator;
 
 [Title("modules.automator.title")]
-public partial class AutomatorConfig : ModuleConfig
+public class AutomatorConfig : ModuleConfig
 {
     public override string ProviderNamespace
     {

@@ -59,8 +59,8 @@ public class Teleporter
             Svc.Log.Info($"Pathfinding to {name} at {destination}");
 
             Plugin.Chain.Submit(() => Chain.Create("Pathfinding")
-                .ConditionalThen(_ => module.config.ShouldMount, ChainHelper.MountChain())
                 .Then(new PathfindingChain(vnav, destination, ev, module.config.ShouldUseCustomPaths, 20f))
+                .ConditionalThen(_ => module.config.ShouldMount, ChainHelper.MountChain())
                 .WaitUntilNear(vnav, destination, 205f)
             );
         }

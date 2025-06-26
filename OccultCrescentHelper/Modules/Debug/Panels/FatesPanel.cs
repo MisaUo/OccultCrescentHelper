@@ -41,7 +41,7 @@ public class FatesPanel : Panel
         Dictionary<uint, uint> locations = [];
         foreach (var fate in EventData.Fates.Values)
         {
-            var fateRow = Svc.Data.GetExcelSheet<Fate>().FirstOrDefault((f) => f.RowId == fate.id);
+            var fateRow = Svc.Data.GetExcelSheet<Fate>().FirstOrDefault(f => f.RowId == fate.id);
             locations[fate.id] = fateRow.Location;
         }
 

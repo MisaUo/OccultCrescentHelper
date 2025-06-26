@@ -8,19 +8,25 @@ namespace BOCCHI.Chains;
 
 public class PathfindingChain : ChainFactory
 {
-    private VNavmesh vnav;
+    private readonly EventData data;
 
-    private Vector3 destination;
+    private readonly Vector3 destination;
 
-    private EventData data;
+    private readonly float? maxRadius;
 
-    private bool useCustomPaths = false;
+    private readonly float? minRadius;
 
-    private float? maxRadius = null;
+    private readonly bool useCustomPaths;
 
-    private float? minRadius = null;
+    private readonly VNavmesh vnav;
 
-    public PathfindingChain(VNavmesh vnav, Vector3 destination, EventData data, bool useCustomPaths, float? maxRadius = null, float? minRadius = null)
+    public PathfindingChain(
+        VNavmesh vnav,
+        Vector3 destination,
+        EventData data,
+        bool useCustomPaths,
+        float? maxRadius = null,
+        float? minRadius = null)
     {
         this.vnav = vnav;
         this.destination = destination;
