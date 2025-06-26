@@ -80,6 +80,7 @@ public class AutomatorModule : Module<Plugin, Config>
     public void DisableIllegalMode()
     {
         config.Enabled = false;
+        automator.Refresh();
         plugin.ipc.GetProvider<VNavmesh>()?.Stop();
         Plugin.Chain.Abort();
         Svc.Chat.Print("[BOCCHI] Illegal Mode Off");
