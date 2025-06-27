@@ -49,18 +49,15 @@ Utility command.
 
     public override unsafe void Command(string command, string arguments)
     {
-        Svc.Framework.RunOnTick(() =>
-        {
-            var map = AgentMap.Instance();
-            map->IsFlagMarkerSet = false;
+        var map = AgentMap.Instance();
+        map->IsFlagMarkerSet = false;
 
-            switch (arguments)
-            {
-                case "flag-active-ce": FlagActiveCe(map); break;
-                case "flag-active-fate": FlagActiveFate(map, false); break;
-                case "flag-active-non-pot-fate": FlagActiveFate(map, true); break;
-            }
-        });
+        switch (arguments)
+        {
+            case "flag-active-ce": FlagActiveCe(map); break;
+            case "flag-active-fate": FlagActiveFate(map, false); break;
+            case "flag-active-non-pot-fate": FlagActiveFate(map, true); break;
+        }
     }
 
     private unsafe void FlagActiveCe(AgentMap* map)

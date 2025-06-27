@@ -56,28 +56,25 @@ Manage och automator/illegal mode.
             return;
         }
 
-        Svc.Framework.RunOnTick(() =>
+        if (!plugin.modules.TryGetModule<AutomatorModule>(out var automator) || automator == null)
         {
-            if (!plugin.modules.TryGetModule<AutomatorModule>(out var automator) || automator == null)
-            {
-                return;
-            }
+            return;
+        }
 
-            switch (arguments)
-            {
-                case "on":
-                    automator.EnableIllegalMode();
-                    break;
-                case "off":
-                    automator.DisableIllegalMode();
-                    break;
-                case "toggle":
-                    AutomatorModule.ToggleIllegalMode(plugin);
-                    break;
-            }
+        switch (arguments)
+        {
+            case "on":
+                automator.EnableIllegalMode();
+                break;
+            case "off":
+                automator.DisableIllegalMode();
+                break;
+            case "toggle":
+                AutomatorModule.ToggleIllegalMode(plugin);
+                break;
+        }
 
-            plugin.config.Save();
-        });
+        plugin.config.Save();
     }
 
     private unsafe void FlagActiveCe(AgentMap* map)
