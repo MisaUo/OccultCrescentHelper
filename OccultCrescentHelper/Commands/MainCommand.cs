@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using BOCCHI.Modules.Buff;
 using BOCCHI.Modules.Debug;
+using ECommons.DalamudServices;
 using Ocelot.Commands;
 using Ocelot.Modules;
 
@@ -31,7 +33,7 @@ Opens Occult Crescent Helper main ui
 
     public override IReadOnlyList<string> validArguments
     {
-        get => ["config", "cfg", "debug"];
+        get => ["config", "cfg", "debug", "buff", "tp"];
     }
 
 
@@ -63,6 +65,22 @@ Opens Occult Crescent Helper main ui
             }
         }
 #endif
+
+        if (arguments == "buff")
+        {
+            var buffs = plugin.modules.GetModule<BuffModule>();
+            if (buffs != null)
+            {
+                buffs.buffs.QueueBuffs();
+                return;
+            }
+        }
+
+        if (arguments == "tp")
+        {
+            Svc.Chat.Print("Press the button nerd.");
+            return;
+        }
 
         plugin.windows?.ToggleMainUI();
     }
