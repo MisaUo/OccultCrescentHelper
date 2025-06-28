@@ -7,11 +7,12 @@ using Ocelot.Windows;
 namespace BOCCHI.Modules.Automator;
 
 [OcelotWindow]
-public class AutomatorWindow : OcelotWindow
+public class AutomatorWindow(Plugin plugin, Config config) : OcelotWindow(plugin, config)
 {
-    public AutomatorWindow(Plugin plugin, Config config)
-        : base(plugin, config, "OCH Illegal Lens")
+    public override void PostInitialize()
     {
+        base.PostInitialize();
+
         TitleBarButtons.Add(new TitleBarButton
         {
             Click = (m) =>
@@ -45,5 +46,11 @@ public class AutomatorWindow : OcelotWindow
         }
 
         automator.panel.Draw(automator);
+    }
+
+    protected override string GetWindowName()
+    {
+        // @todo: Localize this
+        return "BOCCHI Illegal Lens";
     }
 }

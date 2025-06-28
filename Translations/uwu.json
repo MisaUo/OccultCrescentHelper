@@ -10,7 +10,7 @@
   "generic": {
     "label": {
       "enabled": "Ena-buwled! >w<",
-      "start": "Stawt! ✨",
+      "start": "Stawt!",
       "stop": "Stahp! QwQ"
     },
     "tooltip": {
@@ -19,14 +19,14 @@
   },
   "modules": {
     "treasure": {
-      "title": "Tweakwe Twesuwe Configgy! 🌟",
+      "title": "Tweakwe Twesuwe Configgy!",
       "draw": {
         "bronze": {
           "label": "Draw wines to bwonze coffews! owo",
           "tooltip": "Wender a wine fwom youw cha-wactew's posishion to neawby bwonze coffews, whiwe out of combat! uwu"
         },
         "silver": {
-          "label": "Draw wines to siwvew coffews! ✨",
+          "label": "Draw wines to siwvew coffews!",
           "tooltip": "Wender a wine fwom youw cha-wactew's posishion to neawby siwvew coffews, whiwe out of combat! uwu"
         }
       },
@@ -44,46 +44,46 @@
         }
       },
       "panel": {
-        "title": "Twesuwe! 💖",
+        "title": "Twesuwe!",
         "none": "No neawby Twesuwe. QwQ",
         "hunt": {
-          "title": "Twesuwe Huntew! 🐾",
+          "title": "Twesuwe Huntew!",
           "distance": "Distance to next node! owo",
-          "count": "# of instances! ✨",
+          "count": "# of instances!",
           "instance": {
             "current": "Cuwrent Chain! uwu",
             "progress": "Pwogwess! ^_^",
-            "queued": "Queuwed Chains! 🎀"
+            "queued": "Queuwed Chains!"
           }
         }
       }
     },
     "carrots": {
-      "title": "Cwawwots Configgy! 🥕",
+      "title": "Cwawwots Configgy!",
       "draw": {
         "label": "Draw wine to Cwawwots! ^_^",
         "tooltip": "Wender a wine fwom youw cha-wactew's posishion to neawby cwawwots! uwu"
       },
       "panel": {
-        "title": "Cwawwots! 🐰",
+        "title": "Cwawwots!",
         "none": "No neawby cwawwots. QwQ",
-        "label": "Cwawwot! 🌟"
+        "label": "Cwawwot!"
       }
     },
     "currency": {
-      "title": "Cuwwency Configgy! 💰",
+      "title": "Cuwwency Configgy!",
       "panel": {
-        "title": "Cuwwency! ✨",
+        "title": "Cuwwency!",
         "silver": {
           "label": "Siwvew pew houw! owo"
         },
         "gold": {
-          "label": "Gowd pew houw! 🌟"
+          "label": "Gowd pew houw!"
         }
       }
     },
     "event_drop": {
-      "title": "Event Dwop Configgy! 🎁",
+      "title": "Event Dwop Configgy!",
       "demiatma": {
         "label": "Show Demiatma dwops! uwu",
         "tooltip": "Show Demiatma dwops in the active FATE/CE wist! nyaa~"
@@ -93,66 +93,66 @@
         "tooltip": "Show Notes dwops in the active FATE/CE wist! uwu"
       },
       "soulshards": {
-        "label": "Show Souw Shawd dwops! ✨",
+        "label": "Show Souw Shawd dwops!",
         "tooltip": "Show Souw Shawd dwops in the active CE wist! owo"
       }
     },
     "fates": {
-      "title": "Fwates Configgy! 💫",
+      "title": "Fwates Configgy!",
       "panel": {
-        "title": "Fwates! 💖",
+        "title": "Fwates!",
         "none": "No active fwates. QwQ",
         "estimated": "Estimayted! >w<"
       }
     },
     "critical_encounters": {
-      "title": "Cwitical Encounwews Configgy! 💥",
+      "title": "Cwitical Encounwews Configgy!",
       "panel": {
-        "title": "Cwitical Encounwews! 🐾",
+        "title": "Cwitical Encounwews!",
         "none": "No active cwitical encounwews. QwQ",
         "register": "Pwepawing! uwu",
-        "warmup": "Stawting! ✨",
+        "warmup": "Stawting!",
         "estimated": "Estimayted! >w<"
       }
     },
     "exp": {
-      "title": "Exp Configgy! ✨",
+      "title": "Exp Configgy!",
       "panel": {
-        "title": "Exp! 🌟",
+        "title": "Exp!",
         "exp": {
           "label": "Exp pew houw! owo"
         }
       }
     },
     "teleporter": {
-      "title": "Tewepowtew Configgy! 🌠",
+      "title": "Tewepowtew Configgy!",
       "should_mount": {
         "label": "Mount aftew tewepowting! ^_^",
         "tooltip": "The mount to use aftew tewepowting! uwu"
       },
       "path_to_destination": {
-        "label": "Path to event aftew tewepowting! 💖",
+        "label": "Path to event aftew tewepowting!",
         "tooltip": "Use vnavmesh to head to the next event aftew tewepowting via the OCH panew! nyaa~"
       },
       "use_custom_paths": {
-        "label": "Use custom paths! ✨",
+        "label": "Use custom paths!",
         "tooltip": "Use custom paths fow cewtain events to stop vnavmesh fwom taking you to wiwd pwaces! owo"
       },
       "return_after_fate": {
-        "label": "Weturn to base aftew Fwate! 🐾",
+        "label": "Weturn to base aftew Fwate!",
         "tooltip": "Use Occuwt Weturn upon finishing a Fwate to weturn to base camp! uwu"
       },
       "return_after_critical": {
-        "label": "Weturn to base aftew Cwitical Encounwew! 💥",
+        "label": "Weturn to base aftew Cwitical Encounwew!",
         "tooltip": "Use Occuwt Weturn upon finishing a Cwitical Encounwew to weturn to base camp! uwu"
       },
       "approach_aetheryte": {
-        "label": "Appwoach aethewyte aftew wetuwning! 💫",
+        "label": "Appwoach aethewyte aftew wetuwning!",
         "tooltip": "Wawlk to the aethewyte aftew wetuwning to base camp!\n* Onwy wowks when wetuwning via the pwugin aftew a Fwate ow Cwitical Encounwew! uwu"
       }
     },
     "window_manager": {
-      "title": "Window Managew Configgy! 🖼️",
+      "title": "Window Managew Configgy!",
       "main_on_load": {
         "label": "Open main UI on woad! uwu",
         "tooltip": "Opens the main UI when the pwugin is woaded! nyaa~"
@@ -166,7 +166,7 @@
         "tooltip": "Cwoses the main UI when you weave an Occuwt Cwescent zone! uwu"
       },
       "main_in_combat": {
-        "label": "Cwose main UI in combat! ⚔️",
+        "label": "Cwose main UI in combat!",
         "tooltip": "Cwose the main UI when you entew combat! nyaa~"
       },
       "config_on_load": {
@@ -182,42 +182,42 @@
         "tooltip": "Cwoses the config UI when you weave an Occuwt Cwescent zone! uwu"
       },
       "config_in_combat": {
-        "label": "Cwose config UI in combat! ⚔️",
+        "label": "Cwose config UI in combat!",
         "tooltip": "Cwose the config UI when you entew combat! owo"
       }
     },
     "state_manager": {
-      "title": "State Managew Configgy! 🧠",
+      "title": "State Managew Configgy!",
       "show_debug": {
-        "label": "Show State! ✨",
+        "label": "Show State!",
         "tooltip": "Show the cuwrent state in the main UI! uwu"
       },
       "panel": {
-        "title": "State Managew! 💖",
+        "title": "State Managew!",
         "state": {
           "label": "State! ^_^"
         }
       }
     },
     "instance_identifier": {
-      "title": "Instance Identifiew Configgy! 🆔",
+      "title": "Instance Identifiew Configgy!",
       "show": {
         "label": "Show! owo",
         "tooltip": "This is cawght when the zone initiawizes, and wiww be unknown if the pwugin is enabwled ow wewoaded whiwe in the zone! uwu"
       },
       "panel": {
         "id": {
-          "label": "Instance ID! ✨"
+          "label": "Instance ID!"
         }
       }
     },
     "automator": {
-      "title": "Iwwegaw Mode! 😈",
+      "title": "Iwwegaw Mode!",
       "enabled": {
         "tooltip": "Iwwegaw Mode is a bot, its acshions awe not dictayted by youw config outside of this secshion! uwu"
       },
       "ai_provider": {
-        "label": "AI pwo-videw! 🤖",
+        "label": "AI pwo-videw!",
         "tooltip": "The mechanic AI pwo-videw you use! nyaa~"
       },
       "toggle_ai_provider": {
@@ -225,157 +225,157 @@
         "tooltip": "Toggwe AI Pwo-videw on when stawting fwate/ce\nToggwe AI Pwo-videw off when nav-i-gating to fwate/ce! uwu"
       },
       "force_target": {
-        "label": "Fowce Tawget! 🎯",
+        "label": "Fowce Tawget!",
         "tooltip": "Ensuwe you awways maintain a tawget in fwates and cwitical encounwews! owo"
       },
       "force_target_central_enemy": {
-        "label": "Pwiowitizwe centraw most enemy! 💖",
+        "label": "Pwiowitizwe centraw most enemy!",
         "tooltip": "Twy and tawget the enemy in the middwe of the gwoup! nyaa~"
       },
       "engagement_range": {
-        "label": "Engagement Wange! 💥",
+        "label": "Engagement Wange!",
         "tooltip": "The wange to be at fwom a fwate monstew befowe dismounting and wetting youw wotation/ai pwugin take ovwew! uwu"
       },
       "do_critical_encounters": {
-        "label": "Do Cwitical Encounwews! ✨",
+        "label": "Do Cwitical Encounwews!",
         "tooltip": "Shouwd considew cwitical encounwews when chooswing an activity! ^_^"
       },
       "delay_critical_encounters": {
-        "label": "Dewlay befowe heading to Cwitical Encounwew! ⏰",
+        "label": "Dewlay befowe heading to Cwitical Encounwew!",
         "tooltip": "Add a 10 - 15 second dewlay befowe heading to a cwitical Encounwew! uwu"
       },
       "ce_scourge_of_the_mind": {
-        "label": "CE: Scouwge of the Mind! 🧠",
+        "label": "CE: Scouwge of the Mind!",
         "tooltip": "Toggwe pawticipation in the 'Scouwge of the Mind' cwitical encounwew! uwu"
       },
       "ce_the_black_regiment": {
-        "label": "CE: The Bwack Wegiment! 🖤",
+        "label": "CE: The Bwack Wegiment!",
         "tooltip": "Toggwe pawticipation in the 'The Bwack Wegiment' cwitical encounwew! owo"
       },
       "ce_the_unbridled": {
-        "label": "CE: The Unbwidwled! 🐎",
+        "label": "CE: The Unbwidwled!",
         "tooltip": "Toggwe pawticipation in the 'The Unbwidwled' cwitical encounwew! uwu"
       },
       "ce_crawling_death": {
-        "label": "CE: Cwawwing Death! 💀",
+        "label": "CE: Cwawwing Death!",
         "tooltip": "Toggwe pawticipation in the 'Cwawwing Death' cwitical encounwew! nyaa~"
       },
       "ce_calamity_bound": {
-        "label": "CE: Cawamity Bound! ☄️",
+        "label": "CE: Cawamity Bound!",
         "tooltip": "Toggwe pawticipation in the 'Cawamity Bound' cwitical encounwew! uwu"
       },
       "ce_trial_by_claw": {
-        "label": "CE: Twiaw by Cwaw! 🐾",
+        "label": "CE: Twiaw by Cwaw!",
         "tooltip": "Toggwe pawticipation in the 'Twiaw by Cwaw' cwitical encounwew! owo"
       },
       "ce_from_times_bygone": {
-        "label": "CE: Fwom Times Bygone! 🕰️",
+        "label": "CE: Fwom Times Bygone!",
         "tooltip": "Toggwe pawticipation in the 'Fwom Times Bygone' cwitical encounwew! uwu"
       },
       "ce_company_of_stone": {
-        "label": "CE: Company of Stone! 🪨",
+        "label": "CE: Company of Stone!",
         "tooltip": "Toggwe pawticipation in the 'Company of Stone' cwitical encounwew! nyaa~"
       },
       "ce_shark_attack": {
-        "label": "CE: Shawk Attack! 🦈",
+        "label": "CE: Shawk Attack!",
         "tooltip": "Toggwe pawticipation in the 'Shawk Attack' cwitical encounwew! uwu"
       },
       "ce_on_the_hunt": {
-        "label": "CE: On the Hunt! 🐺",
+        "label": "CE: On the Hunt!",
         "tooltip": "Toggwe pawticipation in the 'On the Hunt' cwitical encounwew! owo"
       },
       "ce_with_extreme_prejudice": {
-        "label": "CE: With Extweme Pwejudice! 🔪",
+        "label": "CE: With Extweme Pwejudice!",
         "tooltip": "Toggwe pawticipation in the 'With Extweme Pwejudice' cwitical encounwew! uwu"
       },
       "ce_noise_complaint": {
-        "label": "CE: Noise Compwaint! 📢",
+        "label": "CE: Noise Compwaint!",
         "tooltip": "Toggwe pawticipation in the 'Noise Compwaint' cwitical encounwew! nyaa~"
       },
       "ce_cursed_concern": {
-        "label": "CE: Cuwsed Conwewn! 👻",
+        "label": "CE: Cuwsed Conwewn!",
         "tooltip": "Toggwe pawticipation in the 'Cuwsed Conwewn' cwitical encounwew! uwu"
       },
       "ce_eternal_watch": {
-        "label": "CE: Etewnal Watch! 👁️",
+        "label": "CE: Etewnal Watch!",
         "tooltip": "Toggwe pawticipation in the 'Etewnal Watch' cwitical encounwew! owo"
       },
       "ce_flame_of_dusk": {
-        "label": "CE: Fwame of Dusk! 🔥",
+        "label": "CE: Fwame of Dusk!",
         "tooltip": "Toggwe pawticipation in the 'Fwame of Dusk' cwitical encounwew! uwu"
       },
       "do_fates": {
-        "label": "Do Fwates! ✨",
+        "label": "Do Fwates!",
         "tooltip": "Shouwd considew fwates when chooswing an activity! ^_^"
       },
       "fate_rough_waters": {
-        "label": "Fwate: Wough Watews! 🌊",
+        "label": "Fwate: Wough Watews!",
         "tooltip": "Toggwe pawticipation in the 'Wough Watews' fwate! uwu"
       },
       "fate_the_golden_guardian": {
-        "label": "Fwate: The Gowden Guawdian! 👑",
+        "label": "Fwate: The Gowden Guawdian!",
         "tooltip": "Toggwe pawticipation in the 'The Gowden Guawdian' fwate! owo"
       },
       "fate_king_of_the_crescent": {
-        "label": "Fwate: King of the Cwescent! 🌙",
+        "label": "Fwate: King of the Cwescent!",
         "tooltip": "Toggwe pawticipation in the 'King of the Cwescent' fwate! uwu"
       },
       "fate_the_winged_terror": {
-        "label": "Fwate: The Winged Tewwow! 🦇",
+        "label": "Fwate: The Winged Tewwow!",
         "tooltip": "Toggwe pawticipation in the 'The Winged Tewwow' fwate! nyaa~"
       },
       "fate_an_unending_duty": {
-        "label": "Fwate: An Unending Duty! 📜",
+        "label": "Fwate: An Unending Duty!",
         "tooltip": "Toggwe pawticipation in the 'An Unending Duty' fwate! uwu"
       },
       "fate_brain_drain": {
-        "label": "Fwate: Bwain Dwain! 🧠",
+        "label": "Fwate: Bwain Dwain!",
         "tooltip": "Toggwe pawticipation in the 'Bwain Dwain' fwate! owo"
       },
       "fate_a_delicate_balance": {
-        "label": "Fwate: A Dewicate Bawance! ⚖️",
+        "label": "Fwate: A Dewicate Bawance!",
         "tooltip": "Toggwe pawticipation in the 'A Dewicate Bawance' fwate! uwu"
       },
       "fate_sworn_to_soil": {
-        "label": "Fwate: Swo-wn to Soiw! 🌱",
+        "label": "Fwate: Swo-wn to Soiw!",
         "tooltip": "Toggwe pawticipation in the 'Swo-wn to Soiw' fwate! nyaa~"
       },
       "fate_a_prying_eye": {
-        "label": "Fwate: A Pwywing Eye! 👁️",
+        "label": "Fwate: A Pwywing Eye!",
         "tooltip": "Toggwe pawticipation in the 'A Pwywing Eye' fwate! uwu"
       },
       "fate_fatal_allure": {
-        "label": "Fwate: Fataw Awlure! 💜",
+        "label": "Fwate: Fataw Awlure!",
         "tooltip": "Toggwe pawticipation in the 'Fataw Awlure' fwate! owo"
       },
       "fate_serving_darkness": {
-        "label": "Fwate: Sewving Dawkness! 🌑",
+        "label": "Fwate: Sewving Dawkness!",
         "tooltip": "Toggwe pawticipation in the 'Sewving Dawkness' fwate! uwu"
       },
       "fate_persistent_pots": {
-        "label": "Fwate: Pewsis-tent Pots! 🏺",
+        "label": "Fwate: Pewsis-tent Pots!",
         "tooltip": "Toggwe pawticipation in the 'Pewsis-tent Pots' fwate! nyaa~"
       },
       "fate_pleading_pots": {
-        "label": "Fwate: Pweading Pots! 🥺",
+        "label": "Fwate: Pweading Pots!",
         "tooltip": "Toggwe pawticipation in the 'Pweading Pots' fwate! uwu"
       },
       "panel": {
-        "title": "Iwwegaw Mode! 😈",
+        "title": "Iwwegaw Mode!",
         "activity": {
-          "label": "Ac-tivi-ty! ✨",
+          "label": "Ac-tivi-ty!",
           "none": "N-nyone! QwQ"
         },
         "activity_state": {
-          "label": "Ac-tivi-ty State! 🐾",
+          "label": "Ac-tivi-ty State!",
           "none": "Wai-ting fow Ac-tivi-ty! uwu"
         }
       }
     },
     "mount": {
-      "title": "Mount Configgy! 🐴",
+      "title": "Mount Configgy!",
       "mount": {
-        "label": "Mount! 🐎",
+        "label": "Mount!",
         "tooltip": "Sewect the mount to use! uwu"
       },
       "maintain": {
@@ -383,32 +383,32 @@
         "tooltip": "Whiwe in the idwle state, this wiww enfowce you to be mounted! owo"
       },
       "roulette": {
-        "label": "Use Mount Wouwette! 🎲",
+        "label": "Use Mount Wouwette!",
         "tooltip": "Ovewwides configuwed mount and uses wouwette instead! uwu"
       }
     },
     "buff": {
       "config": {
-        "title": "Buffs Configgy! ✨",
+        "title": "Buffs Configgy!",
         "romeos_ballad": {
-          "label": "Appwy Womeo's Bawwad! 🎶",
+          "label": "Appwy Womeo's Bawwad!",
           "tooltip": "Appwy the Phantom Bawd Buff, Womeo's Bawwad! uwu"
         },
         "enduring_fortitude": {
-          "label": "Appwy Enduw-ing Fowtitude! 🛡️",
+          "label": "Appwy Enduw-ing Fowtitude!",
           "tooltip": "Appwy the Phantom Knight Buff, Enduw-ing Fowtitude! owo"
         },
         "fleetfooted": {
-          "label": "Appwy Fweetfooted! ⚡",
+          "label": "Appwy Fweetfooted!",
           "tooltip": "Appwy the Phantom Monk Buff, Fweetfooted! nyaa~"
         },
         "threshold": {
-          "label": "Weappwy Thweshowd! ⏳",
+          "label": "Weappwy Thweshowd!",
           "tooltip": "The numbew of minutes wemaining on the wowest buff to wefwesh them aww duwing au-toma-tic execushion! uwu"
         }
       },
       "panel": {
-        "title": "Buffs! 💖",
+        "title": "Buffs!",
         "button": {
           "tooltip": "Switch to each enabwled buffing phantom job and use theiw buffing skiww, then switch back to youw owiginaw phantom job! owo"
         }

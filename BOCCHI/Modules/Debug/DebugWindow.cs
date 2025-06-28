@@ -7,13 +7,8 @@ namespace BOCCHI.Modules.Debug;
 #if DEBUG_BUILD
 [OcelotWindow]
 #endif
-public class DebugWindow : OcelotWindow
+public class DebugWindow(Plugin plugin, Config config) : OcelotWindow(plugin, config)
 {
-    public DebugWindow(Plugin plugin, Config config)
-        : base(plugin, config, "OCH Debug")
-    {
-    }
-
     public override void Draw()
     {
         if (!ZoneData.IsInOccultCrescent())
@@ -26,5 +21,10 @@ public class DebugWindow : OcelotWindow
         {
             module.DrawPanels();
         }
+    }
+
+    protected override string GetWindowName()
+    {
+        return "OCH Debug";
     }
 }

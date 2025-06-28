@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using BOCCHI.Modules.Buff;
 using BOCCHI.Modules.Debug;
 using ECommons.DalamudServices;
+using Ocelot;
 using Ocelot.Commands;
 using Ocelot.Modules;
 
@@ -31,11 +33,9 @@ Opens Occult Crescent Helper main ui
         get => ["/och", "/occultcrescenthelper"];
     }
 
-    public override IReadOnlyList<string> validArguments
-    {
-        get => ["config", "cfg", "debug", "buff", "tp"];
-    }
-
+    private readonly IReadOnlyList<string> languageCodes = [
+        "en", "de", "fr", "jp", "uwu"
+    ];
 
     public override void Command(string command, string arguments)
     {
@@ -72,6 +72,31 @@ Opens Occult Crescent Helper main ui
         {
             Svc.Chat.Print("Press the button nerd.");
             return;
+        }
+
+        if (arguments.StartsWith("language"))
+        {
+            var parts = arguments.Split(' ', 2);
+            if (parts.Length == 2)
+            {
+                var code = parts[1].Trim().ToLowerInvariant();
+                if (languageCodes.Contains(code))
+                {
+                    I18N.SetLanguage(code);
+                    Svc.Chat.Print($"Language set to: {code}");
+                    return;
+                }
+                else
+                {
+                    Svc.Log.Error($"Unknown language code: {code}");
+                    return;
+                }
+            }
+            else
+            {
+                Svc.Chat.Print("Usage: /bocchi language <code>");
+                return;
+            }
         }
 
         plugin.windows?.ToggleMainUI();

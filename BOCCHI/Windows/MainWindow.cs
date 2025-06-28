@@ -8,14 +8,8 @@ using Ocelot.Windows;
 namespace BOCCHI.Windows;
 
 [OcelotMainWindow]
-public class MainWindow : OcelotMainWindow
+public class MainWindow(Plugin plugin, Config config) : OcelotMainWindow(plugin, config)
 {
-    public MainWindow(Plugin plugin, Config config)
-        : base(plugin, config)
-    {
-        Flags |= ImGuiWindowFlags.AlwaysAutoResize;
-    }
-
     public override void PostInitialize()
     {
         base.PostInitialize();

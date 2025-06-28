@@ -14,6 +14,12 @@
         "resolved": "1.2.25",
         "contentHash": "xCXiw7BCxHJ8pF6wPepRUddlh2dlQlbr81gXA72hdk4FLHkKXas7EH/n+fk5UCA/YfMqG1Z6XaPiUjDbUNBUzg=="
       },
+      "ECommons": {
+        "type": "Direct",
+        "requested": "[3.0.0, )",
+        "resolved": "3.0.0",
+        "contentHash": "Frb4tiuV5ESubnpq4nG6g3QnJ/Il0I3ohzLh/XHyMCN5bnf9Gedrpleo5gr3A3LWHgGLTJT5H5W/CTDPRsmdJg=="
+      },
       "Microsoft.Extensions.Configuration": {
         "type": "Transitive",
         "resolved": "7.0.0",
@@ -36,13 +42,10 @@
         "resolved": "7.0.0",
         "contentHash": "um1KU5kxcRp3CNuI8o/GrZtD4AIOXDk+RLsytjZ9QPok3ttLUelLKpilVPuaFT3TFjOhSibUAso0odbOaCDj3Q=="
       },
-      "ecommons": {
-        "type": "Project"
-      },
       "FFXIVOcelot": {
         "type": "Project",
         "dependencies": {
-          "Ecommons": "[2.2.0.2, )",
+          "ECommons": "[3.0.0, )",
           "Microsoft.Extensions.Configuration": "[7.0.0, )",
           "Microsoft.Extensions.Configuration.Abstractions": "[7.0.0, )"
         }

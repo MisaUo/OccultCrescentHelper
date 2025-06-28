@@ -1,12 +1,11 @@
 ﻿using System;
-using System.IO;
 using BOCCHI.Chains;
 using BOCCHI.Data;
+using Dalamud.Game;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Plugin;
 using ECommons;
 using ECommons.DalamudServices;
-using ECommons.Reflection;
 using Ocelot;
 using Ocelot.Chain;
 
@@ -19,7 +18,7 @@ public sealed class Plugin : OcelotPlugin
         get => "Occult Crescent Helper";
     }
 
-    public Config config { get; init; }
+    public Config config { get; }
 
     public override IOcelotConfig _config
     {
@@ -35,35 +34,40 @@ public sealed class Plugin : OcelotPlugin
         : base(plugin, Module.DalamudReflector)
     {
         config = plugin.GetPluginConfig() as Config ?? new Config();
+        
+        SetupLanguage(plugin);
 
-        I18N.SetDirectory(plugin.AssemblyLocation.Directory?.FullName!);
-        I18N.LoadFromFile("en", "Translations/en.json");
-        I18N.LoadFromFile("uwu", "Translations/uwu.json");
-
-        if (DateTime.Today.Month == 4 && DateTime.Today.Day == 1 && new Random().NextDouble() < 0.05)
-        {
-            I18N.SetLanguage("uwu");
-        }
-
-        InitializeClientStructs();
         OcelotInitialize();
 
         ChainManager.Initialize();
         ChainHelper.Initialize(this);
     }
 
-    private void InitializeClientStructs()
+    private void SetupLanguage(IDalamudPluginInterface plugin)
     {
-        var gameVersion = DalamudReflector.TryGetDalamudStartInfo(out var ver) ? ver.GameVersion!.ToString() : "unknown";
-        InteropGenerator.Runtime.Resolver.GetInstance.Setup(
-            Svc.SigScanner.SearchBase,
-            gameVersion,
-            new FileInfo(Svc.PluginInterface.ConfigDirectory.FullName + "/cs.json")
-        );
-        FFXIVClientStructs.Interop.Generated.Addresses.Register();
-        InteropGenerator.Runtime.Resolver.GetInstance.Resolve();
-    }
+        I18N.SetDirectory(plugin.AssemblyLocation.Directory?.FullName!);
+        I18N.LoadFromFile("en", "Translations/en.json");
+        I18N.LoadFromFile("fr", "Translations/fr.json");
+        I18N.LoadFromFile("de", "Translations/de.json");
+        I18N.LoadFromFile("jp", "Translations/jp.json");
+        I18N.LoadFromFile("uwu", "Translations/uwu.json");
 
+        var lang = Svc.ClientState.ClientLanguage switch
+        {
+            ClientLanguage.French => "fr",
+            ClientLanguage.German => "de",
+            ClientLanguage.Japanese => "jp",
+            _ => "en",
+        };
+        
+        I18N.SetLanguage(lang);
+
+        var today = DateTime.Today;
+        if (today is { Month: 4, Day: 1 } && Random.Shared.NextDouble() < 0.05)
+        {
+            I18N.SetLanguage("uwu");
+        }
+    }
 
     public override bool ShouldTick()
     {
