@@ -1,6 +1,6 @@
 .vs/
-OccultCrescentHelper/obj/
-OccultCrescentHelper/bin/
+obj/
+BOCCHI/bin/
 *.user
-OccultCrescentHelper/.env
+.env
 node_modules/

@@ -1,7 +1,7 @@
 using Ocelot.Config.Attributes;
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.{{name}};
+namespace BOCCHI.Modules.{{name}};
 
 [Title("{{name}} Config")]
 public class {{name}}Config : ModuleConfig

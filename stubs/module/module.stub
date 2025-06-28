@@ -1,7 +1,7 @@
 
 using Ocelot.Modules;
 
-namespace OccultCrescentHelper.Modules.{{name}};
+namespace BOCCHI.Modules.{{name}};
 
 [OcelotModule]
 public class {{name}}Module : Module<Plugin, Config>

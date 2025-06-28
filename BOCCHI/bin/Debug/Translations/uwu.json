@@ -1,0 +1,321 @@
+{
+  "windows": {
+    "main": {
+      "title": "Occuwt Cwescent Hewper"
+    },
+    "config": {
+      "title": "Occuwt Cwescent Hewper Configuwation~"
+    }
+  },
+  "generic": {
+    "label": {
+      "enabled": "Enabwed~ uwu"
+    }
+  },
+  "modules": {
+    "treasure": {
+      "title": "Tweasuwe Configuwation~",
+      "draw": {
+        "bronze": {
+          "label": "D-dwaw winies tuu bwonze coffews~",
+          "tooltip": "Wendew a winie fwom youw chawactews position tuu nyeawby bwonze coffews, whiwe nyot in combat >w<"
+        },
+        "silver": {
+          "label": "D-dwaw winies tuu siwvew coffews~",
+          "tooltip": "Wendew a winie fwom youw chawactews position tuu nyeawby siwvew coffews, whiwe nyot in combat~"
+        }
+      },
+      "hunt": {
+        "show_button": {
+          "label": "Show Tweasuwe Hunt Button >w<"
+        },
+        "detection": {
+          "label": "Chest detecshun wange~",
+          "tooltip": "The distawnce fwom a nyode you haf tuu be tuu assume it isn't thewe... sowwy >w<\nVawies when sewvew sends gameobject... beawe wiff me ;w;"
+        },
+        "max_level": {
+          "label": "Max awea wevew~",
+          "tooltip": "The highest wevew of meany mobs yuw'we wiwwing tuu chase shiny chests nyeaw~ nya~"
+        }
+      }
+    },
+    "carrots": {
+      "title": "Cawwots Config~",
+      "draw": {
+        "label": "D-dwaw winie tuu Cawwots >w<",
+        "tooltip": "Wendew winie fwom youw posishun tuu nyeawby cawwots! Nyaa~"
+      }
+    },
+    "currency": {
+      "title": "M-munny Config >w<"
+    },
+    "event_drop": {
+      "title": "Event Dwwop Config~",
+      "demiatma": {
+        "label": "Show Demyatma dwwops >~<",
+        "tooltip": "Show dose spawkwy Demyatma dwwops in active FATE/CE wist owo"
+      },
+      "notes": {
+        "label": "Show Notes dwwops~",
+        "tooltip": "Show Notesies dwwops in active FATE/CE wist uwu"
+      },
+      "soulshards": {
+        "label": "Show Souw Shawd dwwops~",
+        "tooltip": "Show souw shawd dwwopsies in da active CE wist~ so spooooky! >///<"
+      }
+    },
+    "fates": {
+      "title": "F-fates Config nya~"
+    },
+    "critical_encounters": {
+      "title": "Cwiticaw Encountews Config~"
+    },
+    "exp": {
+      "title": "Exp Config! mowe wevews hewe we come~"
+    },
+    "teleporter": {
+      "title": "Tewepowtew Config~",
+      "should_mount": {
+        "label": "M-mount aftew tewepowtin~",
+        "tooltip": "W-we use mountie mount aftew twavewwin~ nya!"
+      },
+      "path_to_destination": {
+        "label": "Woute tuu event aftew tewepowt~",
+        "tooltip": "Use vnavmesh tuu go tuu nyaxt event fwom OCH panew >///<"
+      },
+      "use_custom_paths": {
+        "label": "Use custom woutes~",
+        "tooltip": "No mowe siwwy twavels, we go smawt way >w<"
+      },
+      "return_after_fate": {
+        "label": "Wetuwn tuu base aftew FATE~",
+        "tooltip": "Use Occuwt Wetuwn when FATE is done to go home uwu"
+      },
+      "return_after_critical": {
+        "label": "Wetuwn tuu base aftew Cwiticaw~",
+        "tooltip": "Use Occuwt Wetuwn aftew CE to cuddwe at basecamp ;3"
+      },
+      "approach_aetheryte": {
+        "label": "Go tuu aethewyte aftew wetuwn~",
+        "tooltip": "Wawk tuu da aethewyte aftew tewepowtin home~ *onwy wowks when you come back fwom FATE o-or CE >w<*"
+      }
+    },
+    "window_manager": {
+      "title": "Window Mawnagew Config~",
+      "main_on_load": {
+        "label": "Open main UI on woad~",
+        "tooltip": "We show da big UI when pwugin woawd~"
+      },
+      "main_on_enter": {
+        "label": "Open main UI on entew~",
+        "tooltip": "Hewe comes da UI in da Occuwt pwace~"
+      },
+      "main_on_exit": {
+        "label": "Cwose main UI on exit~",
+        "tooltip": "S-say bye bye tuu UI when weaving da Occuwt pwace ;w;"
+      },
+      "config_on_load": {
+        "label": "Open config UI on woad~",
+        "tooltip": "Settings UI pop up when woaded owo"
+      },
+      "config_on_enter": {
+        "label": "Open config UI on entew~",
+        "tooltip": "We show settings when you entew Occuwt Cwescent~"
+      },
+      "config_on_exit": {
+        "label": "Cwose config UI on exit~",
+        "tooltip": "H-hide settings when you weave uwu"
+      }
+    },
+    "state_manager": {
+      "title": "State Mawnagew Config~",
+      "show_debug": {
+        "label": "Show State~",
+        "tooltip": "We show what you doin' in da main UI~ owo"
+      }
+    },
+    "instance_identifier": {
+      "title": "Instance ID Config~",
+      "show": {
+        "label": "Show~",
+        "tooltip": "Caught when zone woadies~ might be unknow if pwugin just nyow started >~<"
+      }
+    },
+    "automator": {
+      "title": "I-iwwegaw M-mode >///<",
+      "enabled": {
+        "tooltip": "Iwwegaw Mode is big scary botty bot... not based on youw config o-o"
+      },
+      "ai_provider": {
+        "label": "AI pwovidew~",
+        "tooltip": "Wh-who gives you smow bwain pwotect pwuggy?"
+      },
+      "toggle_ai_provider": {
+        "label": "Toggwe Ai Pwovidew~",
+        "tooltip": "Toggwe on/off when stawting FATE or going tuu FATE uwu"
+      },
+      "force_target": {
+        "label": "Fowce T-tawget~",
+        "tooltip": "Awways haf a monste~ to pew pew in CEs and FATEs~"
+      },
+      "force_target_central_enemy": {
+        "label": "P-pwioritize centraw nyasty~",
+        "tooltip": "Tawget da middwe meany face~"
+      },
+      "engagement_range": {
+        "label": "En-gage~ wange >w<",
+        "tooltip": "Distance tuu monsty befo awe dismountin an AI go bwoom bwoom~"
+      },
+      "do_critical_encounters": {
+        "label": "Do Cwiticaw Encountews~",
+        "tooltip": "Think about doin' them big mean fights? UwU"
+      },
+      "delay_critical_encounters": {
+        "label": "D-deway tuu CE >~<",
+        "tooltip": "W-wait 10-15 secs befowe heawdin tuu meanie time~"
+      },
+      "ce_scourge_of_the_mind": {
+        "label": "CE: Scouwge of da Mind~",
+        "tooltip": "Toggwe CE 'Scouwge of the Mind' nya~"
+      },
+      "ce_the_black_regiment": {
+        "label": "CE: The Bwack Wegiment~",
+        "tooltip": "Toggwe da edgy CE~"
+      },
+      "ce_the_unbridled": {
+        "label": "CE: Da Unbwidwed~",
+        "tooltip": "Toggwe CE: 'Unbwidwed powew!!' >///<"
+      },
+      "ce_crawling_death": {
+        "label": "CE: Cwawwling Death~",
+        "tooltip": "S-sounds s-scawwy! Toggew on ow off ;_;"
+      },
+      "ce_calamity_bound": {
+        "label": "CE: Cawamity Bound~",
+        "tooltip": "Wanna do cawamity stuffies? Toggwe it~"
+      },
+      "ce_trial_by_claw": {
+        "label": "CE: Twiaw by Cwaw~",
+        "tooltip": "Cat fight?? OwO"
+      },
+      "ce_from_times_bygone": {
+        "label": "CE: F-fwom Times Bygone~",
+        "tooltip": "OwO what's this? A histowy wesson??"
+      },
+      "ce_company_of_stone": {
+        "label": "CE: Compawny of Stwone~",
+        "tooltip": "Toggwe dis hawd stwone gwoup CE~"
+      },
+      "ce_shark_attack": {
+        "label": "CE: Shawk Attack!!!",
+        "tooltip": "SHAAAWK!! Toggwe da nommy nommy CE~"
+      },
+      "ce_on_the_hunt": {
+        "label": "CE: On da Hunt~",
+        "tooltip": "We going hunting?! Toggew time!"
+      },
+      "ce_with_extreme_prejudice": {
+        "label": "CE: Wiff Extweme Pwejudice >:3",
+        "tooltip": "S-scawy attack pewmission... toggwe it~"
+      },
+      "ce_noise_complaint": {
+        "label": "CE: Noisy neighbows~",
+        "tooltip": "Too woud! Let's stop 'em! uwu"
+      },
+      "ce_cursed_concern": {
+        "label": "CE: Cuwsed Cwoncern~",
+        "tooltip": "Toggwe da spooky uwu~"
+      },
+      "ce_eternal_watch": {
+        "label": "CE: Etewnaw Watch~",
+        "tooltip": "Fowevaw and evew... toggwe i-it~"
+      },
+      "ce_flame_of_dusk": {
+        "label": "CE: Fwame of Dusk~",
+        "tooltip": "Let da wight guide yuw... uwu"
+      },
+      "do_fates": {
+        "label": "Do Fwuffy FATEs~",
+        "tooltip": "Thinkin' bout doin FATEs todayy~?"
+      },
+      "fate_rough_waters": {
+        "label": "FATE: Wough Watews~",
+        "tooltip": "Swim o-or sink... toggwe pwease~"
+      },
+      "fate_the_golden_guardian": {
+        "label": "FATE: Gowden Gwawdianny~",
+        "tooltip": "Big shwiny fwiendy o-or enmemy? Toggew it~"
+      },
+      "fate_king_of_the_crescent": {
+        "label": "FATE: King of the Cwescent~",
+        "tooltip": "Youw highness... we toggwe now~"
+      },
+      "fate_the_winged_terror": {
+        "label": "FATE: Wingy Tewwow >w<",
+        "tooltip": "Fwappy scawy birb? y/n"
+      },
+      "fate_an_unending_duty": {
+        "label": "FATE: Unending Dutieees~",
+        "tooltip": "Nyo end... o-only toggwe... uwu"
+      },
+      "fate_brain_drain": {
+        "label": "FATE: Bwain Dwain~",
+        "tooltip": "M-my bwain cewws!!! Toggew >w<"
+      },
+      "fate_a_delicate_balance": {
+        "label": "FATE: Dewicate Bawance~",
+        "tooltip": "Nyo tip da scawes... toggwe with cawe~"
+      },
+      "fate_sworn_to_soil": {
+        "label": "FATE: Swown tuu Soiw~",
+        "tooltip": "Back tuu da diwt >_<"
+      },
+      "fate_a_prying_eye": {
+        "label": "FATE: Pwyyyin Eye~",
+        "tooltip": "S-stawp wooking at me >///<"
+      },
+      "fate_fatal_allure": {
+        "label": "FATE: Fatwa Awwuwe~",
+        "tooltip": "I-it's nyot wike I wanted tuu toggwe this... b-baka~"
+      },
+      "fate_serving_darkness": {
+        "label": "FATE: Sewving Dawkness~",
+        "tooltip": "Fow da edgiest~"
+      },
+      "fate_persistent_pots": {
+        "label": "FATE: Pewssistent Potts~",
+        "tooltip": "Da potts won’t stawp!!"
+      },
+      "fate_pleading_pots": {
+        "label": "FATE: P-pweading Pots~",
+        "tooltip": "Pwease hewp meee~ says pot ;w;"
+      },
+      "panel": {
+        "title": "Iwwegaw Mode~",
+        "activity": {
+          "label": "Activitea~",
+          "none": "N-nuffin~"
+        },
+        "activity_state": {
+          "label": "Activitea State~",
+          "none": "W-waitin fow sumthin tuu do~"
+        }
+      }
+    },
+    "mount": {
+      "title": "Mountie Config~",
+      "mount": {
+        "label": "Mountie~",
+        "tooltip": "Wh-which ridey yuw want? owo"
+      },
+      "maintain": {
+        "label": "S-stay on yuw mounty~",
+        "tooltip": "W-while doin' nuffin, we keep mounted >w<"
+      },
+      "roulette": {
+        "label": "Use Mount Wouwette~",
+        "tooltip": "Spins the wheew and picks mountie at wandom~"
+      }
+    }
+  }
+}
