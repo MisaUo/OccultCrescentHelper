@@ -5,20 +5,15 @@ using Ocelot.Modules;
 namespace BOCCHI.Modules.WindowManager;
 
 [OcelotModule]
-public class WindowManagerModule : Module<Plugin, Config>
+public class WindowManagerModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
 {
     public override WindowManagerConfig config
     {
         get => _config.WindowManagerConfig;
     }
 
-    public WindowManagerModule(Plugin plugin, Config config)
-        : base(plugin, config)
-    {
-    }
 
-
-    private List<uint> occultCrescentTerritoryIds = [1252];
+    private readonly List<uint> occultCrescentTerritoryIds = [1252];
 
     private bool mainClosed = false;
 

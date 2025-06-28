@@ -56,10 +56,10 @@ public class ExpTracker
     {
         return clientLanguage switch
         {
-            ClientLanguage.English => @"You gain (\d+) Phantom .+? experience points\.",
             ClientLanguage.French => @"Vous gagnez (\d+) points d'expérience de soutien en .+? fantôme",
             ClientLanguage.German => @"Du erhältst (\d+) Phantomroutine als Phantom",
             ClientLanguage.Japanese => @".+?」に(\d+)ポイントのサポート経験値を得た。",
+            _ => @"You gain (\d+) Phantom .+? experience points\.",
         };
     }
 }

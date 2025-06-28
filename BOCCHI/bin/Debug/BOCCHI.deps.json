@@ -8,26 +8,12 @@
     ".NETCoreApp,Version=v9.0": {
       "BOCCHI/0.0.0.1": {
         "dependencies": {
-          "DotNetEnv": "3.1.1",
           "Ecommons": "2.2.0.2",
           "FFXIVOcelot": "0.26.0",
           "Ocelot": "0.26.0.0"
         },
         "runtime": {
           "BOCCHI.dll": {}
-        }
-      },
-      "DotNetEnv/3.1.1": {
-        "dependencies": {
-          "Microsoft.Extensions.Configuration": "7.0.0",
-          "Microsoft.Extensions.Configuration.Abstractions": "7.0.0",
-          "Sprache": "2.3.1"
-        },
-        "runtime": {
-          "lib/netstandard1.3/DotNetEnv.dll": {
-            "assemblyVersion": "3.1.1.0",
-            "fileVersion": "3.1.1.0"
-          }
         }
       },
       "Microsoft.Extensions.Configuration/7.0.0": {
@@ -58,14 +44,6 @@
           "lib/net7.0/Microsoft.Extensions.Primitives.dll": {
             "assemblyVersion": "7.0.0.0",
             "fileVersion": "7.0.22.51805"
-          }
-        }
-      },
-      "Sprache/2.3.1": {
-        "runtime": {
-          "lib/netstandard2.1/Sprache.dll": {
-            "assemblyVersion": "2.3.1.0",
-            "fileVersion": "2.3.1.0"
           }
         }
       },
@@ -106,13 +84,6 @@
       "serviceable": false,
       "sha512": ""
     },
-    "DotNetEnv/3.1.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-o4SqUVCq0pqHF/HYsZk6k22XGIVmvsDVo+Dy7l0ubq9uQ45JkXswrMRJmYvhGLXWFYF0M5OupMonytB+0zvpGQ==",
-      "path": "dotnetenv/3.1.1",
-      "hashPath": "dotnetenv.3.1.1.nupkg.sha512"
-    },
     "Microsoft.Extensions.Configuration/7.0.0": {
       "type": "package",
       "serviceable": true,
@@ -133,13 +104,6 @@
       "sha512": "sha512-um1KU5kxcRp3CNuI8o/GrZtD4AIOXDk+RLsytjZ9QPok3ttLUelLKpilVPuaFT3TFjOhSibUAso0odbOaCDj3Q==",
       "path": "microsoft.extensions.primitives/7.0.0",
       "hashPath": "microsoft.extensions.primitives.7.0.0.nupkg.sha512"
-    },
-    "Sprache/2.3.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Q+mXeiTxiUYG3lKYF6TS82/SyB4F2613Q1yXTMwg4jWGHEEVC3yrzHtNcI4B3qnDI0+eJsezGJ0V+cToUytHWw==",
-      "path": "sprache/2.3.1",
-      "hashPath": "sprache.2.3.1.nupkg.sha512"
     },
     "Ecommons/2.2.0.2": {
       "type": "project",

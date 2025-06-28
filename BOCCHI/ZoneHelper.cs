@@ -8,7 +8,7 @@ using ECommons.DalamudServices;
 
 namespace BOCCHI;
 
-public static class ZoneHelper
+internal static class ZoneHelper
 {
     public static Aethernet GetClosestAethernetShard(Vector3 position)
     {
@@ -29,7 +29,7 @@ public static class ZoneHelper
 
     public static bool IsNearAethernetShard(Aethernet aethernet, float range = 4.3f)
     {
-        return GetNearbyAethernetShards(range).Where(o => o.DataId == aethernet.GetData().dataId).Count() > 0;
+        return GetNearbyAethernetShards(range).Any(o => o.DataId == aethernet.GetData().dataId);
     }
 
     public static IList<IGameObject> GetNearbyKnowledgeCrystal(float range = 4.5f)
@@ -46,6 +46,6 @@ public static class ZoneHelper
 
     public static bool IsNearKnowledgeCrystal(float range = 4.5f)
     {
-        return GetNearbyKnowledgeCrystal(range).Count() > 0;
+        return GetNearbyKnowledgeCrystal(range).Any();
     }
 }

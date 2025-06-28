@@ -50,8 +50,6 @@ public sealed class Plugin : OcelotPlugin
 
         ChainManager.Initialize();
         ChainHelper.Initialize(this);
-
-        DotNetEnv.Env.Load(Svc.PluginInterface.AssemblyLocation.Directory + "/.env");
     }
 
     private void InitializeClientStructs()

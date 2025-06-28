@@ -37,7 +37,7 @@ public class Teleporter
 
         if (aethernet == null)
         {
-            aethernet = GetClosestAethernet(destination);
+            aethernet = ZoneHelper.GetClosestAethernetShard(destination);
         }
 
         OcelotUI.Indent(() =>
@@ -173,31 +173,6 @@ public class Teleporter
         }
 
         Plugin.Chain.Submit(ChainHelper.ReturnChain());
-    }
-
-    [Obsolete("Use ZoneHelper.GetClosestAethernetShard")]
-    private Aethernet GetClosestAethernet(Vector3 position)
-    {
-        return AethernetData.All().OrderBy((data) => Vector3.Distance(position, data.position)).First()!.aethernet;
-    }
-
-    [Obsolete("Use ZoneHelper.GetNearbyAethernetShards")]
-    public IList<IGameObject> GetNearbyAethernetShards()
-    {
-        var playerPos = Svc.ClientState.LocalPlayer?.Position ?? Vector3.Zero;
-
-        return Svc.Objects
-            .Where(o => o != null)
-            .Where(o => o.ObjectKind == ObjectKind.EventObj)
-            .Where(o => AethernetData.All().Select((datum) => datum.dataId).Contains(o.DataId))
-            .Where(o => Vector3.Distance(o.Position, playerPos) <= 4.5f)
-            .ToList();
-    }
-
-    [Obsolete("use ZoneHelper.IsNearAethernetShard")]
-    private bool IsNear(Aethernet aethernet)
-    {
-        return GetNearbyAethernetShards().Where(o => o.DataId == aethernet.GetData().dataId).Count() > 0;
     }
 
     public bool IsReady()

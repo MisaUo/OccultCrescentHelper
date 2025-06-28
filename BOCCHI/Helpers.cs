@@ -5,7 +5,7 @@ using ImGuiNET;
 
 namespace BOCCHI;
 
-public static class Helpers
+internal static class Helpers
 {
     public static unsafe void DrawLine(Vector3 start, Vector3 end, float thickness, Vector4 color)
     {

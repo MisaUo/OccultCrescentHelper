@@ -5,7 +5,7 @@ using Ocelot.Modules;
 namespace BOCCHI.Commands;
 
 [OcelotCommand]
-public class ConfigCommand : OcelotCommand
+public class ConfigCommand(Plugin plugin) : OcelotCommand
 {
     public override string command
     {
@@ -24,13 +24,6 @@ Opens Occult Crescent Helper config ui
     public override IReadOnlyList<string> aliases
     {
         get => ["/bocchic", "/ochcfg", "/ochc", "/occultcrescenthelperconfig"];
-    }
-
-    private readonly Plugin plugin;
-
-    public ConfigCommand(Plugin plugin)
-    {
-        this.plugin = plugin;
     }
 
 

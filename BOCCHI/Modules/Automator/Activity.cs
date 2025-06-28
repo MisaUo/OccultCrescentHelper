@@ -56,7 +56,7 @@ public abstract class Activity
     }
 
 
-    public unsafe Func<Chain>? GetChain(StateManagerModule states)
+    public Func<Chain>? GetChain(StateManagerModule states)
     {
         if (!IsValid())
         {
@@ -82,8 +82,6 @@ public abstract class Activity
     {
         return () =>
         {
-            var yes = module.GetIPCProvider<YesAlready>();
-
             var playerShard = AethernetData.All().OrderBy((data) => Vector3.Distance(Player.Position, data.position)).First();
             var activityShard = GetAethernetData();
 

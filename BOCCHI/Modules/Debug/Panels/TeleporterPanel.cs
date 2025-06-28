@@ -22,13 +22,13 @@ public class TeleporterPanel : Panel
             OcelotUI.Title("Teleporter:");
             OcelotUI.Indent(() =>
             {
-                var shards = teleporter.teleporter.GetNearbyAethernetShards();
+                var shards = ZoneHelper.GetNearbyAethernetShards();
                 if (shards.Count > 0)
                 {
                     OcelotUI.Title("Nearby Aethernet Shards:");
                     OcelotUI.Indent(() =>
                     {
-                        foreach (var shard in teleporter.teleporter.GetNearbyAethernetShards())
+                        foreach (var shard in ZoneHelper.GetNearbyAethernetShards())
                         {
                             var data = AethernetData.All().First(o => o.dataId == shard.DataId);
                             ImGui.TextUnformatted(data.aethernet.ToFriendlyString());

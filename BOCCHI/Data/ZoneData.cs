@@ -8,11 +8,6 @@ public static class ZoneData
 {
     public const uint SOUTHHORN = 1252;
 
-    public readonly static List<uint> zoneIds =
-    [
-        SOUTHHORN,
-    ];
-
     // This can and should be filled using layout files or excel data
     public readonly static Dictionary<uint, Vector3> aetherytes = new()
     {

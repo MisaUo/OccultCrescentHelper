@@ -67,17 +67,4 @@ public static class StatusListExtensions
 
         return false;
     }
-
-    public static bool HasAll(this StatusList current, params PlayerStatus[] statuses)
-    {
-        foreach (var status in statuses)
-        {
-            if (!current.Any(s => s.StatusId == (uint)status))
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
 }

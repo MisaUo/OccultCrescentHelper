@@ -12,7 +12,7 @@ using Ocelot.Modules;
 namespace BOCCHI.Commands;
 
 [OcelotCommand]
-public class OCHIllegalCommand : OcelotCommand
+public class OCHIllegalCommand(Plugin plugin) : OcelotCommand
 {
     public override string command
     {
@@ -39,13 +39,6 @@ Manage och automator/illegal mode.
     public override IReadOnlyList<string> validArguments
     {
         get => ["on", "off", "toggle"];
-    }
-
-    private readonly Plugin plugin;
-
-    public OCHIllegalCommand(Plugin plugin)
-    {
-        this.plugin = plugin;
     }
 
     public override void Command(string command, string arguments)

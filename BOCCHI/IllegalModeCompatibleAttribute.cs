@@ -3,10 +3,4 @@ using Ocelot.Config.Attributes;
 
 namespace BOCCHI;
 
-internal sealed class IllegalModeCompatibleAttribute : IconAttribute
-{
-    public IllegalModeCompatibleAttribute()
-        : base(FontAwesomeIcon.Skull, "generic.tooltip.illegal_mode_compatible", 0.6f, 0.4f, 0.77f)
-    {
-    }
-}
+internal sealed class IllegalModeCompatibleAttribute() : IconAttribute(FontAwesomeIcon.Skull, "generic.tooltip.illegal_mode_compatible", 0.6f, 0.4f, 0.77f);

@@ -10,6 +10,7 @@ using ECommons.GameHelpers;
 using ImGuiNET;
 using Ocelot;
 using Ocelot.Chain;
+using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
 
 namespace BOCCHI.Modules.Treasure;
@@ -208,8 +209,9 @@ public class TreasureHunt
                     return false;
                 }, new TaskManagerConfiguration { TimeLimitMS = int.MaxValue }))
                 .Then(() => Chain.Create("Interact")
+                    .BreakIf(() => treasure == null)
                     .Wait(300)
-                    .Then(NeoTasks.InteractWithObject(() => treasure, false, new TaskManagerConfiguration { TimeLimitMS = 3000 }))
+                    .Then(NeoTasks.InteractWithObject(() => treasure!, false, new TaskManagerConfiguration { TimeLimitMS = 3000 }))
                     .Then(_ => treasure = null)
                 );
         });
@@ -264,7 +266,7 @@ public class TreasureHunt
                         var current = pair.Value.CurrentChain!;
                         OcelotUI.LabelledValue(module.T("panel.hunt.instance.current"), distance.ToString());
                         OcelotUI.LabelledValue(module.T("panel.hunt.instance.progress"), $"{current.progress * 100}%");
-                        OcelotUI.LabelledValue(module.T("panel.hunt.instance.queue"), pair.Value.QueueCount.ToString());
+                        OcelotUI.LabelledValue(module.T("panel.hunt.instance.queued"), pair.Value.QueueCount.ToString());
                     });
                 }
             }

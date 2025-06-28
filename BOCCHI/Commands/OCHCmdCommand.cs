@@ -11,7 +11,7 @@ using Ocelot.Modules;
 namespace BOCCHI.Commands;
 
 [OcelotCommand]
-public class OCHCmdCommand : OcelotCommand
+public class OCHCmdCommand(Plugin plugin) : OcelotCommand
 {
     public override string command
     {
@@ -38,13 +38,6 @@ Utility command.
     public override IReadOnlyList<string> validArguments
     {
         get => ["flag-active-ce", "flag-active-fate", "flag-active-non-pot-fate"];
-    }
-
-    private readonly Plugin plugin;
-
-    public OCHCmdCommand(Plugin plugin)
-    {
-        this.plugin = plugin;
     }
 
     public override unsafe void Command(string command, string arguments)

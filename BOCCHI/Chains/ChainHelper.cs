@@ -17,7 +17,7 @@ namespace BOCCHI.Chains;
 
 public class ChainHelper
 {
-    private static ChainHelper _instance = null;
+    private static ChainHelper? _instance = null;
 
     private static ChainHelper instance
     {

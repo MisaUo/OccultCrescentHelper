@@ -7,7 +7,7 @@ using Ocelot.Modules;
 namespace BOCCHI.Commands;
 
 [OcelotCommand]
-public class BuffCommand : OcelotCommand
+public class BuffCommand(Plugin plugin) : OcelotCommand
 {
     public override string command
     {
@@ -20,23 +20,8 @@ public class BuffCommand : OcelotCommand
     }
 
 
-    private readonly Plugin plugin;
-
-    public BuffCommand(Plugin plugin)
-    {
-        this.plugin = plugin;
-    }
-
-
     public override void Command(string command, string arguments)
     {
-        var buffs = plugin.modules.GetModule<BuffModule>();
-        if (buffs == null)
-        {
-            Svc.Log.Error("BuffModule not found.");
-            return;
-        }
-
-        buffs.buffs.QueueBuffs();
+        plugin.modules.GetModule<BuffModule>().buffs.QueueBuffs();
     }
 }

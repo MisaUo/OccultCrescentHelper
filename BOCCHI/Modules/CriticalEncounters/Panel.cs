@@ -15,7 +15,7 @@ public class Panel
         OcelotUI.Title($"{module.T("panel.title")}:");
         OcelotUI.Indent(() =>
         {
-            var active = module.criticalEncounters.Values.Where(ev => ev.State != DynamicEventState.Inactive).Count();
+            var active = module.criticalEncounters.Values.Count(ev => ev.State != DynamicEventState.Inactive);
             if (active <= 0)
             {
                 ImGui.TextUnformatted(module.T("panel.none"));
@@ -37,7 +37,7 @@ public class Panel
                 ImGui.TextUnformatted(ev.Name.ToString());
                 if (ev.EventType >= 4)
                 {
-                    HandlerTower(ev);
+                    HandleTower(ev);
                     continue;
                 }
 
@@ -92,7 +92,7 @@ public class Panel
     }
 
 
-    private void HandlerTower(DynamicEvent ev)
+    private void HandleTower(DynamicEvent _)
     {
     }
 }

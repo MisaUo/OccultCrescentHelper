@@ -213,7 +213,8 @@ public class CriticalEncountersPanel : Panel
 
         OcelotUI.Title("Map Marker:");
         ImGui.SameLine();
-        ImGui.TextUnformatted($"X: {ev.MapMarker.X}, Y: {ev.MapMarker.Y}, IconId: {ev.MapMarker.IconId}"); // example, adjust fields accordingly
+        ImGui.TextUnformatted(
+            $"X: {ev.MapMarker.Position.X}, Y: {ev.MapMarker.Position.Y}, IconId: {ev.MapMarker.IconId}"); // example, adjust fields accordingly
 
         OcelotUI.Title("Event Container Pointer:");
         ImGui.SameLine();
