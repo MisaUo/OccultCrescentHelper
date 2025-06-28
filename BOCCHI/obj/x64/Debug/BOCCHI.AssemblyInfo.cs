@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("A helper for Occult Crescent.")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("0.0.0.1")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.0.0.1+f5261a1c0ae08bdc6f3e63d485f36b5fd76b6550")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.0.0.1+ba20aa4792071706b130236ae26461890b4a5fa5")]
 [assembly: System.Reflection.AssemblyProductAttribute("BOCCHI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BOCCHI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("0.0.0.1")]
