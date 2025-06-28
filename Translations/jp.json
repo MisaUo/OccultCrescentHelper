@@ -301,55 +301,55 @@
         "tooltip": "活動を選択する際にF.A.T.E.を考慮すべきか"
       },
       "fate_rough_waters": {
-        "label": "F.A.T.E.: 荒れた水域",
+        "label": "F.A.T.E.: 波起こしの海魔「ナンム」",
         "tooltip": "'荒れた水域' のF.A.T.E.への参加を切り替えます。"
       },
       "fate_the_golden_guardian": {
-        "label": "F.A.T.E.: 黄金の守護者",
+        "label": "F.A.T.E.: 金色の怪石「ゴールデンブロックス」",
         "tooltip": "'黄金の守護者' のF.A.T.E.への参加を切り替えます。"
       },
       "fate_king_of_the_crescent": {
-        "label": "F.A.T.E.: 三日月の王",
+        "label": "F.A.T.E.: 悲鳴の蒐集者「ロプロス」",
         "tooltip": "'三日月の王' のF.A.T.E.への参加を切り替えます。"
       },
       "fate_the_winged_terror": {
-        "label": "F.A.T.E.: 翼ある恐怖",
+        "label": "F.A.T.E.: 甲板の掃除人「巨大鳥」",
         "tooltip": "'翼ある恐怖' のF.A.T.E.への参加を切り替えます。"
       },
       "fate_an_unending_duty": {
-        "label": "F.A.T.E.: 終わりのない義務",
+        "label": "F.A.T.E.: 神罰の石獣「シジフォス」",
         "tooltip": "'終わりのない義務' のF.A.T.E.への参加を切り替えます。"
       },
       "fate_brain_drain": {
-        "label": "F.A.T.E.: 脳の消耗",
+        "label": "F.A.T.E.: 進化せし怪蛇「アドバンスドエイビス」",
         "tooltip": "'脳の消耗' のF.A.T.E.への参加を切り替えます。"
       },
       "fate_a_delicate_balance": {
-        "label": "F.A.T.E.: 繊細なバランス",
+        "label": "F.A.T.E.: 湿度の狩人「ディヒューミディファイア」",
         "tooltip": "'繊細なバランス' のF.A.T.E.への参加を切り替えます。"
       },
       "fate_sworn_to_soil": {
-        "label": "F.A.T.E.: 土に誓う",
+        "label": "F.A.T.E.: 土壌の守り手「マッドマッド」",
         "tooltip": "'土に誓う' のF.A.T.E.への参加を切り替えます。"
       },
       "fate_a_prying_eye": {
-        "label": "F.A.T.E.: 覗き見する目",
+        "label": "F.A.T.E.: 監視の瞳「アイルオブザーバー」",
         "tooltip": "'覗き見する目' のF.A.T.E.への参加を切り替えます。"
       },
       "fate_fatal_allure": {
-        "label": "F.A.T.E.: 致命的な魅力",
+        "label": "F.A.T.E.: 美しき呪殺者「イグゼクレーター」",
         "tooltip": "'致命的な魅力' のF.A.T.E.への参加を切り替えます。"
       },
       "fate_serving_darkness": {
-        "label": "F.A.T.E.: 闇に仕える",
+        "label": "F.A.T.E.: 命の収奪者「ライフギャザラー」",
         "tooltip": "'闇に仕える' のF.A.T.E.への参加を切り替えます。"
       },
       "fate_persistent_pots": {
-        "label": "F.A.T.E.: しつこいポット",
+        "label": "F.A.T.E.: しあわせのマジックポット",
         "tooltip": "'しつこいポット' のF.A.T.E.への参加を切り替えます。"
       },
       "fate_pleading_pots": {
-        "label": "F.A.T.E.: 嘆願するポット",
+        "label": "F.A.T.E.: カチカチのマジックポット",
         "tooltip": "'嘆願するポット' のF.A.T.E.への参加を切り替えます。"
       },
       "panel": {
