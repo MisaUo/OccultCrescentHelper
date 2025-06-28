@@ -7,7 +7,7 @@ namespace BOCCHI.Modules.Debug;
 #if DEBUG_BUILD
 [OcelotWindow]
 #endif
-public class DebugWindow(Plugin plugin, Config config) : OcelotWindow(plugin, config)
+public class DebugWindow(Plugin priamryPlugin, Config config) : OcelotWindow(priamryPlugin, config)
 {
     public override void Draw()
     {

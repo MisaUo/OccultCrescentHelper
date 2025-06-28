@@ -7,7 +7,7 @@ using Ocelot.Windows;
 namespace BOCCHI.Modules.Automator;
 
 [OcelotWindow]
-public class AutomatorWindow(Plugin plugin, Config config) : OcelotWindow(plugin, config)
+public class AutomatorWindow(Plugin priamryPlugin, Config config) : OcelotWindow(priamryPlugin, config)
 {
     public override void PostInitialize()
     {

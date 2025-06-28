@@ -134,10 +134,6 @@
         "label": "Path to event after teleporting",
         "tooltip": "Use vnavmesh to head to the next event after teleporting via the OCH panel."
       },
-      "use_custom_paths": {
-        "label": "Use custom paths",
-        "tooltip": "Use custom paths for certain events to stop vnavmesh from taking you to wild places."
-      },
       "return_after_fate": {
         "label": "Return to base after FATE",
         "tooltip": "Use Occult Return upon finishing a FATE to return to base camp."

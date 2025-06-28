@@ -97,14 +97,14 @@ public abstract class Activity
             {
                 case NavigationType.WalkToEvent:
                     chain
-                        .Then(new PathfindingChain(vnav, GetPosition(), data, false))
+                        .Then(new PathfindingChain(vnav, GetPosition(), data))
                         .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain());
                     break;
 
                 case NavigationType.ReturnThenWalkToEvent:
                     chain
                         .Then(ChainHelper.ReturnChain())
-                        .Then(new PathfindingChain(vnav, GetPosition(), data, false))
+                        .Then(new PathfindingChain(vnav, GetPosition(), data))
                         .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain());
                     break;
 
@@ -114,7 +114,7 @@ public abstract class Activity
                         .Then(ChainHelper.TeleportChain(activityShard.aethernet))
                         .Debug("Waiting for lifestream to not be 'busy'")
                         .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new TaskManagerConfiguration { TimeLimitMS = 30000 }))
-                        .Then(new PathfindingChain(vnav, GetPosition(), data, false))
+                        .Then(new PathfindingChain(vnav, GetPosition(), data))
                         .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain());
                     break;
 
@@ -124,7 +124,7 @@ public abstract class Activity
                         .Then(ChainHelper.TeleportChain(activityShard.aethernet))
                         .Debug("Waiting for lifestream to not be 'busy'")
                         .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new TaskManagerConfiguration { TimeLimitMS = 30000 }))
-                        .Then(new PathfindingChain(vnav, GetPosition(), data, false))
+                        .Then(new PathfindingChain(vnav, GetPosition(), data))
                         .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain());
                     break;
             }

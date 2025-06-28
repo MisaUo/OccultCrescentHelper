@@ -134,10 +134,6 @@
         "label": "Path to event aftew tewepowting!",
         "tooltip": "Use vnavmesh to head to the next event aftew tewepowting via the OCH panew! nyaa~"
       },
-      "use_custom_paths": {
-        "label": "Use custom paths!",
-        "tooltip": "Use custom paths fow cewtain events to stop vnavmesh fwom taking you to wiwd pwaces! owo"
-      },
       "return_after_fate": {
         "label": "Weturn to base aftew Fwate!",
         "tooltip": "Use Occuwt Weturn upon finishing a Fwate to weturn to base camp! uwu"

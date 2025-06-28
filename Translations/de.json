@@ -134,10 +134,6 @@
         "label": "Pfad zum Event nach dem Teleportieren",
         "tooltip": "Verwendet vnavmesh, um nach dem Teleportieren über das OCH-Panel zum nächsten Event zu gelangen."
       },
-      "use_custom_paths": {
-        "label": "Benutzerdefinierte Pfade verwenden",
-        "tooltip": "Verwendet benutzerdefinierte Pfade für bestimmte Ereignisse, um zu verhindern, dass vnavmesh dich an wilde Orte bringt."
-      },
       "return_after_fate": {
         "label": "Nach FATE zum Basislager zurückkehren",
         "tooltip": "Verwendet 'Okkulte Rückkehr' nach Abschluss eines FATEs, um zum Basislager zurückzukehren."

@@ -87,11 +87,6 @@ public class FatesPanel : Panel
 
                 OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.config.EventDropConfig));
 
-                if (data.pathFactory != null)
-                {
-                    ImGui.TextColored(new Vector4(0.5f, 1.0f, 0.5f, 1.0f), "Has custom path");
-                }
-
                 if (data.id != EventData.Fates.Keys.Max())
                 {
                     OcelotUI.VSpace();

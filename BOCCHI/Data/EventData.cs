@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using BOCCHI.Enums;
-using Ocelot.Prowler;
 
 namespace BOCCHI.Data;
 
@@ -26,8 +25,6 @@ public struct EventData
 
     public Vector3? start;
 
-    public Func<Vector3, List<IProwlerAction>> pathFactory;
-
     public float? radius;
 
     public readonly static Dictionary<uint, EventData> Fates = new()
@@ -41,7 +38,6 @@ public struct EventData
                 Name = "Rough Waters",
                 demiatma = Demiatma.Azurite,
                 monster = Monster.Nammu,
-                // pathFactory = RoughWaters.GetPath,
                 start = new Vector3(162.00f, 56.00f, 676.00f),
             }
         },
@@ -54,14 +50,6 @@ public struct EventData
                 Name = "The Golden Guardian",
                 demiatma = Demiatma.Azurite,
                 monster = Monster.GildedHeadstone,
-                pathFactory = destination =>
-                [
-                    Prowler.FollowPath([
-                        [303.81f, 102.83f, 309.89f],
-                        [335.05f, 71.11f, 326.90f],
-                    ]),
-                    Prowler.Pathfind(destination),
-                ],
                 start = new Vector3(373.20f, 70.00f, 486.00f),
             }
         },
@@ -87,19 +75,6 @@ public struct EventData
                 demiatma = Demiatma.Realgar,
                 monster = Monster.GiantBird,
                 aethernet = Aethernet.TheWanderersHaven,
-                pathFactory = destination =>
-                [
-                    Prowler.FollowPath([
-                        [-172.29f, 6.50f, -607.08f],
-                        [-328.85f, 5.00f, -614.96f],
-                        [-391.31f, 5.00f, -637.37f],
-                        [-428.18f, -0.30f, -662.93f],
-                        [-466.69f, 3.00f, -650.32f],
-                        [-510.11f, 3.80f, -604.60f],
-                    ]),
-                    Prowler.Jump(),
-                    Prowler.MoveTo(destination),
-                ],
                 start = new Vector3(-548.50f, 3.00f, -595.00f),
             }
         },
@@ -112,7 +87,6 @@ public struct EventData
                 Name = "An Unending Duty",
                 demiatma = Demiatma.Malachite,
                 monster = Monster.Sisyphus,
-                // pathFactory = AnUnendingDuty.GetPath,
                 start = new Vector3(-223.10f, 107.00f, 36.00f),
             }
         },
@@ -162,7 +136,6 @@ public struct EventData
                 Name = "A Prying Eye",
                 demiatma = Demiatma.Azurite,
                 monster = Monster.Observer,
-                // pathFactory = APryingEye.GetPath,
                 start = new Vector3(-71.00f, 71.31f, 557.00f),
             }
         },
@@ -237,14 +210,6 @@ public struct EventData
                 demiatma = Demiatma.Azurite,
                 monster = Monster.MysteriousMindflayer,
                 aethernet = Aethernet.Eldergrowth,
-                pathFactory = destination =>
-                [
-                    Prowler.FollowPath([
-                        [303.81f, 102.83f, 309.89f],
-                        [335.05f, 71.11f, 326.90f],
-                    ]),
-                    Prowler.Pathfind(destination),
-                ],
             }
         },
         {
@@ -259,14 +224,6 @@ public struct EventData
                 monster = Monster.BlackStar,
                 notes = MonsterNote.BlackChocobos,
                 aethernet = Aethernet.Eldergrowth,
-                pathFactory = destination =>
-                [
-                    Prowler.FollowPath([
-                        [303.81f, 102.83f, 309.89f],
-                        [335.05f, 71.11f, 326.90f],
-                    ]),
-                    Prowler.Pathfind(destination),
-                ],
             }
         },
         {
@@ -281,14 +238,6 @@ public struct EventData
                 monster = Monster.CrescentBerserker,
                 notes = MonsterNote.CrescentBerserker,
                 aethernet = Aethernet.Eldergrowth,
-                pathFactory = destination =>
-                [
-                    Prowler.FollowPath([
-                        [303.81f, 102.83f, 309.89f],
-                        [335.05f, 71.11f, 326.90f],
-                    ]),
-                    Prowler.Pathfind(destination),
-                ],
             }
         },
         {
@@ -301,14 +250,6 @@ public struct EventData
                 demiatma = Demiatma.Azurite,
                 monster = Monster.DeathClawOccultCrescent,
                 aethernet = Aethernet.Eldergrowth,
-                pathFactory = destination =>
-                [
-                    Prowler.FollowPath([
-                        [303.81f, 102.83f, 309.89f],
-                        [335.05f, 71.11f, 326.90f],
-                    ]),
-                    Prowler.Pathfind(destination),
-                ],
             }
         },
         {
@@ -347,7 +288,6 @@ public struct EventData
                 monster = Monster.MythicIdol,
                 notes = MonsterNote.MythicIdol,
                 aethernet = Aethernet.Stonemarsh,
-                // pathFactory = FromTimesBygone.GetPath
             }
         },
         {
@@ -360,7 +300,6 @@ public struct EventData
                 demiatma = Demiatma.CaputMortuum,
                 monster = Monster.OccultKnight,
                 aethernet = Aethernet.BaseCamp,
-                // pathFactory = CompanyOfStone.GetPath
             }
         },
         {

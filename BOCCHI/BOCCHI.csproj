@@ -24,12 +24,11 @@
     </ItemGroup>
     <!-- Ocelot/Ecommons -->
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-        <!-- <ProjectReference Include="../Ocelot/Ocelot/Ocelot.csproj"/> -->
-        <ProjectReference Include="..\..\Ocelot\Ocelot\Ocelot.csproj"/>
+        <ProjectReference Include="../Ocelot/Ocelot/Ocelot.csproj"/>
         <PackageReference Include="Ecommons" Version="3.0.0"/>
     </ItemGroup>
     <ItemGroup Condition="'$(Configuration)' == 'Release'">
-        <PackageReference Include="FFXIVOcelot" Version="0.25.0"/>
+        <PackageReference Include="FFXIVOcelot" Version="0.27.0"/>
         <PackageReference Include="Ecommons" Version="3.0.0"/>
     </ItemGroup>
     <ItemGroup>

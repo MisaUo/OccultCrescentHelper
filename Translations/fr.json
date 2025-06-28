@@ -134,10 +134,6 @@
         "label": "Chemin vers l'événement après la téléportation",
         "tooltip": "Utilise vnavmesh pour se diriger vers l'événement suivant après la téléportation via le panneau OCH."
       },
-      "use_custom_paths": {
-        "label": "Utiliser des chemins personnalisés",
-        "tooltip": "Utiliser des chemins personnalisés pour certains événements afin d'empêcher vnavmesh de vous emmener dans des endroits inattendus."
-      },
       "return_after_fate": {
         "label": "Retourner à la base après l'ALÉA",
         "tooltip": "Utilise le Retour Occulte après avoir terminé un ALÉA pour retourner au camp de base."

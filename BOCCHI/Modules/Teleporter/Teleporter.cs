@@ -59,7 +59,7 @@ public class Teleporter
             Svc.Log.Info($"Pathfinding to {name} at {destination}");
 
             Plugin.Chain.Submit(() => Chain.Create("Pathfinding")
-                .Then(new PathfindingChain(vnav, destination, ev, module.config.ShouldUseCustomPaths, 20f))
+                .Then(new PathfindingChain(vnav, destination, ev, 20f))
                 .ConditionalThen(_ => module.config.ShouldMount, ChainHelper.MountChain())
                 .WaitUntilNear(vnav, destination, 205f)
             );
@@ -102,7 +102,7 @@ public class Teleporter
                 {
                     chain
                         .RunIf(() => module.config.PathToDestination)
-                        .Then(new PathfindingChain(vnav, destination, ev, module.config.ShouldUseCustomPaths, 20f))
+                        .Then(new PathfindingChain(vnav, destination, ev, 20f))
                         .WaitUntilNear(vnav, destination, 20f);
                 }
 

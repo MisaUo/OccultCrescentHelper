@@ -130,10 +130,6 @@
         "label": "テレポート後にイベントへのパス",
         "tooltip": "OCHパネル経由でテレポートした後、vnavmeshを使用して次のイベントに向かいます。"
       },
-      "use_custom_paths": {
-        "label": "カスタムパスを使用",
-        "tooltip": "特定のイベントにカスタムパスを使用し、vnavmeshが予測不能な場所に移動するのを防ぎます。"
-      },
       "return_after_fate": {
         "label": "F.A.T.E.後にベースに戻る",
         "tooltip": "F.A.T.E.終了後、オカルトリターンを使用してベースキャンプに戻ります。"

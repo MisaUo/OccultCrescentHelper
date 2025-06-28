@@ -26,18 +26,6 @@ public class TeleporterConfig : ModuleConfig
     public bool PathToDestination { get; set; } = false;
 
     [Checkbox]
-    [RequiredPlugin("vnavmesh")]
-    [DependsOn(nameof(PathToDestination))]
-    [Label("modules.teleporter.use_custom_paths.label")]
-    [Tooltip("modules.teleporter.use_custom_paths.tooltip")]
-    public bool UseCustomPaths { get; set; } = true;
-
-    public bool ShouldUseCustomPaths
-    {
-        get => IsPropertyEnabled(nameof(UseCustomPaths));
-    }
-
-    [Checkbox]
     [Label("modules.teleporter.return_after_fate.label")]
     [Tooltip("modules.teleporter.return_after_fate.tooltip")]
     public bool ReturnAfterFate { get; set; } = false;

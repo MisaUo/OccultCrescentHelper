@@ -33,8 +33,9 @@ Opens Occult Crescent Helper main ui
         get => ["/och", "/occultcrescenthelper"];
     }
 
-    private readonly IReadOnlyList<string> languageCodes = [
-        "en", "de", "fr", "jp", "uwu"
+    private readonly IReadOnlyList<string> languageCodes =
+    [
+        "en", "de", "fr", "jp", "uwu",
     ];
 
     public override void Command(string command, string arguments)

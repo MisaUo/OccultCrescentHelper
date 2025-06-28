@@ -8,7 +8,7 @@ using Ocelot.Windows;
 namespace BOCCHI.Windows;
 
 [OcelotMainWindow]
-public class MainWindow(Plugin plugin, Config config) : OcelotMainWindow(plugin, config)
+public class MainWindow(Plugin primaryPlugin, Config config) : OcelotMainWindow(primaryPlugin, config)
 {
     public override void PostInitialize()
     {

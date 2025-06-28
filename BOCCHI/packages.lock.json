@@ -20,6 +20,17 @@
         "resolved": "3.0.0",
         "contentHash": "Frb4tiuV5ESubnpq4nG6g3QnJ/Il0I3ohzLh/XHyMCN5bnf9Gedrpleo5gr3A3LWHgGLTJT5H5W/CTDPRsmdJg=="
       },
+      "FFXIVOcelot": {
+        "type": "Direct",
+        "requested": "[0.27.0, )",
+        "resolved": "0.27.0",
+        "contentHash": "d7tFMypHkhnT1NKZJG6nLUTTQ9S8x8JEU9KJSrSJYtI/v46m9cNRf8N4jQRxCMy1i569LnynWZgdeWcHrfPcAA==",
+        "dependencies": {
+          "ECommons": "3.0.0",
+          "Microsoft.Extensions.Configuration": "7.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "7.0.0"
+        }
+      },
       "Microsoft.Extensions.Configuration": {
         "type": "Transitive",
         "resolved": "7.0.0",
@@ -41,14 +52,6 @@
         "type": "Transitive",
         "resolved": "7.0.0",
         "contentHash": "um1KU5kxcRp3CNuI8o/GrZtD4AIOXDk+RLsytjZ9QPok3ttLUelLKpilVPuaFT3TFjOhSibUAso0odbOaCDj3Q=="
-      },
-      "FFXIVOcelot": {
-        "type": "Project",
-        "dependencies": {
-          "ECommons": "[3.0.0, )",
-          "Microsoft.Extensions.Configuration": "[7.0.0, )",
-          "Microsoft.Extensions.Configuration.Abstractions": "[7.0.0, )"
-        }
       }
     }
   }

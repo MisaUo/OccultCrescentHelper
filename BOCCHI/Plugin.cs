@@ -34,7 +34,7 @@ public sealed class Plugin : OcelotPlugin
         : base(plugin, Module.DalamudReflector)
     {
         config = plugin.GetPluginConfig() as Config ?? new Config();
-        
+
         SetupLanguage(plugin);
 
         OcelotInitialize();
@@ -59,7 +59,7 @@ public sealed class Plugin : OcelotPlugin
             ClientLanguage.Japanese => "jp",
             _ => "en",
         };
-        
+
         I18N.SetLanguage(lang);
 
         var today = DateTime.Today;
