@@ -281,8 +281,8 @@
         "tooltip": "Active/Désactive la participation à la confrontation critique 'À rugir debou'."
       },
       "ce_with_extreme_prejudice": {
-        "label": "CC : Avec une extrême rigueur",
-        "tooltip": "Active/Désactive la participation à la confrontation critique 'Avec une extrême rigueur'."
+        "label": "CC : Cordon de sécurité",
+        "tooltip": "Active/Désactive la participation à la confrontation critique 'Cordon de sécurité'."
       },
       "ce_noise_complaint": {
         "label": "CC : Plainte pour tapage",
@@ -321,16 +321,16 @@
         "tooltip": "Active/Désactive la participation à l'Aléa 'Je fus zu'."
       },
       "fate_an_unending_duty": {
-        "label": "Aléa : Un devoir sans fin",
-        "tooltip": "Active/Désactive la participation à l'Aléa 'Un devoir sans fin'."
+        "label": "Aléa : Pierre de tonerre",
+        "tooltip": "Active/Désactive la participation à l'Aléa 'Pierre de tonerre'."
       },
       "fate_brain_drain": {
         "label": "Aléa : Le poison de l'évolution",
         "tooltip": "Active/Désactive la participation à l'Aléa 'Le poison de l'évolution'."
       },
       "fate_a_delicate_balance": {
-        "label": "Aléa : Un équilibre délicat",
-        "tooltip": "Active/Désactive la participation à l'Aléa 'Un équilibre délicat'."
+        "label": "Aléa : Humidité zéro",
+        "tooltip": "Active/Désactive la participation à l'Aléa 'Humidité zéro'."
       },
       "fate_sworn_to_soil": {
         "label": "Aléa : Rester de boue",
@@ -353,8 +353,8 @@
         "tooltip": "Active/Désactive la participation à l'Aléa 'Pas de pot pour les pots'."
       },
       "fate_pleading_pots": {
-        "label": "Aléa : Pots suppliants",
-        "tooltip": "Active/Désactive la participation à l'Aléa 'Pots suppliants'."
+        "label": "Aléa : Mauvais œil pour les pots",
+        "tooltip": "Active/Désactive la participation à l'Aléa 'Mauvais œil pour les pots'."
       },
       "panel": {
         "title": "Mode Illégal",
