@@ -14,7 +14,7 @@
       "stop": "Arrêter"
     },
     "tooltip": {
-      "illegal_mode_compatible": "Option compatible avec le mode illégal, elle sera utilisé pendant son exécution."
+      "illegal_mode_compatible": "Option compatible avec le mode illégal, elle sera utilisée pendant son exécution."
     }
   },
   "modules": {
@@ -226,7 +226,7 @@
       },
       "force_target_central_enemy": {
         "label": "Prioriser l'ennemi le plus central",
-        "tooltip": "Essayer de cibler l'ennemi au centre du groupe."
+        "tooltip": "Essaye de cibler l'ennemi au centre du groupe."
       },
       "engagement_range": {
         "label": "Portée d'engagement",
@@ -278,7 +278,7 @@
       },
       "ce_on_the_hunt": {
         "label": "CC : À rugir debout",
-        "tooltip": "Active/Désactive la participation à la confrontation critique 'À rugir debou'."
+        "tooltip": "Active/Désactive la participation à la confrontation critique 'À rugir debout'."
       },
       "ce_with_extreme_prejudice": {
         "label": "CC : Cordon de sécurité",
@@ -321,8 +321,8 @@
         "tooltip": "Active/Désactive la participation à l'Aléa 'Je fus zu'."
       },
       "fate_an_unending_duty": {
-        "label": "Aléa : Pierre de tonerre",
-        "tooltip": "Active/Désactive la participation à l'Aléa 'Pierre de tonerre'."
+        "label": "Aléa : Pierre de tonnerre",
+        "tooltip": "Active/Désactive la participation à l'Aléa 'Pierre de tonnerre'."
       },
       "fate_brain_drain": {
         "label": "Aléa : Le poison de l'évolution",
@@ -400,7 +400,7 @@
         },
         "threshold": {
           "label": "Seuil de réapplication",
-          "tooltip": "Nombre de minutes restantes sur le buff le plus bas avant de les rafraichir automatiquement."
+          "tooltip": "Nombre de minutes restantes sur le buff le plus bas avant de les rafraîchir automatiquement."
         }
       },
       "panel": {
