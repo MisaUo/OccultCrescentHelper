@@ -241,8 +241,8 @@
         "tooltip": "Ajoute un délai de 10 à 15 secondes avant de se diriger vers une confrontation critique"
       },
       "ce_scourge_of_the_mind": {
-        "label": "CC : Fléau de l'esprit",
-        "tooltip": "Active/Désactive la participation à la confrontation critique 'Fléau de l'esprit'."
+        "label": "CC : L'encéphalophage",
+        "tooltip": "Active/Désactive la participation à la confrontation critique 'L'encéphalophage'."
       },
       "ce_the_black_regiment": {
         "label": "CC : Le Régiment Noir",
@@ -317,8 +317,8 @@
         "tooltip": "Active/Désactive la participation à l'Aléa 'La bête sadique'."
       },
       "fate_the_winged_terror": {
-        "label": "Aléa : La terreur ailée",
-        "tooltip": "Active/Désactive la participation à l'Aléa 'La terreur ailée'."
+        "label": "Aléa : Je fus zu",
+        "tooltip": "Active/Désactive la participation à l'Aléa 'Je fus zu'."
       },
       "fate_an_unending_duty": {
         "label": "Aléa : Un devoir sans fin",
@@ -345,8 +345,8 @@
         "tooltip": "Active/Désactive la participation à l'Aléa 'La belle mort'."
       },
       "fate_serving_darkness": {
-        "label": "Aléa : Servir les ténèbres",
-        "tooltip": "Active/Désactive la participation à l'Aléa 'Servir les ténèbres'."
+        "label": "Aléa : Collecte mortelle",
+        "tooltip": "Active/Désactive la participation à l'Aléa 'Collecte mortelle'."
       },
       "fate_persistent_pots": {
         "label": "Aléa : Pas de pot pour les pots",
