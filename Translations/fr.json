@@ -14,7 +14,7 @@
       "stop": "Arrêter"
     },
     "tooltip": {
-      "illegal_mode_compatible": "Compatible avec le mode illégal, elle sera utilisé pendant son exécution."
+      "illegal_mode_compatible": "Option compatible avec le mode illégal, elle sera utilisé pendant son exécution."
     }
   },
   "modules": {
@@ -151,7 +151,7 @@
       "title": "Configuration du Gestionnaire de Fenêtres",
       "main_on_load": {
         "label": "Ouvrir l'interface principale au chargement",
-        "tooltip": "Ouvre l'interface de configuration après le chargement du plugin.\""
+        "tooltip": "Ouvre l'interface de configuration après le chargement du plugin."
       },
       "main_on_enter": {
         "label": "Ouvrir l'interface principale en entrant",
@@ -380,7 +380,7 @@
       },
       "roulette": {
         "label": "Monture aléatoire",
-        "tooltip": "Ne tient pas compte de la monture configurée. Utilise une monture aléatoire à la place"
+        "tooltip": "Utilise une monture aléatoire à la place de la monture configurée."
       }
     },
     "buff": {
@@ -406,7 +406,7 @@
       "panel": {
         "title": "Buffs",
         "button": {
-          "tooltip": "Applique l'ensemble des buffs fantôme, puis retourne sur votre job originel."
+          "tooltip": "Applique l'ensemble des buffs fantôme, puis retourne sur votre job."
         }
       }
     }
