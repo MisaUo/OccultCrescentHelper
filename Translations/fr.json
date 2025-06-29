@@ -261,8 +261,8 @@
         "tooltip": "Active/Désactive la participation à la confrontation critique 'Lié au désastre'."
       },
       "ce_trial_by_claw": {
-        "label": "CC : Épreuve par la Griffe",
-        "tooltip": "Active/Désactive la participation à la confrontation critique 'Épreuve par la Griffe'."
+        "label": "CC : Écailles de cristal",
+        "tooltip": "Active/Désactive la participation à la confrontation critique 'Écailles de cristal'."
       },
       "ce_from_times_bygone": {
         "label": "CC : Des temps révolus",
@@ -293,8 +293,8 @@
         "tooltip": "Active/Désactive la participation à la confrontation critique 'Être aux pièces'."
       },
       "ce_eternal_watch": {
-        "label": "CC : Veille éternelle",
-        "tooltip": "Active/Désactive la participation à la confrontation critique 'Veille éternelle'."
+        "label": "CC : Comme un lion nouveau",
+        "tooltip": "Active/Désactive la participation à la confrontation critique 'Comme un lion nouveau'."
       },
       "ce_flame_of_dusk": {
         "label": "CC : Flamme du Crépuscule",
