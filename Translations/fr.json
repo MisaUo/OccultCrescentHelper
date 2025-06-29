@@ -257,16 +257,16 @@
         "tooltip": "Active/Désactive la participation à la confrontation critique 'Face de griffes'."
       },
       "ce_calamity_bound": {
-        "label": "CC : Lié au désastre",
-        "tooltip": "Active/Désactive la participation à la confrontation critique 'Lié au désastre'."
+        "label": "CC : Cloître à perpétuité",
+        "tooltip": "Active/Désactive la participation à la confrontation critique 'Cloître à perpétuité'."
       },
       "ce_trial_by_claw": {
         "label": "CC : Écailles de cristal",
         "tooltip": "Active/Désactive la participation à la confrontation critique 'Écailles de cristal'."
       },
       "ce_from_times_bygone": {
-        "label": "CC : Des temps révolus",
-        "tooltip": "Active/Désactive la participation à la confrontation critique 'Des temps révolus'."
+        "label": "CC : Idole surprise",
+        "tooltip": "Active/Désactive la participation à la confrontation critique 'Idole surprise'."
       },
       "ce_company_of_stone": {
         "label": "CC : L'armée des argileux",
@@ -285,8 +285,8 @@
         "tooltip": "Active/Désactive la participation à la confrontation critique 'Cordon de sécurité'."
       },
       "ce_noise_complaint": {
-        "label": "CC : Plainte pour tapage",
-        "tooltip": "Active/Désactive la participation à la confrontation critique 'Plainte pour tapage'."
+        "label": "CC : Mammouth fâché",
+        "tooltip": "Active/Désactive la participation à la confrontation critique 'Mammouth fâché'."
       },
       "ce_cursed_concern": {
         "label": "CC : Être aux pièces",
@@ -297,8 +297,8 @@
         "tooltip": "Active/Désactive la participation à la confrontation critique 'Comme un lion nouveau'."
       },
       "ce_flame_of_dusk": {
-        "label": "CC : Flamme du Crépuscule",
-        "tooltip": "Active/Désactive la participation à la confrontation critique 'Flamme du Crépuscule'."
+        "label": "CC : Les ailes de pierre",
+        "tooltip": "Active/Désactive la participation à la confrontation critique 'Les ailes de pierre'."
       },
       "do_fates": {
         "label": "Faire les Aléas",
