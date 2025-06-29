@@ -89,7 +89,7 @@
         "tooltip": "Affiche les drops de Demi-âtma dans les Aléas/CC actifs."
       },
       "notes": {
-        "label": "Afficher les drops d''Article",
+        "label": "Afficher les drops d'Article",
         "tooltip": "Affiche les drops d'Article dans les Aléas/CC actifs."
       },
       "soulshards": {
@@ -155,7 +155,7 @@
       },
       "main_on_enter": {
         "label": "Ouvrir l'interface principale en entrant",
-        "tooltip": "Ouvre l'interface principale lorsque vous entrez dansle Croissant Occulte."
+        "tooltip": "Ouvre l'interface principale lorsque vous entrez dans le Croissant Occulte."
       },
       "main_on_exit": {
         "label": "Fermer l'interface principale en quittant",
