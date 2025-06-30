@@ -20,12 +20,8 @@ public class CriticalEncounterTracker
     // Store last known states of each event by ID
     private readonly Dictionary<uint, DynamicEventState> lastStates = new();
 
-    public unsafe CriticalEncounterTracker()
+    public CriticalEncounterTracker()
     {
-        criticalEncounters = PublicContentOccultCrescent.GetInstance()->DynamicEventContainer.Events
-            .ToArray()
-            .ToDictionary(ev => (uint)ev.DynamicEventId, ev => ev);
-
         OnInactiveState += ev =>
         {
             if (ev.EventType < 4)
