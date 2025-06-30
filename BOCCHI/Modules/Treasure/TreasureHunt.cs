@@ -197,7 +197,15 @@ public class TreasureHunt
 
                         if (isFinalNode)
                         {
-                            running = false;
+                            path.Clear();
+                            nodeIndex = 0;
+                            running = !running;
+                            if (running == false)
+                            {
+                                vnav.Stop();
+                                Plugin.Chain.Abort();
+                            }
+
                             return true;
                         }
 
@@ -247,28 +255,8 @@ public class TreasureHunt
 
             if (running)
             {
-                OcelotUI.LabelledValue(module.T("panel.hunt.distance"), distance.ToString());
-
-                var instances = ChainManager.Active();
-
-                OcelotUI.LabelledValue(module.T("panel.hunt.count"), instances.Count.ToString());
-
-                foreach (var pair in instances)
-                {
-                    if (pair.Value.CurrentChain == null)
-                    {
-                        continue;
-                    }
-
-                    OcelotUI.Title($"{pair.Key}:");
-                    OcelotUI.Indent(() =>
-                    {
-                        var current = pair.Value.CurrentChain!;
-                        OcelotUI.LabelledValue(module.T("panel.hunt.instance.current"), distance.ToString());
-                        OcelotUI.LabelledValue(module.T("panel.hunt.instance.progress"), $"{current.progress * 100}%");
-                        OcelotUI.LabelledValue(module.T("panel.hunt.instance.queued"), pair.Value.QueueCount.ToString());
-                    });
-                }
+                OcelotUI.LabelledValue(module.T("panel.hunt.distance"), $"{distance:f2}/{module.config.ChestDetectionRange:f2}");
+                OcelotUI.LabelledValue(module.T("panel.hunt.instance.progress"), $"{nodeIndex}/{path.Count}");
             }
         });
     }
