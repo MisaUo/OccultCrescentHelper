@@ -183,6 +183,11 @@ public class CriticalEncounter : Activity
         return Encounter.MapMarker.Position;
     }
 
+    public override string GetName()
+    {
+        return Encounter.Name.ToString();
+    }
+
     private bool IsCloseToZone(float radius = 50f)
     {
         return Player.DistanceTo(GetPosition()) <= radius;
