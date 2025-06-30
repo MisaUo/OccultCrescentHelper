@@ -99,7 +99,7 @@ public class Panel
         {
             return;
         }
-        
+
         ImGui.TextUnformatted($"{ev.Name}:");
         ImGui.SameLine();
 

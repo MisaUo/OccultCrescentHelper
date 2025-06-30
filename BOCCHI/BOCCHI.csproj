@@ -26,7 +26,7 @@
         <ProjectReference Include="../Ocelot/Ocelot/Ocelot.csproj"/>
     </ItemGroup>
     <ItemGroup Condition="'$(Configuration)' == 'Release'">
-        <PackageReference Include="FFXIVOcelot" Version="0.28.0"/>
+        <PackageReference Include="FFXIVOcelot" Version="0.30.0"/>
     </ItemGroup>
     <ItemGroup>
         <Reference Include="Dalamud.Common">
