@@ -24,6 +24,11 @@ function flatten_keys(obj, prefix = '') {
     return keys;
 }
 
+function get_value_by_path(obj, path) {
+    return path.split('.').reduce((o, key) => (o && o[key] !== undefined) ? o[key] : undefined, obj);
+}
+
+
 function check_translations(basePath, baseFile, otherFiles) {
     const baseJson = load_json(path.join(basePath, baseFile));
     const baseKeys = new Set(flatten_keys(baseJson));
@@ -39,7 +44,10 @@ function check_translations(basePath, baseFile, otherFiles) {
 
         if (missing.length > 0) {
             console.log(`Missing keys (${missing.length}):`);
-            missing.sort().forEach(k => console.log(`  ${k}`));
+            missing.sort().forEach(k => {
+                const val = get_value_by_path(baseJson, k);
+                console.log(`  ${k}: ${JSON.stringify(val)}`);
+            });
         } else {
             console.log('No missing keys.');
         }
