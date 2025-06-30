@@ -46,7 +46,11 @@ public class Alerter : IDisposable
 
     private void OnCriticalEncounterSpawned(DynamicEvent ev)
     {
-        Svc.Chat.Print($"{ev.Name} has Spawned");
+        if (module.config.LogSpawn)
+        {
+            Svc.Chat.Print($"{ev.Name} has Spawned");
+        }
+
         if (!ShouldAlertForCriticalEncounter(ev))
         {
             return;
@@ -57,7 +61,11 @@ public class Alerter : IDisposable
 
     private void OnCriticalEncounterDepawned(DynamicEvent ev)
     {
-        Svc.Chat.Print($"{ev.Name} has Despawned");
+        if (module.config.LogSpawn)
+        {
+            Svc.Chat.Print($"{ev.Name} has Despawned");
+        }
+
         if (!ShouldAlertForCriticalEncounter(ev))
         {
             return;

@@ -35,7 +35,11 @@ public class Alerter : IDisposable
 
     private void OnFateSpawned(IFate fate)
     {
-        Svc.Chat.Print($"{fate.Name} has Spawned");
+        if (module.config.LogSpawn)
+        {
+            Svc.Chat.Print($"{fate.Name} has Spawned");
+        }
+
         if (!ShouldAlertForFate(fate))
         {
             return;
@@ -46,7 +50,11 @@ public class Alerter : IDisposable
 
     private void OnFateDespawned(IFate fate)
     {
-        Svc.Chat.Print($"{fate.Name} has Despawned");
+        if (module.config.LogSpawn)
+        {
+            Svc.Chat.Print($"{fate.Name} has Despawned");
+        }
+
         if (!ShouldAlertForFate(fate))
         {
             return;

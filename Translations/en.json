@@ -106,6 +106,10 @@
     "fates": {
       "title": "Fates Config",
       "config": {
+        "log_spawn": {
+          "label": "Print chat message on (de)spawn",
+          "tooltip": "Print an echo message when a Fate spawns and despawns"
+        },
         "alert_all": {
           "label": "Alert for all Fates",
           "tooltip": "Play a sound effect when any fate spawns"
@@ -147,6 +151,10 @@
         "track_forked_tower": {
           "label": "Track Forked Tower",
           "tooltip": "Track when Forked Tower last ended"
+        },
+        "log_spawn": {
+          "label": "Print chat message on (de)spawn",
+          "tooltip": "Print an echo message when a Critical Encounter spawns and despawns"
         },
         "alert_all": {
           "label": "Alert for all Critical Encounters",

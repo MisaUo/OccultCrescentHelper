@@ -13,6 +13,11 @@ public class FatesConfig : ModuleConfig
     public bool Enabled { get; set; } = true;
 
     [Checkbox]
+    [Label("modules.fates.config.log_spawn.label")]
+    [Tooltip("modules.fates.config.log_spawn.tooltip")]
+    public bool LogSpawn { get; set; } = false;
+
+    [Checkbox]
     [Label("modules.fates.config.alert_all.label")]
     [Tooltip("modules.fates.config.alert_all.tooltip")]
     public bool AlertAll { get; set; } = false;
