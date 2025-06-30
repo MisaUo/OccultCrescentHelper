@@ -62,7 +62,7 @@ public class Alerter : IDisposable
             return true;
         }
 
-        if (!EventData.Fates.TryGetValue(fate.FateId, out var data) || data.demiatma == null)
+        if (!EventData.Fates.TryGetValue(fate.FateId, out var data))
         {
             return false;
         }

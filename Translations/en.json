@@ -107,12 +107,12 @@
       "title": "Fates Config",
       "config": {
         "alert_all": {
-          "label": "Alert for all fates",
+          "label": "Alert for all Fates",
           "tooltip": "Play a sound effect when any fate spawns"
         },
         "alert_azurite": {
           "label": "Alert for Azurite Demiatma Fate",
-          "tooltip": "Play a sound effect when A fate that drops the Azurite Demiatma spawns"
+          "tooltip": "Play a sound effect when a fate that drops the Azurite Demiatma spawns"
         },
         "alert_verdigris": {
           "label": "Alert for Verdigris Demiatma Fate",
@@ -143,6 +143,48 @@
     },
     "critical_encounters": {
       "title": "Critical Encounters Config",
+      "config": {
+        "alert_all": {
+          "label": "Alert for all Critical Encounters",
+          "tooltip": "Play a sound effect when any fate spawns"
+        },
+        "alert_azurite": {
+          "label": "Alert for Azurite Demiatma Critical Encounters",
+          "tooltip": "Play a sound effect when a critical encounter that drops the Azurite Demiatma spawns"
+        },
+        "alert_verdigris": {
+          "label": "Alert for Verdigris Demiatma Critical Encounters",
+          "tooltip": "Play a sound effect when a critical encounter that drops the Verdigris Demiatma spawns"
+        },
+        "alert_malachite": {
+          "label": "Alert for Malachite Demiatma Critical Encounters",
+          "tooltip": "Play a sound effect when a critical encounter that drops the Malachite Demiatma spawns"
+        },
+        "alert_realgar": {
+          "label": "Alert for Realgar Demiatma Critical Encounters",
+          "tooltip": "Play a sound effect when a critical encounter that drops the Realgar Demiatma spawns"
+        },
+        "alert_caputmortuum": {
+          "label": "Alert for Caput Mortuum Demiatma Critical Encounters",
+          "tooltip": "Play a sound effect when a critical encounter that drops the Caput Mortuum Demiatma spawns"
+        },
+        "alert_orpiment": {
+          "label": "Alert for Orpiment Demiatma Critical Encounters",
+          "tooltip": "Play a sound effect when a critical encounter that drops the Orpiment Demiatma spawns"
+        },
+        "alert_oracle": {
+          "label": "Alert for Oracle Soul Shard Critical Encounter",
+          "tooltip": "Play a sound effect when a critical encounter that drops the Oracle Soul Shard spawns"
+        },
+        "alert_berserker": {
+          "label": "Alert for Berserker Soul Shard Critical Encounter",
+          "tooltip": "Play a sound effect when a critical encounter that drops the Berserker Soul Shard spawns"
+        },
+        "alert_ranger": {
+          "label": "Alert for Ranger Soul Shard Critical Encounter",
+          "tooltip": "Play a sound effect when a critical encounter that drops the Ranger Soul Shard spawns"
+        }
+      },
       "panel": {
         "title": "Critical Encounters",
         "none": "No active critical encounters.",
