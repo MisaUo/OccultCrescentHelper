@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using BOCCHI.Data;
 using Dalamud.Game.ClientState.Fates;
 using Dalamud.Plugin.Services;
@@ -14,43 +14,55 @@ public class FateTracker
 
     public Dictionary<uint, EventProgress> progress { get; } = [];
 
+    public event Action<IFate>? OnFateSpawned;
+
+    public event Action<IFate>? OnFateDespawned;
+
+
     public void Tick(IFramework _)
     {
-        var pos = Svc.ClientState.LocalPlayer!.Position;
+        var currentFates = Svc.Fates.ToDictionary(f => (uint)f.FateId, f => f);
 
-        fates = Svc.Fates.OrderBy(f => Vector3.Distance(f.Position, pos)).ToDictionary(f => (uint)f.FateId, f => f);
+        foreach (var (id, fate) in currentFates)
+        {
+            if (!fates.ContainsKey(id))
+            {
+                OnFateSpawned?.Invoke(fate);
+            }
 
-        foreach (var fate in fates.Values)
+            fates[id] = fate;
+        }
+
+        var despawned = fates.Keys.Except(currentFates.Keys).ToList();
+        foreach (var id in despawned)
+        {
+            OnFateDespawned?.Invoke(fates[id]);
+            fates.Remove(id);
+            progress.Remove(id);
+        }
+
+        foreach (var (id, fate) in fates)
         {
             if (fate.Progress == 0)
             {
                 continue;
             }
 
-            if (!this.progress.TryGetValue(fate.FateId, out var progress))
+            if (!progress.TryGetValue(id, out var prog))
             {
-                progress = new EventProgress();
-                this.progress[fate.FateId] = progress;
+                prog = new EventProgress();
+                progress[id] = prog;
             }
 
-            if (progress.samples.Count == 0 || progress.samples[^1].Progress != fate.Progress)
+            if (prog.samples.Count == 0 || prog.samples[^1].Progress != fate.Progress)
             {
-                progress.AddProgress(fate.Progress);
+                prog.AddProgress(fate.Progress);
             }
 
             if (fate.Progress == 100)
             {
-                this.progress.Remove(fate.FateId);
+                progress.Remove(id);
             }
-        }
-
-
-        // Remove non-active fates
-        var active = fates.Select(f => f.Key).ToHashSet();
-        var obsolete = progress.Keys.Where(id => !active.Contains(id)).ToList();
-        foreach (var id in obsolete)
-        {
-            progress.Remove(id);
         }
     }
 }

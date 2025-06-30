@@ -19,6 +19,11 @@ public class FatesModule : Module<Plugin, Config>
         get => config.IsPropertyEnabled(nameof(config.Enabled));
     }
 
+    public override bool tick
+    {
+        get => true;
+    }
+
     public readonly FateTracker tracker = new();
 
     public Dictionary<uint, IFate> fates
@@ -33,9 +38,12 @@ public class FatesModule : Module<Plugin, Config>
 
     private Panel panel = new();
 
+    private Alerter alerter;
+
     public FatesModule(Plugin plugin, Config config)
         : base(plugin, config)
     {
+        alerter = new Alerter(this);
     }
 
     public override void Tick(IFramework framework)
@@ -47,5 +55,11 @@ public class FatesModule : Module<Plugin, Config>
     {
         panel.Draw(this);
         return true;
+    }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+        alerter.Dispose();
     }
 }
