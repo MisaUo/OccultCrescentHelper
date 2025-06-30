@@ -73,16 +73,26 @@ public class AutomatorModule : Module<Plugin, Config>
 
     public void EnableIllegalMode()
     {
+        var wasDisabled = !config.Enabled;
         config.Enabled = true;
-        Svc.Chat.Print("[BOCCHI] Illegal Mode On");
+
+        if (wasDisabled)
+        {
+            Svc.Chat.Print("[BOCCHI] Illegal Mode On");
+        }
     }
 
     public void DisableIllegalMode()
     {
+        var wasEnabled = config.Enabled;
         config.Enabled = false;
         automator.Refresh();
         plugin.ipc.GetProvider<VNavmesh>()?.Stop();
         Plugin.Chain.Abort();
-        Svc.Chat.Print("[BOCCHI] Illegal Mode Off");
+
+        if (wasEnabled)
+        {
+            Svc.Chat.Print("[BOCCHI] Illegal Mode Off");
+        }
     }
 }
