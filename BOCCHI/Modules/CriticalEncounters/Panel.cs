@@ -16,7 +16,7 @@ public class Panel
         OcelotUI.Indent(() =>
         {
             var active = module.criticalEncounters.Values.Count(ev => ev.State != DynamicEventState.Inactive);
-            if (active <= 0)
+            if (active <= 0 && !module.config.TrackForkedTower)
             {
                 ImGui.TextUnformatted(module.T("panel.none"));
                 return;
@@ -95,15 +95,42 @@ public class Panel
 
     private void HandleTower(DynamicEvent ev, CriticalEncountersModule module)
     {
-        if (!module.config.TrackForkedTower || ev.State != DynamicEventState.Inactive)
+        if (!module.config.TrackForkedTower)
         {
             return;
         }
 
-        ImGui.TextUnformatted($"{ev.Name}:");
-        ImGui.SameLine();
+        // Show time since last
+        if (ev.State == DynamicEventState.Inactive)
+        {
+            ImGui.TextUnformatted($"{ev.Name}:");
+            ImGui.SameLine();
 
-        var timeSince = DateTime.Now - module.tracker.LastForkedTower;
-        ImGui.TextUnformatted($"{timeSince:mm\\:ss}");
+            var timeSince = DateTime.Now - module.tracker.LastForkedTower;
+            ImGui.TextUnformatted($"{timeSince:mm\\:ss}");
+        }
+
+        if (ev.State == DynamicEventState.Inactive || ev.State == DynamicEventState.Warmup)
+        {
+            if (!TowerHelper.IsPlayerNearTower(TowerHelper.TowerType.Blood))
+            {
+                return;
+            }
+
+            OcelotUI.Indent(() =>
+            {
+                OcelotUI.LabelledValue("Players on Platform", TowerHelper.GetPlayersInTowerZone(TowerHelper.TowerType.Blood).ToString());
+                if (ImGui.IsItemHovered())
+                {
+                    ImGui.SetTooltip("This includes your character");
+                }
+
+                OcelotUI.LabelledValue("Players near Platform", TowerHelper.GetPlayersNearTowerZone(TowerHelper.TowerType.Blood).ToString());
+                if (ImGui.IsItemHovered())
+                {
+                    ImGui.SetTooltip("This includes your character");
+                }
+            });
+        }
     }
 }

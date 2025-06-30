@@ -148,9 +148,9 @@ public abstract class Activity
                 .Then(_ => vnav.Stop())
                 .Then(new TaskManagerTask(() =>
                 {
-                    if (module.config.ShouldForceTarget && EzThrottler.Throttle("Participating.ForceTarget", 100))
+                    if (module.config.ShouldForceTarget && EzThrottler.Throttle("Participating.ForceTarget", 500))
                     {
-                        Svc.Targets.Target ??= module.config.ShouldForceTargetCentralEnemy ? GetCentralMostEnemy() : GetClosestEnemy();
+                        Svc.Targets.Target = module.config.ShouldForceTargetCentralEnemy ? GetCentralMostEnemy() : GetClosestEnemy();
                     }
 
                     return states.GetState() == State.Idle;
