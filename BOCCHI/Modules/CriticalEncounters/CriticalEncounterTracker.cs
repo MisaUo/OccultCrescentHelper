@@ -15,6 +15,8 @@ public class CriticalEncounterTracker
 
     public Dictionary<uint, EventProgress> progress { get; } = new();
 
+    public DateTime LastForkedTower { get; private set; } = DateTime.Now;
+
     // Store last known states of each event by ID
     private readonly Dictionary<uint, DynamicEventState> lastStates = new();
 
@@ -23,6 +25,16 @@ public class CriticalEncounterTracker
         criticalEncounters = PublicContentOccultCrescent.GetInstance()->DynamicEventContainer.Events
             .ToArray()
             .ToDictionary(ev => (uint)ev.DynamicEventId, ev => ev);
+
+        OnInactiveState += ev =>
+        {
+            if (ev.EventType < 4)
+            {
+                return;
+            }
+
+            LastForkedTower = DateTime.Now;
+        };
     }
 
     public event Action<DynamicEvent>? OnInactiveState;

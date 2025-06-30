@@ -11,6 +11,11 @@ public class CriticalEncountersConfig : ModuleConfig
     public bool Enabled { get; set; } = true;
 
     [Checkbox]
+    [Label("modules.critical_encounters.config.track_forked_tower.label")]
+    [Tooltip("modules.critical_encounters.config.track_forked_tower.tooltip")]
+    public bool TrackForkedTower { get; set; } = true;
+
+    [Checkbox]
     [Label("modules.critical_encounters.config.alert_all.label")]
     [Tooltip("modules.critical_encounters.config.alert_all.tooltip")]
     public bool AlertAll { get; set; } = false;

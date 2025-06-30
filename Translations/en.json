@@ -144,6 +144,10 @@
     "critical_encounters": {
       "title": "Critical Encounters Config",
       "config": {
+        "track_forked_tower": {
+          "label": "Track Forked Tower",
+          "tooltip": "Track when Forked Tower last ended"
+        },
         "alert_all": {
           "label": "Alert for all Critical Encounters",
           "tooltip": "Play a sound effect when any fate spawns"

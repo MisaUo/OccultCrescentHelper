@@ -24,6 +24,12 @@ public class Panel
 
             foreach (var ev in module.criticalEncounters.Values)
             {
+                if (ev.EventType >= 4)
+                {
+                    HandleTower(ev, module);
+                    continue;
+                }
+
                 if (ev.State == DynamicEventState.Inactive)
                 {
                     continue;
@@ -35,11 +41,6 @@ public class Panel
                 }
 
                 ImGui.TextUnformatted(ev.Name.ToString());
-                if (ev.EventType >= 4)
-                {
-                    HandleTower(ev);
-                    continue;
-                }
 
                 if (ev.State == DynamicEventState.Register)
                 {
@@ -92,7 +93,17 @@ public class Panel
     }
 
 
-    private void HandleTower(DynamicEvent _)
+    private void HandleTower(DynamicEvent ev, CriticalEncountersModule module)
     {
+        if (!module.config.TrackForkedTower || ev.State != DynamicEventState.Inactive)
+        {
+            return;
+        }
+        
+        ImGui.TextUnformatted($"{ev.Name}:");
+        ImGui.SameLine();
+
+        var timeSince = DateTime.Now - module.tracker.LastForkedTower;
+        ImGui.TextUnformatted($"{timeSince:mm\\:ss}");
     }
 }

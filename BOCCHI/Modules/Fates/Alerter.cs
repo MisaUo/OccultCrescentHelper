@@ -67,10 +67,13 @@ public class Alerter : IDisposable
             return false;
         }
 
-        var demiatma = (Demiatma)data.demiatma;
-        if (DemiatmaAlerts.TryGetValue(demiatma, out var getter))
+        if (data.demiatma != null)
         {
-            return getter();
+            var demiatma = (Demiatma)data.demiatma;
+            if (DemiatmaAlerts.TryGetValue(demiatma, out var getter))
+            {
+                return getter();
+            }
         }
 
         return false;
