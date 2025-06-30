@@ -23,6 +23,7 @@ public class DebugModule : Module<Plugin, Config>
         new EnemyPanel(),
         new StatusPanel(),
         new TargetPanel(),
+        new ActivityTargetPanel(),
     };
 
     public DebugModule(Plugin plugin, Config config)

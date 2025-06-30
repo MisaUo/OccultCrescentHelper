@@ -90,4 +90,9 @@ public class Fate : Activity
     {
         return data.start ?? fate.Position;
     }
+
+    public override string GetName()
+    {
+        return fate.Name.ToString();
+    }
 }

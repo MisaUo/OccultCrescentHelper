@@ -5,5 +5,6 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Ocelot" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Ocelot/ECommons" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/plugins" vcs="Git" />
   </component>
 </project>

@@ -3,6 +3,7 @@ using BOCCHI.Data;
 using BOCCHI.Modules.Automator;
 using Dalamud.Interface;
 using ImGuiNET;
+using Ocelot;
 using Ocelot.Windows;
 
 namespace BOCCHI.Windows;
@@ -27,7 +28,7 @@ public class MainWindow(Plugin primaryPlugin, Config config) : OcelotMainWindow(
             },
             Icon = FontAwesomeIcon.Stop,
             IconOffset = new Vector2(2, 2),
-            ShowTooltip = () => ImGui.SetTooltip("Emergency Stop"),
+            ShowTooltip = () => ImGui.SetTooltip(I18N.T("window.main.buttons.emergency_stop")),
         });
 
         TitleBarButtons.Add(new TitleBarButton
@@ -43,7 +44,7 @@ public class MainWindow(Plugin primaryPlugin, Config config) : OcelotMainWindow(
             },
             Icon = FontAwesomeIcon.Skull,
             IconOffset = new Vector2(2, 2),
-            ShowTooltip = () => ImGui.SetTooltip("Toggle Illegal Mode"),
+            ShowTooltip = () => ImGui.SetTooltip(I18N.T("window.main.buttons.toggle_illegal_mode")),
         });
     }
 
@@ -51,7 +52,7 @@ public class MainWindow(Plugin primaryPlugin, Config config) : OcelotMainWindow(
     {
         if (!ZoneData.IsInOccultCrescent())
         {
-            ImGui.TextUnformatted("Not in Occult Crescent zone.");
+            ImGui.TextUnformatted(I18N.T("generic.label.not_in_zone"));
             return;
         }
 

@@ -61,7 +61,7 @@ public class CriticalEncountersPanel : Panel
                 {
                     var start = ev.MapMarker.Position;
 
-                    teleporter.teleporter.Button(data.aethernet, start, data.Name, $"ce_{data.id}", data);
+                    teleporter.teleporter.Button(data.aethernet, start, ev.Name.ToString(), $"ce_{data.id}", data);
                 }
 
                 OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.config.EventDropConfig));

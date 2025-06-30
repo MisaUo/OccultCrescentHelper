@@ -12,7 +12,7 @@ public class Panel
         {
             OcelotUI.Title($"{module.T("panel.activity.label")}:");
             ImGui.SameLine();
-            ImGui.TextUnformatted(module.automator.activity?.data.Name ?? module.T("panel.activity.none"));
+            ImGui.TextUnformatted(module.automator.activity?.GetName() ?? module.T("panel.activity.none"));
 
             OcelotUI.Title($"{module.T("panel.activity_state.label")}:");
             ImGui.SameLine();

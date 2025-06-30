@@ -171,7 +171,8 @@ public abstract class Activity
                 o != null &&
                 o.ObjectKind == ObjectKind.BattleNpc &&
                 IsActivityTarget(o) &&
-                o.IsTargetable
+                o.IsTargetable &&
+                !o.IsDead
             )
             .OrderBy(o => Vector3.Distance(o.Position, Player.Position))
             .ToList();
@@ -266,4 +267,6 @@ public abstract class Activity
     public abstract bool IsValid();
 
     public abstract Vector3 GetPosition();
+
+    public abstract string GetName();
 }

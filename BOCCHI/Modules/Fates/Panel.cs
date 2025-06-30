@@ -31,7 +31,7 @@ public class Panel
                     continue;
                 }
 
-                ImGui.TextUnformatted($"{data.Name} ({fate.Progress}%)");
+                ImGui.TextUnformatted($"{fate.Name} ({fate.Progress}%)");
 
 
                 if (module.progress.TryGetValue(fate.FateId, out var progress))

@@ -83,7 +83,7 @@ public class Panel
                 {
                     var start = ev.MapMarker.Position;
 
-                    teleporter.teleporter.Button(data.aethernet, start, data.Name, $"ce_{ev.DynamicEventId}", data);
+                    teleporter.teleporter.Button(data.aethernet, start, ev.Name.ToString(), $"ce_{ev.DynamicEventId}", data);
                 }
 
                 OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.config.EventDropConfig));

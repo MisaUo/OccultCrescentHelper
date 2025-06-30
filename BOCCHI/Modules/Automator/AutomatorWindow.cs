@@ -2,6 +2,7 @@ using System.Numerics;
 using BOCCHI.Data;
 using Dalamud.Interface;
 using ImGuiNET;
+using Ocelot;
 using Ocelot.Windows;
 
 namespace BOCCHI.Modules.Automator;
@@ -34,7 +35,7 @@ public class AutomatorWindow(Plugin priamryPlugin, Config config) : OcelotWindow
     {
         if (!ZoneData.IsInOccultCrescent())
         {
-            ImGui.TextUnformatted("Not in Occult Crescent zone.");
+            ImGui.TextUnformatted(I18N.T("generic.label.not_in_zone"));
             return;
         }
 

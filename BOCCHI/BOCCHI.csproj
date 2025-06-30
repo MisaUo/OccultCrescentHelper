@@ -24,7 +24,8 @@
     </ItemGroup>
     <!-- Ocelot/Ecommons -->
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-        <ProjectReference Include="../Ocelot/Ocelot/Ocelot.csproj"/>
+        <ProjectReference Include="../../Ocelot/Ocelot/Ocelot.csproj"/>
+        <!-- <ProjectReference Include="../Ocelot/Ocelot/Ocelot.csproj"/> -->
         <PackageReference Include="Ecommons" Version="3.0.0"/>
     </ItemGroup>
     <ItemGroup Condition="'$(Configuration)' == 'Release'">
