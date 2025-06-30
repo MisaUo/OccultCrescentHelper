@@ -16,11 +16,11 @@
       },
       "FFXIVOcelot": {
         "type": "Direct",
-        "requested": "[0.28.0, )",
-        "resolved": "0.28.0",
-        "contentHash": "94xrE7HbN2rPCzzWCDNrSPjxZ5VoySBm5UTKCvrOxIK2/XFfRZnBX3441u65WX7s3X3ls5IDgTZvFr1S/n7xSg==",
+        "requested": "[0.30.0, )",
+        "resolved": "0.30.0",
+        "contentHash": "T7r+bL4WWM+0jk5jbdEBeaAy4MS8hbw3RWDluoSs6VQahjPC/ZwQUBF/YRRxjz5WPpIfil/wmYlw7TsKOBXtjw==",
         "dependencies": {
-          "ECommons": "3.0.0",
+          "Ecommons": "3.0.0",
           "Microsoft.Extensions.Configuration": "7.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "7.0.0"
         }

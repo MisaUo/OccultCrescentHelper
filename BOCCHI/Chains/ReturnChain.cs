@@ -48,7 +48,10 @@ public class ReturnChain : RetryChainFactory
 
         if (costToReturn < costToWalk || vnav == null)
         {
-            yes?.PausePlugin(5000);
+            if (yes != null && yes.IsReady())
+            {
+                yes.PausePlugin(5000);
+            }
 
             chain
                 .UseGcdAction(ActionType.GeneralAction, 8)
