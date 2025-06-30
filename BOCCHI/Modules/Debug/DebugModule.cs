@@ -25,6 +25,7 @@ public class DebugModule : Module<Plugin, Config>
         new TargetPanel(),
         new ActivityTargetPanel(),
         new TreasureHuntPanel(),
+        new CarrotPanel(),
     };
 
     public DebugModule(Plugin plugin, Config config)

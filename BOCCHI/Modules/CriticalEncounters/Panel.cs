@@ -110,7 +110,7 @@ public class Panel
             ImGui.TextUnformatted($"{timeSince:mm\\:ss}");
         }
 
-        if (ev.State == DynamicEventState.Inactive || ev.State == DynamicEventState.Warmup)
+        if (ev.State == DynamicEventState.Inactive || ev.State == DynamicEventState.Register)
         {
             if (!TowerHelper.IsPlayerNearTower(TowerHelper.TowerType.Blood))
             {

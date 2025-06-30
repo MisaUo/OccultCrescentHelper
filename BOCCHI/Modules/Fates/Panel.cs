@@ -21,9 +21,9 @@ public class Panel
 
             foreach (var fate in module.fates.Values)
             {
-                if (fate == null)
+                if (!ZoneData.IsInOccultCrescent())
                 {
-                    continue;
+                    return;
                 }
 
                 if (!EventData.Fates.TryGetValue(fate.FateId, out var data))

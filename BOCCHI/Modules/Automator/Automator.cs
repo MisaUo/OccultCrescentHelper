@@ -47,6 +47,11 @@ public class Automator
         var states = module.GetModule<StateManagerModule>();
         if (activity == null)
         {
+            if (states.GetState() == State.InCombat)
+            {
+                return;
+            }
+            
             if (states.GetState() == State.InCriticalEncounter)
             {
                 var critical = module.GetModule<CriticalEncountersModule>();

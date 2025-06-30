@@ -28,7 +28,7 @@ public class MainWindow(Plugin primaryPlugin, Config config) : OcelotMainWindow(
             },
             Icon = FontAwesomeIcon.Stop,
             IconOffset = new Vector2(2, 2),
-            ShowTooltip = () => ImGui.SetTooltip(I18N.T("window.main.buttons.emergency_stop")),
+            ShowTooltip = () => ImGui.SetTooltip(I18N.T("windows.main.buttons.emergency_stop")),
         });
 
         TitleBarButtons.Add(new TitleBarButton
@@ -44,7 +44,7 @@ public class MainWindow(Plugin primaryPlugin, Config config) : OcelotMainWindow(
             },
             Icon = FontAwesomeIcon.Skull,
             IconOffset = new Vector2(2, 2),
-            ShowTooltip = () => ImGui.SetTooltip(I18N.T("window.main.buttons.toggle_illegal_mode")),
+            ShowTooltip = () => ImGui.SetTooltip(I18N.T("windows.main.buttons.toggle_illegal_mode")),
         });
     }
 
