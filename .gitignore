@@ -2,3 +2,4 @@
 *.user
 .env
 node_modules/
+plugins

@@ -15,6 +15,15 @@ public class ConfigWindow(Plugin primaryPlugin, Config config) : OcelotConfigWin
 {
     private IModule? selectedConfigModule;
 
+    public override void PostInitialize()
+    {
+        SizeConstraints = new WindowSizeConstraints
+        {
+            MinimumSize = new Vector2(400, 0),
+            MaximumSize = new Vector2(float.MaxValue, float.MaxValue),
+        };
+    }
+
     public override void Draw()
     {
         var modules = plugin.modules.GetModulesByConfigOrder().ToList();
