@@ -57,6 +57,11 @@ public class FatesModule : Module<Plugin, Config>
         return true;
     }
 
+    public override void OnTerritoryChanged(ushort id)
+    {
+        fates.Clear();
+    }
+
     public override void Dispose()
     {
         base.Dispose();

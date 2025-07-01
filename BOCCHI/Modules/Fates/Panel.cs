@@ -23,6 +23,7 @@ public class Panel
             {
                 if (!ZoneData.IsInOccultCrescent())
                 {
+                    module.fates.Clear();
                     return;
                 }
 

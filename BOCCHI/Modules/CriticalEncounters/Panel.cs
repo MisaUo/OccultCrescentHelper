@@ -24,6 +24,12 @@ public class Panel
 
             foreach (var ev in module.criticalEncounters.Values)
             {
+                if (!ZoneData.IsInOccultCrescent())
+                {
+                    module.criticalEncounters.Clear();
+                    return;
+                }
+
                 if (ev.EventType >= 4)
                 {
                     HandleTower(ev, module);

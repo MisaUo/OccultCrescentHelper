@@ -57,6 +57,11 @@ public class CriticalEncountersModule : Module<Plugin, Config>
         return true;
     }
 
+    public override void OnTerritoryChanged(ushort id)
+    {
+        criticalEncounters.Clear();
+    }
+
     public override void Dispose()
     {
         base.Dispose();
