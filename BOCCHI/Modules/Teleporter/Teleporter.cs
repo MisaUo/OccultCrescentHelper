@@ -103,6 +103,7 @@ public class Teleporter
                     chain
                         .RunIf(() => module.config.PathToDestination)
                         .Then(new PathfindingChain(vnav, destination, ev, 20f))
+                        .ConditionalThen(_ => module.config.ShouldMount, ChainHelper.MountChain())
                         .WaitUntilNear(vnav, destination, 20f);
                 }
 
