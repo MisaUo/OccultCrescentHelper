@@ -16,7 +16,7 @@ public class Panel
         OcelotUI.Indent(() =>
         {
             var active = module.criticalEncounters.Values.Count(ev => ev.State != DynamicEventState.Inactive);
-            if (active <= 0 && !module.config.TrackForkedTower)
+            if (active <= 0)
             {
                 ImGui.TextUnformatted(module.T("panel.none"));
                 return;
@@ -101,6 +101,7 @@ public class Panel
 
     private void HandleTower(DynamicEvent ev, CriticalEncountersModule module)
     {
+        return;
         if (!module.config.TrackForkedTower || ev.State == DynamicEventState.Battle)
         {
             return;
