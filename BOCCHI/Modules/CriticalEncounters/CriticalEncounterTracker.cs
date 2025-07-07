@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using BOCCHI.Data;
+using BOCCHI.Modules.Fates;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
@@ -15,22 +16,14 @@ public class CriticalEncounterTracker
 
     public Dictionary<uint, EventProgress> progress { get; } = new();
 
-    public DateTime LastForkedTower { get; private set; } = DateTime.Now;
+    public TowerTimer TowerTimer { get; private set; }
 
     // Store last known states of each event by ID
     private readonly Dictionary<uint, DynamicEventState> lastStates = new();
 
-    public CriticalEncounterTracker()
+    public CriticalEncounterTracker(CriticalEncountersModule module)
     {
-        OnInactiveState += ev =>
-        {
-            if (ev.EventType < 4)
-            {
-                return;
-            }
-
-            LastForkedTower = DateTime.Now;
-        };
+        TowerTimer = new TowerTimer(this, module.GetModule<FatesModule>()!);
     }
 
     public event Action<DynamicEvent>? OnInactiveState;

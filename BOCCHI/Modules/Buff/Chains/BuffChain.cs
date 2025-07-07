@@ -24,7 +24,7 @@ public class BuffChain : ChainFactory
         this.action = action;
     }
 
-    protected override unsafe Chain Create(Chain chain)
+    protected override Chain Create(Chain chain)
     {
         chain
             .Then(_ => PublicContentOccultCrescent.ChangeSupportJob((byte)job.id))
@@ -32,9 +32,14 @@ public class BuffChain : ChainFactory
             .WaitGcd()
             .UseAction(ActionType.GeneralAction, action)
             .Then(new TaskManagerTask(() => Svc.ClientState.LocalPlayer?.StatusList.Any(s => s.StatusId == (uint)status && s.RemainingTime >= 1780) == true,
-                new TaskManagerConfiguration { TimeLimitMS = 3000 }))
+                new TaskManagerConfiguration { TimeLimitMS = 5000 }))
             .WaitGcd();
 
         return chain;
+    }
+
+    public override TaskManagerConfiguration? Config()
+    {
+        return new TaskManagerConfiguration { TimeLimitMS = 15000 };
     }
 }

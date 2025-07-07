@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -6,9 +7,11 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading.Tasks;
+using BOCCHI.Enums;
+using BOCCHI.Modules.Treasure;
 using ECommons.DalamudServices;
-using ECommons.GameHelpers;
 using FFXIVClientStructs.FFXIV.Client.LayoutEngine;
+using ImGuiNET;
 using Ocelot;
 using Ocelot.IPC;
 
@@ -16,18 +19,21 @@ namespace BOCCHI.Modules.Debug.Panels;
 
 using TreasureData = (uint id, Vector3 position, uint type);
 
-public class DistanceEntry
-{
-    public uint Id { get; set; }
-
-    public float Distance { get; set; }
-}
-
 public class TreasureHuntPanel : Panel
 {
     private List<TreasureData> Treasure = [];
 
-    private bool FirstTick = false;
+    private bool HasRun = false;
+
+    private bool ShouldRun = false;
+
+    private Stopwatch stopwatch = new();
+
+    private Task? task = null;
+
+    private uint Progress = 0;
+
+    private readonly uint MaxProgress = 0;
 
     public unsafe TreasureHuntPanel()
     {
@@ -62,6 +68,9 @@ public class TreasureHuntPanel : Panel
         }
 
         Treasure = Treasure.OrderBy(t => t.id).ToList();
+
+        MaxProgress = (uint)(Treasure.Count * (Treasure.Count - 1));
+        MaxProgress += (uint)(Enum.GetNames(typeof(Aethernet)).Length * Treasure.Count) * 2;
     }
 
     public override string GetName()
@@ -69,71 +78,92 @@ public class TreasureHuntPanel : Panel
         return "Treasure Hunt Helper";
     }
 
+    public override void Draw(DebugModule module)
+    {
+        OcelotUI.LabelledValue("Bronze", Treasure.Count(t => t.type == 1596)); // 60
+        OcelotUI.LabelledValue("Silver", Treasure.Count(t => t.type == 1597)); // 8
+
+        OcelotUI.Indent(() =>
+        {
+            if (!HasRun)
+            {
+                if (ImGui.Button("Run"))
+                {
+                    ShouldRun = true;
+                }
+
+                return;
+            }
+
+            var Completion = (float)Progress / (float)MaxProgress * 100;
+
+            OcelotUI.LabelledValue("Progress: ", $"{Completion:f2}%");
+            OcelotUI.Indent(() => OcelotUI.LabelledValue("Calculations: ", $"{Progress}/{MaxProgress}"));
+            OcelotUI.LabelledValue("Elapsed: ", stopwatch.Elapsed.ToString("mm\\:ss"));
+        });
+    }
+
     public override void Tick(DebugModule module)
     {
-        if (!FirstTick)
+        if (!ShouldRun || HasRun || task != null)
         {
             return;
         }
 
-        FirstTick = false;
+        ShouldRun = true;
+        HasRun = true;
 
-        _ = CalculatePathDistances(module, Player.Position);
+        task = PrecomputeTreasurePathDistances(module);
     }
 
-
-    private async Task CalculatePathDistances(DebugModule module, Vector3 start)
+    private async Task PrecomputeTreasurePathDistances(DebugModule module)
     {
-        var stopwatch = Stopwatch.StartNew();
+        stopwatch.Restart();
+        var outputFile = Path.Join(Svc.PluginInterface.ConfigDirectory.FullName, "southhorn_precomputed_chest_paths.json");
+
         var vnav = module.GetIPCProvider<VNavmesh>();
 
-        var distancesPath = Path.Join(Svc.PluginInterface.ConfigDirectory.FullName, "distances.json");
-
-        var Distances = await LoadDistancesAsync(distancesPath);
-        Dictionary<uint, float> DistanceFromStart = [];
-
-        // var closest = Treasure.OrderBy(t => Vector3.Distance(t.position, start)).Take(10).ToList();  
+        TreasureDataSchema data = new();
+        foreach (var datum in AethernetData.All())
+        {
+            data.AethernetToTreasureDistances[datum.aethernet] = [];
+        }
 
         foreach (var treasure in Treasure)
         {
-            module.Debug($"Treasure {treasure.id}");
-            var pathFromStart = await vnav.Pathfind(start, treasure.position, false);
-            var distanceFromStart = CalculatePathLength(pathFromStart);
-            module.Info($"Path from {treasure.id} to start: {distanceFromStart:0.00}");
-            DistanceFromStart[treasure.id] = distanceFromStart;
+            data.TreasureToTreasureDistances[treasure.id] = [];
+            data.TreasureToAethernetDistances[treasure.id] = [];
+
+            foreach (var other in Treasure.Where(t => t != treasure))
+            {
+                var path = await vnav.Pathfind(treasure.position, other.position, false);
+                var distance = CalculatePathLength(path);
+
+                data.TreasureToTreasureDistances[treasure.id].Add(new ToTreasure(other.id, distance));
+
+                Progress++;
+            }
+
+            foreach (var datum in AethernetData.All())
+            {
+                var pathToTreasure = await vnav.Pathfind(datum.position, treasure.position, false);
+                data.AethernetToTreasureDistances[datum.aethernet].Add(new ToTreasure(treasure.id, CalculatePathLength(pathToTreasure)));
+
+                var pathToAethernet = await vnav.Pathfind(datum.position, treasure.position, false);
+                data.TreasureToAethernetDistances[treasure.id].Add(new ToAethernet(datum.aethernet, CalculatePathLength(pathToAethernet)));
+            }
         }
 
-        var bestPath = FindGreedyPathFromStart(Distances, DistanceFromStart);
-        var cost = CalculateTotalPathDistance(bestPath, Distances, DistanceFromStart);
-
-        module.Info($"Path length: {cost:0.00}");
-
-        module.Info($"Path {string.Join(" -> ", bestPath)}");
-        module.Info($"Path ({bestPath.Count})");
-
         stopwatch.Stop();
-        module.Info($"Calculating path finished in {stopwatch.ElapsedMilliseconds} ms");
-    }
 
-
-    public override void Draw(DebugModule module)
-    {
-        OcelotUI.LabelledValue("Bronze", Treasure.Count(t => t.type == 1596).ToString()); // 60
-        OcelotUI.LabelledValue("Silver", Treasure.Count(t => t.type == 1597).ToString()); // 8
-
-        OcelotUI.Indent(() =>
+        var options = new JsonSerializerOptions
         {
-            foreach (var data in Treasure)
-            {
-                OcelotUI.LabelledValue("Id", data.id.ToString());
+            WriteIndented = false,
+            IncludeFields = false,
+        };
 
-                OcelotUI.Indent(() =>
-                {
-                    OcelotUI.LabelledValue("Position", $"{data.position.X:f2}, {data.position.Y:f2}, {data.position.Z:f2}");
-                    OcelotUI.LabelledValue("Type", data.type.ToString());
-                });
-            }
-        });
+        var json = JsonSerializer.Serialize(data, options);
+        await File.WriteAllTextAsync(outputFile, json);
     }
 
     private float CalculatePathLength(List<Vector3> path)
@@ -146,102 +176,5 @@ public class TreasureHuntPanel : Panel
         }
 
         return length;
-    }
-
-    public List<uint> FindGreedyPathFromStart(
-        Dictionary<uint, List<DistanceEntry>> closest,
-        Dictionary<uint, float> distanceFromStart)
-    {
-        var unvisited = new HashSet<uint>(distanceFromStart.Keys);
-        var path = new List<uint>();
-
-        // Step 1: Find closest node from start
-        uint? current = null;
-        var minStartDistance = float.MaxValue;
-
-        foreach (var kvp in distanceFromStart)
-        {
-            if (kvp.Value < minStartDistance)
-            {
-                minStartDistance = kvp.Value;
-                current = kvp.Key;
-            }
-        }
-
-        if (current == null)
-        {
-            return path;
-        }
-
-        path.Add(current.Value);
-        unvisited.Remove(current.Value);
-
-        while (unvisited.Count > 0)
-        {
-            var currentId = current.Value;
-
-            if (!closest.TryGetValue(currentId, out var neighbors))
-            {
-                break;
-            }
-
-            var bestDistance = float.MaxValue;
-            uint? next = null;
-
-            foreach (var entry in neighbors)
-            {
-                if (unvisited.Contains(entry.Id) && entry.Distance < bestDistance)
-                {
-                    bestDistance = entry.Distance;
-                    next = entry.Id;
-                }
-            }
-
-            if (next == null)
-            {
-                break;
-            }
-
-            current = next;
-            path.Add(current.Value);
-            unvisited.Remove(current.Value);
-        }
-
-        return path;
-    }
-
-    public float CalculateTotalPathDistance(
-        List<uint> path,
-        Dictionary<uint, List<DistanceEntry>> closest,
-        Dictionary<uint, float> distanceFromStart)
-    {
-        if (path.Count == 0)
-        {
-            return 0f;
-        }
-
-        var total = distanceFromStart[path[0]];
-
-        for (var i = 1; i < path.Count; i++)
-        {
-            var from = path[i - 1];
-            var to = path[i];
-
-            var neighbors = closest[from];
-            var match = neighbors.FirstOrDefault(n => n.Id == to);
-
-            total += match.Distance;
-        }
-
-        return total;
-    }
-
-    public async Task<Dictionary<uint, List<DistanceEntry>>> LoadDistancesAsync(string path)
-    {
-        var json = await File.ReadAllTextAsync(path);
-
-        var data = JsonSerializer.Deserialize<Dictionary<uint, List<DistanceEntry>>>(json);
-
-        return data!;
     }
 }

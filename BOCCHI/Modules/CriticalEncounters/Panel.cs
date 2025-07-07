@@ -101,42 +101,51 @@ public class Panel
 
     private void HandleTower(DynamicEvent ev, CriticalEncountersModule module)
     {
-        if (!module.config.TrackForkedTower)
+        if (!module.config.TrackForkedTower || ev.State == DynamicEventState.Battle)
         {
             return;
         }
 
-        // Show time since last
         if (ev.State == DynamicEventState.Inactive)
         {
             ImGui.TextUnformatted($"{ev.Name}:");
-            ImGui.SameLine();
 
-            var timeSince = DateTime.Now - module.tracker.LastForkedTower;
-            ImGui.TextUnformatted($"{timeSince:mm\\:ss}");
+            var time = module.tracker.TowerTimer.GetTimeToForkedTowerSpawn(ev.State);
+            OcelotUI.Indent(() => { OcelotUI.LabelledValue("Forked Tower Spawn Estimate", $"{time:mm\\:ss}"); });
+        }
+        else
+        {
+            ImGui.TextUnformatted($"{ev.Name}:");
+
+            var time = module.tracker.TowerTimer.GetTimeRemainingToRegister(ev.State);
+            OcelotUI.Indent(() => { OcelotUI.LabelledValue("Forked Tower Register", $"{time:mm\\:ss}"); });
         }
 
-        if (ev.State == DynamicEventState.Inactive || ev.State == DynamicEventState.Register)
+        OcelotUI.Indent(32, () =>
         {
-            if (!TowerHelper.IsPlayerNearTower(TowerHelper.TowerType.Blood))
+            OcelotUI.LabelledValue("Critical Encounters completed", module.tracker.TowerTimer.GetCompletedCriticalEncounters());
+            OcelotUI.LabelledValue("Fates completed", module.tracker.TowerTimer.GetcompletedFates());
+        });
+
+
+        if (!TowerHelper.IsPlayerNearTower(TowerHelper.TowerType.Blood))
+        {
+            return;
+        }
+
+        OcelotUI.Indent(() =>
+        {
+            OcelotUI.LabelledValue("Players on Platform", TowerHelper.GetPlayersInTowerZone(TowerHelper.TowerType.Blood));
+            if (ImGui.IsItemHovered())
             {
-                return;
+                ImGui.SetTooltip("This includes your character");
             }
 
-            OcelotUI.Indent(() =>
+            OcelotUI.LabelledValue("Players near Platform", TowerHelper.GetPlayersNearTowerZone(TowerHelper.TowerType.Blood));
+            if (ImGui.IsItemHovered())
             {
-                OcelotUI.LabelledValue("Players on Platform", TowerHelper.GetPlayersInTowerZone(TowerHelper.TowerType.Blood).ToString());
-                if (ImGui.IsItemHovered())
-                {
-                    ImGui.SetTooltip("This includes your character");
-                }
-
-                OcelotUI.LabelledValue("Players near Platform", TowerHelper.GetPlayersNearTowerZone(TowerHelper.TowerType.Blood).ToString());
-                if (ImGui.IsItemHovered())
-                {
-                    ImGui.SetTooltip("This includes your character");
-                }
-            });
-        }
+                ImGui.SetTooltip("This includes your character");
+            }
+        });
     }
 }

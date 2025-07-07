@@ -25,8 +25,11 @@ public class DebugModule : Module<Plugin, Config>
         new TargetPanel(),
         new ActivityTargetPanel(),
         new TreasureHuntPanel(),
-        new CarrotPanel(),
+        new CarrotHuntPanel(),
+        new JobLevelPanel(),
     };
+
+    private int selectedPanelIndex = 0;
 
     public DebugModule(Plugin plugin, Config config)
         : base(plugin, config)
@@ -43,14 +46,35 @@ public class DebugModule : Module<Plugin, Config>
 
     public void DrawPanels()
     {
-        foreach (var panel in panels)
+        // Determine sizes
+        var panelWidth = 200f;
+        var spacing = ImGui.GetStyle().ItemSpacing.X;
+
+        ImGui.BeginGroup();
+
+        // Left panel list
+        ImGui.BeginChild("PanelList", new System.Numerics.Vector2(panelWidth, 0), true);
+        for (var i = 0; i < panels.Count; i++)
         {
-            if (ImGui.CollapsingHeader(panel.GetName()))
+            var selected = i == selectedPanelIndex;
+            if (ImGui.Selectable(panels[i].GetName(), selected))
             {
-                panel.Draw(this);
-                OcelotUI.VSpace();
+                selectedPanelIndex = i;
             }
         }
+
+        ImGui.EndChild();
+
+        ImGui.SameLine(0, spacing);
+
+        // Right panel content
+        ImGui.BeginGroup();
+        ImGui.BeginChild("PanelContent", new System.Numerics.Vector2(0, 0), false);
+        panels[selectedPanelIndex].Draw(this);
+        ImGui.EndChild();
+        ImGui.EndGroup();
+
+        ImGui.EndGroup();
     }
 
     public override void Tick(IFramework _)

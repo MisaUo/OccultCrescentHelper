@@ -24,7 +24,7 @@ public class CriticalEncountersModule : Module<Plugin, Config>
         get => true;
     }
 
-    public readonly CriticalEncounterTracker tracker = new();
+    public readonly CriticalEncounterTracker tracker;
 
     public Dictionary<uint, DynamicEvent> criticalEncounters
     {
@@ -43,6 +43,7 @@ public class CriticalEncountersModule : Module<Plugin, Config>
     public CriticalEncountersModule(Plugin plugin, Config config)
         : base(plugin, config)
     {
+        tracker = new CriticalEncounterTracker(this);
         alerter = new Alerter(this);
     }
 

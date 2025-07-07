@@ -22,7 +22,7 @@ public class CarrotsTracker
             .Where(o => o.DataId == (uint)OccultObjectType.Carrot)
             .OrderBy(o => Vector3.Distance(o.Position, pos))
             .Select(o => new Carrot(o))
-            .Where(c => c.IsValid())
+            // .Where(c => c.IsValid())
             .ToList();
     }
 }

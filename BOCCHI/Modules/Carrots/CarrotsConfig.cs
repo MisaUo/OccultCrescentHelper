@@ -20,4 +20,36 @@ public class CarrotsConfig : ModuleConfig
     {
         get => IsPropertyEnabled(nameof(DrawLineToCarrots));
     }
+
+    // [Checkbox]
+    // [Experimental]
+    // [Illegal]
+    // [RequiredPlugin("vnavmesh", "Lifestream")]
+    // [DependsOn(nameof(Enabled))]
+    // [Label("modules.carrot.config.hunt.show_button.label")]
+    // public bool EnableCarrotHunt { get; set; } = false;
+    //
+    // public bool ShouldEnableCarrotHunt
+    // {
+    //     get => IsPropertyEnabled(nameof(EnableCarrotHunt));
+    // }
+    //
+    // [FloatRange(10f, 100f)]
+    // [DependsOn(nameof(Enabled), nameof(EnableCarrotHunt))]
+    // [Label("modules.carrot.config.hunt.detection.label")]
+    // [Tooltip("modules.carrot.config.hunt.detection.tooltip")]
+    // public float CarrotDetectionRange { get; set; } = 75f;
+    //
+    // [IntRange(1, 28)]
+    // [Experimental]
+    // [DependsOn(nameof(Enabled), nameof(EnableCarrotHunt))]
+    // [Label("modules.carrot.config.hunt.max_level.label")]
+    // [Tooltip("modules.carrot.config.hunt.max_level.tooltip")]
+    // public int MaxLevel { get; set; } = 24;
+    //
+    // [Checkbox]
+    // [Experimental]
+    // [DependsOn(nameof(Enabled), nameof(EnableCarrotHunt))]
+    // [Label("modules.carrot.config.hunt.repeat.label")]
+    // public bool RepeatCarrotHunt { get; set; } = false;
 }

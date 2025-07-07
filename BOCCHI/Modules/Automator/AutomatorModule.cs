@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
@@ -7,7 +8,7 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Automator;
 
-[OcelotModule]
+[OcelotModule(int.MaxValue / 2)]
 public class AutomatorModule : Module<Plugin, Config>
 {
     public override AutomatorConfig config

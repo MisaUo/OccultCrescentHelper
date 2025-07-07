@@ -6,6 +6,7 @@ using ECommons.DalamudServices;
 using ECommons.GameFunctions;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;
+using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using ImGuiNET;
 using Ocelot;
 
@@ -20,17 +21,12 @@ public class EnemyPanel : Panel
 
     private List<IGameObject> enemies = [];
 
-    public override void Draw(DebugModule module)
+    public override unsafe void Draw(DebugModule module)
     {
         OcelotUI.Indent(() =>
         {
             foreach (var enemy in enemies)
             {
-                if (enemy.Name.ToString().StartsWith("Crescent"))
-                {
-                    continue;
-                }
-
                 if (ImGui.CollapsingHeader($"{enemy.Name} - {enemy.DataId}##{enemy.ObjectIndex}"))
                 {
                     OcelotUI.Indent(() =>
@@ -63,6 +59,22 @@ public class EnemyPanel : Panel
 
                         ImGui.Text($"IsValid(): {enemy.IsValid()}");
                         ImGui.Text($"Address: 0x{enemy.Address.ToInt64():X}");
+
+
+                        var battleChara = (BattleChara*)enemy.Address;
+
+
+                        ImGui.Text($"LayoutId: {battleChara->LayoutId}");
+                        ImGui.Text($"Level: {battleChara->ForayInfo.Level}");
+
+                        var distance = Player.DistanceTo(enemy.Position);
+                        if (distance <= 30f)
+                        {
+                            if (ImGui.Button("Target"))
+                            {
+                                Svc.Targets.Target = enemy;
+                            }
+                        }
                     });
                 }
             }

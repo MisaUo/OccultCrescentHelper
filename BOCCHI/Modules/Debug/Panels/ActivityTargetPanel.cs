@@ -37,7 +37,7 @@ public class ActivityTargetPanel : Panel
                 ImGui.TextUnformatted(enemy.Name.ToString());
                 OcelotUI.Indent(() =>
                 {
-                    OcelotUI.LabelledValue("Object Kind", enemy.ObjectKind.ToString());
+                    OcelotUI.LabelledValue("Object Kind", enemy.ObjectKind);
                     OcelotUI.LabelledValue("Targetable", enemy.IsTargetable ? "Yes" : "No");
                     OcelotUI.LabelledValue("Is Alive", enemy.IsDead ? "No" : "Yes");
                     OcelotUI.LabelledValue("Is Activity Target", IsActivityTarget(enemy, module) ? "Yes" : "No");

@@ -1,124 +1,268 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using BOCCHI.Chains;
+using BOCCHI.Enums;
+using BOCCHI.Modules.StateManager;
+using BOCCHI.Pathfinding;
 using Dalamud.Game.ClientState.Objects.Enums;
-using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.Automation.NeoTaskManager.Tasks;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
+using FFXIVClientStructs.FFXIV.Client.LayoutEngine;
 using ImGuiNET;
 using Ocelot;
 using Ocelot.Chain;
-using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
 
 namespace BOCCHI.Modules.Treasure;
 
-public struct TreasureNode
-{
-    public Vector3 position;
-
-    public int level;
-
-    public TreasureNode(Vector3 position, int level)
-    {
-        this.position = position;
-        this.level = level;
-    }
-}
+using TreasureData = (uint id, Vector3 position, uint type);
 
 public class TreasureHunt
 {
     private const float INTERACT_THRESHOLD = 2f;
 
-    private readonly List<TreasureNode> loop =
-    [
-        new(new Vector3(490.41f, 62.48f, -590.57f), 1),
-        new(new Vector3(617.09f, 66.31f, -703.88f), 1),
-        new(new Vector3(666.54f, 79.13f, -480.36f), 2),
-        new(new Vector3(870.69f, 95.7f, -388.33f), 2),
-        new(new Vector3(779.02f, 96.1f, -256.24f), 4),
-        new(new Vector3(770.75f, 108f, -143.54f), 5),
-        new(new Vector3(726.28f, 108.15f, -67.9f), 5),
-        new(new Vector3(788.88f, 120.4f, 109.39f), 20),
-        new(new Vector3(609.62f, 108f, 117.29f), 5),
-        new(new Vector3(475.73f, 96f, -87.08f), 4),
-        new(new Vector3(354.12f, 95.66f, -288.9f), 3),
-        new(new Vector3(245.62f, 109.14f, -18.17f), 9),
-        new(new Vector3(277.81f, 103.8f, 241.91f), 10),
-        new(new Vector3(517.75f, 67.9f, 236.13f), 21),
-        new(new Vector3(643f, 70f, 407.8f), 16),
-        new(new Vector3(697.32f, 70f, 597.92f), 17),
-        new(new Vector3(596.49f, 70.3f, 622.77f), 17),
-        new(new Vector3(471.21f, 70.3f, 530.02f), 16),
-        new(new Vector3(433.71f, 70.3f, 683.53f), 17),
-        new(new Vector3(294.91f, 56.1f, 640.22f), 15),
-        new(new Vector3(256.15f, 73.19f, 492.36f), 14),
-        new(new Vector3(140.98f, 56f, 770.99f), 15),
-        new(new Vector3(35.72f, 65.11f, 648.98f), 14),
-        new(new Vector3(-197.19f, 74.93f, 618.34f), 18),
-        new(new Vector3(-225.02f, 75f, 804.99f), 18),
-        new(new Vector3(-372.67f, 75f, 527.43f), 19),
-        new(new Vector3(-550.12f, 107f, 627.77f), 26),
-        new(new Vector3(-784.75f, 139f, 699.78f), 27),
-        new(new Vector3(-600.27f, 139f, 802.64f), 28),
-        new(new Vector3(-676.39f, 171f, 640.41f), 28),
-        new(new Vector3(-716.12f, 171f, 794.43f), 28),
-        new(new Vector3(-645.66f, 203f, 710.17f), 28),
-        new(new Vector3(-648f, 75f, 403.98f), 19),
-        new(new Vector3(-283.96f, 116f, 377.04f), 11),
-        new(new Vector3(-256.86f, 121f, 125.08f), 11),
-        new(new Vector3(-25.68f, 102.23f, 150.19f), 10),
-        new(new Vector3(55.31f, 111.32f, -289.08f), 9),
-        new(new Vector3(-158.65f, 98.65f, -132.74f), 11),
-        new(new Vector3(-487.11f, 98.53f, -205.46f), 11),
-        new(new Vector3(-444.11f, 90.69f, 26.23f), 12),
-        new(new Vector3(-394.89f, 106.74f, 175.46f), 12),
-        new(new Vector3(-682.77f, 135.62f, -195.27f), 13),
-        new(new Vector3(-713.8f, 62.07f, 192.64f), 13),
-        new(new Vector3(-756.8f, 76.57f, 97.37f), 13),
-        new(new Vector3(-729.92f, 116.54f, -79.06f), 24),
-        new(new Vector3(-856.93f, 68.85f, -93.14f), 24),
-        new(new Vector3(-767.45f, 115.62f, -235f), 25),
-        new(new Vector3(-680.54f, 104.86f, -354.79f), 25),
-        new(new Vector3(-798.21f, 105.61f, -310.54f), 25),
-        new(new Vector3(-140.46f, 22.38f, -414.27f), 6),
-        new(new Vector3(-490.99f, 3f, -529.59f), 8),
-        new(new Vector3(-661.68f, 3f, -579.49f), 22),
-        new(new Vector3(-729.43f, 5f, -724.79f), 22),
-        new(new Vector3(-825.14f, 3f, -832.25f), 23),
-        new(new Vector3(-585.26f, 5f, -864.84f), 22),
-        new(new Vector3(-451.68f, 3f, -775.57f), 8),
-        new(new Vector3(-118.97f, 5f, -708.43f), 7),
-        new(new Vector3(142.11f, 16.41f, -574.06f), 6),
-        new(new Vector3(381.77f, 22.18f, -743.65f), 6),
-        new(new Vector3(386.95f, 96.82f, -451.35f), 3),
-    ];
-
-    private List<Vector3> path = [];
-
-    private int nodeIndex = 0;
-
-    private Vector3 currentNode
+    private readonly Dictionary<uint, uint> Levels = new()
     {
-        get => path[nodeIndex];
-    }
+        { 1789, 5 },
+        { 1790, 11 },
+        { 1791, 25 },
+        { 1792, 16 },
+        { 1793, 14 },
+        { 1794, 23 },
+        { 1795, 25 },
+        { 1796, 28 },
+        { 1797, 1 },
+        { 1798, 1 },
+        { 1799, 2 },
+        { 1800, 2 },
+        { 1801, 3 },
+        { 1802, 3 },
+        { 1803, 4 },
+        { 1804, 4 },
+        { 1805, 5 },
+        { 1806, 5 },
+        { 1807, 3 },
+        { 1808, 6 },
+        { 1809, 6 },
+        { 1810, 7 },
+        { 1811, 8 },
+        { 1812, 8 },
+        { 1813, 9 },
+        { 1814, 9 },
+        { 1815, 10 },
+        { 1816, 10 },
+        { 1817, 11 },
+        { 1818, 11 },
+        { 1819, 12 },
+        { 1820, 12 },
+        { 1821, 13 },
+        { 1822, 13 },
+        { 1823, 14 },
+        { 1824, 14 },
+        { 1825, 15 },
+        { 1826, 15 },
+        { 1827, 16 },
+        { 1828, 16 },
+        { 1829, 17 },
+        { 1830, 17 },
+        { 1831, 18 },
+        { 1832, 18 },
+        { 1833, 19 },
+        { 1834, 19 },
+        { 1835, 20 },
+        { 1836, 20 },
+        { 1837, 21 },
+        { 1838, 21 },
+        { 1839, 22 },
+        { 1840, 22 },
+        { 1841, 22 },
+        { 1842, 23 },
+        { 1843, 24 },
+        { 1844, 24 },
+        { 1845, 25 },
+        { 1846, 25 },
+        { 1847, 26 },
+        { 1848, 26 },
+        { 1849, 27 },
+        { 1850, 27 },
+        { 1851, 28 },
+        { 1852, 28 },
+        { 1853, 21 },
+        { 1854, 10 },
+        { 1855, 11 },
+        { 1856, 11 },
+    };
 
-    private bool isFinalNode
-    {
-        get => nodeIndex >= path.Count - 1;
-    }
+    private List<TreasureData> Treasure = [];
 
     private bool running = false;
 
-    private volatile float distance = 0f;
+    private Pathfinder? pathfinder;
 
-    private volatile IGameObject? treasure = null;
+    private List<PathfinderStep> Steps = [];
 
-    public unsafe void Tick(TreasureModule module)
+    private int stepIndex = 0;
+
+    private float distance = 0f;
+
+    private Stopwatch stopwatch = new();
+
+    private PathfinderStep CurrentStep
     {
-        if (!running)
+        get => Steps[stepIndex];
+    }
+
+    public static ChainQueue StepProcessor
+    {
+        get => ChainManager.Get("TreasureStepProcessor");
+    }
+
+    private Dictionary<PathfinderStepType, Func<TreasureModule, VNavmesh, Lifestream, bool>> Handlers = new();
+
+    public unsafe TreasureHunt()
+    {
+        stopwatch.Reset();
+
+        var layout = LayoutWorld.Instance()->ActiveLayout;
+        if (layout == null)
+        {
+            return;
+        }
+
+        if (!layout->InstancesByType.TryGetValue(InstanceType.Treasure, out var mapPtr, false))
+        {
+            return;
+        }
+
+        foreach (ILayoutInstance* instance in mapPtr.Value->Values)
+        {
+            var transform = instance->GetTransformImpl();
+            var position = transform->Translation;
+            if (position.Y <= -10f)
+            {
+                continue;
+            }
+
+            var treasureRowId = Unsafe.Read<uint>((byte*)instance + 0x30);
+            var sgbId = Svc.Data.GetExcelSheet<Lumina.Excel.Sheets.Treasure>().GetRow(treasureRowId).SGB.RowId;
+            if (sgbId != 1596 && sgbId != 1597)
+            {
+                continue;
+            }
+
+            Treasure.Add((treasureRowId, position, sgbId));
+        }
+
+        Treasure = Treasure.OrderBy(t => t.id).ToList();
+
+
+        Handlers = new Dictionary<PathfinderStepType, Func<TreasureModule, VNavmesh, Lifestream, bool>>
+        {
+            {
+                PathfinderStepType.WalkToDestination, (module, vnav, lifestream) =>
+                {
+                    var destination = Treasure.First(t => t.id == CurrentStep.NodeId).position;
+
+                    if (!vnav.IsRunning())
+                    {
+                        vnav.PathfindAndMoveTo(destination, false);
+                    }
+
+                    if (!Player.Mounted)
+                    {
+                        StepProcessor.SubmitFront(ChainHelper.MountChain());
+                    }
+
+                    distance = Player.DistanceTo(destination);
+                    if (distance <= module.config.ChestDetectionRange)
+                    {
+                        var treasure = Svc.Objects
+                            .Where(o => o.ObjectKind == ObjectKind.Treasure && o.IsValid() && o is { IsDead: false, IsTargetable: true })
+                            .FirstOrDefault(t => Is(t.Position, destination));
+
+                        if (treasure == null)
+                        {
+                            vnav.Stop();
+                            return true;
+                        }
+
+                        if (distance <= INTERACT_THRESHOLD)
+                        {
+                            StepProcessor.SubmitFront(() => Chain.Create().Then(NeoTasks.InteractWithObject(() => treasure)));
+                        }
+                    }
+
+                    return distance <= INTERACT_THRESHOLD;
+                }
+            },
+            {
+                PathfinderStepType.WalkToAethernet, (module, vnav, lifestream) =>
+                {
+                    var destination = CurrentStep.Aethernet.GetData().position;
+
+                    if (!vnav.IsRunning())
+                    {
+                        vnav.PathfindAndMoveTo(destination, false);
+                    }
+
+                    if (!Player.Mounted)
+                    {
+                        StepProcessor.SubmitFront(ChainHelper.MountChain());
+                    }
+
+                    distance = Player.DistanceTo(destination);
+                    return distance <= 4f;
+                }
+            },
+            {
+                PathfinderStepType.ReturnToBaseCamp, (module, vnav, lifestream) =>
+                {
+                    distance = 0;
+                    var state = module.GetModule<StateManagerModule>();
+                    var inCombat = state.GetState() == State.InCombat;
+
+                    // If we are in combat, start running back to the base camp so we can escape combat
+                    if (inCombat && !vnav.IsRunning())
+                    {
+                        vnav.PathfindAndMoveTo(Aethernet.BaseCamp.GetData().position, false);
+                        return false;
+                    }
+
+                    if (!inCombat && vnav.IsRunning())
+                    {
+                        vnav.Stop();
+                    }
+
+                    if (inCombat)
+                    {
+                        return false;
+                    }
+
+                    StepProcessor.SubmitFront(ChainHelper.ReturnChain());
+
+                    return true;
+                }
+            },
+            {
+                PathfinderStepType.TeleportToAethernet, (module, vnav, lifestream) =>
+                {
+                    StepProcessor.SubmitFront(ChainHelper.TeleportChain(CurrentStep.Aethernet));
+                    return true;
+                }
+            },
+        };
+    }
+
+    public void Tick(TreasureModule module)
+    {
+        if (!running || Plugin.Chain.IsRunning)
         {
             return;
         }
@@ -133,9 +277,10 @@ public class TreasureHunt
             return;
         }
 
-        if (path.Count == 0)
+        if (pathfinder == null && Steps.Count <= 0)
         {
-            path = GeneratePath(Player.Position, module);
+            Svc.Log.Info("Creating new pathfinder");
+            pathfinder = new Pathfinder(module, Treasure);
         }
 
         MaintainWatcherChain(module, vnav, lifestream);
@@ -153,76 +298,57 @@ public class TreasureHunt
             return;
         }
 
-        Plugin.Chain.Submit(() =>
+        if (pathfinder != null && pathfinder.State != PathfinderState.PathfindingDone)
         {
-            var pos = $"({currentNode.X:f2}, {currentNode.Y:f2}, {currentNode.Z:f2})";
-            return Chain.Create($"Treasure hunt looper ({nodeIndex + 1}/{path.Count}) ({pos})")
-                .Then(new TaskManagerTask(() =>
+            Plugin.Chain.Submit(() =>
+            {
+                Task<List<PathfinderStep>> steps = null;
+                var valid = Levels.Where(node => node.Value <= module.config.MaxLevel).Select(node => node.Key).ToList();
+
+                // Prep pathfinding
+                return Chain.Create()
+                    .Then(new TaskManagerTask(() => pathfinder?.State == PathfinderState.FileLoaded))
+                    .Then(_ => steps = pathfinder.FindPath(Player.Position, valid))
+                    .Then(new TaskManagerTask(() => steps!.IsCompleted))
+                    .Then(_ => Steps = steps!.Result)
+                    .Then(_ => pathfinder = null);
+            });
+
+            return;
+        }
+
+        if (StepProcessor.IsRunning)
+        {
+            return;
+        }
+
+        StepProcessor.Submit(() =>
+            Chain.Create()
+                .Then(_ =>
                 {
-                    if (!vnav.IsRunning())
+                    var handler = Handlers[CurrentStep.Type];
+                    if (handler(module, vnav, lifestream))
                     {
-                        vnav.PathfindAndMoveTo(currentNode, false);
+                        stepIndex++;
                     }
+                })
+                .Wait(1000 / 60)
+        );
 
-                    var treasures = Svc.Objects
-                        .Where(o => o != null && o?.ObjectKind == ObjectKind.Treasure && o.IsValid() && !o.IsDead && o.IsTargetable)
-                        .ToList();
 
-                    var distance = Vector3.Distance(Player.Position, currentNode);
-                    this.distance = distance;
-                    if (distance <= module.config.ChestDetectionRange)
-                    {
-                        treasure = treasures.FirstOrDefault(o => Is(o.Position, currentNode));
-                        if (treasure != null)
-                        {
-                            Svc.Targets.Target = treasure;
+        if (stepIndex < Steps.Count)
+        {
+            return;
+        }
 
-                            if (distance > INTERACT_THRESHOLD)
-                            {
-                                return false;
-                            }
-
-                            Plugin.Chain.SubmitFront(() => Chain.Create("Interact")
-                                .Then(_ => module.Debug("Starting Interaction"))
-                                .Then(NeoTasks.InteractWithObject(() => treasure, false, new TaskManagerConfiguration
-                                {
-                                    TimeLimitMS = 3000,
-                                    TimeoutSilently = true,
-                                }))
-                                .Then(_ => module.Debug("Interaction Done"))
-                            );
-
-                            vnav.Stop();
-                        }
-
-                        if (isFinalNode)
-                        {
-                            path.Clear();
-                            nodeIndex = 0;
-                            running = !running;
-                            if (running == false)
-                            {
-                                vnav.Stop();
-                                Plugin.Chain.Abort();
-                            }
-
-                            return true;
-                        }
-
-                        nodeIndex++;
-                        vnav.PathfindAndMoveTo(currentNode, false);
-                        return true;
-                    }
-
-                    return false;
-                }, new TaskManagerConfiguration { TimeLimitMS = int.MaxValue }))
-                .Then(() => Chain.Create("Interact")
-                    .BreakIf(() => treasure == null)
-                    .Wait(300)
-                    .Then(NeoTasks.InteractWithObject(() => treasure!, false, new TaskManagerConfiguration { TimeLimitMS = 3000 }))
-                    .Then(_ => treasure = null)
-                );
-        });
+        stopwatch.Stop();
+        running = false;
+        stepIndex = 0;
+        Steps.Clear();
+        vnav.Stop();
+        Plugin.Chain.Abort();
+        StepProcessor.Abort();
+        pathfinder = null;
     }
 
     public void Draw(TreasureModule module)
@@ -242,57 +368,44 @@ public class TreasureHunt
         {
             if (ImGui.Button(running ? "Stop" : "Start"))
             {
-                path.Clear();
-                nodeIndex = 0;
                 running = !running;
-                distance = 0f;
                 if (running == false)
                 {
+                    stopwatch.Stop();
+                    running = false;
+                    stepIndex = 0;
+                    Steps.Clear();
                     vnav.Stop();
                     Plugin.Chain.Abort();
+                    StepProcessor.Abort();
+                    pathfinder = null;
                 }
+                else
+                {
+                    stopwatch.Restart();
+                }
+            }
+
+            if (stopwatch.Elapsed > TimeSpan.Zero)
+            {
+                OcelotUI.LabelledValue("Time", $"{stopwatch.Elapsed:mm\\:ss}");
             }
 
             if (running)
             {
-                OcelotUI.LabelledValue(module.T("panel.hunt.distance"), $"{distance:f2}/{module.config.ChestDetectionRange:f2}");
-                OcelotUI.LabelledValue(module.T("panel.hunt.instance.progress"), $"{nodeIndex}/{path.Count}");
+                OcelotUI.LabelledValue(module.T("panel.hunt.instance.progress"), $"{stepIndex}/{Steps.Count}");
+                OcelotUI.LabelledValue("Step Type", CurrentStep.Type);
+
+                if (CurrentStep.Type == PathfinderStepType.WalkToDestination)
+                {
+                    OcelotUI.LabelledValue(module.T("panel.hunt.distance"), $"{distance:f2}/{module.config.ChestDetectionRange:f2}");
+                }
+
+                if (CurrentStep.Type == PathfinderStepType.WalkToAethernet)
+                {
+                    OcelotUI.LabelledValue($"Distance to {CurrentStep.Aethernet.ToString()}", $"{distance:f2}");
+                }
             }
         });
-    }
-
-    private List<Vector3> GeneratePath(Vector3 from, TreasureModule module)
-    {
-        List<Vector3> path = new();
-
-        var valid = loop.Where(node => node.level <= module.config.MaxLevel).ToList();
-        if (valid.Count <= 0)
-        {
-            return path;
-        }
-
-        var startIndex = 0;
-        var closestDistance = float.MaxValue;
-
-        for (var i = 0; i < valid.Count; i++)
-        {
-            var dist = Vector3.Distance(from, valid[i].position);
-            if (dist < closestDistance)
-            {
-                closestDistance = dist;
-                startIndex = i;
-            }
-        }
-
-        for (var i = 0; i < valid.Count; i++)
-        {
-            var index = (startIndex + i) % valid.Count;
-            path.Add(valid[index].position);
-        }
-
-        var start = path.First();
-        module.Debug($"Generated path with {path.Count} nodes, starting at ({startIndex}) {start.X:f2}, {start.Y:f2}, {start.Z:f2}");
-
-        return path;
     }
 }

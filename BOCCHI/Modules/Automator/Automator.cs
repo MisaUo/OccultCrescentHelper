@@ -51,7 +51,7 @@ public class Automator
             {
                 return;
             }
-            
+
             if (states.GetState() == State.InCriticalEncounter)
             {
                 var critical = module.GetModule<CriticalEncountersModule>();

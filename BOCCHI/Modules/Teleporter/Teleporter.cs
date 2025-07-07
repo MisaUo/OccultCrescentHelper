@@ -70,7 +70,6 @@ public class Teleporter
             ImGui.SetTooltip($"Pathfind to {name}");
         }
 
-
         if (!module.TryGetIPCProvider<Lifestream>(out var lifestream) || lifestream == null || !lifestream.IsReady())
         {
             return;

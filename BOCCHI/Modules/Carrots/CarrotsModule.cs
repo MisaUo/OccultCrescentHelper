@@ -19,6 +19,8 @@ public class CarrotsModule : Module<Plugin, Config>
 
     private readonly CarrotsTracker tracker = new();
 
+    private readonly CarrotHunt hunter = new();
+
     public List<Carrot> carrots
     {
         get => tracker.carrots;
@@ -36,6 +38,7 @@ public class CarrotsModule : Module<Plugin, Config>
     public override void Tick(IFramework framework)
     {
         tracker.Tick(framework, plugin);
+        // hunter.Tick(this);
     }
 
     public override void Draw()
@@ -46,6 +49,12 @@ public class CarrotsModule : Module<Plugin, Config>
     public override bool DrawMainUi()
     {
         panel.Draw(this);
+
+        // if (config.ShouldEnableCarrotHunt)
+        // {
+            // hunter.Draw(this);
+        // }
+
         return true;
     }
 }
