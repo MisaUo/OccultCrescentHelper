@@ -47,7 +47,7 @@ public class CarrotHuntPanel : Panel
     public override void Draw(DebugModule module)
     {
         OcelotUI.LabelledValue("Carrots", CarrotData.Data.Count); // 25
-        
+
         OcelotUI.Indent(() =>
         {
             if (!HasRun)
@@ -56,12 +56,12 @@ public class CarrotHuntPanel : Panel
                 {
                     ShouldRun = true;
                 }
-        
+
                 return;
             }
-        
+
             var Completion = (float)Progress / (float)MaxProgress * 100;
-        
+
             OcelotUI.LabelledValue("Progress: ", $"{Completion:f2}%");
             OcelotUI.Indent(() => OcelotUI.LabelledValue("Calculations: ", $"{Progress}/{MaxProgress}"));
             OcelotUI.LabelledValue("Elapsed: ", stopwatch.Elapsed.ToString("mm\\:ss"));

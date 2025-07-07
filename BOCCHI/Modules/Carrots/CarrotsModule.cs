@@ -52,7 +52,7 @@ public class CarrotsModule : Module<Plugin, Config>
 
         // if (config.ShouldEnableCarrotHunt)
         // {
-            // hunter.Draw(this);
+        // hunter.Draw(this);
         // }
 
         return true;

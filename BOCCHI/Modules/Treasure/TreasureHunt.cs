@@ -366,7 +366,7 @@ public class TreasureHunt
         OcelotUI.Title($"{module.T("panel.hunt.title")}:");
         OcelotUI.Indent(() =>
         {
-            if (ImGui.Button(running ? I18N.T("generic.label.stop"): I18N.T("generic.label.start")))
+            if (ImGui.Button(running ? I18N.T("generic.label.stop") : I18N.T("generic.label.start")))
             {
                 running = !running;
                 if (running == false)

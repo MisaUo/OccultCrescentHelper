@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BOCCHI.Modules.Buff;
 using BOCCHI.Modules.Debug;
+using ECommons;
 using ECommons.DalamudServices;
 using Ocelot;
 using Ocelot.Commands;
@@ -61,17 +62,13 @@ Opens Occult Crescent Helper main ui
 
         if (arguments == "buff")
         {
-            var buffs = plugin.modules.GetModule<BuffModule>();
-            if (buffs != null)
-            {
-                buffs.buffs.QueueBuffs();
-                return;
-            }
+            new BuffCommand(plugin).Command("/bocchibuff", "");
+            return;
         }
 
-        if (arguments == "tp")
+        if (arguments.StartsWith("tp"))
         {
-            Svc.Chat.Print("Press the button nerd.");
+            new TeleportCommand(plugin).Command("/bocchitp", arguments.ReplaceFirst("tp", "").Trim());
             return;
         }
 
