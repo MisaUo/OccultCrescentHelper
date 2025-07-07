@@ -366,7 +366,7 @@ public class TreasureHunt
         OcelotUI.Title($"{module.T("panel.hunt.title")}:");
         OcelotUI.Indent(() =>
         {
-            if (ImGui.Button(running ? "Stop" : "Start"))
+            if (ImGui.Button(running ? I18N.T("generic.label.stop"): I18N.T("generic.label.start")))
             {
                 running = !running;
                 if (running == false)
@@ -388,22 +388,21 @@ public class TreasureHunt
 
             if (stopwatch.Elapsed > TimeSpan.Zero)
             {
-                OcelotUI.LabelledValue("Time", $"{stopwatch.Elapsed:mm\\:ss}");
+                OcelotUI.LabelledValue(module.T("panel.hunt.elapsed"), $"{stopwatch.Elapsed:mm\\:ss}");
             }
 
             if (running)
             {
                 OcelotUI.LabelledValue(module.T("panel.hunt.instance.progress"), $"{stepIndex}/{Steps.Count}");
-                OcelotUI.LabelledValue("Step Type", CurrentStep.Type);
 
                 if (CurrentStep.Type == PathfinderStepType.WalkToDestination)
                 {
-                    OcelotUI.LabelledValue(module.T("panel.hunt.distance"), $"{distance:f2}/{module.config.ChestDetectionRange:f2}");
+                    OcelotUI.LabelledValue(module.T("panel.hunt.distance_chest"), $"{distance:f2}/{module.config.ChestDetectionRange:f2}");
                 }
 
                 if (CurrentStep.Type == PathfinderStepType.WalkToAethernet)
                 {
-                    OcelotUI.LabelledValue($"Distance to {CurrentStep.Aethernet.ToString()}", $"{distance:f2}");
+                    OcelotUI.LabelledValue(module.T("panel.hunt.distance_shard"), $"{distance:f2}");
                 }
             }
         });

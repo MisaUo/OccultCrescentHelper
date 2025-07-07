@@ -59,8 +59,10 @@
         "none": "No nearby Treasure.",
         "hunt": {
           "title": "Treasure Hunter",
-          "distance": "Distance to next node",
+          "distance_chest": "Distance to next chest",
+          "distance_shard": "Distance to Aethernet Shard",
           "count": "# of instances",
+          "elapsed": "Elapsed",
           "instance": {
             "current": "Current Chain",
             "progress": "Progress",
