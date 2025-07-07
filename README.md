@@ -4,7 +4,6 @@
 
 [Repository for all my plugins](https://raw.githubusercontent.com/OhKannaDuh/plugins/refs/heads/master/manifest.json)
 
-
 ## Features
 
 - Instance ID

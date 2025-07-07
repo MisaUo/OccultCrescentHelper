@@ -96,7 +96,7 @@ public class TeleportCommand(Plugin plugin) : OcelotCommand
                 continue;
             }
 
-            return data.aethernet != null ? (Aethernet)data.aethernet : ZoneHelper.GetClosestAethernetShard(data.start ?? fate.Position);
+            return data.aethernet ?? ZoneHelper.GetClosestAethernetShard(data.start ?? fate.Position);
         }
 
         return null;
@@ -117,7 +117,7 @@ public class TeleportCommand(Plugin plugin) : OcelotCommand
                 continue;
             }
 
-            return data.aethernet != null ? (Aethernet)data.aethernet : ZoneHelper.GetClosestAethernetShard(data.start ?? fate.Position);
+            return data.aethernet ?? ZoneHelper.GetClosestAethernetShard(data.start ?? fate.Position);
         }
 
         return null;
@@ -138,7 +138,7 @@ public class TeleportCommand(Plugin plugin) : OcelotCommand
                 continue;
             }
 
-            return data.aethernet != null ? (Aethernet)data.aethernet : ZoneHelper.GetClosestAethernetShard(data.start ?? encounter.MapMarker.Position);
+            return data.aethernet ?? ZoneHelper.GetClosestAethernetShard(data.start ?? encounter.MapMarker.Position);
         }
 
         return null;

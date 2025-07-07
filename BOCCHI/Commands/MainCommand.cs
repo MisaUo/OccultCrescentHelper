@@ -41,7 +41,7 @@ Opens Occult Crescent Helper main ui
 
     public override void Command(string command, string arguments)
     {
-        if (arguments == "config" || arguments == "cfg")
+        if (arguments is "config" or "cfg")
         {
             plugin.windows?.ToggleConfigUI();
             return;
@@ -50,13 +50,8 @@ Opens Occult Crescent Helper main ui
 #if DEBUG_BUILD
         if (arguments == "debug")
         {
-            var debug = plugin.modules.GetModule<DebugModule>();
-            var window = plugin.windows.GetWindow<DebugWindow>();
-            if (debug != null && window != null)
-            {
-                window.Toggle();
-                return;
-            }
+            plugin.windows.GetWindow<DebugWindow>().Toggle();
+            return;
         }
 #endif
 
@@ -84,19 +79,15 @@ Opens Occult Crescent Helper main ui
                     Svc.Chat.Print($"Language set to: {code}");
                     return;
                 }
-                else
-                {
-                    Svc.Log.Error($"Unknown language code: {code}");
-                    return;
-                }
-            }
-            else
-            {
-                Svc.Chat.Print("Usage: /bocchi language <code>");
+
+                Svc.Log.Error($"Unknown language code: {code}");
                 return;
             }
+
+            Svc.Chat.Print("Usage: /bocchi language <code>");
+            return;
         }
 
-        plugin.windows?.ToggleMainUI();
+        plugin.windows.ToggleMainUI();
     }
 }

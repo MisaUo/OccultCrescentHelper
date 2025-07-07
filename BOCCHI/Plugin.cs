@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using BOCCHI.Chains;
 using BOCCHI.Data;
 using Dalamud.Game;
@@ -34,6 +35,16 @@ public sealed class Plugin : OcelotPlugin
         : base(plugin, Module.DalamudReflector)
     {
         config = plugin.GetPluginConfig() as Config ?? new Config();
+
+        var dataDirectory = Path.Combine(plugin.AssemblyLocation.Directory?.FullName!, "Data");
+        var files = Directory.GetFiles(dataDirectory, "*.json");
+        foreach (var source in files)
+        {
+            var file = Path.GetFileName(source);
+            var destination = Path.Combine(plugin.ConfigDirectory.FullName!, file);
+
+            File.Copy(source, destination, true);
+        }
 
         SetupLanguage(plugin);
 

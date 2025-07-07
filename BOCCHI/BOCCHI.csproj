@@ -21,12 +21,16 @@
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
             <Link>Translations\%(RecursiveDir)%(Filename)%(Extension)</Link>
         </None>
+        <None Include="..\Data\**">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <Link>Data\%(RecursiveDir)%(Filename)%(Extension)</Link>
+        </None>
     </ItemGroup>
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
         <ProjectReference Include="../Ocelot/Ocelot/Ocelot.csproj"/>
     </ItemGroup>
     <ItemGroup Condition="'$(Configuration)' == 'Release'">
-        <PackageReference Include="FFXIVOcelot" Version="0.30.0"/>
+        <PackageReference Include="FFXIVOcelot" Version="0.31.0"/>
     </ItemGroup>
     <ItemGroup>
         <Reference Include="Dalamud.Common">
