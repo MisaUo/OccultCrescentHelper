@@ -22,6 +22,10 @@
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
             <Link>Translations\%(RecursiveDir)%(Filename)%(Extension)</Link>
         </None>
+        <None Include="..\Data\**">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <Link>Translations\%(RecursiveDir)%(Filename)%(Extension)</Link>
+        </None>
     </ItemGroup>
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
         <ProjectReference Include="../Ocelot/Ocelot/Ocelot.csproj"/>
