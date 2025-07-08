@@ -4,8 +4,8 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Carrots;
 
-[OcelotModule(4, 2)]
-public class CarrotsModule : Module<Plugin, Config>
+[OcelotModule(1004, 2)]
+public class CarrotsModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
 {
     public override CarrotsConfig config
     {
@@ -19,7 +19,7 @@ public class CarrotsModule : Module<Plugin, Config>
 
     private readonly CarrotsTracker tracker = new();
 
-    private readonly CarrotHunt hunter = new();
+    private CarrotHunt hunter = null!;
 
     public List<Carrot> carrots
     {
@@ -30,15 +30,15 @@ public class CarrotsModule : Module<Plugin, Config>
 
     private readonly Radar radar = new();
 
-    public CarrotsModule(Plugin plugin, Config config)
-        : base(plugin, config)
+    public override void PostInitialize()
     {
+        hunter = new CarrotHunt(this);
     }
 
     public override void Tick(IFramework framework)
     {
         tracker.Tick(framework, plugin);
-        // hunter.Tick(this);
+        hunter.Tick(this);
     }
 
     public override void Draw()
@@ -50,10 +50,10 @@ public class CarrotsModule : Module<Plugin, Config>
     {
         panel.Draw(this);
 
-        // if (config.ShouldEnableCarrotHunt)
-        // {
-        // hunter.Draw(this);
-        // }
+        if (config.ShouldEnableCarrotHunt)
+        {
+            hunter.Draw(this);
+        }
 
         return true;
     }

@@ -22,7 +22,7 @@ public class DataModule(Plugin plugin, Config config) : Module<Plugin, Config>(p
         get => config.Enabled;
     }
 
-    private Api Api = new();
+    private readonly Api Api = new();
 
     public override void Tick(IFramework _)
     {

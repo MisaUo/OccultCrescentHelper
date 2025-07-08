@@ -10,11 +10,14 @@ using System.Threading.Tasks;
 using BOCCHI.Data;
 using BOCCHI.Enums;
 using BOCCHI.Modules.Carrots;
+using BOCCHI.Modules.Data;
 using BOCCHI.Modules.Treasure;
+using BOCCHI.Pathfinding;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.LayoutEngine;
 using ImGuiNET;
 using Ocelot;
+using Ocelot.Chain;
 using Ocelot.IPC;
 
 namespace BOCCHI.Modules.Debug.Panels;
@@ -33,10 +36,19 @@ public class CarrotHuntPanel : Panel
 
     private readonly uint MaxProgress = 0;
 
-    public unsafe CarrotHuntPanel()
+    private ChainQueue ChainQueue
     {
-        MaxProgress = (uint)(CarrotData.Data.Count * (CarrotData.Data.Count - 1));
-        MaxProgress += (uint)(Enum.GetNames(typeof(Aethernet)).Length * CarrotData.Data.Count);
+        get => ChainManager.Get("CarrotHuntPanelChain");
+    }
+
+    public CarrotHuntPanel()
+    {
+        var carrotCount = CarrotData.Data.Count;
+        var aethernetCount = Enum.GetNames(typeof(Aethernet)).Length;
+
+        MaxProgress = (uint)(carrotCount * (carrotCount - 1));
+        MaxProgress += (uint)(aethernetCount * carrotCount);
+        MaxProgress += (uint)(carrotCount * aethernetCount);
     }
 
     public override string GetName()
@@ -81,55 +93,97 @@ public class CarrotHuntPanel : Panel
         task = PrecomputeCarrotPathDistances(module);
     }
 
-    private async Task PrecomputeCarrotPathDistances(DebugModule module)
+    private Task PrecomputeCarrotPathDistances(DebugModule module)
     {
         stopwatch.Restart();
-        var outputFile = Path.Join(Svc.PluginInterface.ConfigDirectory.FullName, "southhorn_precomputed_carrot_paths.json");
+        var outputFile = Path.Join(ZoneData.GetCurrentZoneDataDirectory(), "precomputed_carrot_hunt_data.json");
 
         var vnav = module.GetIPCProvider<VNavmesh>();
 
-        CarrotDataSchema data = new();
+        NodeDataSchema data = new();
         foreach (var datum in AethernetData.All())
         {
-            data.AethernetToCarrotDistances[datum.aethernet] = [];
+            data.AethernetToNodeDistances[datum.aethernet] = [];
         }
 
-        var index = 0;
         foreach (var carrot in CarrotData.Data)
         {
-            data.CarrotToCarrotDistances[carrot.Id] = [];
-            data.CarrotsToAethernetDistances[carrot.Id] = [];
+            data.NodeToNodeDistances[carrot.Id] = [];
+            data.NodeToAethernetDistances[carrot.Id] = [];
 
             foreach (var other in CarrotData.Data.Where(c => c.Id != carrot.Id))
             {
-                var path = await vnav.Pathfind(carrot.Position, other.Position, false);
-                var distance = CalculatePathLength(path);
+                ChainQueue.Submit(() =>
+                    Chain.Create()
+                        .Then(async void (_) =>
+                        {
+                            var path = await vnav.Pathfind(carrot.Position, other.Position, false);
+                            var distance = CalculatePathLength(path);
 
-                data.CarrotToCarrotDistances[carrot.Id].Add(new ToCarrot(other.Id, distance));
+                            var nodes = path.Select(Position.Create).ToList();
 
-                Progress++;
+                            data.NodeToNodeDistances[carrot.Id].Add(new ToNode(other.Id, distance, nodes));
+
+                            Progress++;
+                        })
+                        .Then(_ => !vnav.IsRunning())
+                );
             }
 
             foreach (var datum in AethernetData.All())
             {
-                var pathToTreasure = await vnav.Pathfind(datum.position, carrot.Position, false);
-                data.AethernetToCarrotDistances[datum.aethernet].Add(new ToCarrot(carrot.Id, CalculatePathLength(pathToTreasure)));
+                ChainQueue.Submit(() =>
+                    Chain.Create()
+                        .Then(async void (_) =>
+                        {
+                            var path = await vnav.Pathfind(datum.destination, carrot.Position, false);
+                            var distance = CalculatePathLength(path);
 
-                var pathToAethernet = await vnav.Pathfind(datum.position, carrot.Position, false);
-                data.CarrotsToAethernetDistances[carrot.Id].Add(new ToAethernet(datum.aethernet, CalculatePathLength(pathToAethernet)));
+                            var nodes = path.Select(Position.Create).ToList();
+
+                            data.AethernetToNodeDistances[datum.aethernet].Add(new ToNode(carrot.Id, distance, nodes));
+
+                            Progress++;
+                        })
+                        .Then(_ => !vnav.IsRunning())
+                );
+
+                ChainQueue.Submit(() =>
+                    Chain.Create()
+                        .Then(async void (_) =>
+                        {
+                            var path = await vnav.Pathfind(datum.destination, carrot.Position, false);
+                            var distance = CalculatePathLength(path);
+
+                            var nodes = path.Select(Position.Create).ToList();
+
+                            data.NodeToAethernetDistances[carrot.Id].Add(new ToAethernet(datum.aethernet, distance, nodes));
+
+                            Progress++;
+                        })
+                        .Then(_ => !vnav.IsRunning())
+                );
             }
         }
 
-        stopwatch.Stop();
+        ChainQueue.Submit(() =>
+            Chain.Create()
+                .Then(_ =>
+                {
+                    stopwatch.Stop();
 
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = false,
-            IncludeFields = false,
-        };
+                    var options = new JsonSerializerOptions
+                    {
+                        WriteIndented = false,
+                        IncludeFields = false,
+                    };
 
-        var json = JsonSerializer.Serialize(data, options);
-        await File.WriteAllTextAsync(outputFile, json);
+                    Svc.Log.Info("Saving file to " + outputFile);
+                    var json = JsonSerializer.Serialize(data, options);
+                    File.WriteAllTextAsync(outputFile, json);
+                })
+        );
+        return Task.CompletedTask;
     }
 
     private float CalculatePathLength(List<Vector3> path)

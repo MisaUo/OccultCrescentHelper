@@ -5,7 +5,7 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Treasure;
 
-[OcelotModule(3, 1)]
+[OcelotModule(1003, 1)]
 public class TreasureModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
 {
     public override TreasureConfig config
@@ -26,7 +26,7 @@ public class TreasureModule(Plugin plugin, Config config) : Module<Plugin, Confi
 
     private readonly TreasureTracker tracker = new();
 
-    private readonly TreasureHunt hunter = new();
+    private TreasureHunt hunter = null!;
 
     public List<Treasure> treasures
     {
@@ -36,6 +36,11 @@ public class TreasureModule(Plugin plugin, Config config) : Module<Plugin, Confi
     private readonly Panel panel = new();
 
     private readonly Radar radar = new();
+
+    public override void PostInitialize()
+    {
+        hunter = new TreasureHunt(this);
+    }
 
     public override void Tick(IFramework framework)
     {

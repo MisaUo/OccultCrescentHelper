@@ -41,10 +41,10 @@ public class ConfigWindow(Plugin primaryPlugin, Config config) : OcelotConfigWin
 
                 var name = concreteModule.config.GetType().Name;
 
-                var title = concreteModule.config.GetType().GetCustomAttribute<TitleAttribute>();
+                var title = concreteModule.config.GetTitle();
                 if (title != null)
                 {
-                    name = I18N.T(title.translation_key);
+                    name = title;
                 }
 
                 var selected = module == selectedConfigModule;

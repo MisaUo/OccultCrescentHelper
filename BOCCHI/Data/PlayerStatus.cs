@@ -17,6 +17,8 @@ public enum PlayerStatus : uint
 
     RomeosBallad = 4244,
 
+    BattleBell = 4251,
+
     ResurrectionRestricted = 4262,
 
     ResurrectionDenied = 4263,

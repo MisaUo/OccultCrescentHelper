@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Numerics;
 using ECommons.DalamudServices;
 
@@ -49,5 +51,23 @@ public static class ZoneData
     public static bool IsInForkedTower()
     {
         return IsInForkedTowerBlood();
+    }
+
+    public static string GetCurrentZoneName()
+    {
+        if (IsInSouthHorn())
+        {
+            return "South Horn";
+        }
+
+        throw new Exception("Unknown Zone");
+    }
+
+    public static string GetCurrentZoneDataDirectory()
+    {
+        var directory = Path.Join(Svc.PluginInterface.AssemblyLocation.DirectoryName, "Data", GetCurrentZoneName().Replace(" ", ""));
+        Directory.CreateDirectory(directory);
+
+        return directory;
     }
 }

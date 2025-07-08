@@ -36,16 +36,6 @@ public sealed class Plugin : OcelotPlugin
     {
         config = plugin.GetPluginConfig() as Config ?? new Config();
 
-        var dataDirectory = Path.Combine(plugin.AssemblyLocation.Directory?.FullName!, "Data");
-        var files = Directory.GetFiles(dataDirectory, "*.json");
-        foreach (var source in files)
-        {
-            var file = Path.GetFileName(source);
-            var destination = Path.Combine(plugin.ConfigDirectory.FullName!, file);
-
-            File.Copy(source, destination, true);
-        }
-
         SetupLanguage(plugin);
 
         OcelotInitialize();
@@ -57,10 +47,12 @@ public sealed class Plugin : OcelotPlugin
     private void SetupLanguage(IDalamudPluginInterface plugin)
     {
         I18N.SetDirectory(plugin.AssemblyLocation.Directory?.FullName!);
-        I18N.LoadFromFile("en", "Translations/en.json");
-        I18N.LoadFromFile("fr", "Translations/fr.json");
+        I18N.LoadAllFromDirectory("en", "Translations/en");
+        I18N.LoadAllFromDirectory("jp", "Translations/jp");
+        I18N.LoadAllFromDirectory("fr", "Translations/fr");
+
+        // @todo: Breakup German and uwu translation
         I18N.LoadFromFile("de", "Translations/de.json");
-        I18N.LoadFromFile("jp", "Translations/jp.json");
         I18N.LoadFromFile("uwu", "Translations/uwu.json");
 
         var lang = Svc.ClientState.ClientLanguage switch

@@ -3,7 +3,7 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Treasure;
 
-[Title("modules.treasure.title")]
+[Title]
 public class TreasureConfig : ModuleConfig
 {
     [Checkbox]
@@ -12,8 +12,7 @@ public class TreasureConfig : ModuleConfig
 
     [Checkbox]
     [DependsOn(nameof(Enabled))]
-    [Label("modules.treasure.draw.bronze.label")]
-    [Tooltip("modules.treasure.draw.bronze.tooltip")]
+
     public bool DrawLineToBronzeChests { get; set; } = true;
 
     public bool ShouldDrawLineToBronzeChests
@@ -23,8 +22,7 @@ public class TreasureConfig : ModuleConfig
 
     [Checkbox]
     [DependsOn(nameof(Enabled))]
-    [Label("modules.treasure.draw.silver.label")]
-    [Tooltip("modules.treasure.draw.silver.tooltip")]
+
     public bool DrawLineToSilverChests { get; set; } = true;
 
     public bool ShouldDrawLineToSilverChests
@@ -37,24 +35,11 @@ public class TreasureConfig : ModuleConfig
     [Illegal]
     [RequiredPlugin("vnavmesh", "Lifestream")]
     [DependsOn(nameof(Enabled))]
-    [Label("modules.treasure.hunt.show_button.label")]
+    [Label("modules.treasure.config.show_hunt_button.label")]
     public bool EnableTreasureHunt { get; set; } = false;
 
     public bool ShouldEnableTreasureHunt
     {
         get => IsPropertyEnabled(nameof(EnableTreasureHunt));
     }
-
-    [FloatRange(10f, 100f)]
-    [DependsOn(nameof(Enabled), nameof(EnableTreasureHunt))]
-    [Label("modules.treasure.hunt.detection.label")]
-    [Tooltip("modules.treasure.hunt.detection.tooltip")]
-    public float ChestDetectionRange { get; set; } = 75f;
-
-    [IntRange(1, 28)]
-    [Experimental]
-    [DependsOn(nameof(Enabled), nameof(EnableTreasureHunt))]
-    [Label("modules.treasure.hunt.max_level.label")]
-    [Tooltip("modules.treasure.hunt.max_level.tooltip")]
-    public int MaxLevel { get; set; } = 28;
 }

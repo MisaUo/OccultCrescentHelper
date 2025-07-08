@@ -4,7 +4,7 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Exp;
 
-[OcelotModule(6, 4)]
+[OcelotModule(int.MaxValue - 1000, 4)]
 public class ExpModule : Module<Plugin, Config>
 {
     public override ExpConfig config

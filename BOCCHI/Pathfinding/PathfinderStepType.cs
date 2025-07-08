@@ -2,7 +2,7 @@
 
 public enum PathfinderStepType
 {
-    WalkToDestination,
+    WalkToNode,
 
     ReturnToBaseCamp,
 

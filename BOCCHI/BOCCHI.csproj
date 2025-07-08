@@ -7,6 +7,7 @@
         <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
         <IsPackable>false</IsPackable>
         <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
+        <NoWarn>$(NoWarn);4014</NoWarn>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
         <DefineConstants>DEBUG;TRACE;DEBUG_BUILD</DefineConstants>
@@ -21,21 +22,20 @@
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
             <Link>Translations\%(RecursiveDir)%(Filename)%(Extension)</Link>
         </None>
-        <None Include="..\Data\**">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-            <Link>Data\%(RecursiveDir)%(Filename)%(Extension)</Link>
-        </None>
     </ItemGroup>
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
         <ProjectReference Include="../Ocelot/Ocelot/Ocelot.csproj"/>
     </ItemGroup>
     <ItemGroup Condition="'$(Configuration)' == 'Release'">
-        <PackageReference Include="FFXIVOcelot" Version="0.31.0"/>
+        <PackageReference Include="FFXIVOcelot" Version="0.32.1"/>
     </ItemGroup>
     <ItemGroup>
         <Reference Include="Dalamud.Common">
             <HintPath>$(DalamudLibPath)Dalamud.Common.dll</HintPath>
             <Private>False</Private>
         </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="TextCopy" Version="6.2.1"/>
     </ItemGroup>
 </Project>

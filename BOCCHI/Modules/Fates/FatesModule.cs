@@ -6,7 +6,7 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Fates;
 
-[OcelotModule(7, 5)]
+[OcelotModule(1001, 5)]
 public class FatesModule : Module<Plugin, Config>
 {
     public override FatesConfig config

@@ -3,7 +3,7 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Mount;
 
-[OcelotModule(int.MinValue)]
+[OcelotModule(1)]
 public class MountModule : Module<Plugin, Config>
 {
     public static ChainQueue MountMaintainer

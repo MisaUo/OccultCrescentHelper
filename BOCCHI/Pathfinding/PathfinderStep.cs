@@ -10,13 +10,11 @@ public class PathfinderStep
 
     public Aethernet Aethernet = Aethernet.BaseCamp;
 
-    public int Flag = 0;
-
     public static PathfinderStep WalkToDestination(uint id)
     {
         return new PathfinderStep
         {
-            Type = PathfinderStepType.WalkToDestination,
+            Type = PathfinderStepType.WalkToNode,
             NodeId = id,
         };
     }

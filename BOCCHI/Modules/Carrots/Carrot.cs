@@ -7,7 +7,7 @@ public class Carrot
 {
     private readonly IGameObject gameObject;
 
-    public static Vector4 color = new(0.93f, 0.57f, 0.13f, 1f);
+    public static Vector4 color = new(0.2f, 0.8f, 0.2f, 1f);
 
     public Carrot(IGameObject obj)
     {

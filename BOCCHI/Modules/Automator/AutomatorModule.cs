@@ -8,7 +8,7 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Automator;
 
-[OcelotModule(int.MaxValue / 2)]
+[OcelotModule(int.MaxValue - 1)]
 public class AutomatorModule : Module<Plugin, Config>
 {
     public override AutomatorConfig config

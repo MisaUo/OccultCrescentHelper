@@ -7,12 +7,16 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading.Tasks;
+using BOCCHI.Data;
 using BOCCHI.Enums;
+using BOCCHI.Modules.Data;
 using BOCCHI.Modules.Treasure;
+using BOCCHI.Pathfinding;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.LayoutEngine;
 using ImGuiNET;
 using Ocelot;
+using Ocelot.Chain;
 using Ocelot.IPC;
 
 namespace BOCCHI.Modules.Debug.Panels;
@@ -29,11 +33,14 @@ public class TreasureHuntPanel : Panel
 
     private Stopwatch stopwatch = new();
 
-    private Task? task = null;
-
     private uint Progress = 0;
 
     private readonly uint MaxProgress = 0;
+
+    private ChainQueue ChainQueue
+    {
+        get => ChainManager.Get("TreasureHuntPanelChain");
+    }
 
     public unsafe TreasureHuntPanel()
     {
@@ -69,8 +76,9 @@ public class TreasureHuntPanel : Panel
 
         Treasure = Treasure.OrderBy(t => t.id).ToList();
 
-        MaxProgress = (uint)(Treasure.Count * (Treasure.Count - 1));
-        MaxProgress += (uint)(Enum.GetNames(typeof(Aethernet)).Length * Treasure.Count) * 2;
+        var t = Treasure.Count;
+        var a = Enum.GetNames(typeof(Aethernet)).Length;
+        MaxProgress = (uint)(t * (t - 1 + 2 * a));
     }
 
     public override string GetName()
@@ -105,7 +113,7 @@ public class TreasureHuntPanel : Panel
 
     public override void Tick(DebugModule module)
     {
-        if (!ShouldRun || HasRun || task != null)
+        if (!ShouldRun || HasRun)
         {
             return;
         }
@@ -113,57 +121,102 @@ public class TreasureHuntPanel : Panel
         ShouldRun = true;
         HasRun = true;
 
-        task = PrecomputeTreasurePathDistances(module);
+        PrecomputeTreasurePathDistances(module);
     }
 
-    private async Task PrecomputeTreasurePathDistances(DebugModule module)
+    private void PrecomputeTreasurePathDistances(DebugModule module)
     {
         stopwatch.Restart();
-        var outputFile = Path.Join(Svc.PluginInterface.ConfigDirectory.FullName, "southhorn_precomputed_chest_paths.json");
+
+        var outputFile = Path.Join(ZoneData.GetCurrentZoneDataDirectory(), "precomputed_treasure_hunt_data.json");
 
         var vnav = module.GetIPCProvider<VNavmesh>();
 
-        TreasureDataSchema data = new();
+        NodeDataSchema data = new();
         foreach (var datum in AethernetData.All())
         {
-            data.AethernetToTreasureDistances[datum.aethernet] = [];
+            data.AethernetToNodeDistances[datum.aethernet] = [];
         }
 
         foreach (var treasure in Treasure)
         {
-            data.TreasureToTreasureDistances[treasure.id] = [];
-            data.TreasureToAethernetDistances[treasure.id] = [];
+            data.NodeToNodeDistances[treasure.id] = [];
+            data.NodeToAethernetDistances[treasure.id] = [];
 
             foreach (var other in Treasure.Where(t => t != treasure))
             {
-                var path = await vnav.Pathfind(treasure.position, other.position, false);
-                var distance = CalculatePathLength(path);
+                ChainQueue.Submit(() =>
+                    Chain.Create()
+                        .Then(async void (_) =>
+                        {
+                            var path = await vnav.Pathfind(treasure.position, other.position, false);
+                            var distance = CalculatePathLength(path);
 
-                data.TreasureToTreasureDistances[treasure.id].Add(new ToTreasure(other.id, distance));
+                            var nodes = path.Select(p => Position.Create(p)).ToList();
 
-                Progress++;
+                            data.NodeToNodeDistances[treasure.id].Add(new ToNode(other.id, distance, nodes));
+
+                            Progress++;
+                        })
+                        .Then(_ => !vnav.IsRunning())
+                );
             }
 
             foreach (var datum in AethernetData.All())
             {
-                var pathToTreasure = await vnav.Pathfind(datum.position, treasure.position, false);
-                data.AethernetToTreasureDistances[datum.aethernet].Add(new ToTreasure(treasure.id, CalculatePathLength(pathToTreasure)));
+                ChainQueue.Submit(() =>
+                    Chain.Create()
+                        .Then(async void (_) =>
+                        {
+                            var path = await vnav.Pathfind(datum.destination, treasure.position, false);
+                            var distance = CalculatePathLength(path);
 
-                var pathToAethernet = await vnav.Pathfind(datum.position, treasure.position, false);
-                data.TreasureToAethernetDistances[treasure.id].Add(new ToAethernet(datum.aethernet, CalculatePathLength(pathToAethernet)));
+                            var nodes = path.Select(p => Position.Create(p)).ToList();
+
+                            data.AethernetToNodeDistances[datum.aethernet].Add(new ToNode(treasure.id, distance, nodes));
+
+                            Progress++;
+                        })
+                        .Then(_ => !vnav.IsRunning())
+                );
+
+                ChainQueue.Submit(() =>
+                    Chain.Create()
+                        .Then(async void (_) =>
+                        {
+                            var path = await vnav.Pathfind(datum.destination, treasure.position, false);
+                            var distance = CalculatePathLength(path);
+
+                            var nodes = path.Select(p => Position.Create(p)).ToList();
+
+
+                            data.NodeToAethernetDistances[treasure.id].Add(new ToAethernet(datum.aethernet, distance, nodes));
+
+                            Progress++;
+                        })
+                        .Then(_ => !vnav.IsRunning())
+                );
             }
         }
 
-        stopwatch.Stop();
+        ChainQueue.Submit(() =>
+            Chain.Create()
+                .Wait(5000)
+                .Then(_ =>
+                {
+                    stopwatch.Stop();
 
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = false,
-            IncludeFields = false,
-        };
+                    var options = new JsonSerializerOptions
+                    {
+                        WriteIndented = false,
+                        IncludeFields = false,
+                    };
 
-        var json = JsonSerializer.Serialize(data, options);
-        await File.WriteAllTextAsync(outputFile, json);
+                    Svc.Log.Info("Saving file to " + outputFile);
+                    var json = JsonSerializer.Serialize(data, options);
+                    File.WriteAllTextAsync(outputFile, json);
+                })
+        );
     }
 
     private float CalculatePathLength(List<Vector3> path)

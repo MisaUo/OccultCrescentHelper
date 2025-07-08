@@ -1,0 +1,11 @@
+{
+  "hunter": {
+    "progress": "進行度",
+    "distance_shard": null,
+    "elapsed": null,
+    "export": {
+      "label": null,
+      "tooltip": null
+    }
+  }
+}

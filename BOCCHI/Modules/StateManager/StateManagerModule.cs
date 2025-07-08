@@ -4,7 +4,7 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.StateManager;
 
-[OcelotModule(mainOrder: -1)]
+[OcelotModule(6, -1)]
 public class StateManagerModule : Module<Plugin, Config>
 {
     public override StateManagerConfig config

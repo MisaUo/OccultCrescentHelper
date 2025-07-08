@@ -1,0 +1,29 @@
+{
+  "modules": {
+    "carrots": {
+      "panel": {
+        "title": "にんじん",
+        "none": "近くににんじんはありません。",
+        "label": "にんじん",
+        "hunt": {
+          "title": null,
+          "distance_node": null
+        }
+      },
+      "config": {
+        "title": "にんじん設定",
+        "draw_line_to_carrots": {
+          "label": "にんじんに線を引く",
+          "tooltip": "キャラクターの位置から近くのにんじんに線を描画します。"
+        },
+        "show_hunt_button": {
+          "label": "宝探しボタンを表示"
+        },
+        "repeat_carrot_hunt": {
+          "label": null,
+          "tooltip": null
+        }
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.EventDrop;
 
-[OcelotModule(2)]
+[OcelotModule(4)]
 public class EventDropModule : Module<Plugin, Config>
 {
     public override EventDropConfig config

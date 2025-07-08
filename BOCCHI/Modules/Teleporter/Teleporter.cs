@@ -151,7 +151,7 @@ public class Teleporter
             return;
         }
 
-        if (!module.config.ReturnAfterCritcalEncounter)
+        if (!module.config.ReturnAfterCriticalEncounter)
         {
             return;
         }

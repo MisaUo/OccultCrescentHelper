@@ -3,7 +3,7 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Currency;
 
-[Title("modules.currency.title")]
+[Title]
 public class CurrencyConfig : ModuleConfig
 {
     [Checkbox]

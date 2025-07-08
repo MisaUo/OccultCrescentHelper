@@ -3,7 +3,7 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Buff;
 
-[OcelotModule(5, 2)]
+[OcelotModule(1005, 2)]
 public class BuffModule : Module<Plugin, Config>
 {
     public override BuffConfig config
@@ -14,6 +14,11 @@ public class BuffModule : Module<Plugin, Config>
     public override bool enabled
     {
         get => config.IsPropertyEnabled(nameof(config.Enabled));
+    }
+
+    public override bool tick
+    {
+        get => true;
     }
 
     public readonly BuffManager buffs = new();

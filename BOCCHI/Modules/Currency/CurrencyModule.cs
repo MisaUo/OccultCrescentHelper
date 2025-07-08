@@ -3,7 +3,7 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Currency;
 
-[OcelotModule(5, 3)]
+[OcelotModule(int.MaxValue - 1001, 3)]
 public class CurrencyModule : Module<Plugin, Config>
 {
     public override CurrencyConfig config

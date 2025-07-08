@@ -3,8 +3,8 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Data;
 
-[Title("modules.data.title")]
-[Text("modules.data.explanation")]
+[Title]
+[Text("config.explanation")]
 public class DataConfig : ModuleConfig
 {
     [Checkbox]

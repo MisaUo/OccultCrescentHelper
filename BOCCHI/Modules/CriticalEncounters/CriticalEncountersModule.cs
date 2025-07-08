@@ -6,7 +6,7 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.CriticalEncounters;
 
-[OcelotModule(8, 6)]
+[OcelotModule(1002, 6)]
 public class CriticalEncountersModule : Module<Plugin, Config>
 {
     public override CriticalEncountersConfig config

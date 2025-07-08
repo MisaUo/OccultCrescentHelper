@@ -4,7 +4,7 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.WindowManager;
 
-[OcelotModule]
+[OcelotModule(5)]
 public class WindowManagerModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
 {
     public override WindowManagerConfig config
@@ -97,5 +97,14 @@ public class WindowManagerModule(Plugin plugin, Config config) : Module<Plugin, 
             plugin.windows.OpenConfigUI();
             configClosed = false;
         }
+    }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+        GetModule<StateManagerModule>().OnEnterInCombat -= EnterCombat;
+        GetModule<StateManagerModule>().OnEnterInCriticalEncounter -= EnterCombat;
+        GetModule<StateManagerModule>().OnEnterInFate -= EnterCombat;
+        GetModule<StateManagerModule>().OnEnterIdle -= ExitCombat;
     }
 }

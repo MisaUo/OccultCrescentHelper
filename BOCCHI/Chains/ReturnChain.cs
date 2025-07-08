@@ -38,7 +38,7 @@ public class ReturnChain : RetryChainFactory
         this.buffs = buffs;
     }
 
-    protected override unsafe Chain Create(Chain chain)
+    protected override Chain Create(Chain chain)
     {
         chain.BreakIf(() => Svc.ClientState.LocalPlayer?.IsDead == true);
 
