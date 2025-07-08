@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using BOCCHI.Data;
 using BOCCHI.Modules.Teleporter;
@@ -32,7 +33,14 @@ public class Panel
                     continue;
                 }
 
-                ImGui.TextUnformatted($"{fate.Name} ({fate.Progress}%)");
+                try
+                {
+                    ImGui.TextUnformatted($"{fate.Name} ({fate.Progress}%)");
+                }
+                catch (AccessViolationException)
+                {
+                    continue;
+                }
 
 
                 if (module.progress.TryGetValue(fate.FateId, out var progress))

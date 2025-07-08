@@ -1,3 +1,4 @@
+using System;
 using ImGuiNET;
 using Ocelot;
 
@@ -11,8 +12,16 @@ public class Panel
         OcelotUI.Indent(() =>
         {
             OcelotUI.Title($"{module.T("panel.activity.label")}:");
-            ImGui.SameLine();
-            ImGui.TextUnformatted(module.automator.activity?.GetName() ?? module.T("panel.activity.none"));
+            try
+            {
+                var name = module.automator.activity?.GetName() ?? module.T("panel.activity.none");
+                ImGui.SameLine();
+                ImGui.TextUnformatted(name);
+            }
+            catch (AccessViolationException)
+            {
+                return;
+            }
 
             OcelotUI.Title($"{module.T("panel.activity_state.label")}:");
             ImGui.SameLine();
