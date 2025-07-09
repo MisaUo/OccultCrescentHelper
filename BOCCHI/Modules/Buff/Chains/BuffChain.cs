@@ -11,11 +11,12 @@ using Ocelot.Chain.ChainEx;
 
 namespace BOCCHI.Modules.Buff.Chains;
 
-public class BuffChain(Job job, PlayerStatus buff, Action action) : ChainFactory
+public abstract class BuffChain(Job job, PlayerStatus buff, Action action) : ChainFactory
 {
     protected override Chain Create(Chain chain)
     {
-        chain .Then(_ => job.ChangeTo()) .WaitUntilStatus(job.UintStatus);
+        chain.RunIf(ShouldRun);
+        chain.Then(_ => job.ChangeTo()).WaitUntilStatus(job.UintStatus);
 
         chain = action
             .CastOnChain(chain)
@@ -30,4 +31,6 @@ public class BuffChain(Job job, PlayerStatus buff, Action action) : ChainFactory
     {
         return new TaskManagerConfiguration { TimeLimitMS = 15000 };
     }
+
+    protected abstract bool ShouldRun();
 }
