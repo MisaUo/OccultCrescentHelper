@@ -7,7 +7,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using BOCCHI.Data;
 using BOCCHI.Enums;
-using BOCCHI.Pathfinding;
 using ECommons.DalamudServices;
 
 namespace BOCCHI.Pathfinding;

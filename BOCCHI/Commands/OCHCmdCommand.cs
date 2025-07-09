@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using BOCCHI.Data;
+using BOCCHI.Enums;
 using BOCCHI.Modules.CriticalEncounters;
 using BOCCHI.Modules.Fates;
 using ECommons.DalamudServices;
@@ -91,7 +92,7 @@ Utility command.
                 continue;
             }
 
-            if (ignorePots && data.notes == Enums.MonsterNote.PersistentPots)
+            if (ignorePots && data.notes == MonsterNote.PersistentPots)
             {
                 continue;
             }

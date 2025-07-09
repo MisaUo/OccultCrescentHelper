@@ -5,9 +5,9 @@ using System.Numerics;
 using BOCCHI.Data;
 using BOCCHI.Enums;
 using BOCCHI.Pathfinding;
+using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
-using Dalamud.Game.ClientState.Objects.Enums;
 using Ocelot.Chain;
 
 namespace BOCCHI.Modules.Carrots;

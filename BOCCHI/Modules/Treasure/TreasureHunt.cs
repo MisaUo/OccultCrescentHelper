@@ -1,30 +1,19 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
-using System.Text.Json;
-using System.Threading.Tasks;
-using BOCCHI.Chains;
 using BOCCHI.Data;
-using BOCCHI.Enums;
-using BOCCHI.Modules.StateManager;
 using BOCCHI.Pathfinding;
-using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.Automation.NeoTaskManager;
-using ECommons.Automation.NeoTaskManager.Tasks;
 using ECommons.DalamudServices;
-using ECommons.GameHelpers;
 using ECommons.Throttlers;
 using FFXIVClientStructs.FFXIV.Client.Game.Control;
+using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using FFXIVClientStructs.FFXIV.Client.LayoutEngine;
-using ImGuiNET;
-using Ocelot;
 using Ocelot.Chain;
-using Ocelot.IPC;
-using TextCopy;
+using ObjectKind = Dalamud.Game.ClientState.Objects.Enums.ObjectKind;
 
 namespace BOCCHI.Modules.Treasure;
 
@@ -99,7 +88,7 @@ public class TreasureHunt(TreasureModule module) : Hunter(module)
                 unsafe
                 {
                     Svc.Targets.Target = obj;
-                    var gameObject = (FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject*)(void*)obj.Address;
+                    var gameObject = (GameObject*)(void*)obj.Address;
                     var instance = (FFXIVClientStructs.FFXIV.Client.Game.Object.Treasure*)gameObject;
                     TargetSystem.Instance()->InteractWithObject(gameObject);
                     return instance->Flags.HasFlag(FFXIVClientStructs.FFXIV.Client.Game.Object.Treasure.TreasureFlags.Opened);

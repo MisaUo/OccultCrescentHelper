@@ -1,4 +1,5 @@
 using ECommons.DalamudServices;
+using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using ImGuiNET;
 using Ocelot;
 
@@ -23,7 +24,7 @@ public class TargetPanel : Panel
             }
 
             // Try to cast to internal GameObject
-            var obj = (FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject*)target.Address;
+            var obj = (GameObject*)target.Address;
 
             if (obj == null)
             {

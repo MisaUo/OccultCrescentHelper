@@ -7,13 +7,11 @@ using BOCCHI.Data;
 using BOCCHI.Enums;
 using BOCCHI.Modules.StateManager;
 using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;
-using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using Ocelot.Chain;
 using Ocelot.IPC;
 

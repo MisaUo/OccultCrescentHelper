@@ -1,3 +1,4 @@
+using System.Globalization;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using Ocelot.Config.Handlers;
 using ExcelMount = Lumina.Excel.Sheets.Mount;
@@ -13,6 +14,6 @@ public class MountProvider : ExcelSheetItemProvider<ExcelMount>
 
     public override string GetLabel(ExcelMount item)
     {
-        return System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(item.Singular.ToString());
+        return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(item.Singular.ToString());
     }
 }

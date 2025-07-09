@@ -1,10 +1,8 @@
 using System.Linq;
-using System.Numerics;
 using BOCCHI.Enums;
 using BOCCHI.Modules.Teleporter;
 using ImGuiNET;
 using Ocelot;
-using Ocelot.IPC;
 
 namespace BOCCHI.Modules.Debug.Panels;
 

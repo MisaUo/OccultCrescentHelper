@@ -1,12 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using BOCCHI.Enums;
 using Dalamud.Game.ClientState.Objects.Enums;
-using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
-using Ocelot;
 
 namespace BOCCHI;
 

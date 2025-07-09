@@ -6,7 +6,6 @@ using BOCCHI.Data;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using Lumina.Excel.Sheets;
-using Ocelot.IPC;
 
 namespace BOCCHI.Enums;
 

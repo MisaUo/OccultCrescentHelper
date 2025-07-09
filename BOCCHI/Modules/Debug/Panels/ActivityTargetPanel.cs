@@ -10,6 +10,7 @@ using ECommons.GameHelpers;
 using ECommons.Throttlers;
 using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using ImGuiNET;
+using Lumina.Excel.Sheets;
 using Ocelot;
 
 namespace BOCCHI.Modules.Debug.Panels;
@@ -66,7 +67,7 @@ public class ActivityTargetPanel : Panel
             var battleChara = (BattleChara*)obj.Address;
 
             var id = battleChara->EventId.EntryId;
-            var count = Svc.Data.GetExcelSheet<Lumina.Excel.Sheets.DynamicEvent>().Count();
+            var count = Svc.Data.GetExcelSheet<DynamicEvent>().Count();
 
             var activity = module.GetModule<AutomatorModule>().automator.activity;
             if (activity != null)

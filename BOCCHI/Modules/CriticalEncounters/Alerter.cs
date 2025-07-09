@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using BOCCHI.Data;
 using BOCCHI.Enums;
-using Dalamud.Game.ClientState.Fates;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using FFXIVClientStructs.FFXIV.Client.UI;

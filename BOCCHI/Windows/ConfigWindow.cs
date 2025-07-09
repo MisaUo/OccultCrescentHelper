@@ -1,12 +1,9 @@
-﻿using Ocelot.Windows;
-using Ocelot.Modules;
-using Ocelot.Config.Attributes;
+﻿using System.Linq;
 using System.Numerics;
-using System.Reflection;
-using System.Linq;
-using ImGuiNET;
 using Dalamud.Interface.Utility.Raii;
-using Ocelot;
+using ImGuiNET;
+using Ocelot.Modules;
+using Ocelot.Windows;
 
 namespace BOCCHI.Windows;
 

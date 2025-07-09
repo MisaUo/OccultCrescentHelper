@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using BOCCHI.Chains;
 using BOCCHI.Data;
 using BOCCHI.Enums;
 using BOCCHI.Modules.Automator;
-using Dalamud.Game.ClientState.Objects.Enums;
-using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Interface;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
@@ -54,7 +51,7 @@ public class Teleporter
             return;
         }
 
-        if (ImGuiEx.IconButton(Dalamud.Interface.FontAwesomeIcon.Running, $"{name}##{id}"))
+        if (ImGuiEx.IconButton(FontAwesomeIcon.Running, $"{name}##{id}"))
         {
             Svc.Log.Info($"Pathfinding to {name} at {destination}");
 
@@ -88,7 +85,7 @@ public class Teleporter
         var isNearShards = ZoneHelper.GetNearbyAethernetShards().Count() > 0;
         var isNearCurrentShard = ZoneHelper.IsNearAethernetShard(aethernet);
 
-        if (ImGuiEx.IconButton(Dalamud.Interface.FontAwesomeIcon.LocationArrow, $"{name}##{id}", enabled: isNearShards && !isNearCurrentShard))
+        if (ImGuiEx.IconButton(FontAwesomeIcon.LocationArrow, $"{name}##{id}", enabled: isNearShards && !isNearCurrentShard))
         {
             var factory = () =>
             {

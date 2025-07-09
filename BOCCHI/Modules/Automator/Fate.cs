@@ -5,14 +5,12 @@ using BOCCHI.ActionHelpers;
 using BOCCHI.Data;
 using BOCCHI.Modules.Fates;
 using BOCCHI.Modules.StateManager;
-using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Fates;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;
-using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using Ocelot.IPC;
 

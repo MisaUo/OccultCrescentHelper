@@ -1,16 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using BOCCHI.Enums;
-using BOCCHI.Modules.Automator;
-using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
-using ECommons.GameHelpers;
-using ECommons.Throttlers;
-using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
-using ImGuiNET;
 using Lumina.Excel.Sheets;
 using Ocelot;
 

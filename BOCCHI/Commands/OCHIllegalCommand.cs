@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using BOCCHI.Data;
+using BOCCHI.Enums;
 using BOCCHI.Modules.Automator;
 using BOCCHI.Modules.CriticalEncounters;
 using BOCCHI.Modules.Fates;
@@ -108,7 +109,7 @@ Manage och automator/illegal mode.
                 continue;
             }
 
-            if (ignorePots && data.notes == Enums.MonsterNote.PersistentPots)
+            if (ignorePots && data.notes == MonsterNote.PersistentPots)
             {
                 continue;
             }

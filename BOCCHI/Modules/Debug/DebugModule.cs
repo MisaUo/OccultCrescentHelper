@@ -1,9 +1,9 @@
 using System.Collections.Generic;
+using System.Numerics;
 using BOCCHI.Modules.Debug.Panels;
 using Dalamud.Plugin.Services;
 using ECommons;
 using ImGuiNET;
-using Ocelot;
 using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Debug;
@@ -53,7 +53,7 @@ public class DebugModule : Module<Plugin, Config>
         ImGui.BeginGroup();
 
         // Left panel list
-        ImGui.BeginChild("PanelList", new System.Numerics.Vector2(panelWidth, 0), true);
+        ImGui.BeginChild("PanelList", new Vector2(panelWidth, 0), true);
         for (var i = 0; i < panels.Count; i++)
         {
             var selected = i == selectedPanelIndex;
@@ -69,7 +69,7 @@ public class DebugModule : Module<Plugin, Config>
 
         // Right panel content
         ImGui.BeginGroup();
-        ImGui.BeginChild("PanelContent", new System.Numerics.Vector2(0, 0), false);
+        ImGui.BeginChild("PanelContent", new Vector2(0, 0), false);
         panels[selectedPanelIndex].Draw(this);
         ImGui.EndChild();
         ImGui.EndGroup();

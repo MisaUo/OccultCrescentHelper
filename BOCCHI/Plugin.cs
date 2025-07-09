@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using BOCCHI.Chains;
 using BOCCHI.Data;
 using Dalamud.Game;
