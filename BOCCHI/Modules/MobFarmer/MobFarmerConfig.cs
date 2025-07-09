@@ -19,13 +19,16 @@ public class MobFarmerConfig : ModuleConfig
 
     [IntRange(1, 28)] public int MaxMobLevel { get; set; } = 28;
 
-    [FloatRange(10f, 1000f)] public float MaxEuclideanDistance { get; set; } = 250f;
+    [FloatRange(10f, 1000f)]
+    [RangeIndicator(0.9f, 0.1f, 0.6f)]
+    public float MaxEuclideanDistance { get; set; } = 75f;
 
     [Checkbox] public bool ReturnToStartInWaitingPhase { get; set; } = false;
 
     [FloatRange(10f, 1000f)]
+    [RangeIndicator(0.9f, 0.1f, 0.6f)]
     [DependsOn(nameof(ReturnToStartInWaitingPhase))]
-    public float MinEuclideanDistanceToReturnHome { get; set; } = 500f;
+    public float MinEuclideanDistanceToReturnHome { get; set; } = 200f;
 
     [Checkbox] public bool RenderDebugLines { get; set; } = false;
 
