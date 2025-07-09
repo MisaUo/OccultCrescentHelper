@@ -1,11 +1,7 @@
-using System.Linq;
 using BOCCHI.ActionHelpers;
 using BOCCHI.Data;
 using ECommons.Automation.NeoTaskManager;
-using ECommons.DalamudServices;
 using ECommons.GameHelpers;
-using FFXIVClientStructs.FFXIV.Client.Game;
-using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 
@@ -18,13 +14,10 @@ public abstract class BuffChain(Job job, PlayerStatus buff, Action action) : Cha
         chain.RunIf(ShouldRun);
         chain.Then(_ => job.ChangeTo()).WaitUntilStatus(job.UintStatus);
 
-        chain = action
+        return action
             .CastOnChain(chain)
             .Then(_ => Player.Status.Has(buff))
-            .Then(_ => Player.Status.Get(buff)?.RemainingTime >= 1780)
-            .Debug("Donzo");
-
-        return chain;
+            .Then(_ => Player.Status.Get(buff)?.RemainingTime >= 1780);
     }
 
     public override TaskManagerConfiguration? Config()

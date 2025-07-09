@@ -1,21 +1,13 @@
+using BOCCHI.Data;
 using ECommons.Automation.NeoTaskManager;
-using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 
 namespace BOCCHI.Modules.Buff.Chains;
 
-public unsafe class AllBuffsChain : ChainFactory
+public class AllBuffsChain(BuffModule module) : ChainFactory
 {
-    private BuffModule module;
-
-    private byte startingJobId;
-
-    public AllBuffsChain(BuffModule module)
-    {
-        this.module = module;
-        startingJobId = PublicContentOccultCrescent.GetState()->CurrentSupportJob;
-    }
+    private readonly Job startingJob = Job.Current;
 
     protected override Chain Create(Chain chain)
     {
@@ -23,13 +15,13 @@ public unsafe class AllBuffsChain : ChainFactory
             .Then(new KnightBuffChain(module))
             .Then(new MonkBuffChain(module))
             .Then(new BardBuffChain(module))
-            .Then(_ => PublicContentOccultCrescent.ChangeSupportJob(startingJobId))
-            .WaitGcd();
+            .Then(_ => startingJob.ChangeTo())
+            .WaitUntilStatus(startingJob.UintStatus);
 
         return chain;
     }
 
-    public override TaskManagerConfiguration? Config()
+    public override TaskManagerConfiguration Config()
     {
         return new TaskManagerConfiguration { TimeLimitMS = 60000 };
     }

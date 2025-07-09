@@ -19,6 +19,31 @@ public class Job
         get => (uint)status;
     }
 
+    public static unsafe Job Current
+    {
+        get
+        {
+            var id = (JobId)PublicContentOccultCrescent.GetState()->CurrentSupportJob;
+            return id switch
+            {
+                JobId.Freelancer => Freelancer,
+                JobId.Knight => Knight,
+                JobId.Berserker => Berserker,
+                JobId.Monk => Monk,
+                JobId.Ranger => Ranger,
+                JobId.Samurai => Samurai,
+                JobId.Bard => Bard,
+                JobId.Geomancer => Geomancer,
+                JobId.TimeMage => TimeMage,
+                JobId.Cannoneer => Cannoneer,
+                JobId.Chemist => Chemist,
+                JobId.Oracle => Oracle,
+                JobId.Thief => Thief,
+                _ => Freelancer,
+            };
+        }
+    }
+
     public Job(JobId id, PlayerStatus status)
     {
         this.id = id;
