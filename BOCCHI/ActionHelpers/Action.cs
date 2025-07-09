@@ -24,6 +24,11 @@ public unsafe class Action(ActionType type, uint id)
         ActionManager.Instance()->UseAction(type, id);
     }
 
+    public void Cast(uint arg)
+    {
+        ActionManager.Instance()->UseAction(type, id, arg);
+    }
+
     public Func<Chain> GetCastChain()
     {
         return () => CastOnChain(Chain.Create($"Action({type}, {id})"));
@@ -34,5 +39,17 @@ public unsafe class Action(ActionType type, uint id)
         return chain
             .Then(_ => CanCast())
             .Then(_ => Cast());
+    }
+
+    public Func<Chain> GetCastChain(uint arg)
+    {
+        return () => CastOnChain(Chain.Create($"Action({type}, {id})"), arg);
+    }
+
+    public Chain CastOnChain(Chain chain, uint arg)
+    {
+        return chain
+            .Then(_ => CanCast())
+            .Then(_ => Cast(arg));
     }
 }

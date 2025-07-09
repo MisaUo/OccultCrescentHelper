@@ -1,9 +1,11 @@
 using System;
 using System.Linq;
 using System.Numerics;
+using BOCCHI.ActionHelpers;
 using BOCCHI.Data;
 using BOCCHI.Modules.Fates;
 using BOCCHI.Modules.StateManager;
+using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Fates;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.Automation.NeoTaskManager;
@@ -57,11 +59,7 @@ public class Fate : Activity
                 {
                     if (Vector3.Distance(Player.Position, target.Position) <= module.config.EngagementRange)
                     {
-                        // Dismount
-                        if (Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.Mounted])
-                        {
-                            ActionManager.Instance()->UseAction(ActionType.Mount, module.plugin.config.MountConfig.Mount);
-                        }
+                        Actions.TryUnmount();
 
                         vnav.Stop();
 

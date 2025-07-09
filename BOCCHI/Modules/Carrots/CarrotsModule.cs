@@ -32,17 +32,13 @@ public class CarrotsModule(Plugin plugin, Config config) : Module<Plugin, Config
 
     public override void PostInitialize()
     {
-#if DEBUG_BUILD
         hunter = new CarrotHunt(this);
-#endif
     }
 
     public override void Tick(IFramework framework)
     {
         tracker.Tick(framework, plugin);
-#if DEBUG_BUILD
-        hunter.Tick(this);
-#endif
+        // hunter.Tick(this);
     }
 
     public override void Draw()
@@ -53,12 +49,11 @@ public class CarrotsModule(Plugin plugin, Config config) : Module<Plugin, Config
     public override bool DrawMainUi()
     {
         panel.Draw(this);
-#if DEBUG_BUILD
-        if (config.ShouldEnableCarrotHunt)
-        {
-            hunter.Draw(this);
-        }
-#endif
+        // if (config.ShouldEnableCarrotHunt)
+        // {
+        // hunter.Draw(this);
+        // }
+
         return true;
     }
 }

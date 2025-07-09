@@ -7,17 +7,24 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading.Tasks;
+using BOCCHI.ActionHelpers;
 using BOCCHI.Data;
 using BOCCHI.Enums;
+using BOCCHI.ItemHelpers;
 using BOCCHI.Modules.Carrots;
 using BOCCHI.Modules.Data;
 using BOCCHI.Modules.Treasure;
 using BOCCHI.Pathfinding;
+using Dalamud.Game.ClientState.Objects.Enums;
 using ECommons.DalamudServices;
+using ECommons.GameHelpers;
+using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.LayoutEngine;
+using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using ImGuiNET;
 using Ocelot;
 using Ocelot.Chain;
+using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
 
 namespace BOCCHI.Modules.Debug.Panels;
@@ -62,6 +69,24 @@ public class CarrotHuntPanel : Panel
 
         OcelotUI.Indent(() =>
         {
+            if (ImGui.Button("Test carrot usage chain"))
+            {
+                Plugin.Chain.Submit(() => Chain.Create()
+                    .ConditionalThen(_ => Player.Mounted, _ => Actions.Unmount.Cast())
+                    .BreakIf(() => Items.FortuneCarrot.Count() <= 0)
+                    .Then(_ => Items.FortuneCarrot.Use())
+                    .WaitToCast()
+                    .Wait(500)
+                    .Log("Done!")
+                );
+            }
+
+            var obj = Svc.Objects; //.Where(o => o.ObjectKind == ObjectKind.Treasure);
+            foreach (var o in obj)
+            {
+                ImGui.TextUnformatted(o.Name + " " + o.ObjectKind);
+            }
+
             if (!HasRun)
             {
                 if (ImGui.Button("Run"))

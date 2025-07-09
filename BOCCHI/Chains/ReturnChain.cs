@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using BOCCHI.ActionHelpers;
 using BOCCHI.Data;
 using BOCCHI.Enums;
 using BOCCHI.Modules.Buff;
@@ -79,7 +80,7 @@ public class ReturnChain : RetryChainFactory
         return chain.Then(_ => complete = true);
     }
 
-    private unsafe Chain ApplyBuffs(Chain chain)
+    private Chain ApplyBuffs(Chain chain)
     {
         if (buffs.ShouldRefreshBuffs() && vnav != null)
         {
@@ -91,13 +92,7 @@ public class ReturnChain : RetryChainFactory
                 return Chain.Create("Go to Crystal and Buff")
                     .BreakIf(() => !buffs.buffs.ShouldRefresh(buffs))
                     .Wait(500)
-                    .Then(_ =>
-                    {
-                        if (Svc.Condition[ConditionFlag.Mounted])
-                        {
-                            ActionManager.Instance()->UseAction(ActionType.Mount, buffs.plugin.config.MountConfig.Mount);
-                        }
-                    })
+                    .Then(_ => Actions.TryUnmount())
                     .BreakIf(() => closestKnowledgeCrystal == null)
                     .Then(_ => vnav.MoveToPath([position], false))
                     .WaitUntilNear(vnav, position, AethernetData.DISTANCE)

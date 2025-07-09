@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 using BOCCHI.ActionHelpers;
 using BOCCHI.Modules.MobFarmer.Chains;
 using Dalamud.Game.ClientState.Conditions;
@@ -10,7 +11,9 @@ using ECommons.Automation;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;
+using FFXIVClientStructs.FFXIV.Client.System.Framework;
 using Ocelot.Chain;
+using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
 using Chain = Ocelot.Chain.Chain;
 
@@ -144,19 +147,16 @@ public class Farmer
 
             if (target.IsTargetingPlayer() || EzThrottler.Throttle("Repath", 500))
             {
+                Task<List<Vector3>>? task = null;
+                List<Vector3> path = [];
                 ChainQueue.Submit(() =>
                     Chain.Create()
-                        .Then(async void (_) =>
-                        {
-                            var path = await vnav.Pathfind(Player.Position, target.Position, false);
-                            if (path.Count <= 1)
-                            {
-                                return;
-                            }
-
-                            path.RemoveAt(0);
-                            vnav.MoveToPath(path, false);
-                        })
+                        .Then(_ => task = vnav.Pathfind(Player.Position, target.Position, false))
+                        .Then(_ => task!.IsCompleted)
+                        .Then(_ => path = task!.Result)
+                        .BreakIf(() => path.Count <= 1)
+                        .Then(_ => path.RemoveAt(0))
+                        .Then(_ => vnav.MoveToPath(path, false))
                 );
             }
         }
@@ -175,7 +175,12 @@ public class Farmer
             return FarmerPhase.Fighting;
         }
 
-        var furthest = InCombat.Where(o => o.Address != Svc.Targets.Target?.Address).OrderBy(Player.DistanceTo).Last();
+        var furthest = InCombat.Where(o => o.Address != Svc.Targets.Target?.Address).OrderBy(Player.DistanceTo).LastOrDefault();
+        if (furthest == null)
+        {
+            return FarmerPhase.Fighting;
+        }
+
         vnav.PathfindAndMoveTo(furthest.Position, false);
         HasRunStack = true;
 

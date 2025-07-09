@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Numerics;
+using BOCCHI.ActionHelpers;
 using BOCCHI.Data;
 using BOCCHI.Modules.CriticalEncounters;
 using BOCCHI.Modules.StateManager;
@@ -129,14 +130,7 @@ public class CriticalEncounter : Activity
 
                         if (!vnav.IsRunning() && states.GetState() == State.InCombat)
                         {
-                            // Unmount if we're in combat, and activate our AI provider
-                            if (Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.Mounted])
-                            {
-                                ActionManager.Instance()->UseAction(
-                                    ActionType.Mount,
-                                    module.plugin.config.MountConfig.Mount
-                                );
-                            }
+                            Actions.TryUnmount();
 
                             if (module.config.ShouldToggleAiProvider)
                             {

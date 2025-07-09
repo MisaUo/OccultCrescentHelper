@@ -1,7 +1,8 @@
+using BOCCHI.ActionHelpers;
 using BOCCHI.Data;
 using Dalamud.Game.ClientState.Conditions;
 using ECommons.DalamudServices;
-using FFXIVClientStructs.FFXIV.Client.Game;
+using ECommons.GameHelpers;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 
@@ -11,24 +12,21 @@ public class MountChain : RetryChainFactory
 {
     private MountConfig config;
 
-    private bool isFirstThrottle = true;
-
     public MountChain(MountConfig config)
     {
         this.config = config;
     }
 
-    protected override unsafe Chain Create(Chain chain)
+    protected override Chain Create(Chain chain)
     {
-        return chain
-            .BreakIf(Breaker)
-            .ConditionalThen(_ => !config.MountRoulette, _ => ActionManager.Instance()->UseAction(ActionType.Mount, config.Mount))
-            // Mount Roulette
-            .ConditionalThen(_ => config.MountRoulette, _ => ActionManager.Instance()->UseAction(ActionType.GeneralAction, 9));
+        chain.BreakIf(Breaker);
+
+        return !config.MountRoulette ? Actions.Mount(config.Mount).CastOnChain(chain) : Actions.MountRoulette.CastOnChain(chain);
     }
 
     private bool Breaker()
     {
+        // @todo add IsCasting to ecommons Player
         var player = Svc.ClientState.LocalPlayer;
         if (player == null)
         {
@@ -39,20 +37,14 @@ public class MountChain : RetryChainFactory
                || Svc.Condition[ConditionFlag.BetweenAreas]
                || Svc.Condition[ConditionFlag.BetweenAreas51]
                || Svc.Condition[ConditionFlag.InCombat]
-               || player.StatusList.Has(PlayerStatus.HoofingIt)
+               || Player.Status.Has(PlayerStatus.HoofingIt)
                || player.IsCasting
-               || player.IsDead;
+               || Player.IsDead;
     }
 
     public override int GetThrottle()
     {
-        if (isFirstThrottle)
-        {
-            isFirstThrottle = false;
-            return 500;
-        }
-
-        return 5000;
+        return attempt == 0 ? 500 : 5000;
     }
 
     public override bool IsComplete()

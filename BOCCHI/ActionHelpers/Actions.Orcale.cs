@@ -4,5 +4,7 @@ namespace BOCCHI.ActionHelpers;
 
 public static partial class Actions
 {
-    public static Action Sprint { get; private set; } = new(ActionType.GeneralAction, 4);
+    public static class Oracle
+    {
+    }
 }

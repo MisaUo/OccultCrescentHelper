@@ -10,7 +10,7 @@ public class BattleBellChain(MobFarmerModule module) : ChainFactory
 {
     protected override unsafe Chain Create(Chain chain)
     {
-        chain.BreakIf(() => Actions.BattleBell.GetRecastTime() >= module.config.MaximumBattleBellWaitTime);
+        chain.BreakIf(() => Actions.Geomancer.BattleBell.GetRecastTime() >= module.config.MaximumBattleBellWaitTime);
 
         chain.SubChain(sub => sub
             .RunIf(() => PublicContentOccultCrescent.GetState()->CurrentSupportJob != Job.Geomancer.ByteId)
@@ -18,7 +18,7 @@ public class BattleBellChain(MobFarmerModule module) : ChainFactory
             .WaitUntilStatus(Job.Geomancer.UintStatus)
         );
 
-        chain.Then(Actions.BattleBell.GetCastChain()).Wait(1000);
+        chain.Then(Actions.Geomancer.BattleBell.GetCastChain()).Wait(1000);
 
         chain
             .Then(_ => PublicContentOccultCrescent.ChangeSupportJob(Job.Cannoneer.ByteId))
