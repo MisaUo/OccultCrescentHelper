@@ -4,8 +4,8 @@
       "config": {
         "title": "F.A.T.E.設定",
         "log_spawn": {
-          "label": null,
-          "tooltip": null
+          "label": "出現/消滅時にチャットメッセージを表示",
+          "tooltip": "F.A.T.E. が出現、または消滅したときにエコーメッセージを表示します"
         },
         "alert_all": {
           "label": "すべてのFATEを通知",

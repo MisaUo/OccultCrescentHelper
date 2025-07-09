@@ -6,8 +6,8 @@
         "none": "近くににんじんはありません。",
         "label": "にんじん",
         "hunt": {
-          "title": null,
-          "distance_node": null
+          "title": "にんじんハンター",
+          "distance_node": "次のにんじんまでの距離"
         }
       },
       "config": {
@@ -20,8 +20,8 @@
           "label": "宝探しボタンを表示"
         },
         "repeat_carrot_hunt": {
-          "label": null,
-          "tooltip": null
+          "label": "繰り返す",
+          "tooltip": "最終ノードに到達後に再度探索を開始します"
         }
       }
     }

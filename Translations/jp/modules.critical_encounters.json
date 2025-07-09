@@ -2,14 +2,14 @@
   "modules": {
     "critical_encounters": {
       "config": {
-        "title": null,
+        "title": "クリティカルエンカウント設定",
         "track_forked_tower": {
           "label": "フォークタワーの追跡",
           "tooltip": "フォークタワーが最後に終了したタイミングを記録します"
         },
         "log_spawn": {
-          "label": null,
-          "tooltip": null
+          "label": "出現/消滅時にチャットメッセージを表示",
+          "tooltip": "クリティカルエンカウントが出現、または消滅したときにエコーメッセージを表示します"
         },
         "alert_all": {
           "label": "すべてのクリティカルエンカウントを通知",

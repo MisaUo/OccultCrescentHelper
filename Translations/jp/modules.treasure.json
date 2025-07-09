@@ -20,7 +20,7 @@
         "none": "近くに宝箱はありません。",
         "hunt": {
           "title": "トレジャーハンター",
-          "distance_node": null
+          "distance_node": "次の宝箱までの距離"
         }
       }
     }
