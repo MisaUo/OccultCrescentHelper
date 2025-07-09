@@ -5,10 +5,12 @@ using BOCCHI.Data;
 using BOCCHI.Modules.CriticalEncounters;
 using BOCCHI.Modules.StateManager;
 using Dalamud.Game.ClientState.Objects.Enums;
+using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using FFXIVClientStructs.FFXIV.Client.Game;
+using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using Ocelot.Chain;
 using Ocelot.IPC;
@@ -191,5 +193,23 @@ public class CriticalEncounter : Activity
     private bool IsCloseToZone(float radius = 50f)
     {
         return Player.DistanceTo(GetPosition()) <= radius;
+    }
+    
+
+    protected override unsafe bool IsActivityTarget(IBattleNpc obj)
+    {
+        try
+        {
+            var battleChara = (BattleChara*)obj.Address;
+
+            var isRelatedToCurrentEvent = battleChara->EventId.EntryId == Player.BattleChara->EventId.EntryId;
+
+            return obj.SubKind == (byte)BattleNpcSubKind.Enemy && isRelatedToCurrentEvent;
+        }
+        catch (Exception ex)
+        {
+            Svc.Log.Error(ex.Message);
+            return false;
+        }
     }
 }

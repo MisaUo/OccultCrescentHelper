@@ -32,10 +32,11 @@ public class CarrotsConfig : ModuleConfig
     {
         get => IsPropertyEnabled(nameof(EnableCarrotHunt));
     }
+#if DEBUG_BUILD
+    [Checkbox]
+    [Experimental]
+    [DependsOn(nameof(Enabled), nameof(EnableCarrotHunt))]
 
-    // [Checkbox]
-    // [Experimental]
-    // [DependsOn(nameof(Enabled), nameof(EnableCarrotHunt))]
-    //
-    // public bool RepeatCarrotHunt { get; set; } = false;
+    public bool RepeatCarrotHunt { get; set; } = false;
+#endif
 }

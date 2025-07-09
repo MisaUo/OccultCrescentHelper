@@ -47,11 +47,13 @@ public class CarrotHunt(CarrotsModule module) : Hunter(module)
 
     protected override void Teardown()
     {
-        // if (!module.config.RepeatCarrotHunt)
-        // {
-        //     stopwatch.Stop();
-        //     running = false;
-        // }
+#if DEBUG_BUILD
+        if (!module.config.RepeatCarrotHunt)
+        {
+            stopwatch.Stop();
+            running = false;
+        }
+#endif
 
         stepIndex = 0;
         Steps.Clear();

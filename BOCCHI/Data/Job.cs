@@ -6,7 +6,17 @@ public class Job
 {
     public readonly JobId id;
 
+    public byte ByteId
+    {
+        get => (byte)id;
+    }
+
     public readonly PlayerStatus status;
+
+    public uint UintStatus
+    {
+        get => (uint)status;
+    }
 
     public Job(JobId id, PlayerStatus status)
     {

@@ -150,7 +150,8 @@ public abstract class Activity
                 {
                     if (module.config.ShouldForceTarget && EzThrottler.Throttle("Participating.ForceTarget", 500))
                     {
-                        Svc.Targets.Target = module.config.ShouldForceTargetCentralEnemy ? GetCentralMostEnemy() : GetClosestEnemy();
+                        var enemies = GetEnemies();
+                        Svc.Targets.Target = module.config.ShouldForceTargetCentralEnemy ? enemies.Centroid() : enemies.Closest();
                     }
 
                     return states.GetState() == State.Idle;
@@ -164,83 +165,16 @@ public abstract class Activity
         return null;
     }
 
-    private List<IGameObject> GetEnemies()
+    protected List<IBattleNpc> GetEnemies()
     {
-        return Svc.Objects
-            .Where(o =>
-                o != null &&
-                o.ObjectKind == ObjectKind.BattleNpc &&
-                IsActivityTarget(o) &&
-                o.IsTargetable &&
-                !o.IsDead
-            )
-            .OrderBy(o => Vector3.Distance(o.Position, Player.Position))
-            .ToList();
+        return TargetHelper.Enemies.Where(IsActivityTarget).ToList();
     }
 
-    protected int GetEnemyCount()
-    {
-        return GetEnemies().Count();
-    }
-
-    protected IGameObject? GetClosestEnemy()
-    {
-        return GetEnemies().FirstOrDefault();
-    }
-
-    protected IGameObject? GetCentralMostEnemy()
-    {
-        var enemies = GetEnemies();
-
-        if (enemies.Count == 0)
-        {
-            return null;
-        }
-
-        var centroid = new Vector3(
-            enemies.Average(o => o.Position.X),
-            enemies.Average(o => o.Position.Y),
-            enemies.Average(o => o.Position.Z)
-        );
-
-        return enemies
-            .OrderBy(o => Vector3.Distance(o.Position, centroid))
-            .FirstOrDefault();
-    }
-
-    private unsafe bool IsActivityTarget(IGameObject? obj)
-    {
-        if (obj == null)
-        {
-            return false;
-        }
-
-        try
-        {
-            var battleChara = (BattleChara*)obj.Address;
-
-            var id = battleChara->EventId.EntryId;
-            var count = Svc.Data.GetExcelSheet<Lumina.Excel.Sheets.DynamicEvent>().Count();
-
-            if (data.type == EventType.Fate)
-            {
-                return battleChara->FateId == data.id;
-            }
-
-            var isRelatedToCurrentEvent = battleChara->EventId.EntryId == Player.BattleChara->EventId.EntryId;
-
-            return obj.SubKind == (byte)BattleNpcSubKind.Enemy && isRelatedToCurrentEvent;
-        }
-        catch (Exception ex)
-        {
-            Svc.Log.Error(ex.Message);
-            return false;
-        }
-    }
+    protected abstract bool IsActivityTarget(IBattleNpc obj);
 
     public AethernetData GetAethernetData()
     {
-        return data.aethernet?.GetData() ?? AethernetData.All().OrderBy((data) => Vector3.Distance(GetPosition(), data.position)).First();
+        return data.aethernet?.GetData() ?? AethernetData.All().OrderBy(data => Vector3.Distance(GetPosition(), data.position)).First();
     }
 
     public bool IsInZone()

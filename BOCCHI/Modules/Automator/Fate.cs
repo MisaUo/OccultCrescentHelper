@@ -1,14 +1,17 @@
+using System;
 using System.Linq;
 using System.Numerics;
 using BOCCHI.Data;
 using BOCCHI.Modules.Fates;
 using BOCCHI.Modules.StateManager;
 using Dalamud.Game.ClientState.Fates;
+using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;
 using FFXIVClientStructs.FFXIV.Client.Game;
+using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using Ocelot.IPC;
 
 namespace BOCCHI.Modules.Automator;
@@ -33,7 +36,7 @@ public class Fate : Activity
             {
                 if (Svc.Targets.Target == null)
                 {
-                    var enemy = GetCentralMostEnemy();
+                    var enemy = GetEnemies().Centroid();
                     if (enemy != null)
                     {
                         Svc.Targets.Target = enemy;
@@ -94,5 +97,20 @@ public class Fate : Activity
     public override string GetName()
     {
         return fate.Name.ToString();
+    }
+
+    protected override unsafe bool IsActivityTarget(IBattleNpc obj)
+    {
+        try
+        {
+            var battleChara = (BattleChara*)obj.Address;
+
+            return battleChara->FateId == data.id;
+        }
+        catch (Exception ex)
+        {
+            Svc.Log.Error(ex.Message);
+            return false;
+        }
     }
 }

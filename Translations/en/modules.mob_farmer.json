@@ -1,4 +1,37 @@
 {
   "modules": {
+    "mob_farmer": {
+      "config": {
+        "title": "Mob Farmer Config",
+        "mob": {
+          "label": "Mob",
+          "tooltip": "The mob to farm"
+        },
+        "render_debug_lines": {
+          "label": "Render debug lines",
+          "tooltip": "Render red lines to valid mobs out of combat and green lines to valid mobs in combat"
+        },
+        "render_debug_lines_while_not_running": {
+          "label": "Render debug lines while inactive",
+          "tooltip": "Render the lines even while mob farmer is not running"
+        },
+        "apply_battle_bell": {
+          "label": "Apply Battle Bell",
+          "tooltip": "Apply Battle Bell before pulling"
+        },
+        "maximum_battle_bell_wait_time": {
+          "label": "Maximum time to wait for Battle Bell",
+          "tooltip": "The maximum time you will wait for Battle Bell to be off of cooldown"
+        },
+        "minimum_mobs_to_start_loop": {
+          "label": "Minimum mobs to start",
+          "tooltip": "How many valid mobs need to be nearby to start the loop"
+        },
+        "minimum_mobs_to_start_fight": {
+          "label": "Minimum mobs to fight",
+          "tooltip": "How many mobs to gather before stopping to fight them.\n Note if there are no more out of combat mobs around you, it will start combat regardless."
+        }
+      }
+    }
   }
 }

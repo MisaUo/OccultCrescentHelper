@@ -4,18 +4,16 @@ using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
-using ECommons.Throttlers;
+using FFXIVClientStructs.FFXIV.Client.Game.Object;
 
 namespace BOCCHI.Modules.MobFarmer;
 
-public class Scanner
+public class Scanner(MobFarmerModule module)
 {
-    private const int FOPPER = 17851;
-
-    public List<IGameObject> Foppers { get; private set; } = [];
+    public IEnumerable<IBattleNpc> Mobs { get; private set; } = [];
 
     public void Tick(IFramework _)
     {
-        Foppers = Svc.Objects.Where(o => o.DataId == FOPPER && !o.IsDead && o.IsTargetable).OrderBy(Player.DistanceTo).ToList();
+        Mobs = TargetHelper.Enemies.Where(o => o.NameId == (uint)module.config.Mob);
     }
 }
