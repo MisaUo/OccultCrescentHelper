@@ -1,13 +1,12 @@
 using BOCCHI.Data;
 using ECommons.Automation.NeoTaskManager;
 using Ocelot.Chain;
-using Ocelot.Chain.ChainEx;
 
 namespace BOCCHI.Modules.Buff.Chains;
 
 public class AllBuffsChain(BuffModule module) : ChainFactory
 {
-    private readonly Job startingJob = Job.Current;
+    private readonly Job StartingJob = Job.Current;
 
     protected override Chain Create(Chain chain)
     {
@@ -15,8 +14,7 @@ public class AllBuffsChain(BuffModule module) : ChainFactory
             .Then(new KnightBuffChain(module))
             .Then(new MonkBuffChain(module))
             .Then(new BardBuffChain(module))
-            .Then(_ => startingJob.ChangeTo())
-            .WaitUntilStatus(startingJob.UintStatus);
+            .Then(StartingJob.ChangeToChain);
 
         return chain;
     }

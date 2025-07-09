@@ -11,8 +11,7 @@ public abstract class BuffChain(Job job, PlayerStatus buff, Action action) : Cha
 {
     protected override Chain Create(Chain chain)
     {
-        chain.RunIf(ShouldRun);
-        chain.Then(_ => job.ChangeTo()).WaitUntilStatus(job.UintStatus);
+        chain.RunIf(ShouldRun).Then(job.ChangeToChain);
 
         return action
             .CastOnChain(chain)

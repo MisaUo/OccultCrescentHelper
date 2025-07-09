@@ -23,6 +23,10 @@ public class MobFarmerConfig : ModuleConfig
 
     [Checkbox] public bool ReturnToStartInWaitingPhase { get; set; } = false;
 
+    [FloatRange(10f, 1000f)]
+    [DependsOn(nameof(ReturnToStartInWaitingPhase))]
+    public float MinEuclideanDistanceToReturnHome { get; set; } = 500f;
+
     [Checkbox] public bool RenderDebugLines { get; set; } = false;
 
     [Checkbox]

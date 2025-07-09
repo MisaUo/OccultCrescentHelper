@@ -1,5 +1,7 @@
 using BOCCHI.Enums;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
+using Ocelot.Chain;
+using Ocelot.Chain.ChainEx;
 
 namespace BOCCHI.Data;
 
@@ -53,6 +55,14 @@ public class Job
     public void ChangeTo()
     {
         PublicContentOccultCrescent.ChangeSupportJob(ByteId);
+    }
+
+    public Chain ChangeToChain()
+    {
+        return Chain.Create()
+            .RunIf(() => Current.id != id)
+            .Then(_ => ChangeTo())
+            .WaitUntilStatus(UintStatus);
     }
 
     public readonly static Job Freelancer = new(JobId.Freelancer, PlayerStatus.PhantomFreelancer);

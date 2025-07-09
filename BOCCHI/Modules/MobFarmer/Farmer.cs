@@ -197,7 +197,8 @@ public class Farmer
 
         var anyInCombat = InCombat.Any();
 
-        if (module.config.ReturnToStartInWaitingPhase && !anyInCombat)
+        var shouldReturnHome = module.config.ReturnToStartInWaitingPhase && Player.DistanceTo(StartingPoint) >= module.config.MinEuclideanDistanceToReturnHome;
+        if (shouldReturnHome && !anyInCombat)
         {
             var vnav = module.GetIPCProvider<VNavmesh>();
             if (!vnav.IsRunning())
