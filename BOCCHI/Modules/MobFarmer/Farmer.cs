@@ -211,7 +211,13 @@ public class Farmer
 
         foreach (var mob in NotInCombat)
         {
-            Helpers.DrawLine(Player.Position, mob.Position, 3f, new Vector4(0.9f, 0.1f, 0.1f, 1f));
+            var color = new Vector4(0.9f, 0.1f, 0.1f, 1f);
+            if (mob.NameId != (uint)module.config.Mob)
+            {
+                color = new Vector4(0.9f, 0.1f, 0.9f, 1f);
+            }
+
+            Helpers.DrawLine(Player.Position, mob.Position, 3f, color);
         }
 
         foreach (var mob in InCombat)

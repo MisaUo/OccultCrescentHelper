@@ -7,6 +7,14 @@
           "label": "Mob",
           "tooltip": "The mob to farm"
         },
+        "consider_special_mobs": {
+          "label": "Consider special mobs",
+          "tooltip": "Consider nearby special mobs to pull and in counts. These are mobs that spawn during specific times and weather."
+        },
+        "max_mob_level": {
+          "label": "Max mob level",
+          "tooltip": "Max mob level to pull, helpful for use with special mobs or mobs with varied levels"
+        },
         "render_debug_lines": {
           "label": "Render debug lines",
           "tooltip": "Render red lines to valid mobs out of combat and green lines to valid mobs in combat"

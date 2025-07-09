@@ -13,8 +13,11 @@ public class MobFarmerConfig : ModuleConfig
     }
 
     [Enum(typeof(Mob), nameof(MobProvider))]
-
     public Mob Mob { get; set; } = Mob.Foper;
+
+    [Checkbox] public bool ConsiderSpecialMobs { get; set; } = false;
+
+    [IntRange(1, 28)] public int MaxMobLevel { get; set; } = 28;
 
     [Checkbox] public bool RenderDebugLines { get; set; } = false;
 

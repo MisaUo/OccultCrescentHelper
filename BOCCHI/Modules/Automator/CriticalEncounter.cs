@@ -194,7 +194,7 @@ public class CriticalEncounter : Activity
     {
         return Player.DistanceTo(GetPosition()) <= radius;
     }
-    
+
 
     protected override unsafe bool IsActivityTarget(IBattleNpc obj)
     {
