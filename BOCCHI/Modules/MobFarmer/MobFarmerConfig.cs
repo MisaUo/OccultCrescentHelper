@@ -19,6 +19,10 @@ public class MobFarmerConfig : ModuleConfig
 
     [IntRange(1, 28)] public int MaxMobLevel { get; set; } = 28;
 
+    [FloatRange(10f, 1000f)] public float MaxEuclideanDistance { get; set; } = 250f;
+
+    [Checkbox] public bool ReturnToStartInWaitingPhase { get; set; } = false;
+
     [Checkbox] public bool RenderDebugLines { get; set; } = false;
 
     [Checkbox]

@@ -15,6 +15,14 @@
           "label": "Max mob level",
           "tooltip": "Max mob level to pull, helpful for use with special mobs or mobs with varied levels"
         },
+        "max_euclidean_distance": {
+          "label": "Max euclidean distance",
+          "tooltip": "Max euclidean distance to a mob before ignoring it, useful to stop yourself getting chained across the map when considering special mobs."
+        },
+        "return_to_start_in_waiting_phase": {
+          "label": "Return to your starting point after combat",
+          "tooltip": "Starting point is determined by where you are stood when you press Start."
+        },
         "render_debug_lines": {
           "label": "Render debug lines",
           "tooltip": "Render red lines to valid mobs out of combat and green lines to valid mobs in combat"

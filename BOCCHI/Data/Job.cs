@@ -1,4 +1,5 @@
 using BOCCHI.Enums;
+using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 
 namespace BOCCHI.Data;
 
@@ -22,6 +23,11 @@ public class Job
     {
         this.id = id;
         this.status = status;
+    }
+
+    public void ChangeTo()
+    {
+        PublicContentOccultCrescent.ChangeSupportJob(ByteId);
     }
 
     public readonly static Job Freelancer = new(JobId.Freelancer, PlayerStatus.PhantomFreelancer);

@@ -18,6 +18,11 @@ public class Scanner(MobFarmerModule module)
     {
         Mobs = TargetHelper.Enemies.Where(o =>
         {
+            if (Player.DistanceTo(o) > module.config.MaxEuclideanDistance)
+            {
+                return false;
+            }
+
             var chara = (BattleChara*)o.Address;
 
             if (o.NameId == (uint)module.config.Mob)

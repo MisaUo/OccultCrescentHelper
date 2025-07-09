@@ -35,6 +35,8 @@ public class Farmer
 
     private bool HasRunStack = false;
 
+    private Vector3 StartingPoint = Vector3.Zero;
+
     public FarmerPhase Phase { get; private set; } = FarmerPhase.Waiting;
 
     public IEnumerable<IBattleNpc> Mobs
@@ -194,7 +196,20 @@ public class Farmer
             Svc.Targets.Target = InCombat.Centroid();
         }
 
-        return !InCombat.Any() ? FarmerPhase.Waiting : null;
+        var anyInCombat = InCombat.Any();
+
+        if (module.config.ReturnToStartInWaitingPhase && !anyInCombat)
+        {
+            var vnav = module.GetIPCProvider<VNavmesh>();
+            if (!vnav.IsRunning())
+            {
+                vnav.PathfindAndMoveTo(StartingPoint, false);
+            }
+
+            return Player.DistanceTo(StartingPoint) <= 2f ? FarmerPhase.Waiting : null;
+        }
+
+        return !anyInCombat ? FarmerPhase.Waiting : null;
     }
 
     public void Draw()
@@ -237,6 +252,7 @@ public class Farmer
         Phase = FarmerPhase.Waiting;
         if (Running)
         {
+            StartingPoint = Player.Position;
             Svc.Commands.ProcessCommand("/wrath unset 110058");
         }
     }
