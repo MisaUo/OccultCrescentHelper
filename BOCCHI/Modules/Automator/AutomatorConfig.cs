@@ -6,11 +6,6 @@ namespace BOCCHI.Modules.Automator;
 
 public class AutomatorConfig : ModuleConfig
 {
-    public override string ProviderNamespace
-    {
-        get => GetType().Namespace!;
-    }
-
     [Checkbox]
     [Illegal]
     [RequiredPlugin("Lifestream", "vnavmesh")]

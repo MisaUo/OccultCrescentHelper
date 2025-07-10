@@ -7,11 +7,6 @@ namespace BOCCHI.Modules.MobFarmer;
 [Title]
 public class MobFarmerConfig : ModuleConfig
 {
-    public override string ProviderNamespace
-    {
-        get => GetType().Namespace!;
-    }
-
     [Enum(typeof(Mob), nameof(MobProvider))]
     public Mob Mob { get; set; } = Mob.Foper;
 

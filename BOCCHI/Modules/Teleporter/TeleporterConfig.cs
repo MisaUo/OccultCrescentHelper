@@ -6,11 +6,6 @@ namespace BOCCHI.Modules.Teleporter;
 [Title]
 public class TeleporterConfig : ModuleConfig
 {
-    public override string ProviderNamespace
-    {
-        get => GetType().Namespace!;
-    }
-
     [Checkbox]
     [RequiredPlugin("Lifestream")]
     [IllegalModeCompatible]
