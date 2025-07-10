@@ -44,7 +44,7 @@ public class AethernetData
 
     public static IOrderedEnumerable<AethernetData> AllByDistance(Vector3 position)
     {
-        return All().OrderBy(a => Player.DistanceTo(a.position));
+        return All().OrderBy(a => Vector3.Distance(a.position, position));
     }
 
     public static AethernetData GetClosestTo(Vector3 to)

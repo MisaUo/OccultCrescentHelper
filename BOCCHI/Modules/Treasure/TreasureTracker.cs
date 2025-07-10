@@ -89,6 +89,12 @@ public class TreasureTracker : IDisposable
             return;
         }
 
+        var addon = (AtkUnitBase*)args.Addon;
+        if (!addon->IsVisible)
+        {
+            return;
+        }
+
         var timeSinceLast = DateTime.Now - LastParseWideText;
         if (timeSinceLast < ParseWideTextCooldown)
         {
@@ -97,21 +103,17 @@ public class TreasureTracker : IDisposable
 
         LastParseWideText = DateTime.Now;
 
-        var addon = (AtkUnitBase*)args.Addon;
-        if (!addon->IsVisible)
-        {
-            return;
-        }
-
         var pattern = LogMessageHelper.GetLogMessagePattern(10965);
         var text = addon->GetNodeById(3)->GetAsAtkTextNode()->NodeText.ToString();
         var match = Regex.Match(text, pattern);
 
-        if (match.Success)
+        if (!match.Success)
         {
-            SilverChests = int.Parse(match.Groups[1].Value);
-            BronzeChests = int.Parse(match.Groups[2].Value);
+            return;
         }
+
+        SilverChests = int.Parse(match.Groups[1].Value);
+        BronzeChests = int.Parse(match.Groups[2].Value);
     }
 
     public void Dispose()

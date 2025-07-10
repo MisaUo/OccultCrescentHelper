@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using BOCCHI.Enums;
+using ECommons.DalamudServices;
 
 namespace BOCCHI.Modules.Automator;
 
@@ -36,6 +37,12 @@ public static class SmartNavigation
             { NavigationType.ReturnTeleportWalk, costToReturnTeleportThenWalk },
             { NavigationType.WalkTeleportWalk, costToWalkToShardThenEvent },
         };
+
+        Svc.Log.Debug("Closest Aethernet: " + closestToDestination.aethernet.ToFriendlyString());
+        foreach (var (type, cost) in costs)
+        {
+            Svc.Log.Debug($"{type} - {cost:f2}");
+        }
 
         return costs.OrderBy(kv => kv.Value).First().Key;
     }

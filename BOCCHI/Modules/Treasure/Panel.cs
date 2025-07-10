@@ -15,8 +15,8 @@ public class Panel
         {
             if (module.Tracker.BronzeChests + module.Tracker.SilverChests > 0)
             {
-                OcelotUI.LabelledValue(module.T("pane.active_bronze.label"), module.Tracker.BronzeChests);
-                OcelotUI.LabelledValue(module.T("pane.active_silver.label"), module.Tracker.SilverChests);
+                OcelotUI.LabelledValue(module.T("panel.active_bronze.label"), module.Tracker.BronzeChests);
+                OcelotUI.LabelledValue(module.T("panel.active_silver.label"), module.Tracker.SilverChests);
             }
 
             if (module.Treasures.Count <= 0)
