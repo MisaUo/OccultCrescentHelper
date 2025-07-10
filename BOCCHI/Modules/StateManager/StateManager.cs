@@ -1,8 +1,9 @@
 using System.Collections.Generic;
-using System.Linq;
+using BOCCHI.Data;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
+using ECommons.GameHelpers;
 using FFXIVClientStructs.FFXIV.Client.Game.Fate;
 using Action = System.Action;
 
@@ -28,7 +29,7 @@ public class StateManager
 
     public event Action? OnExitInCriticalEncounter;
 
-    private Dictionary<State, Action> handlers;
+    private readonly Dictionary<State, Action> handlers;
 
     public StateManager()
     {
@@ -43,7 +44,7 @@ public class StateManager
 
     public void Tick(IFramework _)
     {
-        if (Svc.ClientState.LocalPlayer?.IsDead ?? true)
+        if (Player.IsDead)
         {
             return;
         }
@@ -69,7 +70,6 @@ public class StateManager
         if (IsInCriticalEncounter())
         {
             ChangeState(State.InCriticalEncounter);
-            return;
         }
     }
 
@@ -91,7 +91,6 @@ public class StateManager
         if (!IsInCombat())
         {
             ChangeState(State.Idle);
-            return;
         }
     }
 
@@ -100,7 +99,6 @@ public class StateManager
         if (!IsInFate())
         {
             ChangeState(IsInCombat() ? State.InCombat : State.Idle);
-            return;
         }
     }
 
@@ -109,7 +107,6 @@ public class StateManager
         if (!IsInCriticalEncounter())
         {
             ChangeState(IsInCombat() ? State.InCriticalEncounter : State.Idle);
-            return;
         }
     }
 
@@ -160,10 +157,9 @@ public class StateManager
         return FateManager.Instance()->CurrentFate is not null;
     }
 
-    // 1778 = Hoofing It (Unable to mount)
     private bool IsInCriticalEncounter()
     {
-        return Svc.ClientState.LocalPlayer?.StatusList.Any(s => s.StatusId == 1778) ?? false;
+        return Player.Status.Has(PlayerStatus.HoofingIt);
     }
 
     public State GetState()

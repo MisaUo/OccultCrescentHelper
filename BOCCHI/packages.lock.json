@@ -16,9 +16,9 @@
       },
       "FFXIVOcelot": {
         "type": "Direct",
-        "requested": "[0.36.0, )",
-        "resolved": "0.36.0",
-        "contentHash": "JHPPw2uoAD3XOB2EHzqQHDPaFV6UOopuJN+pJZz638n4uyb2ZjZPVv0a4gVqgs6+uDZoxFkpVxrHaUi5hQazcw==",
+        "requested": "[0.37.0, )",
+        "resolved": "0.37.0",
+        "contentHash": "3n+TP5JaWGQsswcVoJ2l4LJfZWvT/RuVX1lhtirrNuN8wBZ5oMG9MIR86aww2j8wrkx2SK+AX9WKQyA7NkLX/Q==",
         "dependencies": {
           "Ecommons": "3.0.0",
           "Microsoft.Extensions.Configuration": "7.0.0",

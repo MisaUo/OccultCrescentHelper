@@ -12,9 +12,9 @@ public class StateManagerModule : Module<Plugin, Config>
         get => _config.StateManagerConfig;
     }
 
-    private Panel panel = new();
+    private readonly Panel panel = new();
 
-    private StateManager state = new();
+    private readonly StateManager state = new();
 
     public event Action? OnEnterIdle
     {
