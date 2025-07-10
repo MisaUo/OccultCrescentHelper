@@ -1,8 +1,5 @@
 using System.Linq;
 using Dalamud.Plugin.Services;
-using ECommons.DalamudServices;
-using ECommons.GameFunctions;
-using ECommons.GameHelpers;
 using ECommons.Throttlers;
 using Ocelot.Modules;
 
@@ -30,16 +27,7 @@ public class DataModule(Plugin plugin, Config config) : Module<Plugin, Config>(p
             return;
         }
 
-        var enemies = Svc.Objects
-            .Where(o =>
-                o != null &&
-                o.IsHostile() &&
-                o.IsTargetable &&
-                o.Name.TextValue.Length > 0
-            )
-            .OrderBy(o => Player.DistanceTo(o.Position))
-            .ToList();
-
+        var enemies = TargetHelper.Enemies.Where(e => e.Name.TextValue.Length > 0);
         foreach (var enemy in enemies)
         {
             Api.SendEnemyData(enemy);

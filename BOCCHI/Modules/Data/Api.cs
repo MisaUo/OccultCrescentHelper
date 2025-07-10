@@ -12,7 +12,7 @@ public class Api
 {
     private readonly HttpClient client = new();
 
-    private DataHelper data = new();
+    private readonly DataHelper data = new();
 
     public async Task SendEnemyData(IGameObject obj)
     {
@@ -22,7 +22,7 @@ public class Api
             return;
         }
 
-        var url = "https://api.oc.ohkannaduh.com/monster_spawn";
+        const string url = "https://api.oc.ohkannaduh.com/monster_spawn";
         var payload = MonsterPayload.Create(enemy);
         var json = JsonSerializer.Serialize(payload);
         var content = new StringContent(json, Encoding.UTF8, "application/json");

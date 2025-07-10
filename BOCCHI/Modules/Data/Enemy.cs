@@ -20,11 +20,6 @@ public unsafe class Enemy(IGameObject obj)
         }
     }
 
-    public uint DataId
-    {
-        get => obj.DataId;
-    }
-
     public uint LayoutId
     {
         get => BattleChara->LayoutId;

@@ -3,7 +3,6 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Data;
 
-[Title]
 [Text("config.explanation")]
 public class DataConfig : ModuleConfig
 {

@@ -6,7 +6,7 @@ using ECommons.DalamudServices;
 
 namespace BOCCHI.Modules.Data;
 
-using Schema = List<uint>;
+using Data = List<uint>;
 
 public class DataHelper
 {
@@ -15,7 +15,9 @@ public class DataHelper
         { ZoneData.SOUTHHORN, Path.Join(Svc.PluginInterface.ConfigDirectory.FullName, "southhorn_enemies.json") },
     };
 
-    private Schema LoadSchema()
+    private readonly JsonSerializerOptions options = new() { WriteIndented = true };
+
+    private Data LoadSchema()
     {
         if (!Paths.TryGetValue(Svc.ClientState.TerritoryType, out var path))
         {
@@ -28,29 +30,23 @@ public class DataHelper
         }
 
         var json = File.ReadAllText(path);
-        var schema = JsonSerializer.Deserialize<Schema>(json);
-        return schema ?? [];
+        return JsonSerializer.Deserialize<Data>(json) ?? [];
     }
 
-    private void SaveSchema(Schema schema)
+    private void SaveSchema(Data data)
     {
         if (!Paths.TryGetValue(Svc.ClientState.TerritoryType, out var path))
         {
             throw new KeyNotFoundException($"No JSON path configured for territory {Svc.ClientState.TerritoryType}");
         }
 
-        var json = JsonSerializer.Serialize(schema, new JsonSerializerOptions { WriteIndented = true });
+        var json = JsonSerializer.Serialize(data, options);
         File.WriteAllText(path, json);
     }
 
     public bool HasSharedEnemyData(Enemy enemy)
     {
-        if (!Paths.ContainsKey(Svc.ClientState.TerritoryType))
-        {
-            return true;
-        }
-
-        return LoadSchema().Contains(enemy.LayoutId);
+        return !Paths.ContainsKey(Svc.ClientState.TerritoryType) || LoadSchema().Contains(enemy.LayoutId);
     }
 
     public void MarkSharedEnemyData(Enemy enemy)
