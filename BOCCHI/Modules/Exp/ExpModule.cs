@@ -5,7 +5,7 @@ using Ocelot.Modules;
 namespace BOCCHI.Modules.Exp;
 
 [OcelotModule(int.MaxValue - 1000, 4)]
-public class ExpModule : Module<Plugin, Config>
+public class ExpModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
 {
     public override ExpConfig config
     {
@@ -19,12 +19,7 @@ public class ExpModule : Module<Plugin, Config>
 
     public readonly ExpTracker tracker = new();
 
-    private Panel panel = new();
-
-    public ExpModule(Plugin plugin, Config config)
-        : base(plugin, config)
-    {
-    }
+    private readonly Panel panel = new();
 
 
     public override bool DrawMainUi()
