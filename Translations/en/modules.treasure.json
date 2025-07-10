@@ -25,6 +25,12 @@
         "hunt": {
           "title": "Treasure Hunter",
           "distance_node": "Distance to next chest"
+        },
+        "active_bronze": {
+          "label": "Active Bronze"
+        },
+        "active_silver": {
+          "label": "Active Silver"
         }
       }
     }

@@ -83,9 +83,9 @@ public class Treasure(IGameObject obj)
     {
         return GetTreasureType() switch
         {
-            TreasureType.Bronze => TreasureModule.bronze,
-            TreasureType.Silver => TreasureModule.silver,
-            _ => TreasureModule.unknown,
+            TreasureType.Bronze => TreasureModule.Bronze,
+            TreasureType.Silver => TreasureModule.Silver,
+            _ => TreasureModule.Unknown,
         };
     }
 

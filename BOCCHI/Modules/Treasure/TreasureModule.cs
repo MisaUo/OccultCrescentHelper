@@ -18,19 +18,19 @@ public class TreasureModule(Plugin plugin, Config config) : Module<Plugin, Confi
         get => config.IsPropertyEnabled(nameof(config.Enabled));
     }
 
-    public readonly static Vector4 bronze = new(0.804f, 0.498f, 0.196f, 1f);
+    public readonly static Vector4 Bronze = new(0.804f, 0.498f, 0.196f, 1f);
 
-    public readonly static Vector4 silver = new(0.753f, 0.753f, 0.753f, 1f);
+    public readonly static Vector4 Silver = new(0.753f, 0.753f, 0.753f, 1f);
 
-    public readonly static Vector4 unknown = new(0.6f, 0.2f, 0.8f, 1f);
+    public readonly static Vector4 Unknown = new(0.6f, 0.2f, 0.8f, 1f);
 
-    public readonly TreasureTracker tracker = new();
+    public readonly TreasureTracker Tracker = new();
 
     private TreasureHunt hunter = null!;
 
-    public List<Treasure> treasures
+    public List<Treasure> Treasures
     {
-        get => tracker.Treasures;
+        get => Tracker.Treasures;
     }
 
     private readonly Panel panel = new();
@@ -44,7 +44,7 @@ public class TreasureModule(Plugin plugin, Config config) : Module<Plugin, Confi
 
     public override void Tick(IFramework framework)
     {
-        tracker.Tick(framework, plugin);
+        Tracker.Tick(framework, plugin);
         hunter.Tick(this);
     }
 

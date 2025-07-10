@@ -13,20 +13,19 @@ public class Panel
 
         OcelotUI.Indent(() =>
         {
-            if (module.tracker.BronzeChests + module.tracker.SilverChests > 0)
+            if (module.Tracker.BronzeChests + module.Tracker.SilverChests > 0)
             {
-                OcelotUI.LabelledValue("Active Bronze", module.tracker.BronzeChests);
-                OcelotUI.LabelledValue("Active Silver", module.tracker.SilverChests);
+                OcelotUI.LabelledValue(module.T("pane.active_bronze.label"), module.Tracker.BronzeChests);
+                OcelotUI.LabelledValue(module.T("pane.active_silver.label"), module.Tracker.SilverChests);
             }
 
-            if (module.treasures.Count <= 0)
+            if (module.Treasures.Count <= 0)
             {
                 ImGui.TextUnformatted(module.T("panel.none"));
                 return;
             }
 
-
-            foreach (var treasure in module.treasures)
+            foreach (var treasure in module.Treasures)
             {
                 if (!treasure.IsValid())
                 {

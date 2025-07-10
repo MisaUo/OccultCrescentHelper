@@ -1,3 +1,4 @@
+using System.Linq;
 using BOCCHI.Data;
 using BOCCHI.Enums;
 using Dalamud.Game.ClientState.Conditions;
@@ -22,13 +23,8 @@ public class Radar
         }
 
         var pos = Player.Position;
-        foreach (var treasure in module.treasures)
+        foreach (var treasure in module.Treasures.Where(treasure => treasure.IsValid()))
         {
-            if (!treasure.IsValid())
-            {
-                continue;
-            }
-
             switch (treasure.GetTreasureType())
             {
                 case TreasureType.Bronze:

@@ -3,7 +3,6 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Treasure;
 
-[Title]
 public class TreasureConfig : ModuleConfig
 {
     [Checkbox]
@@ -12,7 +11,6 @@ public class TreasureConfig : ModuleConfig
 
     [Checkbox]
     [DependsOn(nameof(Enabled))]
-
     public bool DrawLineToBronzeChests { get; set; } = true;
 
     public bool ShouldDrawLineToBronzeChests
@@ -22,7 +20,6 @@ public class TreasureConfig : ModuleConfig
 
     [Checkbox]
     [DependsOn(nameof(Enabled))]
-
     public bool DrawLineToSilverChests { get; set; } = true;
 
     public bool ShouldDrawLineToSilverChests
