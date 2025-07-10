@@ -1,7 +1,6 @@
 using System;
 using System.Numerics;
 using ECommons.Automation.NeoTaskManager;
-using ECommons.DalamudServices;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
@@ -33,9 +32,7 @@ public class PathfindAndMoveToChain : ChainFactory
         var offsetZ = MathF.Sin(angle) * distance;
 
         destination = new Vector3(destination.X + offsetX, destination.Y, destination.Z + offsetZ);
-        Svc.Log.Info($"Pre: {destination.X:f2}, {destination.Y:f2}, {destination.Z:f2}");
         destination = vnav.FindPointOnFloor(destination, false, 0.5f) ?? destination;
-        Svc.Log.Info($"Post: {destination.X:f2}, {destination.Y:f2}, {destination.Z:f2}");
 
         return new PathfindAndMoveToChain(vnav, destination);
     }
