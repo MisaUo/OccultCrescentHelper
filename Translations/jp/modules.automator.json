@@ -162,12 +162,12 @@
           "none": "アクティビティを待機中"
         },
         "lens": {
-          "title": null
+          "title": "BOCCHI 不正レンズ"
         }
       },
       "messages": {
-        "off": null,
-        "on": null
+        "off": "[BOCCHI] 不正モード OFF",
+        "on": "[BOCCHI] 不正モード ON"
       }
     }
   }

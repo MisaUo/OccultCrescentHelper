@@ -32,20 +32,20 @@
         },
         "title": "モブファーミング設定",
         "consider_special_mobs": {
-          "label": null,
-          "tooltip": null
+          "label": "特殊モブを考慮する",
+          "tooltip": "特定の時間や天候で出現する特殊モブを引き寄せ対象およびカウントに含めます"
         },
         "max_mob_level": {
-          "label": null,
-          "tooltip": null
+          "label": "モブの最大レベル",
+          "tooltip": "引き寄せ対象とするモブの最大レベル。特殊モブやレベル差のあるモブを扱う際に便利です"
         },
         "max_euclidean_distance": {
-          "label": null,
-          "tooltip": null
+          "label": "最大ユークリッド距離",
+          "tooltip": "特殊モブを考慮する際、マップ全体を引き回されるのを防ぐためにモブを無視する最大直線距離を設定します"
         },
         "return_to_start_in_waiting_phase": {
-          "label": null,
-          "tooltip": null
+          "label": "戦闘後に開始地点へ戻る",
+          "tooltip": "開始地点は「開始」ボタンを押した時点の位置です"
         }
       }
     }
