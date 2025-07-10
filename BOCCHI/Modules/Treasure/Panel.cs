@@ -50,15 +50,17 @@ public class Panel
         OcelotUI.LabelledValue(module.T("panel.active_bronze.label"), $"{module.Tracker.BronzeChests}/30");
         if (module.config.ShowPercentageActiveTreasureCount)
         {
+            var percentage = module.Tracker.BronzeChests / 30f * 100f;
             ImGui.SameLine();
-            ImGui.TextUnformatted($"({module.Tracker.BronzeChests / 30f * 100f}%)");
+            ImGui.TextUnformatted($"({percentage:f2}%)");
         }
 
         OcelotUI.LabelledValue(module.T("panel.active_silver.label"), $"{module.Tracker.SilverChests}/8");
         if (module.config.ShowPercentageActiveTreasureCount)
         {
+            var percentage = module.Tracker.SilverChests / 8f * 100f;
             ImGui.SameLine();
-            ImGui.TextUnformatted($"({module.Tracker.SilverChests / 8f * 100f}%)");
+            ImGui.TextUnformatted($"({percentage:f2}%)");
         }
     }
 }

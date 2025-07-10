@@ -162,6 +162,7 @@ public abstract class Hunter
 
         if (stepIndex < Steps.Count)
         {
+            StepProcessor.Submit(GetInteractionChain);
             return;
         }
 

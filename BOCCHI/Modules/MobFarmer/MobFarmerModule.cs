@@ -11,13 +11,16 @@ public class MobFarmerModule : Module<Plugin, Config>
         get => _config.MobFarmerConfig;
     }
 
+    public override bool enabled
+    {
+        get => config.Enabled;
+    }
 
-    private Panel panel = new();
+    private readonly Panel panel = new();
 
     public readonly Scanner scanner;
 
     public readonly Farmer farmer;
-
 
     public MobFarmerModule(Plugin plugin, Config config)
         : base(plugin, config)

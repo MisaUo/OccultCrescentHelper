@@ -6,6 +6,10 @@ namespace BOCCHI.Modules.MobFarmer;
 
 public class MobFarmerConfig : ModuleConfig
 {
+    [Checkbox]
+    [Label("generic.label.enabled")]
+    public bool Enabled { get; set; } = true;
+
     [Enum(typeof(Mob), nameof(MobProvider))]
     public Mob Mob { get; set; } = Mob.Foper;
 
