@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace BOCCHI;
 
-public static unsafe class CameraHelper
+public static class CameraHelper
 {
     public static bool WorldLineToScreen(
         Vector3 startWorld,
@@ -82,29 +82,5 @@ public static unsafe class CameraHelper
         }
 
         return true;
-    }
-
-    public static Vector3 WorldToScreen(Vector3 pointWorld, Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix, uint windowWidth, uint windowHeight)
-    {
-        var pointWorld4 = new Vector4(pointWorld, 1f);
-        var pointView = Vector4.Transform(pointWorld4, viewMatrix);
-        var pointClip = Vector4.Transform(pointView, projectionMatrix);
-
-        if (pointClip.W <= 0)
-        {
-            return new Vector3(-1, -1, -1); // behind camera sentinel
-        }
-
-        var pointNDC = new Vector3(pointClip.X, pointClip.Y, pointClip.Z) / pointClip.W;
-
-        var clampedNDC = new Vector3(
-            Math.Clamp(pointNDC.X, -1, 1),
-            Math.Clamp(pointNDC.Y, -1, 1),
-            pointNDC.Z);
-
-        var screenX = (clampedNDC.X + 1f) * 0.5f * windowWidth;
-        var screenY = (1f - (clampedNDC.Y + 1f) * 0.5f) * windowHeight;
-
-        return new Vector3(screenX, screenY, clampedNDC.Z);
     }
 }
