@@ -37,7 +37,7 @@ public class CarrotsModule(Plugin plugin, Config config) : Module<Plugin, Config
 
     public override void Tick(IFramework framework)
     {
-        tracker.Tick(framework, plugin);
+        tracker.Tick(framework);
         // hunter.Tick(this);
     }
 

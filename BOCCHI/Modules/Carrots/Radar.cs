@@ -32,7 +32,7 @@ public class Radar
                 continue;
             }
 
-            Helpers.DrawLine(pos, carrot.GetPosition(), 3f, Carrot.color);
+            Helpers.DrawLine(pos, carrot.GetPosition(), 3f, Carrot.Color);
         }
     }
 }

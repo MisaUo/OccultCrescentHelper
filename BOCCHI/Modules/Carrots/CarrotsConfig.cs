@@ -3,7 +3,6 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Carrots;
 
-[Title]
 public class CarrotsConfig : ModuleConfig
 {
     [Checkbox]
@@ -12,7 +11,6 @@ public class CarrotsConfig : ModuleConfig
 
     [Checkbox]
     [DependsOn(nameof(Enabled))]
-
     public bool DrawLineToCarrots { get; set; } = true;
 
     public bool ShouldDrawLineToCarrots

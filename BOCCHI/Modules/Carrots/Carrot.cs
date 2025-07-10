@@ -3,24 +3,17 @@ using Dalamud.Game.ClientState.Objects.Types;
 
 namespace BOCCHI.Modules.Carrots;
 
-public class Carrot
+public class Carrot(IGameObject obj)
 {
-    private readonly IGameObject gameObject;
-
-    public static Vector4 color = new(0.2f, 0.8f, 0.2f, 1f);
-
-    public Carrot(IGameObject obj)
-    {
-        gameObject = obj;
-    }
+    public static Vector4 Color { get; } = new(0.2f, 0.8f, 0.2f, 1f);
 
     public bool IsValid()
     {
-        return gameObject != null && !gameObject.IsDead && gameObject.IsValid();
+        return obj is { IsDead: false } && obj.IsValid();
     }
 
     public Vector3 GetPosition()
     {
-        return gameObject.Position;
+        return obj.Position;
     }
 }
