@@ -40,16 +40,4 @@ public unsafe class Action(ActionType type, uint id)
             .Then(_ => CanCast())
             .Then(_ => Cast());
     }
-
-    public Func<Chain> GetCastChain(uint arg)
-    {
-        return () => CastOnChain(Chain.Create($"Action({type}, {id})"), arg);
-    }
-
-    public Chain CastOnChain(Chain chain, uint arg)
-    {
-        return chain
-            .Then(_ => CanCast())
-            .Then(_ => Cast(arg));
-    }
 }
