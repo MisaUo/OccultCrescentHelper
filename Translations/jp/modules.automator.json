@@ -160,7 +160,14 @@
         "activity_state": {
           "label": "アクティビティ状態",
           "none": "アクティビティを待機中"
+        },
+        "lens": {
+          "title": null
         }
+      },
+      "messages": {
+        "off": null,
+        "on": null
       }
     }
   }

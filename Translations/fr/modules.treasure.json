@@ -13,7 +13,15 @@
         "show_hunt_button": {
           "label": "Afficher le bouton de chasse au coffres"
         },
-        "title": "Configuration des Coffres"
+        "title": "Configuration des Coffres",
+        "cast_treasure_sight_upon_return": {
+          "label": null,
+          "tooltip": null
+        },
+        "show_percentage_active_treasure_count": {
+          "label": null,
+          "tooltip": null
+        }
       },
       "panel": {
         "hunt": {
@@ -21,7 +29,13 @@
           "title": "Chasseur de coffres"
         },
         "none": "Pas de coffre à proximité.",
-        "title": "Coffres"
+        "title": "Coffres",
+        "active_bronze": {
+          "label": null
+        },
+        "active_silver": {
+          "label": null
+        }
       }
     }
   }

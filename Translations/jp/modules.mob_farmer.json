@@ -38,6 +38,14 @@
         "max_mob_level": {
           "label": null,
           "tooltip": null
+        },
+        "max_euclidean_distance": {
+          "label": null,
+          "tooltip": null
+        },
+        "return_to_start_in_waiting_phase": {
+          "label": null,
+          "tooltip": null
         }
       }
     }

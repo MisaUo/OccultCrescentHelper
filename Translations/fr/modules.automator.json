@@ -160,7 +160,14 @@
           "label": "État",
           "none": "En attente"
         },
-        "title": "Mode Illégal"
+        "title": "Mode Illégal",
+        "lens": {
+          "title": null
+        }
+      },
+      "messages": {
+        "off": null,
+        "on": null
       }
     }
   }

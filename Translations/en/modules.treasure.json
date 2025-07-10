@@ -17,6 +17,10 @@
         "cast_treasure_sight_upon_return": {
           "label": "Cast Treasuresight after returning",
           "tooltip": "Cast Treasuresight to update the active chest count upon returning to basecamp after a fate/ce"
+        },
+        "show_percentage_active_treasure_count": {
+          "label": "Show active treasure as percentage",
+          "tooltip": "Show active treasure as percentage next to the total"
         }
       },
       "panel": {
