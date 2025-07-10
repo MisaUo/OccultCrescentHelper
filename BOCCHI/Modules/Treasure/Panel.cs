@@ -13,11 +13,7 @@ public class Panel
 
         OcelotUI.Indent(() =>
         {
-            if (module.Tracker.BronzeChests + module.Tracker.SilverChests > 0)
-            {
-                OcelotUI.LabelledValue(module.T("panel.active_bronze.label"), module.Tracker.BronzeChests);
-                OcelotUI.LabelledValue(module.T("panel.active_silver.label"), module.Tracker.SilverChests);
-            }
+            DrawActiveChests(module);
 
             if (module.Treasures.Count <= 0)
             {
@@ -42,5 +38,27 @@ public class Panel
                 });
             }
         });
+    }
+
+    private void DrawActiveChests(TreasureModule module)
+    {
+        if (!module.Tracker.CountInitialised)
+        {
+            return;
+        }
+
+        OcelotUI.LabelledValue(module.T("panel.active_bronze.label"), $"{module.Tracker.BronzeChests}/30");
+        if (module.config.ShowPercentageActiveTreasureCount)
+        {
+            ImGui.SameLine();
+            ImGui.TextUnformatted($"({module.Tracker.BronzeChests / 30f * 100f}%)");
+        }
+
+        OcelotUI.LabelledValue(module.T("panel.active_silver.label"), $"{module.Tracker.SilverChests}/8");
+        if (module.config.ShowPercentageActiveTreasureCount)
+        {
+            ImGui.SameLine();
+            ImGui.TextUnformatted($"({module.Tracker.SilverChests / 8f * 100f}%)");
+        }
     }
 }

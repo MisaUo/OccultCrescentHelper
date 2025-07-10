@@ -18,6 +18,8 @@ public class TreasureTracker : IDisposable
 {
     public List<Treasure> Treasures { get; private set; } = [];
 
+    public bool CountInitialised { get; private set; } = false;
+
     public int BronzeChests { get; private set; } = 0;
 
     public int SilverChests { get; private set; } = 0;
@@ -114,6 +116,7 @@ public class TreasureTracker : IDisposable
 
         SilverChests = int.Parse(match.Groups[1].Value);
         BronzeChests = int.Parse(match.Groups[2].Value);
+        CountInitialised = true;
     }
 
     public void Dispose()

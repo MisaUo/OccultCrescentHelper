@@ -41,4 +41,6 @@ public class TreasureConfig : ModuleConfig
     }
 
     [Checkbox] public bool CastTreasureSightUponReturn { get; set; } = false;
+
+    [Checkbox] public bool ShowPercentageActiveTreasureCount { get; set; } = false;
 }

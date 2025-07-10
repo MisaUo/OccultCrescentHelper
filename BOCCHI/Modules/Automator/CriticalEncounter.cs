@@ -154,17 +154,12 @@ public class CriticalEncounter : Activity
             return true;
         }
 
-        if (Encounter.State == DynamicEventState.Warmup)
-        {
-            return Player.DistanceTo(GetPosition()) <= GetRadius();
-        }
-
-        if (Encounter.State == DynamicEventState.Battle)
+        if (Encounter.State is DynamicEventState.Warmup or DynamicEventState.Battle)
         {
             return Player.Status.Has(PlayerStatus.HoofingIt);
         }
 
-        return true;
+        return false;
     }
 
     protected override float GetRadius()

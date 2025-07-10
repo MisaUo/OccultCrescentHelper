@@ -26,21 +26,17 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Re
 
         var shouldReturn = GetCostToReturn() < GetCostToWalk();
 
-        chain.ConditionalThen(_ => shouldReturn, CastReturn);
+        if (shouldReturn)
+        {
+            chain = Actions.Return.CastOnChain(chain);
+            chain.WaitToCast().WaitToCycleCondition(ConditionFlag.BetweenAreas);
+        }
+
         chain.Then(ChainHelper.TreasureSightChain());
         chain.Then(ApplyBuffs);
         chain.ConditionalThen(_ => config.ApproachAetheryte, ChainHelper.PathfindToAndWait(GetAetherytePosition(), AethernetData.DISTANCE));
 
         return chain.Then(_ => complete = true);
-    }
-
-    private Chain CastReturn()
-    {
-        var chain = Chain.Create();
-        chain = Actions.Return.CastOnChain(chain);
-        chain.WaitToCast().WaitToCycleCondition(ConditionFlag.BetweenAreas);
-
-        return chain;
     }
 
     private Chain ApplyBuffs()
