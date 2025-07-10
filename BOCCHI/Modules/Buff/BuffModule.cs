@@ -4,7 +4,7 @@ using Ocelot.Modules;
 namespace BOCCHI.Modules.Buff;
 
 [OcelotModule(1005, 2)]
-public class BuffModule : Module<Plugin, Config>
+public class BuffModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
 {
     public override BuffConfig config
     {
@@ -21,18 +21,13 @@ public class BuffModule : Module<Plugin, Config>
         get => true;
     }
 
-    public readonly BuffManager buffs = new();
+    public readonly BuffManager BuffManager = new();
 
-    private Panel panel = new();
-
-    public BuffModule(Plugin plugin, Config config)
-        : base(plugin, config)
-    {
-    }
+    private readonly Panel panel = new();
 
     public override void Tick(IFramework framework)
     {
-        buffs.Tick(framework, this);
+        BuffManager.Tick(framework, this);
     }
 
     public override bool DrawMainUi()
@@ -43,6 +38,6 @@ public class BuffModule : Module<Plugin, Config>
 
     public bool ShouldRefreshBuffs()
     {
-        return buffs.ShouldRefresh(this);
+        return BuffManager.ShouldRefresh(this);
     }
 }

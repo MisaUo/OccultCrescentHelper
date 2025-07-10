@@ -13,11 +13,11 @@ public class Panel
         OcelotUI.Indent(() =>
         {
             var isNearKnowledgeCrystal = ZoneHelper.IsNearKnowledgeCrystal();
-            var isQueued = module.buffs.IsQueued();
+            var isQueued = module.BuffManager.IsQueued();
 
             if (ImGuiEx.IconButton(FontAwesomeIcon.Redo, "Button##ApplyBuffs", enabled: isNearKnowledgeCrystal && !isQueued))
             {
-                module.buffs.QueueBuffs();
+                module.BuffManager.QueueBuffs();
             }
 
             if (ImGui.IsItemHovered())

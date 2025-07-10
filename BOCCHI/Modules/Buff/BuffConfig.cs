@@ -19,6 +19,5 @@ public class BuffConfig : ModuleConfig
 
     [IntRange(0, 25)]
     [IllegalModeCompatible]
-
     public int ReapplyThreshold { get; set; } = 10;
 }
