@@ -10,8 +10,15 @@ public class Panel
     public void Draw(TreasureModule module)
     {
         OcelotUI.Title($"{module.T("panel.title")}:");
+
         OcelotUI.Indent(() =>
         {
+            if (module.tracker.BronzeChests + module.tracker.SilverChests > 0)
+            {
+                OcelotUI.LabelledValue("Active Bronze", module.tracker.BronzeChests);
+                OcelotUI.LabelledValue("Active Silver", module.tracker.SilverChests);
+            }
+
             if (module.treasures.Count <= 0)
             {
                 ImGui.TextUnformatted(module.T("panel.none"));

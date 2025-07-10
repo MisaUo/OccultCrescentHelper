@@ -205,4 +205,9 @@ public class CriticalEncounter : Activity
             return false;
         }
     }
+
+    protected override ActivityState GetPostPathfindingState()
+    {
+        return ActivityState.WaitingToStartCriticalEncounter;
+    }
 }

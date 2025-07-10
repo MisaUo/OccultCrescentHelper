@@ -79,7 +79,7 @@ public static class AethernetExtensions
                 {
                     aethernet = Aethernet.BaseCamp,
                     dataId = 2014664,
-                    position = ZoneData.aetherytes[ZoneData.SOUTHHORN],
+                    position = ZoneData.Aetherytes[ZoneData.SOUTHHORN],
                     destination = new Vector3(835.3f, 73f, -695.9f),
                 };
             case Aethernet.TheWanderersHaven:

@@ -3,35 +3,65 @@ using System.Numerics;
 using BOCCHI.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
+using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using XIVTreasure = Lumina.Excel.Sheets.Treasure;
+using TreasureFlags = FFXIVClientStructs.FFXIV.Client.Game.Object.Treasure.TreasureFlags;
 
 namespace BOCCHI.Modules.Treasure;
 
-public class Treasure
+public class Treasure(IGameObject obj)
 {
-    private readonly IGameObject gameObject;
-
-    public Treasure(IGameObject obj)
+    public uint Id
     {
-        gameObject = obj;
+        get => obj.DataId;
     }
+
+    private TreasureFlags LastFlags = TreasureFlags.None;
+
+    public unsafe bool CheckOpened()
+    {
+        var gameObject = (GameObject*)(void*)obj.Address;
+        if (gameObject == null)
+        {
+            return false;
+        }
+
+        var instance = (FFXIVClientStructs.FFXIV.Client.Game.Object.Treasure*)gameObject;
+        var currentFlags = instance->Flags;
+
+        if (currentFlags != LastFlags)
+        {
+            var wasNotOpened = !LastFlags.HasFlag(TreasureFlags.Opened);
+            var isNowOpened = currentFlags.HasFlag(TreasureFlags.Opened);
+
+            LastFlags = currentFlags;
+
+            if (wasNotOpened && isNowOpened)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     private XIVTreasure? GetData()
     {
-        return Svc.Data.GetExcelSheet<XIVTreasure>().ToList().FirstOrDefault(t => t.RowId == gameObject.DataId);
+        return Svc.Data.GetExcelSheet<XIVTreasure>().ToList().FirstOrDefault(t => t.RowId == obj.DataId);
     }
 
     public bool IsValid()
     {
-        return gameObject != null && gameObject.IsValid() && !gameObject.IsDead && gameObject.IsTargetable;
+        return obj.IsValid() && obj is { IsDead: false, IsTargetable: true };
     }
 
     public Vector3 GetPosition()
     {
-        return gameObject.Position;
+        return obj.Position;
     }
 
-    public uint? GetModelId()
+    private uint? GetModelId()
     {
         return GetData()?.SGB.RowId;
     }
@@ -51,32 +81,21 @@ public class Treasure
 
     public Vector4 GetColor()
     {
-        switch (GetTreasureType())
+        return GetTreasureType() switch
         {
-            case TreasureType.Bronze:
-                return TreasureModule.bronze;
-            case TreasureType.Silver:
-                return TreasureModule.silver;
-            default:
-                return TreasureModule.unknown;
-        }
+            TreasureType.Bronze => TreasureModule.bronze,
+            TreasureType.Silver => TreasureModule.silver,
+            _ => TreasureModule.unknown,
+        };
     }
 
     public string GetName()
     {
-        switch (GetTreasureType())
+        return GetTreasureType() switch
         {
-            case TreasureType.Bronze:
-                return "Bronze Treasure Coffer";
-            case TreasureType.Silver:
-                return "Silver Treasure Coffer";
-            default:
-                return "Unknown Treasure Coffer";
-        }
-    }
-
-    public void Target()
-    {
-        Svc.Targets.Target = gameObject;
+            TreasureType.Bronze => "Bronze Treasure Coffer",
+            TreasureType.Silver => "Silver Treasure Coffer",
+            _ => "Unknown Treasure Coffer",
+        };
     }
 }

@@ -11,12 +11,12 @@ public static class ZoneData
     public const uint SOUTHHORN = 1252;
 
     // This can and should be filled using layout files or excel data
-    public readonly static Dictionary<uint, Vector3> aetherytes = new()
+    public readonly static Dictionary<uint, Vector3> Aetherytes = new()
     {
         { SOUTHHORN, new Vector3(830.75f, 72.98f, -695.98f) },
     };
 
-    public readonly static Dictionary<uint, Vector3> startingLocations = new()
+    public readonly static Dictionary<uint, Vector3> StartingLocations = new()
     {
         { SOUTHHORN, new Vector3(850.33f, 72.99f, -704.07f) },
     };

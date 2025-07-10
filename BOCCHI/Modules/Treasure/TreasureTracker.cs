@@ -1,26 +1,121 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
+using System.Text.RegularExpressions;
+using BOCCHI.Data;
+using BOCCHI.Enums;
+using Dalamud.Game.Addon.Lifecycle;
+using Dalamud.Game.Addon.Lifecycle.AddonArgTypes;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
+using ECommons.GameHelpers;
+using FFXIVClientStructs.FFXIV.Component.GUI;
 
 namespace BOCCHI.Modules.Treasure;
 
-public class TreasureTracker
+public class TreasureTracker : IDisposable
 {
-    public List<Treasure> treasures { get; private set; } = [];
+    public List<Treasure> Treasures { get; private set; } = [];
+
+    public int BronzeChests { get; private set; } = 0;
+
+    public int SilverChests { get; private set; } = 0;
+
+    private readonly TimeSpan ParseWideTextCooldown = TimeSpan.FromSeconds(10);
+
+    private DateTime LastParseWideText = DateTime.MinValue;
+
+    public TreasureTracker()
+    {
+        Svc.AddonLifecycle.RegisterListener(AddonEvent.PostDraw, "_WideText", OnWideTextPostDraw);
+    }
 
     public void Tick(IFramework _, Plugin plugin)
     {
-        var pos = Svc.ClientState.LocalPlayer!.Position;
+        var treasures = Svc.Objects
+            .Where(o => o is { ObjectKind: ObjectKind.Treasure })
+            .ToDictionary(o => o.DataId, o => o);
 
-        treasures = Svc.Objects
-            .Where(o => o != null)
-            .Where(o => o.ObjectKind == ObjectKind.Treasure)
-            .OrderBy(o => Vector3.Distance(o.Position, pos))
-            .Select(o => new Treasure(o))
-            .Where(t => t.IsValid())
-            .ToList();
+        var knownIds = Treasures.Select(t => t.Id).ToHashSet();
+
+        // Removed
+        for (var i = Treasures.Count - 1; i >= 0; i--)
+        {
+            var treasure = Treasures[i];
+            if (!treasures.ContainsKey(treasure.Id) || !treasure.IsValid())
+            {
+                Treasures.RemoveAt(i);
+            }
+        }
+
+        // Added
+        foreach (var (objectId, obj) in treasures)
+        {
+            if (knownIds.Contains(objectId))
+            {
+                continue;
+            }
+
+            var treasure = new Treasure(obj);
+            if (treasure.IsValid())
+            {
+                Treasures.Add(treasure);
+            }
+        }
+
+        Treasures = Treasures.OrderBy(t => Player.DistanceTo(t.GetPosition())).ToList();
+
+        foreach (var treasure in Treasures)
+        {
+            if (treasure.CheckOpened())
+            {
+                if (treasure.GetTreasureType() == TreasureType.Bronze)
+                {
+                    BronzeChests = Math.Max(0, BronzeChests - 1);
+                }
+                else if (treasure.GetTreasureType() == TreasureType.Silver)
+                {
+                    SilverChests = Math.Max(0, SilverChests - 1);
+                }
+            }
+        }
+    }
+
+    private unsafe void OnWideTextPostDraw(AddonEvent type, AddonArgs args)
+    {
+        if (!ZoneData.IsInOccultCrescent())
+        {
+            return;
+        }
+
+        var timeSinceLast = DateTime.Now - LastParseWideText;
+        if (timeSinceLast < ParseWideTextCooldown)
+        {
+            return;
+        }
+
+        LastParseWideText = DateTime.Now;
+
+        var addon = (AtkUnitBase*)args.Addon;
+        if (!addon->IsVisible)
+        {
+            return;
+        }
+
+        var pattern = LogMessageHelper.GetLogMessagePattern(10965);
+        var text = addon->GetNodeById(3)->GetAsAtkTextNode()->NodeText.ToString();
+        var match = Regex.Match(text, pattern);
+
+        if (match.Success)
+        {
+            SilverChests = int.Parse(match.Groups[1].Value);
+            BronzeChests = int.Parse(match.Groups[2].Value);
+        }
+    }
+
+    public void Dispose()
+    {
+        Svc.AddonLifecycle.UnregisterListener(AddonEvent.PostDraw, "_WideText", OnWideTextPostDraw);
     }
 }

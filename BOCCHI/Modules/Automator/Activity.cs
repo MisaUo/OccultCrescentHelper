@@ -108,7 +108,7 @@ public abstract class Activity
 
                 case NavigationType.ReturnThenTeleportToEventshard:
                     chain
-                        .Then(ChainHelper.ReturnChain())
+                        .Then(ChainHelper.ReturnChain(new ReturnChainConfig { ApproachAetheryte = true }))
                         .Then(ChainHelper.TeleportChain(activityShard.aethernet))
                         .Debug("Waiting for lifestream to not be 'busy'")
                         .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new TaskManagerConfiguration { TimeLimitMS = 30000 }))
@@ -129,8 +129,7 @@ public abstract class Activity
 
             chain
                 .Then(GetPathfindingWatcher(states, vnav))
-                // Cringe
-                .Then(_ => state = isFate ? ActivityState.Participating : ActivityState.WaitingToStartCriticalEncounter);
+                .Then(_ => state = GetPostPathfindingState());
 
             return chain;
         };
@@ -201,4 +200,6 @@ public abstract class Activity
     public abstract Vector3 GetPosition();
 
     public abstract string GetName();
+
+    protected abstract ActivityState GetPostPathfindingState();
 }

@@ -24,13 +24,13 @@ public class TreasureModule(Plugin plugin, Config config) : Module<Plugin, Confi
 
     public readonly static Vector4 unknown = new(0.6f, 0.2f, 0.8f, 1f);
 
-    private readonly TreasureTracker tracker = new();
+    public readonly TreasureTracker tracker = new();
 
     private TreasureHunt hunter = null!;
 
     public List<Treasure> treasures
     {
-        get => tracker.treasures;
+        get => tracker.Treasures;
     }
 
     private readonly Panel panel = new();

@@ -135,7 +135,7 @@ public class Automator
         {
             idleTime = 0;
 
-            Plugin.Chain.Submit(ChainHelper.ReturnChain());
+            Plugin.Chain.Submit(ChainHelper.ReturnChain(new ReturnChainConfig { ApproachAetheryte = true }));
         }
     }
 

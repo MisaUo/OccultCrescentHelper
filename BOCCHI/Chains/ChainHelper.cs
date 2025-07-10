@@ -1,12 +1,10 @@
 using System;
 using System.Numerics;
-using BOCCHI.Data;
 using BOCCHI.Enums;
-using BOCCHI.Modules.Buff;
 using BOCCHI.Modules.Mount;
 using BOCCHI.Modules.Mount.Chains;
 using BOCCHI.Modules.Teleporter;
-using ECommons.DalamudServices;
+using BOCCHI.Modules.Treasure;
 using ECommons.GameHelpers;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
@@ -54,17 +52,19 @@ public class ChainHelper
         _instance ??= new ChainHelper(plugin);
     }
 
-    public static ReturnChain ReturnChain(bool approachAetherye = true)
+    public static ReturnChain ReturnChain()
     {
-        var buffs = modules.GetModule<BuffModule>();
+        var config = new ReturnChainConfig
+        {
+            ApproachAetheryte = instance.plugin.config.TeleporterConfig.ApproachAetheryte,
+        };
 
-        return new ReturnChain(
-            ZoneData.aetherytes[Svc.ClientState.TerritoryType],
-            buffs,
-            ipc.GetProvider<YesAlready>(),
-            ipc.GetProvider<VNavmesh>(),
-            approachAetherye
-        );
+        return ReturnChain(config);
+    }
+
+    public static ReturnChain ReturnChain(ReturnChainConfig config)
+    {
+        return new ReturnChain(modules.GetModule<TeleporterModule>(), config);
     }
 
     public static TeleportChain TeleportChain(Aethernet aethernet)
@@ -103,5 +103,10 @@ public class ChainHelper
                     .WaitUntilNear(vnav, destination, distance)
                     .Then(_ => vnav.Stop())
             );
+    }
+
+    public static TreasureSightChain TreasureSightChain()
+    {
+        return new TreasureSightChain(modules.GetModule<TreasureModule>());
     }
 }

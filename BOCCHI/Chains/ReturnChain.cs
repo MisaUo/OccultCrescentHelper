@@ -5,102 +5,60 @@ using BOCCHI.Data;
 using BOCCHI.Enums;
 using BOCCHI.Modules.Buff;
 using BOCCHI.Modules.Buff.Chains;
+using BOCCHI.Modules.Teleporter;
 using Dalamud.Game.ClientState.Conditions;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
-using FFXIVClientStructs.FFXIV.Client.Game;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
 
 namespace BOCCHI.Chains;
 
-public class ReturnChain : RetryChainFactory
+public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : RetryChainFactory
 {
-    private bool approachAetherye = false;
-
-    private Vector3 destination = Vector3.Zero;
-
-    private YesAlready? yes;
-
-    private VNavmesh? vnav;
-
-    private BuffModule buffs;
-
     private bool complete = false;
-
-    public ReturnChain(Vector3 destination, BuffModule buffs, YesAlready? yes = null, VNavmesh? vnav = null, bool approachAetherye = true)
-    {
-        this.destination = destination;
-        this.yes = yes;
-        this.vnav = vnav;
-        this.approachAetherye = approachAetherye;
-        this.buffs = buffs;
-    }
 
     protected override Chain Create(Chain chain)
     {
-        chain.BreakIf(() => Svc.ClientState.LocalPlayer?.IsDead == true);
+        chain.BreakIf(() => Player.IsDead);
 
-        var zone = Svc.ClientState.TerritoryType;
-        var costToReturn = 60f + Vector3.Distance(ZoneData.startingLocations[zone], destination);
-        var costToWalk = Vector3.Distance(Player.Position, destination);
+        var shouldReturn = GetCostToReturn() < GetCostToWalk();
 
-        if (costToReturn < costToWalk || vnav == null)
-        {
-            if (yes != null && yes.IsReady())
-            {
-                yes.PausePlugin(5000);
-            }
-
-            chain
-                .UseGcdAction(ActionType.GeneralAction, 8)
-                .AddonCallback("SelectYesno", true, 0)
-                .WaitToCast()
-                .WaitToCycleCondition(ConditionFlag.BetweenAreas);
-
-            chain = ApplyBuffs(chain);
-
-            if (approachAetherye && vnav != null)
-            {
-                chain
-                    .Wait(500)
-                    .Then(ChainHelper.MoveToAndWait(destination, AethernetData.DISTANCE));
-            }
-        }
-        else if (vnav != null)
-        {
-            chain = ApplyBuffs(chain);
-
-            chain.Then(ChainHelper.PathfindToAndWait(destination, AethernetData.DISTANCE));
-        }
-
+        chain.ConditionalThen(_ => shouldReturn, CastReturn);
+        chain.Then(ChainHelper.TreasureSightChain());
+        chain.Then(ApplyBuffs);
+        chain.ConditionalThen(_ => config.ApproachAetheryte, ChainHelper.PathfindToAndWait(GetAetherytePosition(), AethernetData.DISTANCE));
 
         return chain.Then(_ => complete = true);
     }
 
-    private Chain ApplyBuffs(Chain chain)
+    private Chain CastReturn()
     {
-        if (buffs.ShouldRefreshBuffs() && vnav != null)
-        {
-            chain.Then(() =>
-            {
-                var closestKnowledgeCrystal = ZoneHelper.GetNearbyKnowledgeCrystal(60f).FirstOrDefault();
-                var position = closestKnowledgeCrystal?.Position ?? Vector3.Zero;
+        var chain = Chain.Create();
+        chain = Actions.Return.CastOnChain(chain);
+        chain.WaitToCast().WaitToCycleCondition(ConditionFlag.BetweenAreas);
 
-                return Chain.Create("Go to Crystal and Buff")
-                    .BreakIf(() => !buffs.buffs.ShouldRefresh(buffs))
-                    .Wait(500)
-                    .Then(_ => Actions.TryUnmount())
-                    .BreakIf(() => closestKnowledgeCrystal == null)
-                    .Then(_ => vnav.MoveToPath([position], false))
-                    .WaitUntilNear(vnav, position, AethernetData.DISTANCE)
-                    .Then(_ => vnav.Stop())
-                    .Then(new AllBuffsChain(buffs))
-                    .Wait(2500);
-            });
-        }
+        return chain;
+    }
+
+    private Chain ApplyBuffs()
+    {
+        var vnav = module.GetIPCProvider<VNavmesh>();
+        var buffs = module.GetModule<BuffModule>();
+
+        var closestKnowledgeCrystal = ZoneHelper.GetNearbyKnowledgeCrystal(60f).FirstOrDefault();
+
+        var chain = Chain.Create();
+        chain.BreakIf(() => !buffs.ShouldRefreshBuffs() || !vnav.IsReady() || closestKnowledgeCrystal == null);
+        chain.Then(_ => Actions.TryUnmount());
+
+        chain.PathfindAndMoveTo(vnav, closestKnowledgeCrystal!.Position);
+        chain.WaitUntilNear(vnav, closestKnowledgeCrystal!.Position, AethernetData.DISTANCE);
+        chain.Then(_ => vnav.Stop());
+
+        chain.Then(new AllBuffsChain(buffs));
 
         return chain;
     }
@@ -118,5 +76,31 @@ public class ReturnChain : RetryChainFactory
     public override TaskManagerConfiguration? Config()
     {
         return new TaskManagerConfiguration { TimeLimitMS = 60000 };
+    }
+
+    private Vector3 GetAetherytePosition()
+    {
+        if (ZoneData.Aetherytes.TryGetValue(Svc.ClientState.TerritoryType, out var position))
+        {
+            return position;
+        }
+
+        return Vector3.PositiveInfinity;
+    }
+
+    private float GetCostToReturn()
+    {
+        if (ZoneData.StartingLocations.TryGetValue(Svc.ClientState.TerritoryType, out var start))
+        {
+            return Vector3.Distance(start, GetAetherytePosition()) + 75f;
+        }
+
+
+        return float.MaxValue;
+    }
+
+    private float GetCostToWalk()
+    {
+        return Player.DistanceTo(GetAetherytePosition());
     }
 }

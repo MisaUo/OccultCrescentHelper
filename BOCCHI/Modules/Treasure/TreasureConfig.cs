@@ -42,4 +42,6 @@ public class TreasureConfig : ModuleConfig
     {
         get => IsPropertyEnabled(nameof(EnableTreasureHunt));
     }
+
+    [Checkbox] public bool CastTreasureSightUponReturn { get; set; } = false;
 }

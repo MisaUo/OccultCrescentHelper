@@ -190,12 +190,11 @@ public class Farmer
 
     private FarmerPhase? HandleFightingPhase()
     {
-        if (EzThrottler.Throttle("Targetter"))
+        var anyInCombat = InCombat.Any();
+        if (anyInCombat && EzThrottler.Throttle("Targetter"))
         {
             Svc.Targets.Target = InCombat.Centroid();
         }
-
-        var anyInCombat = InCombat.Any();
 
         var shouldReturnHome = module.config.ReturnToStartInWaitingPhase && Player.DistanceTo(StartingPoint) >= module.config.MinEuclideanDistanceToReturnHome;
         if (shouldReturnHome && !anyInCombat)

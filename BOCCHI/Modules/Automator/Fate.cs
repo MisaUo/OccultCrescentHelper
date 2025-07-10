@@ -109,4 +109,9 @@ public class Fate : Activity
             return false;
         }
     }
+
+    protected override ActivityState GetPostPathfindingState()
+    {
+        return ActivityState.Participating;
+    }
 }
