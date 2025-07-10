@@ -3,7 +3,6 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Pathfinder;
 
-[Title]
 [Text("config.text")]
 public class PathfinderConfig : ModuleConfig
 {
