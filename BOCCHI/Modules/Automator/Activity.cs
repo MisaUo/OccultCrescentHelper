@@ -21,17 +21,17 @@ public abstract class Activity
 {
     public readonly EventData data;
 
-    protected Lifestream lifestream;
+    private readonly Lifestream lifestream;
 
-    protected VNavmesh vnav;
+    protected readonly VNavmesh vnav;
 
-    protected AutomatorModule module;
+    protected readonly AutomatorModule module;
 
     public ActivityState state = ActivityState.Idle;
 
-    protected Dictionary<ActivityState, Func<StateManagerModule, Func<Chain>?>> handlers;
+    protected readonly Dictionary<ActivityState, Func<StateManagerModule, Func<Chain>?>> handlers;
 
-    public Activity(EventData data, Lifestream lifestream, VNavmesh vnav, AutomatorModule module)
+    protected Activity(EventData data, Lifestream lifestream, VNavmesh vnav, AutomatorModule module)
     {
         this.data = data;
         this.lifestream = lifestream;
@@ -56,57 +56,56 @@ public abstract class Activity
 
     public Func<Chain>? GetChain(StateManagerModule states)
     {
-        if (!IsValid())
-        {
-            return null;
-        }
-
-        return handlers[state](states);
+        return !IsValid() ? null : handlers[state](states);
     }
 
-    public Func<Chain> GetIdleChain(StateManagerModule states)
+    private Func<Chain> GetIdleChain(StateManagerModule states)
     {
         return () =>
         {
+            bool ShouldToggleAi(ChainContext _)
+            {
+                return module.config.ShouldToggleAiProvider && !Svc.Condition[ConditionFlag.InCombat];
+            }
+
             return Chain.Create("Illegal:Idle")
-                .ConditionalThen(_ => module.config.ShouldToggleAiProvider && !Svc.Condition[ConditionFlag.InCombat],
-                    _ => module.config.AiProvider.Off())
+                .ConditionalThen(ShouldToggleAi, _ => module.config.AiProvider.Off())
                 .Then(_ => vnav.Stop())
                 .Then(_ => state = ActivityState.Pathfinding);
         };
     }
 
-    public Func<Chain> GetPathfindingChain(StateManagerModule states)
+    private Func<Chain> GetPathfindingChain(StateManagerModule states)
     {
         return () =>
         {
-            var playerShard = AethernetData.All().OrderBy((data) => Vector3.Distance(Player.Position, data.position)).First();
+            var playerShard = AethernetData.AllByDistance().First();
             var activityShard = GetAethernetData();
 
             var isFate = data.type == EventType.Fate;
             var navType = SmartNavigation.Decide(Player.Position, GetPosition(), activityShard);
 
-            module.Debug("Selected navigation type: " + navType.ToString());
+            module.Debug("Selected navigation type: " + navType);
 
             var chain = Chain.Create("Illegal:Pathfinding")
                 .ConditionalWait(_ => !isFate && module.config.ShouldDelayCriticalEncounters, Random.Shared.Next(10000, 15001));
 
             switch (navType)
             {
-                case NavigationType.WalkToEvent:
+                case NavigationType.Walk:
                     chain
                         .Then(new PathfindingChain(vnav, GetPosition(), data))
                         .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain());
                     break;
 
-                case NavigationType.ReturnThenWalkToEvent:
+                case NavigationType.ReturnWalk:
                     chain
                         .Then(ChainHelper.ReturnChain())
                         .Then(new PathfindingChain(vnav, GetPosition(), data))
                         .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain());
                     break;
 
-                case NavigationType.ReturnThenTeleportToEventshard:
+                case NavigationType.ReturnTeleportWalk:
                     chain
                         .Then(ChainHelper.ReturnChain(new ReturnChainConfig { ApproachAetheryte = true }))
                         .Then(ChainHelper.TeleportChain(activityShard.aethernet))
@@ -116,7 +115,7 @@ public abstract class Activity
                         .ConditionalThen(_ => ShouldMountToPathfindTo(GetPosition()), ChainHelper.MountChain());
                     break;
 
-                case NavigationType.WalkToClosestShardAndTeleportToEventShardThenWalkToEvent:
+                case NavigationType.WalkTeleportWalk:
                     chain
                         .Then(ChainHelper.PathfindToAndWait(playerShard.position, AethernetData.DISTANCE))
                         .Then(ChainHelper.TeleportChain(activityShard.aethernet))
@@ -128,7 +127,7 @@ public abstract class Activity
             }
 
             chain
-                .Then(GetPathfindingWatcher(states, vnav))
+                .Then(GetPathfindingWatcher(states))
                 .Then(_ => state = GetPostPathfindingState());
 
             return chain;
@@ -136,7 +135,7 @@ public abstract class Activity
     }
 
 
-    protected Func<Chain>? GetParticipatingChain(StateManagerModule states)
+    private Func<Chain> GetParticipatingChain(StateManagerModule states)
     {
         return () =>
         {
@@ -145,11 +144,13 @@ public abstract class Activity
                 .Then(_ => vnav.Stop())
                 .Then(new TaskManagerTask(() =>
                 {
-                    if (module.config.ShouldForceTarget && EzThrottler.Throttle("Participating.ForceTarget", 500))
+                    if (!module.config.ShouldForceTarget || !EzThrottler.Throttle("Participating.ForceTarget", 500))
                     {
-                        var enemies = GetEnemies();
-                        Svc.Targets.Target = module.config.ShouldForceTargetCentralEnemy ? enemies.Centroid() : enemies.Closest();
+                        return states.GetState() == State.Idle;
                     }
+
+                    var enemies = GetEnemies();
+                    Svc.Targets.Target = module.config.ShouldForceTargetCentralEnemy ? enemies.Centroid() : enemies.Closest();
 
                     return states.GetState() == State.Idle;
                 }, new TaskManagerConfiguration { TimeLimitMS = int.MaxValue }))
@@ -157,7 +158,7 @@ public abstract class Activity
         };
     }
 
-    protected Func<Chain>? GetDoneChain(StateManagerModule states)
+    private Func<Chain>? GetDoneChain(StateManagerModule states)
     {
         return null;
     }
@@ -169,12 +170,12 @@ public abstract class Activity
 
     protected abstract bool IsActivityTarget(IBattleNpc obj);
 
-    public AethernetData GetAethernetData()
+    private AethernetData GetAethernetData()
     {
-        return data.aethernet?.GetData() ?? AethernetData.All().OrderBy(data => Vector3.Distance(GetPosition(), data.position)).First();
+        return data.aethernet?.GetData() ?? AethernetData.AllByDistance(GetPosition()).First();
     }
 
-    public bool IsInZone()
+    protected bool IsInZone()
     {
         var radius = data.radius ?? GetRadius();
 
@@ -193,11 +194,11 @@ public abstract class Activity
 
     protected abstract float GetRadius();
 
-    protected abstract TaskManagerTask GetPathfindingWatcher(StateManagerModule states, VNavmesh vnav);
+    protected abstract TaskManagerTask GetPathfindingWatcher(StateManagerModule states);
 
     public abstract bool IsValid();
 
-    public abstract Vector3 GetPosition();
+    protected abstract Vector3 GetPosition();
 
     public abstract string GetName();
 

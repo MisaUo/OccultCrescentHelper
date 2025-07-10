@@ -15,37 +15,26 @@ namespace BOCCHI.Modules.Automator;
 
 public class Automator
 {
-    private bool IsChainActive
+    private static bool IsChainActive
     {
         get => ChainManager.Active().Count > 0;
     }
 
-    public Activity? activity { get; private set; } = null;
+    public Activity? Activity { get; private set; } = null;
 
     private int idleTime = 0;
 
-    private bool firstTick = true;
-
-    public void Tick(AutomatorModule module, IFramework framework)
+    public void PostTick(AutomatorModule module, IFramework framework)
     {
-        if (firstTick)
-        {
-            firstTick = false;
-            return;
-        }
-
-        if (!module.TryGetIPCProvider<VNavmesh>(out var vnav) || vnav == null)
-        {
-            return;
-        }
-
-        if (!module.TryGetIPCProvider<Lifestream>(out var lifestream) || lifestream == null)
+        var vnav = module.GetIPCProvider<VNavmesh>();
+        var lifestream = module.GetIPCProvider<Lifestream>();
+        if (!vnav.IsReady() || !lifestream.IsReady())
         {
             return;
         }
 
         var states = module.GetModule<StateManagerModule>();
-        if (activity == null)
+        if (Activity == null)
         {
             if (states.GetState() == State.InCombat)
             {
@@ -55,13 +44,13 @@ public class Automator
             if (states.GetState() == State.InCriticalEncounter)
             {
                 var critical = module.GetModule<CriticalEncountersModule>();
-                var encounter = critical.criticalEncounters.Values.Where((ev) => ev.State != DynamicEventState.Inactive).Last();
+                var encounter = critical.criticalEncounters.Values.Last(ev => ev.State != DynamicEventState.Inactive);
                 var data = EventData.CriticalEncounters[encounter.DynamicEventId];
-                activity = new CriticalEncounter(data, lifestream, vnav, module, critical);
+                Activity = new CriticalEncounter(data, lifestream, vnav, module, critical);
 
-                if (activity != null)
+                if (Activity != null)
                 {
-                    module.Debug($"Resuming running activity: {activity.data.Name}");
+                    module.Debug($"Resuming running activity: {Activity.data.Name}");
                 }
 
                 return;
@@ -69,22 +58,22 @@ public class Automator
 
             if (states.GetState() == State.InFate)
             {
-                activity ??= FindFate(module, lifestream, vnav);
+                Activity ??= FindFate(module, lifestream, vnav);
 
-                if (activity != null)
+                if (Activity != null)
                 {
-                    module.Debug($"Resuming running activity: {activity.data.Name}");
+                    module.Debug($"Resuming running activity: {Activity.data.Name}");
                 }
 
                 return;
             }
         }
 
-        if (activity != null && !activity.IsValid())
+        if (Activity != null && !Activity.IsValid())
         {
             Plugin.Chain.Abort();
             vnav.Stop();
-            activity = null;
+            Activity = null;
         }
 
         if (IsChainActive)
@@ -92,15 +81,15 @@ public class Automator
             return;
         }
 
-        if (activity != null)
+        if (Activity != null)
         {
-            if (activity.state == ActivityState.Done)
+            if (Activity.state == ActivityState.Done)
             {
-                activity = null;
+                Activity = null;
                 return;
             }
 
-            var chain = activity.GetChain(states);
+            var chain = Activity.GetChain(states);
             if (chain == null)
             {
                 return;
@@ -116,11 +105,11 @@ public class Automator
         }
 
         // Try and get the next activity
-        activity ??= module.config.ShouldDoCriticalEncounters ? FindCriticalEncounter(module, lifestream, vnav) : null;
-        activity ??= module.config.ShouldDoFates ? FindFate(module, lifestream, vnav) : null;
-        if (activity != null)
+        Activity ??= module.config.ShouldDoCriticalEncounters ? FindCriticalEncounter(module, lifestream, vnav) : null;
+        Activity ??= module.config.ShouldDoFates ? FindFate(module, lifestream, vnav) : null;
+        if (Activity != null)
         {
-            Svc.Log.Info($"Selected activity: {activity.data.Name}");
+            Svc.Log.Info($"Selected activity: {Activity.data.Name}");
             return;
         }
 
@@ -139,7 +128,7 @@ public class Automator
         }
     }
 
-    public Activity? FindCriticalEncounter(AutomatorModule module, Lifestream lifestream, VNavmesh vnav)
+    private static CriticalEncounter? FindCriticalEncounter(AutomatorModule module, Lifestream lifestream, VNavmesh vnav)
     {
         if (!module.TryGetModule<CriticalEncountersModule>(out var source) || source == null)
         {
@@ -169,7 +158,7 @@ public class Automator
         return null;
     }
 
-    public Activity? FindFate(AutomatorModule module, Lifestream lifestream, VNavmesh vnav)
+    private static Fate? FindFate(AutomatorModule module, Lifestream lifestream, VNavmesh vnav)
     {
         if (!module.TryGetModule<FatesModule>(out var source) || source == null)
         {
@@ -178,11 +167,7 @@ public class Automator
 
         foreach (var fate in source.fates.Values)
         {
-            if (
-                fate == null
-                || !module.config.FatesMap[fate.FateId] == true
-                || !EventData.Fates.TryGetValue(fate.FateId, out var data)
-            )
+            if (!module.config.FatesMap[fate.FateId] || !EventData.Fates.TryGetValue(fate.FateId, out var data))
             {
                 continue;
             }
@@ -195,8 +180,7 @@ public class Automator
 
     public void Refresh()
     {
-        activity = null;
+        Activity = null;
         idleTime = 0;
-        firstTick = true;
     }
 }

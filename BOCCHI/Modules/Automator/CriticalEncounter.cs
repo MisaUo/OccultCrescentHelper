@@ -19,24 +19,24 @@ namespace BOCCHI.Modules.Automator;
 
 public class CriticalEncounter : Activity
 {
-    private readonly CriticalEncountersModule critical;
+    private readonly CriticalEncountersModule source;
 
     private DynamicEvent Encounter
     {
-        get => critical.criticalEncounters[data.id];
+        get => source.criticalEncounters[data.id];
     }
 
     private bool finalDestination = false;
 
-    public CriticalEncounter(EventData data, Lifestream lifestream, VNavmesh vnav, AutomatorModule module, CriticalEncountersModule critical)
+    public CriticalEncounter(EventData data, Lifestream lifestream, VNavmesh vnav, AutomatorModule module, CriticalEncountersModule source)
         : base(data, lifestream, vnav, module)
     {
-        this.critical = critical;
+        this.source = source;
 
         handlers.Add(ActivityState.WaitingToStartCriticalEncounter, GetWaitingToStartCriticalEncounterChain);
     }
 
-    protected override TaskManagerTask GetPathfindingWatcher(StateManagerModule states, VNavmesh vnav)
+    protected override TaskManagerTask GetPathfindingWatcher(StateManagerModule states)
     {
         return new TaskManagerTask(() =>
         {
@@ -57,7 +57,7 @@ public class CriticalEncounter : Activity
                 {
                     var minX = playersInZone.Min(p => p.Position.X);
                     var maxX = playersInZone.Max(p => p.Position.X);
-                    var minY = playersInZone.Min(p => p.Position.Z); // Y in 2D is Z in FFXIV
+                    var minY = playersInZone.Min(p => p.Position.Z);
                     var maxY = playersInZone.Max(p => p.Position.Z);
 
                     // Choose a random point within the bounding box of players
@@ -106,7 +106,7 @@ public class CriticalEncounter : Activity
     }
 
 
-    public unsafe Func<Chain> GetWaitingToStartCriticalEncounterChain(StateManagerModule states)
+    private Func<Chain> GetWaitingToStartCriticalEncounterChain(StateManagerModule states)
     {
         return () =>
         {
@@ -173,7 +173,7 @@ public class CriticalEncounter : Activity
         return Encounter.Unknown4;
     }
 
-    public override Vector3 GetPosition()
+    protected override Vector3 GetPosition()
     {
         return Encounter.MapMarker.Position;
     }

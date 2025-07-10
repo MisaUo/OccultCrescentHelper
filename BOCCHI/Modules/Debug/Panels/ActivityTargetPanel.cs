@@ -69,7 +69,7 @@ public class ActivityTargetPanel : Panel
             var id = battleChara->EventId.EntryId;
             var count = Svc.Data.GetExcelSheet<DynamicEvent>().Count();
 
-            var activity = module.GetModule<AutomatorModule>().automator.activity;
+            var activity = module.GetModule<AutomatorModule>().automator.Activity;
             if (activity != null)
             {
                 var data = activity.data;

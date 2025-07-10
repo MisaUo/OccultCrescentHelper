@@ -24,7 +24,7 @@ public class AutomatorModule : Module<Plugin, Config>
 
     public readonly Panel panel = new();
 
-    private List<uint> occultCrescentTerritoryIds = [1252];
+    private readonly List<uint> occultCrescentTerritoryIds = [1252];
 
     public AutomatorModule(Plugin plugin, Config config)
         : base(plugin, config)
@@ -34,9 +34,9 @@ public class AutomatorModule : Module<Plugin, Config>
     }
 
 
-    public override void Tick(IFramework framework)
+    public override void PostTick(IFramework framework)
     {
-        automator.Tick(this, framework);
+        automator.PostTick(this, framework);
     }
 
 
@@ -78,7 +78,7 @@ public class AutomatorModule : Module<Plugin, Config>
 
         if (wasDisabled)
         {
-            Svc.Chat.Print("[BOCCHI] Illegal Mode On");
+            Svc.Chat.Print(T("messages.on"));
         }
     }
 
@@ -87,12 +87,12 @@ public class AutomatorModule : Module<Plugin, Config>
         var wasEnabled = config.Enabled;
         config.Enabled = false;
         automator.Refresh();
-        plugin.ipc.GetProvider<VNavmesh>()?.Stop();
+        plugin.ipc.GetProvider<VNavmesh>().Stop();
         Plugin.Chain.Abort();
 
         if (wasEnabled)
         {
-            Svc.Chat.Print("[BOCCHI] Illegal Mode Off");
+            Svc.Chat.Print(T("messages.off"));
         }
     }
 }

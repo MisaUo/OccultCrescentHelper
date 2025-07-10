@@ -35,11 +35,20 @@ public class AethernetData
 
     public Vector3 destination; // Where you end up after teleporting to this shard
 
-    public static List<AethernetData> All()
+    public static IEnumerable<AethernetData> All()
     {
         return ((Aethernet[])Enum.GetValues(typeof(Aethernet)))
-            .Select(a => a.GetData())
-            .ToList();
+            .Select(a => a.GetData());
+    }
+
+    public static IOrderedEnumerable<AethernetData> AllByDistance()
+    {
+        return AllByDistance(Player.Position);
+    }
+
+    public static IOrderedEnumerable<AethernetData> AllByDistance(Vector3 position)
+    {
+        return All().OrderBy(a => Player.DistanceTo(a.position));
     }
 
     public static AethernetData GetClosestTo(Vector3 to)

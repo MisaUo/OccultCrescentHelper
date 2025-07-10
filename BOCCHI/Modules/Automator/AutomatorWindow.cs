@@ -8,7 +8,7 @@ using Ocelot.Windows;
 namespace BOCCHI.Modules.Automator;
 
 [OcelotWindow]
-public class AutomatorWindow(Plugin priamryPlugin, Config config) : OcelotWindow(priamryPlugin, config)
+public class AutomatorWindow(Plugin _plugin, Config _config) : OcelotWindow(_plugin, _config)
 {
     public override void PostInitialize()
     {
@@ -40,7 +40,7 @@ public class AutomatorWindow(Plugin priamryPlugin, Config config) : OcelotWindow
         }
 
         var automator = plugin.modules.GetModule<AutomatorModule>();
-        if (automator == null || !automator.enabled)
+        if (!automator.enabled)
         {
             ImGui.TextUnformatted("Illegal Mode is not enabled.");
             return;
@@ -51,7 +51,6 @@ public class AutomatorWindow(Plugin priamryPlugin, Config config) : OcelotWindow
 
     protected override string GetWindowName()
     {
-        // @todo: Localize this
-        return "BOCCHI Illegal Lens";
+        return plugin.modules.GetModule<AutomatorModule>().T("panel.lens.title");
     }
 }

@@ -14,7 +14,7 @@ public class Panel
             OcelotUI.Title($"{module.T("panel.activity.label")}:");
             try
             {
-                var name = module.automator.activity?.GetName() ?? module.T("panel.activity.none");
+                var name = module.automator.Activity?.GetName() ?? module.T("panel.activity.none");
                 ImGui.SameLine();
                 ImGui.TextUnformatted(name);
             }
@@ -25,7 +25,7 @@ public class Panel
 
             OcelotUI.Title($"{module.T("panel.activity_state.label")}:");
             ImGui.SameLine();
-            ImGui.TextUnformatted(module.automator.activity?.state.ToLabel() ?? module.T("panel.activity_state.none"));
+            ImGui.TextUnformatted(module.automator.Activity?.state.ToLabel() ?? module.T("panel.activity_state.none"));
         });
     }
 }

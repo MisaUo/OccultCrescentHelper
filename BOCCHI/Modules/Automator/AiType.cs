@@ -1,3 +1,4 @@
+using System;
 using ECommons.Automation;
 
 namespace BOCCHI.Modules.Automator;
@@ -31,6 +32,8 @@ public static class AiProviderExtensions
             case AiType.BMR:
                 Chat.ExecuteCommand("/bmrai on");
                 break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(provider), provider, null);
         }
     }
 
@@ -44,6 +47,8 @@ public static class AiProviderExtensions
             case AiType.BMR:
                 Chat.ExecuteCommand("/bmrai off");
                 break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(provider), provider, null);
         }
     }
 }

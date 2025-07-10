@@ -160,7 +160,14 @@
         "activity_state": {
           "label": "Activity State",
           "none": "Waiting for Activity"
+        },
+        "lens": {
+          "title": "BOCCHI Illegal Lens"
         }
+      },
+      "messages": {
+        "on": "[BOCCHI] Illegal Mode On",
+        "off": "[BOCCHI] Illegal Mode Off"
       }
     }
   }

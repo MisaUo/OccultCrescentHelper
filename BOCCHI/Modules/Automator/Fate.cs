@@ -16,17 +16,10 @@ using Ocelot.IPC;
 
 namespace BOCCHI.Modules.Automator;
 
-public class Fate : Activity
+public class Fate(EventData data, Lifestream lifestream, VNavmesh vnav, AutomatorModule module, IFate fate)
+    : Activity(data, lifestream, vnav, module)
 {
-    private IFate fate;
-
-    public Fate(EventData data, Lifestream lifestream, VNavmesh vnav, AutomatorModule module, IFate fate)
-        : base(data, lifestream, vnav, module)
-    {
-        this.fate = fate;
-    }
-
-    protected override unsafe TaskManagerTask GetPathfindingWatcher(StateManagerModule states, VNavmesh vnav)
+    protected override TaskManagerTask GetPathfindingWatcher(StateManagerModule states)
     {
         var lastTargetPos = Vector3.Zero;
 
@@ -85,14 +78,21 @@ public class Fate : Activity
         return Svc.Fates.Contains(fate);
     }
 
-    public override Vector3 GetPosition()
+    protected override Vector3 GetPosition()
     {
         return data.start ?? fate.Position;
     }
 
     public override string GetName()
     {
-        return fate.Name.ToString();
+        try
+        {
+            return fate.Name.ToString();
+        }
+        catch (AccessViolationException)
+        {
+            return data.Name;
+        }
     }
 
     protected override unsafe bool IsActivityTarget(IBattleNpc obj)
