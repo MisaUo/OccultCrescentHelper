@@ -30,20 +30,16 @@ public class TeleporterModule : Module<Plugin, Config>
 
     public override void Initialize()
     {
-        if (TryGetModule<StateManagerModule>(out var states) && states != null)
-        {
-            states.OnExitInFate += teleporter.OnFateEnd;
-            states.OnExitInCriticalEncounter += teleporter.OnCriticalEncounterEnd;
-        }
+        var states = GetModule<StateManagerModule>();
+        states.OnExitInFate += teleporter.OnFateEnd;
+        states.OnExitInCriticalEncounter += teleporter.OnCriticalEncounterEnd;
     }
 
     public override void Dispose()
     {
-        if (TryGetModule<StateManagerModule>(out var states) && states != null)
-        {
-            states.OnExitInFate -= teleporter.OnFateEnd;
-            states.OnExitInCriticalEncounter -= teleporter.OnCriticalEncounterEnd;
-        }
+        var states = GetModule<StateManagerModule>();
+        states.OnExitInFate -= teleporter.OnFateEnd;
+        states.OnExitInCriticalEncounter -= teleporter.OnCriticalEncounterEnd;
 
         Svc.AddonLifecycle.UnregisterListener(AddonEvent.PostSetup, "SelectYesno", OnSelectYesnoPostSetup);
     }

@@ -3,7 +3,6 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Teleporter;
 
-[Title]
 public class TeleporterConfig : ModuleConfig
 {
     [Checkbox]

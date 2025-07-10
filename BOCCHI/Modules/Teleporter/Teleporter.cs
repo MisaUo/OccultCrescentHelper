@@ -16,15 +16,8 @@ using Ocelot.IPC;
 
 namespace BOCCHI.Modules.Teleporter;
 
-public class Teleporter
+public class Teleporter(TeleporterModule module)
 {
-    private readonly TeleporterModule module;
-
-    public Teleporter(TeleporterModule module)
-    {
-        this.module = module;
-    }
-
     public void Button(Aethernet? aethernet, Vector3 destination, string name, string id, EventData ev)
     {
         if (!module.TryGetIPCProvider<VNavmesh>(out var vnav) || vnav == null || !vnav.IsReady())
@@ -82,12 +75,12 @@ public class Teleporter
             return;
         }
 
-        var isNearShards = ZoneHelper.GetNearbyAethernetShards().Count() > 0;
+        var isNearShards = ZoneHelper.GetNearbyAethernetShards().Any();
         var isNearCurrentShard = ZoneHelper.IsNearAethernetShard(aethernet);
 
         if (ImGuiEx.IconButton(FontAwesomeIcon.LocationArrow, $"{name}##{id}", enabled: isNearShards && !isNearCurrentShard))
         {
-            var factory = () =>
+            Chain Factory()
             {
                 var chain = Chain.Create("Teleport Sequence")
                     .Then(ChainHelper.TeleportChain(aethernet))
@@ -96,33 +89,34 @@ public class Teleporter
 
                 if (module.TryGetIPCProvider<VNavmesh>(out var vnav) && vnav != null && vnav.IsReady())
                 {
-                    chain
-                        .RunIf(() => module.config.PathToDestination)
+                    chain.RunIf(() => module.config.PathToDestination)
                         .Then(new PathfindingChain(vnav, destination, ev, 20f))
                         .ConditionalThen(_ => module.config.ShouldMount, ChainHelper.MountChain())
                         .WaitUntilNear(vnav, destination, 20f);
                 }
 
                 return chain;
-            };
+            }
 
-            Plugin.Chain.Submit(factory);
+            Plugin.Chain.Submit(Factory);
         }
 
-        if (ImGui.IsItemHovered())
+        if (!ImGui.IsItemHovered())
         {
-            if (!isNearShards)
-            {
-                ImGui.SetTooltip($"You must be near an aetheryte to teleport");
-            }
-            else if (isNearCurrentShard)
-            {
-                ImGui.SetTooltip($"You're already at this aetheryte");
-            }
-            else
-            {
-                ImGui.SetTooltip($"Teleport to {aethernet.ToFriendlyString()}");
-            }
+            return;
+        }
+
+        if (!isNearShards)
+        {
+            ImGui.SetTooltip($"You must be near an aetheryte to teleport");
+        }
+        else if (isNearCurrentShard)
+        {
+            ImGui.SetTooltip($"You're already at this aetheryte");
+        }
+        else
+        {
+            ImGui.SetTooltip($"Teleport to {aethernet.ToFriendlyString()}");
         }
     }
 
@@ -159,12 +153,6 @@ public class Teleporter
     public void Return()
     {
         if (ZoneData.IsInForkedTower())
-        {
-            return;
-        }
-
-        var player = Svc.ClientState.LocalPlayer;
-        if (player == null)
         {
             return;
         }
