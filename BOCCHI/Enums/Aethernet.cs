@@ -12,13 +12,9 @@ namespace BOCCHI.Enums;
 public enum Aethernet : uint
 {
     BaseCamp = 4944,
-
     TheWanderersHaven = 4936,
-
     CrystallizedCaverns = 4929,
-
     Eldergrowth = 4930,
-
     Stonemarsh = 4942,
 }
 

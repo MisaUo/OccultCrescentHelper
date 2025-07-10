@@ -3,13 +3,9 @@ namespace BOCCHI.Modules.Automator;
 public enum ActivityState
 {
     Idle,
-
     Pathfinding,
-
     WaitingToStartCriticalEncounter,
-
     Participating,
-
     Done,
 }
 

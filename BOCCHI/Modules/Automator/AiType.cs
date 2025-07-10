@@ -6,7 +6,6 @@ namespace BOCCHI.Modules.Automator;
 public enum AiType
 {
     VBM, // Boss Mod
-
     BMR, // Bossmod Reborn
 }
 

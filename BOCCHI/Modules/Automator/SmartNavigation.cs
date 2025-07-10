@@ -8,11 +8,8 @@ namespace BOCCHI.Modules.Automator;
 public enum NavigationType
 {
     Walk,
-
     ReturnWalk,
-
     ReturnTeleportWalk,
-
     WalkTeleportWalk,
 }
 

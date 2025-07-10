@@ -3,12 +3,8 @@
 public enum FarmerPhase
 {
     Waiting,
-
     Buffing,
-
     Gathering,
-
     Stacking,
-
     Fighting,
 }
