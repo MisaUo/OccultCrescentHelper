@@ -4,7 +4,6 @@ using ExcelMount = Lumina.Excel.Sheets.Mount;
 
 namespace BOCCHI.Modules.Mount;
 
-[Title]
 public class MountConfig : ModuleConfig
 {
     [ExcelSheet(typeof(ExcelMount), nameof(MountProvider))]

@@ -4,7 +4,6 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.MobFarmer;
 
-[Title]
 public class MobFarmerConfig : ModuleConfig
 {
     [Enum(typeof(Mob), nameof(MobProvider))]

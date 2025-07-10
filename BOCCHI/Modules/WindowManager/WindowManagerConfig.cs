@@ -3,7 +3,6 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.WindowManager;
 
-[Title]
 public class WindowManagerConfig : ModuleConfig
 {
     [Checkbox] public bool OpenMainOnStartUp { get; set; } = false;

@@ -3,7 +3,6 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Exp;
 
-[Title]
 public class ExpConfig : ModuleConfig
 {
     [Checkbox]
