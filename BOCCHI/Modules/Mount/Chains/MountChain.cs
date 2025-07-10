@@ -8,15 +8,8 @@ using Ocelot.Chain.ChainEx;
 
 namespace BOCCHI.Modules.Mount.Chains;
 
-public class MountChain : RetryChainFactory
+public class MountChain(MountConfig config) : RetryChainFactory
 {
-    private MountConfig config;
-
-    public MountChain(MountConfig config)
-    {
-        this.config = config;
-    }
-
     protected override Chain Create(Chain chain)
     {
         chain.BreakIf(Breaker);
@@ -27,18 +20,14 @@ public class MountChain : RetryChainFactory
     private bool Breaker()
     {
         // @todo add IsCasting to ecommons Player
-        var player = Svc.ClientState.LocalPlayer;
-        if (player == null)
-        {
-            return true;
-        }
+        // https://github.com/NightmareXIV/ECommons/pull/123
 
         return Svc.Condition[ConditionFlag.Mounted]
                || Svc.Condition[ConditionFlag.BetweenAreas]
                || Svc.Condition[ConditionFlag.BetweenAreas51]
                || Svc.Condition[ConditionFlag.InCombat]
                || Player.Status.Has(PlayerStatus.HoofingIt)
-               || player.IsCasting
+               || Player.Available && Player.Object.IsCasting
                || Player.IsDead;
     }
 
