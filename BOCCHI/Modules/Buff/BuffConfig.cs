@@ -3,7 +3,6 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Buff;
 
-[Title]
 public class BuffConfig : ModuleConfig
 {
     [Checkbox]
