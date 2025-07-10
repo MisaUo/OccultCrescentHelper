@@ -12,7 +12,7 @@ public class Alerter : IDisposable
 {
     private readonly CriticalEncountersModule module;
 
-    public Dictionary<Demiatma, Func<bool>> DemiatmaAlerts
+    private Dictionary<Demiatma, Func<bool>> DemiatmaAlerts
     {
         get => new()
         {
@@ -25,7 +25,7 @@ public class Alerter : IDisposable
         };
     }
 
-    public Dictionary<SoulShard, Func<bool>> SoulShardAlerts
+    private Dictionary<SoulShard, Func<bool>> SoulShardAlerts
     {
         get => new()
         {

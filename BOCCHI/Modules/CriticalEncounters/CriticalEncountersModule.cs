@@ -28,17 +28,17 @@ public class CriticalEncountersModule : Module<Plugin, Config>
 
     public Dictionary<uint, DynamicEvent> criticalEncounters
     {
-        get => tracker.criticalEncounters;
+        get => tracker.CriticalEncounters;
     }
 
     public Dictionary<uint, EventProgress> progress
     {
-        get => tracker.progress;
+        get => tracker.Progress;
     }
 
-    private Panel panel = new();
+    private readonly Panel panel = new();
 
-    private Alerter alerter;
+    private readonly Alerter alerter;
 
     public CriticalEncountersModule(Plugin plugin, Config config)
         : base(plugin, config)

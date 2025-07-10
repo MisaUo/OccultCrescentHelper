@@ -9,9 +9,9 @@ namespace BOCCHI.Modules.CriticalEncounters;
 
 public class TowerTimer : IDisposable
 {
-    private CriticalEncounterTracker tracker;
+    private readonly CriticalEncounterTracker tracker;
 
-    private FatesModule fates;
+    private readonly FatesModule fates;
 
     private DateTime LastForkedTowerEnd = DateTime.Now;
 
@@ -19,11 +19,11 @@ public class TowerTimer : IDisposable
 
     private TimeSpan ForkedTowerSpawnTimer = TimeSpan.FromMinutes(5);
 
-    private TimeSpan ForkedTowerWarmUpTimer = TimeSpan.FromSeconds(330);
+    private readonly TimeSpan ForkedTowerWarmUpTimer = TimeSpan.FromSeconds(330);
 
-    private int FatesCompleted = 0;
+    public int FatesCompleted { get; private set; } = 0;
 
-    private int CriticalEncountersCompleted = 0;
+    public int CriticalEncountersCompleted { get; private set; } = 0;
 
     public TowerTimer(CriticalEncounterTracker tracker, FatesModule fates)
     {
@@ -64,16 +64,6 @@ public class TowerTimer : IDisposable
         }
 
         return LastForkedTowerRegister + ForkedTowerWarmUpTimer - DateTime.Now;
-    }
-
-    public int GetcompletedFates()
-    {
-        return FatesCompleted;
-    }
-
-    public int GetCompletedCriticalEncounters()
-    {
-        return CriticalEncountersCompleted;
     }
 
     private void OnFateDespawned(IFate _)

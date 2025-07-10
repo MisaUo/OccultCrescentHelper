@@ -48,36 +48,43 @@ public class Panel
 
                 ImGui.TextUnformatted(ev.Name.ToString());
 
-                if (ev.State == DynamicEventState.Register)
+                switch (ev.State)
                 {
-                    var start = DateTimeOffset.FromUnixTimeSeconds(ev.StartTimestamp).DateTime;
-                    var timeUntilStart = start - DateTime.UtcNow;
-                    var formattedTime = $"{timeUntilStart.Minutes:D2}:{timeUntilStart.Seconds:D2}";
+                    case DynamicEventState.Register:
+                        {
+                            var start = DateTimeOffset.FromUnixTimeSeconds(ev.StartTimestamp).DateTime;
+                            var timeUntilStart = start - DateTime.UtcNow;
+                            var formattedTime = $"{timeUntilStart.Minutes:D2}:{timeUntilStart.Seconds:D2}";
 
-                    ImGui.SameLine();
-                    ImGui.TextUnformatted($"({module.T("panel.register")}: {formattedTime})");
-                }
-
-                if (ev.State == DynamicEventState.Warmup)
-                {
-                    ImGui.SameLine();
-                    ImGui.TextUnformatted($"({module.T("panel.warmup")})");
-                }
-
-                if (ev.State == DynamicEventState.Battle)
-                {
-                    ImGui.SameLine();
-                    ImGui.TextUnformatted($"({ev.Progress}%)");
-
-                    if (module.progress.TryGetValue(ev.DynamicEventId, out var progress))
-                    {
-                        var estimate = progress.EstimateTimeToCompletion();
-                        if (estimate != null)
+                            ImGui.SameLine();
+                            ImGui.TextUnformatted($"({module.T("panel.register")}: {formattedTime})");
+                            break;
+                        }
+                    case DynamicEventState.Warmup:
+                        ImGui.SameLine();
+                        ImGui.TextUnformatted($"({module.T("panel.warmup")})");
+                        break;
+                    case DynamicEventState.Battle:
                         {
                             ImGui.SameLine();
-                            ImGui.TextUnformatted($"({module.T("panel.estimated")} {estimate.Value:mm\\:ss})");
+                            ImGui.TextUnformatted($"({ev.Progress}%)");
+
+                            if (module.progress.TryGetValue(ev.DynamicEventId, out var progress))
+                            {
+                                var estimate = progress.EstimateTimeToCompletion();
+                                if (estimate != null)
+                                {
+                                    ImGui.SameLine();
+                                    ImGui.TextUnformatted($"({module.T("panel.estimated")} {estimate.Value:mm\\:ss})");
+                                }
+                            }
+
+                            break;
                         }
-                    }
+                    case DynamicEventState.Inactive:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
 
                 if (ev.State != DynamicEventState.Register)
@@ -101,51 +108,53 @@ public class Panel
 
     private void HandleTower(DynamicEvent ev, CriticalEncountersModule module)
     {
-        // if (!module.config.TrackForkedTower || ev.State == DynamicEventState.Battle)
-        // {
-        //     return;
-        // }
-        //
-        // if (ev.State == DynamicEventState.Inactive)
-        // {
-        //     ImGui.TextUnformatted($"{ev.Name}:");
-        //
-        //     var time = module.tracker.TowerTimer.GetTimeToForkedTowerSpawn(ev.State);
-        //     OcelotUI.Indent(() => { OcelotUI.LabelledValue("Forked Tower Spawn Estimate", $"{time:mm\\:ss}"); });
-        // }
-        // else
-        // {
-        //     ImGui.TextUnformatted($"{ev.Name}:");
-        //
-        //     var time = module.tracker.TowerTimer.GetTimeRemainingToRegister(ev.State);
-        //     OcelotUI.Indent(() => { OcelotUI.LabelledValue("Forked Tower Register", $"{time:mm\\:ss}"); });
-        // }
-        //
-        // OcelotUI.Indent(32, () =>
-        // {
-        //     OcelotUI.LabelledValue("Critical Encounters completed", module.tracker.TowerTimer.GetCompletedCriticalEncounters());
-        //     OcelotUI.LabelledValue("Fates completed", module.tracker.TowerTimer.GetcompletedFates());
-        // });
-        //
-        //
-        // if (!TowerHelper.IsPlayerNearTower(TowerHelper.TowerType.Blood))
-        // {
-        //     return;
-        // }
-        //
-        // OcelotUI.Indent(() =>
-        // {
-        //     OcelotUI.LabelledValue("Players on Platform", TowerHelper.GetPlayersInTowerZone(TowerHelper.TowerType.Blood));
-        //     if (ImGui.IsItemHovered())
-        //     {
-        //         ImGui.SetTooltip("This includes your character");
-        //     }
-        //
-        //     OcelotUI.LabelledValue("Players near Platform", TowerHelper.GetPlayersNearTowerZone(TowerHelper.TowerType.Blood));
-        //     if (ImGui.IsItemHovered())
-        //     {
-        //         ImGui.SetTooltip("This includes your character");
-        //     }
-        // });
+        if (!module.config.TrackForkedTower || ev.State == DynamicEventState.Battle)
+        {
+            return;
+        }
+
+        OcelotUI.Error("This feature is a work in progress.");
+
+        if (ev.State == DynamicEventState.Inactive)
+        {
+            ImGui.TextUnformatted($"{ev.Name}:");
+
+            var time = module.tracker.TowerTimer.GetTimeToForkedTowerSpawn(ev.State);
+            OcelotUI.Indent(() => { OcelotUI.LabelledValue("Forked Tower Spawn Estimate", $"{time:mm\\:ss}"); });
+        }
+        else
+        {
+            ImGui.TextUnformatted($"{ev.Name}:");
+
+            var time = module.tracker.TowerTimer.GetTimeRemainingToRegister(ev.State);
+            OcelotUI.Indent(() => { OcelotUI.LabelledValue("Forked Tower Register", $"{time:mm\\:ss}"); });
+        }
+
+        OcelotUI.Indent(32, () =>
+        {
+            OcelotUI.LabelledValue("Critical Encounters completed", module.tracker.TowerTimer.CriticalEncountersCompleted);
+            OcelotUI.LabelledValue("Fates completed", module.tracker.TowerTimer.FatesCompleted);
+        });
+
+
+        if (!TowerHelper.IsPlayerNearTower(TowerHelper.TowerType.Blood))
+        {
+            return;
+        }
+
+        OcelotUI.Indent(() =>
+        {
+            OcelotUI.LabelledValue("Players on Platform", TowerHelper.GetPlayersInTowerZone(TowerHelper.TowerType.Blood));
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("This includes your character");
+            }
+
+            OcelotUI.LabelledValue("Players near Platform", TowerHelper.GetPlayersNearTowerZone(TowerHelper.TowerType.Blood));
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("This includes your character");
+            }
+        });
     }
 }

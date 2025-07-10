@@ -3,7 +3,6 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.CriticalEncounters;
 
-[Title]
 public class CriticalEncountersConfig : ModuleConfig
 {
     [Checkbox]

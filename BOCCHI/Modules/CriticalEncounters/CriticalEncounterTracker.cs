@@ -1,20 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using BOCCHI.Data;
 using BOCCHI.Modules.Fates;
 using Dalamud.Plugin.Services;
-using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 
 namespace BOCCHI.Modules.CriticalEncounters;
 
 public class CriticalEncounterTracker
 {
-    public Dictionary<uint, DynamicEvent> criticalEncounters = new();
+    public Dictionary<uint, DynamicEvent> CriticalEncounters = new();
 
-    public Dictionary<uint, EventProgress> progress { get; } = new();
+    public Dictionary<uint, EventProgress> Progress { get; } = new();
 
     public TowerTimer TowerTimer { get; private set; }
 
@@ -23,7 +21,7 @@ public class CriticalEncounterTracker
 
     public CriticalEncounterTracker(CriticalEncountersModule module)
     {
-        TowerTimer = new TowerTimer(this, module.GetModule<FatesModule>()!);
+        TowerTimer = new TowerTimer(this, module.GetModule<FatesModule>());
     }
 
     public event Action<DynamicEvent>? OnInactiveState;
@@ -37,13 +35,11 @@ public class CriticalEncounterTracker
 
     public unsafe void Tick(IFramework _)
     {
-        var pos = Svc.ClientState.LocalPlayer?.Position ?? Vector3.Zero;
-
-        criticalEncounters = PublicContentOccultCrescent.GetInstance()->DynamicEventContainer.Events
+        CriticalEncounters = PublicContentOccultCrescent.GetInstance()->DynamicEventContainer.Events
             .ToArray()
             .ToDictionary(ev => (uint)ev.DynamicEventId, ev => ev);
 
-        foreach (var ev in criticalEncounters.Values)
+        foreach (var ev in CriticalEncounters.Values)
         {
             // Get previous state, default to Inactive if unknown
             lastStates.TryGetValue(ev.DynamicEventId, out var previousState);
@@ -57,25 +53,25 @@ public class CriticalEncounterTracker
                     continue;
                 }
 
-                if (!this.progress.TryGetValue(ev.DynamicEventId, out var progress))
+                if (!Progress.TryGetValue(ev.DynamicEventId, out var current))
                 {
-                    progress = new EventProgress();
-                    this.progress[ev.DynamicEventId] = progress;
+                    current = new EventProgress();
+                    Progress[ev.DynamicEventId] = current;
                 }
 
-                if (progress.samples.Count == 0 || progress.samples[^1].Progress != ev.Progress)
+                if (current.samples.Count == 0 || current.samples[^1].Progress != ev.Progress)
                 {
-                    progress.AddProgress(ev.Progress);
+                    current.AddProgress(ev.Progress);
                 }
 
                 if (ev.Progress == 100)
                 {
-                    this.progress.Remove(ev.DynamicEventId);
+                    Progress.Remove(ev.DynamicEventId);
                 }
             }
             else
             {
-                progress.Remove(ev.DynamicEventId);
+                Progress.Remove(ev.DynamicEventId);
             }
 
             if (previousState == currentState)
