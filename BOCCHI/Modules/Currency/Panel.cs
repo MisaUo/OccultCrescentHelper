@@ -12,7 +12,6 @@ public class Panel
         OcelotUI.Title($"{module.T("panel.title")}:");
         OcelotUI.Indent(() =>
         {
-            // Content here
             if (ImGui.BeginTable("CurrencyData##OCH", 3, ImGuiTableFlags.SizingFixedFit))
             {
                 // Silver
@@ -21,14 +20,14 @@ public class Panel
                 ImGui.TableNextColumn();
                 if (ImGuiEx.IconButton(FontAwesomeIcon.Redo, "Reset##Silver"))
                 {
-                    module.tracker.ResetSilver();
+                    module.Tracker.ResetSilver();
                 }
 
                 ImGui.TableNextColumn();
-                ImGui.TextUnformatted(module.T("panel.silver.label"));
+                OcelotUI.Title(module.T("panel.silver.label"));
 
                 ImGui.TableNextColumn();
-                ImGui.TextUnformatted(module.tracker.GetSilverPerHour().ToString("F2"));
+                ImGui.TextUnformatted(module.Tracker.GetSilverPerHour().ToString("F2"));
 
                 // Gold
                 ImGui.TableNextRow();
@@ -36,14 +35,14 @@ public class Panel
                 ImGui.TableNextColumn();
                 if (ImGuiEx.IconButton(FontAwesomeIcon.Redo, "Reset##Gold"))
                 {
-                    module.tracker.ResetGold();
+                    module.Tracker.ResetGold();
                 }
 
                 ImGui.TableNextColumn();
-                ImGui.TextUnformatted(module.T("panel.gold.label"));
+                OcelotUI.Title(module.T("panel.gold.label"));
 
                 ImGui.TableNextColumn();
-                ImGui.TextUnformatted(module.tracker.GetGoldPerHour().ToString("F2"));
+                ImGui.TextUnformatted(module.Tracker.GetGoldPerHour().ToString("F2"));
 
                 ImGui.EndTable();
             }

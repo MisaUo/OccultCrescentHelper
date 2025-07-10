@@ -4,35 +4,35 @@ using Ocelot.Modules;
 namespace BOCCHI.Modules.Currency;
 
 [OcelotModule(int.MaxValue - 1001, 3)]
-public class CurrencyModule : Module<Plugin, Config>
+public class CurrencyModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
 {
     public override CurrencyConfig config
     {
         get => _config.CurrencyConfig;
     }
 
-    public override bool enabled
+    public override bool render
     {
         get => config.IsPropertyEnabled(nameof(config.Enabled));
     }
 
-    public readonly CurrencyTracker tracker = new();
-
-    private Panel panel = new();
-
-    public CurrencyModule(Plugin plugin, Config config)
-        : base(plugin, config)
+    public override bool tick
     {
+        get => true;
     }
+
+    public readonly CurrencyTracker Tracker = new();
+
+    private readonly Panel panel = new();
 
     public override void Tick(IFramework framework)
     {
-        tracker.Tick(framework);
+        Tracker.Tick(framework);
     }
 
     public override void OnTerritoryChanged(ushort _)
     {
-        tracker.Reset();
+        Tracker.Reset();
     }
 
     public override bool DrawMainUi()

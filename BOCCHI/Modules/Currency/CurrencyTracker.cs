@@ -1,18 +1,11 @@
 using System;
+using BOCCHI.ItemHelpers;
 using Dalamud.Plugin.Services;
-using FFXIVClientStructs.FFXIV.Client.Game;
 
 namespace BOCCHI.Modules.Currency;
 
 public class CurrencyTracker
 {
-    private enum Currency
-    {
-        Silver = 45043,
-
-        Gold = 45044,
-    }
-
     private float lastGold = 0f;
 
     private float gainedGold = 0f;
@@ -32,8 +25,8 @@ public class CurrencyTracker
 
     public void Tick(IFramework _)
     {
-        var currentGold = GetGold();
-        var currentSilver = GetSilver();
+        var currentGold = Items.Gold.Count();
+        var currentSilver = Items.Silver.Count();
 
         var goldDelta = currentGold - lastGold;
         var silverDelta = currentSilver - lastSilver;
@@ -52,21 +45,16 @@ public class CurrencyTracker
         lastSilver = currentSilver;
     }
 
-    public void TerritoryChanged(ushort _)
-    {
-        Reset();
-    }
-
     public void ResetSilver()
     {
-        lastSilver = GetSilver();
+        lastSilver = Items.Silver.Count();
         gainedSilver = 0;
         silverStartTime = DateTime.UtcNow;
     }
 
     public void ResetGold()
     {
-        lastGold = GetGold();
+        lastGold = Items.Gold.Count();
         gainedGold = 0;
         goldStartTime = DateTime.UtcNow;
     }
@@ -97,15 +85,5 @@ public class CurrencyTracker
         }
 
         return gainedSilver / elapsed;
-    }
-
-    private unsafe float GetGold()
-    {
-        return InventoryManager.Instance()->GetInventoryItemCount((uint)Currency.Gold);
-    }
-
-    private unsafe float GetSilver()
-    {
-        return InventoryManager.Instance()->GetInventoryItemCount((uint)Currency.Silver);
     }
 }
