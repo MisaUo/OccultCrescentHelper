@@ -14,7 +14,7 @@ public class Panel
         OcelotUI.Title($"{module.T("panel.title")}:");
         OcelotUI.Indent(() =>
         {
-            if (module.tracker.fates.Count <= 0)
+            if (module.tracker.Fates.Count <= 0)
             {
                 ImGui.TextUnformatted(module.T("panel.none"));
                 return;

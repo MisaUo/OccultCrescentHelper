@@ -3,7 +3,6 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Fates;
 
-[Title]
 public class FatesConfig : ModuleConfig
 {
     [Checkbox]

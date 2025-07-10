@@ -28,17 +28,17 @@ public class FatesModule : Module<Plugin, Config>
 
     public Dictionary<uint, IFate> fates
     {
-        get => tracker.fates;
+        get => tracker.Fates;
     }
 
     public Dictionary<uint, EventProgress> progress
     {
-        get => tracker.progress;
+        get => tracker.Progress;
     }
 
-    private Panel panel = new();
+    private readonly Panel panel = new();
 
-    private Alerter alerter;
+    private readonly Alerter alerter;
 
     public FatesModule(Plugin plugin, Config config)
         : base(plugin, config)

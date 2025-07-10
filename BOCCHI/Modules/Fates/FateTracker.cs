@@ -10,9 +10,9 @@ namespace BOCCHI.Modules.Fates;
 
 public class FateTracker
 {
-    public Dictionary<uint, IFate> fates = [];
+    public readonly Dictionary<uint, IFate> Fates = [];
 
-    public Dictionary<uint, EventProgress> progress { get; } = [];
+    public Dictionary<uint, EventProgress> Progress { get; } = [];
 
     public event Action<IFate>? OnFateSpawned;
 
@@ -25,43 +25,43 @@ public class FateTracker
 
         foreach (var (id, fate) in currentFates)
         {
-            if (!fates.ContainsKey(id))
+            if (!Fates.ContainsKey(id))
             {
                 OnFateSpawned?.Invoke(fate);
             }
 
-            fates[id] = fate;
+            Fates[id] = fate;
         }
 
-        var despawned = fates.Keys.Except(currentFates.Keys).ToList();
+        var despawned = Fates.Keys.Except(currentFates.Keys).ToList();
         foreach (var id in despawned)
         {
-            OnFateDespawned?.Invoke(fates[id]);
-            fates.Remove(id);
-            progress.Remove(id);
+            OnFateDespawned?.Invoke(Fates[id]);
+            Fates.Remove(id);
+            Progress.Remove(id);
         }
 
-        foreach (var (id, fate) in fates)
+        foreach (var (id, fate) in Fates)
         {
             if (fate.Progress == 0)
             {
                 continue;
             }
 
-            if (!progress.TryGetValue(id, out var prog))
+            if (!Progress.TryGetValue(id, out var current))
             {
-                prog = new EventProgress();
-                progress[id] = prog;
+                current = new EventProgress();
+                Progress[id] = current;
             }
 
-            if (prog.samples.Count == 0 || prog.samples[^1].Progress != fate.Progress)
+            if (current.samples.Count == 0 || current.samples[^1].Progress != fate.Progress)
             {
-                prog.AddProgress(fate.Progress);
+                current.AddProgress(fate.Progress);
             }
 
             if (fate.Progress == 100)
             {
-                progress.Remove(id);
+                Progress.Remove(id);
             }
         }
     }

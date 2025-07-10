@@ -12,7 +12,7 @@ public class Alerter : IDisposable
 {
     private readonly FatesModule module;
 
-    public Dictionary<Demiatma, Func<bool>> DemiatmaAlerts
+    private Dictionary<Demiatma, Func<bool>> DemiatmaAlerts
     {
         get => new()
         {
