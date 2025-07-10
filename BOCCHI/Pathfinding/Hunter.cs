@@ -162,7 +162,12 @@ public abstract class Hunter
 
         if (stepIndex < Steps.Count)
         {
-            StepProcessor.Submit(GetInteractionChain);
+            var obj = GetValidObjects().FirstOrDefault(o => Vector3.Distance(Player.Position, o.Position) <= 5f);
+            if (obj != null)
+            {
+                StepProcessor.Submit(GetInteractionChain(obj));
+            }
+
             return;
         }
 
