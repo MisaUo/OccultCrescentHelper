@@ -5,7 +5,6 @@ using Dalamud.Game.Addon.Lifecycle.AddonArgTypes;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using FFXIVClientStructs.FFXIV.Component.GUI;
-using Lumina.Excel.Sheets;
 using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Teleporter;
@@ -62,8 +61,8 @@ public class TeleporterModule : Module<Plugin, Config>
             return;
         }
 
-        var prefix = Svc.Data.GetExcelSheet<Addon>().GetRow(118).Text.ToString().Split("<br>")[0];
-        if (!addon->AtkValues[0].String.ToString().StartsWith(prefix))
+        // This could be the dumbest thing I've ever written, but that bar is low
+        if (addon->AtkValues[7].Type != ValueType.Int || addon->AtkValues[7].Int != -1)
         {
             return;
         }
