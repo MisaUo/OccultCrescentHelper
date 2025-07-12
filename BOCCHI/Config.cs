@@ -8,6 +8,7 @@ using BOCCHI.Modules.Data;
 using BOCCHI.Modules.EventDrop;
 using BOCCHI.Modules.Exp;
 using BOCCHI.Modules.Fates;
+using BOCCHI.Modules.ForkedTower;
 using BOCCHI.Modules.MobFarmer;
 using BOCCHI.Modules.Mount;
 using BOCCHI.Modules.Pathfinder;
@@ -44,6 +45,8 @@ public class Config : IOcelotConfig
 
     public CriticalEncountersConfig CriticalEncountersConfig { get; set; } = new();
 
+    public ForkedTowerConfig ForkedTowerConfig { get; set; } = new();
+
     public TreasureConfig TreasureConfig { get; set; } = new();
 
     public CarrotsConfig CarrotsConfig { get; set; } = new();
@@ -61,6 +64,7 @@ public class Config : IOcelotConfig
     public AutomatorConfig AutomatorConfig { get; set; } = new();
 
     public DataConfig DataConfig { get; set; } = new();
+
 
     public void Save()
     {
