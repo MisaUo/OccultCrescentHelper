@@ -181,5 +181,6 @@ public static class TrapData
         new TrapDatum(new Vector3(813.7463f, -489f, 98.21516f), OccultObjectType.Trap),
         new TrapDatum(new Vector3(739f, -500f, -468.5f), OccultObjectType.Trap),
         new TrapDatum(new Vector3(817f, -500f, -535.5f), OccultObjectType.Trap),
+        new TrapDatum(new Vector3(817f, -500f, -520.5f), OccultObjectType.Trap),
     };
 }
