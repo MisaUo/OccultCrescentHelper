@@ -1,8 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
+using BOCCHI.Data;
 using BOCCHI.Enums;
 using BOCCHI.Modules.CriticalEncounters;
 using ECommons.DalamudServices;
@@ -25,8 +25,6 @@ public class ForkedTowerModule(Plugin plugin, Config config) : Module<Plugin, Co
 
     private readonly Panel panel = new();
 
-    private List<(Vector3 Position, OccultObjectType Type)> TrapPositions { get; set; } = [];
-
     public override void PostInitialize()
     {
         GetModule<CriticalEncountersModule>().Tracker.OnBattleState += OnCriticalEncounterBattle;
@@ -41,7 +39,7 @@ public class ForkedTowerModule(Plugin plugin, Config config) : Module<Plugin, Co
             return;
         }
 
-        foreach (var trap in TrapPositions.Where(t => Player.DistanceTo(t.Position) <= config.TrapDrawRange))
+        foreach (var trap in TrapData.Traps.Where(t => Player.DistanceTo(t.Position) <= config.TrapDrawRange))
         {
             var key = $"{trap.Position.X:f2}:{trap.Position.Y:f2}:{trap.Position.Z:f2}.{trap.Type}";
             PictoService.VfxRenderer.AddCircle(key, trap.Position, 4f, GetTrapColor(trap.Type));
