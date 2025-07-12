@@ -12,6 +12,11 @@ public class CarrotsModule(Plugin plugin, Config config) : Module<Plugin, Config
         get => _config.CarrotsConfig;
     }
 
+    public override bool tick
+    {
+        get => true;
+    }
+
     public override bool enabled
     {
         get => config.IsPropertyEnabled(nameof(config.Enabled));
@@ -38,7 +43,7 @@ public class CarrotsModule(Plugin plugin, Config config) : Module<Plugin, Config
     public override void Tick(IFramework framework)
     {
         tracker.Tick(framework);
-        // hunter.Tick(this);
+        hunter.Tick(this);
     }
 
     public override void Draw()
@@ -49,10 +54,11 @@ public class CarrotsModule(Plugin plugin, Config config) : Module<Plugin, Config
     public override bool DrawMainUi()
     {
         panel.Draw(this);
-        // if (config.ShouldEnableCarrotHunt)
-        // {
-        // hunter.Draw(this);
-        // }
+
+        if (config.ShouldEnableCarrotHunt)
+        {
+            hunter.Draw(this);
+        }
 
         return true;
     }

@@ -18,22 +18,22 @@ public class CarrotsConfig : ModuleConfig
         get => IsPropertyEnabled(nameof(DrawLineToCarrots));
     }
 
-    // [Checkbox]
-    // [Experimental]
-    // [Illegal]
-    // [RequiredPlugin("vnavmesh", "Lifestream")]
-    // [DependsOn(nameof(Enabled))]
-    // [Label("modules.carrots.config.show_hunt_button.label")]
-    // public bool EnableCarrotHunt { get; set; } = false;
-    //
-    // public bool ShouldEnableCarrotHunt
-    // {
-    //     get => IsPropertyEnabled(nameof(EnableCarrotHunt));
-    // }
+    [Checkbox]
+    [Experimental]
+    [Illegal]
+    [RequiredPlugin("vnavmesh", "Lifestream")]
+    [DependsOn(nameof(Enabled))]
+    [Label("modules.carrots.config.show_hunt_button.label")]
+    public bool EnableCarrotHunt { get; set; } = false;
 
-    // [Checkbox]
-    // [Experimental]
-    // [DependsOn(nameof(Enabled), nameof(EnableCarrotHunt))]
-    //
-    // public bool RepeatCarrotHunt { get; set; } = false;
+    public bool ShouldEnableCarrotHunt
+    {
+        get => IsPropertyEnabled(nameof(EnableCarrotHunt));
+    }
+
+    [Checkbox]
+    [Experimental]
+    [DependsOn(nameof(Enabled), nameof(EnableCarrotHunt))]
+
+    public bool RepeatCarrotHunt { get; set; } = false;
 }

@@ -12,8 +12,11 @@ using BOCCHI.Enums;
 using BOCCHI.ItemHelpers;
 using BOCCHI.Modules.Data;
 using BOCCHI.Pathfinding;
+using Dalamud.Game.ClientState.Objects.SubKinds;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
+using FFXIVClientStructs.FFXIV.Client.Game.Control;
+using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using ImGuiNET;
 using Ocelot;
 using Ocelot.Chain;
@@ -56,8 +59,9 @@ public class CarrotHuntPanel : Panel
         return "Carrot Hunt Helper";
     }
 
-    public override void Draw(DebugModule module)
+    public override unsafe void Draw(DebugModule module)
     {
+        var vnav = module.GetIPCProvider<VNavmesh>();
         OcelotUI.LabelledValue("Carrots", CarrotData.Data.Count); // 25
 
         OcelotUI.Indent(() =>
@@ -66,18 +70,43 @@ public class CarrotHuntPanel : Panel
             {
                 Plugin.Chain.Submit(() => Chain.Create()
                     .ConditionalThen(_ => Player.Mounted, _ => Actions.Unmount.Cast())
+                    .Wait(500)
                     .BreakIf(() => Items.FortuneCarrot.Count() <= 0)
                     .Then(_ => Items.FortuneCarrot.Use())
                     .WaitToCast()
-                    .Wait(500)
-                    .Log("Done!")
+                    .Then(_ => GetBunnyChests().Any())
+                    .Then(_ =>
+                    {
+                        var target = GetBunnyChests().FirstOrDefault();
+                        if (target == null)
+                        {
+                            return true;
+                        }
+
+                        Svc.Targets.Target = target;
+
+                        if (!vnav.IsRunning())
+                        {
+                            vnav.PathfindAndMoveTo(target.Position, false);
+                        }
+
+                        if (Player.DistanceTo(target) <= 2f)
+                        {
+                            var gameObject = (GameObject*)(void*)target.Address;
+                            TargetSystem.Instance()->InteractWithObject(gameObject);
+                            return true;
+                        }
+
+                        return false;
+                    })
+                    .WaitToCast()
                 );
             }
 
-            var obj = Svc.Objects; //.Where(o => o.ObjectKind == ObjectKind.Treasure);
+            var obj = Svc.Objects.OfType<IEventObj>();
             foreach (var o in obj)
             {
-                ImGui.TextUnformatted(o.Name + " " + o.ObjectKind);
+                ImGui.TextUnformatted(o.Name + " " + o.ObjectKind + " " + o.DataId);
             }
 
             if (!HasRun)
@@ -214,5 +243,10 @@ public class CarrotHuntPanel : Panel
         }
 
         return length;
+    }
+
+    private IEnumerable<IEventObj> GetBunnyChests()
+    {
+        return Svc.Objects.OfType<IEventObj>().Where(o => o.DataId == (uint)OccultObjectType.BunnyChest);
     }
 }

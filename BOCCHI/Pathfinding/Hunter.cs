@@ -117,7 +117,7 @@ public abstract class Hunter
                 var valid = GetValidNodes(config.MaxLevel);
 
                 // Prep pathfinding
-                return Chain.Create()
+                return Chain.Create("Hunter.Pathfinding")
                     .Then(new TaskManagerTask(() => pathfinder?.State == PathfinderState.FileLoaded))
                     .Then(_ => steps = pathfinder.FindPath(Player.Position, valid))
                     .Then(new TaskManagerTask(() => steps!.IsCompleted))
@@ -147,7 +147,7 @@ public abstract class Hunter
         }
 
         StepProcessor.Submit(() =>
-            Chain.Create()
+            Chain.Create("Hunter.Run")
                 .Then(_ =>
                 {
                     var handler = Handlers[CurrentStep.Type];
