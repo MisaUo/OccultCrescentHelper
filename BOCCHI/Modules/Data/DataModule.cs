@@ -54,9 +54,4 @@ public class DataModule : Module<Plugin, Config>
             api.SendTrapData(trap);
         }
     }
-
-    public override void Dispose()
-    {
-        api.Dispose();
-    }
 }

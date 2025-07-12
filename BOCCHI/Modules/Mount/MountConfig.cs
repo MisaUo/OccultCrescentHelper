@@ -7,6 +7,7 @@ namespace BOCCHI.Modules.Mount;
 public class MountConfig : ModuleConfig
 {
     [ExcelSheet(typeof(ExcelMount), nameof(MountProvider))]
+    [Searchable]
     [IllegalModeCompatible]
     public uint Mount { get; set; } = 1;
 

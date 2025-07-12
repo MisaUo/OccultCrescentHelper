@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Net.Http;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using BOCCHI.Modules.CriticalEncounters;
+using BOCCHI.Modules.ForkedTower;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
-using ECommons.GameHelpers;
-using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 
 namespace BOCCHI.Modules.Data;
 
-public class Api : IDisposable
+public class Api(DataModule module)
 {
-    private readonly DataModule module;
+    private ForkedTowerModule forkedTowerModule = null!;
 
     private readonly HttpClient client = new();
 
@@ -22,18 +19,9 @@ public class Api : IDisposable
 
     private readonly TrapDataHelper TrapData = new();
 
-    private string towerHash = "";
-
-    public Api(DataModule module)
-    {
-        this.module = module;
-    }
-
     public void Initialize()
     {
-        module.GetModule<CriticalEncountersModule>().Tracker.OnBattleState += OnCriticalEncounterBattle;
-
-        GenerateHash();
+        forkedTowerModule = module.GetModule<ForkedTowerModule>();
     }
 
     public async Task SendEnemyData(IGameObject obj)
@@ -78,7 +66,7 @@ public class Api : IDisposable
 
     public async Task SendTrapData(IGameObject obj)
     {
-        var trap = new Trap(obj, towerHash);
+        var trap = new Trap(obj, forkedTowerModule.TowerHash);
         if (TrapData.HasSharedData(trap))
         {
             return;
@@ -114,43 +102,5 @@ public class Api : IDisposable
         {
             Svc.Log.Debug($"Failed to send request: {ex.Message}");
         }
-    }
-
-    private void OnCriticalEncounterBattle(DynamicEvent ev)
-    {
-        if (ev.EventType < 4)
-        {
-            return;
-        }
-
-        GenerateHash();
-    }
-
-    private void GenerateHash()
-    {
-        using var sha256 = SHA256.Create();
-
-        var timeBytes = BitConverter.GetBytes(DateTimeOffset.UtcNow.ToUnixTimeSeconds());
-        var contentIdBytes = BitConverter.GetBytes(Player.CID);
-
-        if (!BitConverter.IsLittleEndian)
-        {
-            Array.Reverse(timeBytes);
-            Array.Reverse(contentIdBytes);
-        }
-
-        var combined = new byte[timeBytes.Length + contentIdBytes.Length];
-        Buffer.BlockCopy(timeBytes, 0, combined, 0, timeBytes.Length);
-        Buffer.BlockCopy(contentIdBytes, 0, combined, timeBytes.Length, contentIdBytes.Length);
-
-        var hashBytes = sha256.ComputeHash(combined);
-
-        towerHash = Convert.ToBase64String(hashBytes);
-        Svc.Log.Debug($"New Tower Hash Generated {towerHash}");
-    }
-
-    public void Dispose()
-    {
-        module.GetModule<CriticalEncountersModule>().Tracker.OnBattleState -= OnCriticalEncounterBattle;
     }
 }

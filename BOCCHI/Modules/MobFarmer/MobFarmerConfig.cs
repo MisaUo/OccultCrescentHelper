@@ -11,6 +11,7 @@ public class MobFarmerConfig : ModuleConfig
     public bool Enabled { get; set; } = true;
 
     [Enum(typeof(Mob), nameof(MobProvider))]
+    [Searchable]
     public Mob Mob { get; set; } = Mob.Foper;
 
     [Checkbox] public bool ConsiderSpecialMobs { get; set; } = false;

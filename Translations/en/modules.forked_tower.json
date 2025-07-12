@@ -1,0 +1,26 @@
+{
+  "modules": {
+    "forked_tower": {
+      "config": {
+        "title": "Forked Tower Config",
+        "no_traps": "No trap positions have been reported yet. Don't report this.",
+        "draw_potential_trap_positions": {
+          "label": "Draw Potential Trap Positions",
+          "tooltip": "Enables drawing of potential trap spawn locations within range."
+        },
+        "trap_draw_range": {
+          "label": "Trap Draw Range",
+          "tooltip": "The radius (in yalms) around the player to highlight known potential trap positions."
+        },
+        "trap_draw_color": {
+          "label": "Trap Draw Color",
+          "tooltip": "Color used to display regular trap markers."
+        },
+        "big_trap_draw_color": {
+          "label": "Big Trap Draw Color",
+          "tooltip": "Color used to display larger or more dangerous trap markers."
+        }
+      }
+    }
+  }
+}

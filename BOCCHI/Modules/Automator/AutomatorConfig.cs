@@ -14,7 +14,6 @@ public class AutomatorConfig : ModuleConfig
     public bool Enabled { get; set; } = false;
 
     [Enum(typeof(AiType), nameof(AiTypeProvider))]
-
     public AiType AiProvider { get; set; } = AiType.VBM;
 
     [Checkbox] public bool ToggleAiProvider { get; set; } = true;
