@@ -61,7 +61,7 @@ Utility command.
             return;
         }
 
-        foreach (var encounter in source.criticalEncounters.Values)
+        foreach (var encounter in source.CriticalEncounters.Values)
         {
             if (encounter.EventType >= 4 || encounter.State != DynamicEventState.Register)
             {

@@ -1,27 +1,41 @@
 using System.Linq;
+using BOCCHI.Enums;
+using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Plugin.Services;
+using ECommons.DalamudServices;
 using ECommons.Throttlers;
 using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Data;
 
 [OcelotModule(int.MaxValue)]
-public class DataModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
+public class DataModule : Module<Plugin, Config>
 {
     public override DataConfig config
     {
         get => _config.DataConfig;
     }
 
-    public override bool tick
+    private readonly Api api;
+
+    public DataModule(Plugin plugin, Config config)
+        : base(plugin, config)
     {
-        get => config.Enabled;
+        api = new Api(this);
     }
 
-    private readonly Api Api = new();
+    public override void PostInitialize()
+    {
+        api.Initialize();
+    }
 
     public override void Tick(IFramework _)
     {
+        if (!config.Enabled)
+        {
+            return;
+        }
+
         if (!EzThrottler.Throttle("ApiScan", 2500))
         {
             return;
@@ -30,7 +44,19 @@ public class DataModule(Plugin plugin, Config config) : Module<Plugin, Config>(p
         var enemies = TargetHelper.Enemies.Where(e => e.Name.TextValue.Length > 0);
         foreach (var enemy in enemies)
         {
-            Api.SendEnemyData(enemy);
+            api.SendEnemyData(enemy);
         }
+
+        var traps = Svc.Objects.OfType<IEventObj>()
+            .Where(o => o.DataId is (uint)OccultObjectType.Trap or (uint)OccultObjectType.BigTrap or (uint)OccultObjectType.Carrot);
+        foreach (var trap in traps)
+        {
+            api.SendTrapData(trap);
+        }
+    }
+
+    public override void Dispose()
+    {
+        api.Dispose();
     }
 }

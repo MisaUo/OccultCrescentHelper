@@ -24,16 +24,16 @@ public class CriticalEncountersModule : Module<Plugin, Config>
         get => true;
     }
 
-    public readonly CriticalEncounterTracker tracker;
+    public readonly CriticalEncounterTracker Tracker;
 
-    public Dictionary<uint, DynamicEvent> criticalEncounters
+    public Dictionary<uint, DynamicEvent> CriticalEncounters
     {
-        get => tracker.CriticalEncounters;
+        get => Tracker.CriticalEncounters;
     }
 
-    public Dictionary<uint, EventProgress> progress
+    public Dictionary<uint, EventProgress> Progress
     {
-        get => tracker.Progress;
+        get => Tracker.Progress;
     }
 
     private readonly Panel panel = new();
@@ -43,13 +43,13 @@ public class CriticalEncountersModule : Module<Plugin, Config>
     public CriticalEncountersModule(Plugin plugin, Config config)
         : base(plugin, config)
     {
-        tracker = new CriticalEncounterTracker(this);
+        Tracker = new CriticalEncounterTracker(this);
         alerter = new Alerter(this);
     }
 
     public override void Tick(IFramework framework)
     {
-        tracker.Tick(framework);
+        Tracker.Tick(framework);
     }
 
     public override bool DrawMainUi()
@@ -60,7 +60,7 @@ public class CriticalEncountersModule : Module<Plugin, Config>
 
     public override void OnTerritoryChanged(ushort id)
     {
-        criticalEncounters.Clear();
+        CriticalEncounters.Clear();
     }
 
     public override void Dispose()

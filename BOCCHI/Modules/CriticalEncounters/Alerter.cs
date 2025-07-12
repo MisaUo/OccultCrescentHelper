@@ -39,8 +39,8 @@ public class Alerter : IDisposable
     {
         this.module = module;
 
-        this.module.tracker.OnRegisterState += OnCriticalEncounterSpawned;
-        this.module.tracker.OnInactiveState += OnCriticalEncounterDepawned;
+        this.module.Tracker.OnRegisterState += OnCriticalEncounterSpawned;
+        this.module.Tracker.OnInactiveState += OnCriticalEncounterDepawned;
     }
 
     private void OnCriticalEncounterSpawned(DynamicEvent ev)
@@ -108,7 +108,7 @@ public class Alerter : IDisposable
 
     public void Dispose()
     {
-        module.tracker.OnRegisterState -= OnCriticalEncounterSpawned;
-        module.tracker.OnInactiveState -= OnCriticalEncounterDepawned;
+        module.Tracker.OnRegisterState -= OnCriticalEncounterSpawned;
+        module.Tracker.OnInactiveState -= OnCriticalEncounterDepawned;
     }
 }

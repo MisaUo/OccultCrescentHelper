@@ -123,7 +123,7 @@ public class TeleportCommand(Plugin plugin) : OcelotCommand
     private Aethernet? GetCriticalEncounterAethernet()
     {
         var source = plugin.modules.GetModule<CriticalEncountersModule>();
-        foreach (var encounter in source.criticalEncounters.Values)
+        foreach (var encounter in source.CriticalEncounters.Values)
         {
             if (encounter.EventType >= 4 || encounter.State != DynamicEventState.Register)
             {

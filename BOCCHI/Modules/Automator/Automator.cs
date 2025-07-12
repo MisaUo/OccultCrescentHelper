@@ -44,7 +44,7 @@ public class Automator
             if (states.GetState() == State.InCriticalEncounter)
             {
                 var critical = module.GetModule<CriticalEncountersModule>();
-                var encounter = critical.criticalEncounters.Values.Last(ev => ev.State != DynamicEventState.Inactive);
+                var encounter = critical.CriticalEncounters.Values.Last(ev => ev.State != DynamicEventState.Inactive);
                 var data = EventData.CriticalEncounters[encounter.DynamicEventId];
                 Activity = new CriticalEncounter(data, lifestream, vnav, module, critical);
 
@@ -135,7 +135,7 @@ public class Automator
             return null;
         }
 
-        foreach (var encounter in source.criticalEncounters.Values)
+        foreach (var encounter in source.CriticalEncounters.Values)
         {
             if (!module.config.CriticalEncountersMap.TryGetValue(encounter.DynamicEventId, out var enabled) || !enabled)
             {

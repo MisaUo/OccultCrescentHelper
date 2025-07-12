@@ -15,18 +15,18 @@ public class Panel
         OcelotUI.Title($"{module.T("panel.title")}:");
         OcelotUI.Indent(() =>
         {
-            var active = module.criticalEncounters.Values.Count(ev => ev.State != DynamicEventState.Inactive);
+            var active = module.CriticalEncounters.Values.Count(ev => ev.State != DynamicEventState.Inactive);
             if (active <= 0)
             {
                 ImGui.TextUnformatted(module.T("panel.none"));
                 return;
             }
 
-            foreach (var ev in module.criticalEncounters.Values)
+            foreach (var ev in module.CriticalEncounters.Values)
             {
                 if (!ZoneData.IsInOccultCrescent())
                 {
-                    module.criticalEncounters.Clear();
+                    module.CriticalEncounters.Clear();
                     return;
                 }
 
@@ -69,7 +69,7 @@ public class Panel
                             ImGui.SameLine();
                             ImGui.TextUnformatted($"({ev.Progress}%)");
 
-                            if (module.progress.TryGetValue(ev.DynamicEventId, out var progress))
+                            if (module.Progress.TryGetValue(ev.DynamicEventId, out var progress))
                             {
                                 var estimate = progress.EstimateTimeToCompletion();
                                 if (estimate != null)
@@ -119,21 +119,21 @@ public class Panel
         {
             ImGui.TextUnformatted($"{ev.Name}:");
 
-            var time = module.tracker.TowerTimer.GetTimeToForkedTowerSpawn(ev.State);
+            var time = module.Tracker.TowerTimer.GetTimeToForkedTowerSpawn(ev.State);
             OcelotUI.Indent(() => { OcelotUI.LabelledValue("Forked Tower Spawn Estimate", $"{time:mm\\:ss}"); });
         }
         else
         {
             ImGui.TextUnformatted($"{ev.Name}:");
 
-            var time = module.tracker.TowerTimer.GetTimeRemainingToRegister(ev.State);
+            var time = module.Tracker.TowerTimer.GetTimeRemainingToRegister(ev.State);
             OcelotUI.Indent(() => { OcelotUI.LabelledValue("Forked Tower Register", $"{time:mm\\:ss}"); });
         }
 
         OcelotUI.Indent(32, () =>
         {
-            OcelotUI.LabelledValue("Critical Encounters completed", module.tracker.TowerTimer.CriticalEncountersCompleted);
-            OcelotUI.LabelledValue("Fates completed", module.tracker.TowerTimer.FatesCompleted);
+            OcelotUI.LabelledValue("Critical Encounters completed", module.Tracker.TowerTimer.CriticalEncountersCompleted);
+            OcelotUI.LabelledValue("Fates completed", module.Tracker.TowerTimer.FatesCompleted);
         });
 
 

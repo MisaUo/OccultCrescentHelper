@@ -1,6 +1,4 @@
-﻿using Dalamud.Game.ClientState.Objects.Types;
-
-namespace BOCCHI.Modules.Data;
+﻿namespace BOCCHI.Modules.Data;
 
 public struct MonsterPayload
 {
@@ -11,11 +9,6 @@ public struct MonsterPayload
     public uint level { get; set; }
 
     public Position position { get; set; }
-
-    public static MonsterPayload Create(IGameObject enemy)
-    {
-        return Create(new Enemy(enemy));
-    }
 
     public static MonsterPayload Create(Enemy enemy)
     {

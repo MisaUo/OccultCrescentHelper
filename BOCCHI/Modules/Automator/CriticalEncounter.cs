@@ -23,7 +23,7 @@ public class CriticalEncounter : Activity
 
     private DynamicEvent Encounter
     {
-        get => source.criticalEncounters[data.id];
+        get => source.CriticalEncounters[data.id];
     }
 
     private bool finalDestination = false;
@@ -84,7 +84,7 @@ public class CriticalEncounter : Activity
             }
 
             var critical = module.GetModule<CriticalEncountersModule>();
-            var encounter = critical.criticalEncounters[data.id];
+            var encounter = critical.CriticalEncounters[data.id];
 
             if (encounter.State != DynamicEventState.Register)
             {
@@ -119,7 +119,7 @@ public class CriticalEncounter : Activity
                         }
 
                         var critical = module.GetModule<CriticalEncountersModule>();
-                        var encounter = critical.criticalEncounters[data.id];
+                        var encounter = critical.CriticalEncounters[data.id];
 
                         if (encounter.State == DynamicEventState.Battle &&
                             states.GetState() != State.InCriticalEncounter)

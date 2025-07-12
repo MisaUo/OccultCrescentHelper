@@ -24,7 +24,7 @@ public class CriticalEncountersPanel : Panel
         {
             foreach (var data in EventData.CriticalEncounters.Values)
             {
-                var ev = module.GetModule<CriticalEncountersModule>().criticalEncounters[data.id];
+                var ev = module.GetModule<CriticalEncountersModule>().CriticalEncounters[data.id];
 
                 ImGui.TextUnformatted(ev.Name.ToString());
 
