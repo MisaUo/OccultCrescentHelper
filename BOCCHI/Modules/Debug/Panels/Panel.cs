@@ -4,11 +4,11 @@ public abstract class Panel
 {
     public abstract string GetName();
 
-    public virtual void Tick(DebugModule module)
+    public virtual void Update(DebugModule module)
     {
     }
 
-    public virtual void Draw(DebugModule module)
+    public virtual void Render(DebugModule module)
     {
     }
 

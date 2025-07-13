@@ -12,9 +12,9 @@ namespace BOCCHI.Modules.Teleporter;
 [OcelotModule(2)]
 public class TeleporterModule : Module<Plugin, Config>
 {
-    public override TeleporterConfig config
+    public override TeleporterConfig Config
     {
-        get => _config.TeleporterConfig;
+        get => PluginConfig.TeleporterConfig;
     }
 
     public readonly Teleporter teleporter;

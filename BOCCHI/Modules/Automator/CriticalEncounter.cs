@@ -131,9 +131,9 @@ public class CriticalEncounter : Activity
                         {
                             Actions.TryUnmount();
 
-                            if (module.config.ShouldToggleAiProvider)
+                            if (module.Config.ShouldToggleAiProvider)
                             {
-                                module.config.AiProvider.On();
+                                module.Config.AiProvider.On();
                             }
                         }
 

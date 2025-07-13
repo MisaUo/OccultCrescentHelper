@@ -10,7 +10,7 @@ namespace BOCCHI.Modules.Debug;
 #endif
 public class DebugWindow(Plugin priamryPlugin, Config config) : OcelotWindow(priamryPlugin, config)
 {
-    public override void Draw()
+    public override void Render()
     {
         if (!ZoneData.IsInOccultCrescent())
         {
@@ -18,7 +18,7 @@ public class DebugWindow(Plugin priamryPlugin, Config config) : OcelotWindow(pri
             return;
         }
 
-        if (plugin.modules.TryGetModule<DebugModule>(out var module) && module != null)
+        if (plugin.Modules.TryGetModule<DebugModule>(out var module) && module != null)
         {
             module.DrawPanels();
         }

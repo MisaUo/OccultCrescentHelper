@@ -24,7 +24,7 @@ public class ActivityTargetPanel : Panel
         return "Activity Targets";
     }
 
-    public override unsafe void Draw(DebugModule module)
+    public override unsafe void Render(DebugModule module)
     {
         OcelotUI.Indent(() =>
         {

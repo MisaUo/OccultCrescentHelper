@@ -12,7 +12,7 @@ public class TreasureSightChain(TreasureModule module) : ChainFactory
 
     protected override Chain Create(Chain chain)
     {
-        chain.RunIf(() => module.config.CastTreasureSightUponReturn);
+        chain.RunIf(() => module.Config.CastTreasureSightUponReturn);
 
         chain.Then(Job.Freelancer.ChangeToChain);
         chain.Then(Actions.Freelancer.Treasuresight.GetCastChain()).Wait(1000);

@@ -16,12 +16,12 @@ public class Alerter : IDisposable
     {
         get => new()
         {
-            [Demiatma.Azurite] = () => module.config.AlertAzurite,
-            [Demiatma.Verdigris] = () => module.config.AlertVerdigris,
-            [Demiatma.Malachite] = () => module.config.AlertMalachite,
-            [Demiatma.Realgar] = () => module.config.AlertRealgar,
-            [Demiatma.CaputMortuum] = () => module.config.AlertCaputMortuum,
-            [Demiatma.Orpiment] = () => module.config.AlertOrpiment,
+            [Demiatma.Azurite] = () => module.Config.AlertAzurite,
+            [Demiatma.Verdigris] = () => module.Config.AlertVerdigris,
+            [Demiatma.Malachite] = () => module.Config.AlertMalachite,
+            [Demiatma.Realgar] = () => module.Config.AlertRealgar,
+            [Demiatma.CaputMortuum] = () => module.Config.AlertCaputMortuum,
+            [Demiatma.Orpiment] = () => module.Config.AlertOrpiment,
         };
     }
 
@@ -35,7 +35,7 @@ public class Alerter : IDisposable
 
     private void OnFateSpawned(IFate fate)
     {
-        if (module.config.LogSpawn)
+        if (module.Config.LogSpawn)
         {
             Svc.Chat.Print($"{fate.Name} has Spawned");
         }
@@ -50,7 +50,7 @@ public class Alerter : IDisposable
 
     private void OnFateDespawned(IFate fate)
     {
-        if (module.config.LogSpawn)
+        if (module.Config.LogSpawn)
         {
             Svc.Chat.Print($"{fate.Name} has Despawned");
         }
@@ -65,7 +65,7 @@ public class Alerter : IDisposable
 
     private bool ShouldAlertForFate(IFate fate)
     {
-        if (module.config.AlertAll)
+        if (module.Config.AlertAll)
         {
             return true;
         }

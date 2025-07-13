@@ -6,17 +6,17 @@ namespace BOCCHI.Modules.Currency;
 [OcelotModule(int.MaxValue - 1001, 3)]
 public class CurrencyModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
 {
-    public override CurrencyConfig config
+    public override CurrencyConfig Config
     {
-        get => _config.CurrencyConfig;
+        get => PluginConfig.CurrencyConfig;
     }
 
-    public override bool render
+    public override bool ShouldRender
     {
-        get => config.IsPropertyEnabled(nameof(config.Enabled));
+        get => Config.IsPropertyEnabled(nameof(Config.Enabled));
     }
 
-    public override bool tick
+    public override bool ShouldUpdate
     {
         get => true;
     }
@@ -25,7 +25,7 @@ public class CurrencyModule(Plugin plugin, Config config) : Module<Plugin, Confi
 
     private readonly Panel panel = new();
 
-    public override void Tick(IFramework framework)
+    public override void Update(IFramework framework)
     {
         Tracker.Tick(framework);
     }
@@ -35,7 +35,7 @@ public class CurrencyModule(Plugin plugin, Config config) : Module<Plugin, Confi
         Tracker.Reset();
     }
 
-    public override bool DrawMainUi()
+    public override bool RenderMainUi()
     {
         panel.Draw(this);
         return true;

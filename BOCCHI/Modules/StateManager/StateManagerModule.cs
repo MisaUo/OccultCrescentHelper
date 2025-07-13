@@ -7,9 +7,9 @@ namespace BOCCHI.Modules.StateManager;
 [OcelotModule(6, -1)]
 public class StateManagerModule : Module<Plugin, Config>
 {
-    public override StateManagerConfig config
+    public override StateManagerConfig Config
     {
-        get => _config.StateManagerConfig;
+        get => PluginConfig.StateManagerConfig;
     }
 
     private readonly Panel panel = new();
@@ -69,12 +69,12 @@ public class StateManagerModule : Module<Plugin, Config>
     {
     }
 
-    public override void Tick(IFramework framework)
+    public override void Update(IFramework framework)
     {
         state.Tick(framework);
     }
 
-    public override bool DrawMainUi()
+    public override bool RenderMainUi()
     {
         return panel.Draw(this);
     }

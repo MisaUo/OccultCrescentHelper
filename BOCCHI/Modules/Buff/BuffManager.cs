@@ -54,17 +54,17 @@ public class BuffManager
     {
         List<uint> buffs = [];
 
-        if (module.config.ApplyEnduringFortitude)
+        if (module.Config.ApplyEnduringFortitude)
         {
             buffs.Add((uint)PlayerStatus.EnduringFortitude);
         }
 
-        if (module.config.ApplyFleetfooted)
+        if (module.Config.ApplyFleetfooted)
         {
             buffs.Add((uint)PlayerStatus.Fleetfooted);
         }
 
-        if (module.config.ApplyRomeosBallad)
+        if (module.Config.ApplyRomeosBallad)
         {
             buffs.Add((uint)PlayerStatus.RomeosBallad);
         }
@@ -75,11 +75,11 @@ public class BuffManager
 
     public bool ShouldRefresh(BuffModule module)
     {
-        if (module.enabled == false)
+        if (!module.IsEnabled)
         {
             return false;
         }
 
-        return lowestTimer <= module.config.ReapplyThreshold * 60;
+        return lowestTimer <= module.Config.ReapplyThreshold * 60;
     }
 }

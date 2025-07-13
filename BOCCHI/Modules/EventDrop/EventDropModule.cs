@@ -5,8 +5,8 @@ namespace BOCCHI.Modules.EventDrop;
 [OcelotModule(4)]
 public class EventDropModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
 {
-    public override EventDropConfig config
+    public override EventDropConfig Config
     {
-        get => _config.EventDropConfig;
+        get => PluginConfig.EventDropConfig;
     }
 }

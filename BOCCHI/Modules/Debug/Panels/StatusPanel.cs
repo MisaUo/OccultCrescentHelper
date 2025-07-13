@@ -13,7 +13,7 @@ public class StatusPanel : Panel
         return "Statuses";
     }
 
-    public override void Draw(DebugModule module)
+    public override void Render(DebugModule module)
     {
         var data = Svc.Data.GetExcelSheet<Status>();
 

@@ -29,6 +29,6 @@ Opens Occult Crescent Helper config ui
 
     public override void Command(string command, string arguments)
     {
-        plugin.windows?.ToggleConfigUI();
+        plugin.Windows.ToggleConfigUI();
     }
 }

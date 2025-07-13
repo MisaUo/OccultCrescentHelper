@@ -42,14 +42,14 @@ Opens Occult Crescent Helper main ui
     {
         if (arguments is "config" or "cfg")
         {
-            plugin.windows?.ToggleConfigUI();
+            plugin.Windows.ToggleConfigUI();
             return;
         }
 
 #if DEBUG_BUILD
         if (arguments == "debug")
         {
-            plugin.windows.GetWindow<DebugWindow>().Toggle();
+            plugin.Windows.GetWindow<DebugWindow>().Toggle();
             return;
         }
 #endif
@@ -87,6 +87,6 @@ Opens Occult Crescent Helper main ui
             return;
         }
 
-        plugin.windows.ToggleMainUI();
+        plugin.Windows.ToggleMainUI();
     }
 }

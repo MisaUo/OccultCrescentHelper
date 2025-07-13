@@ -6,14 +6,14 @@ namespace BOCCHI.Modules.MobFarmer;
 [OcelotModule(int.MaxValue - 2)]
 public class MobFarmerModule : Module<Plugin, Config>
 {
-    public override MobFarmerConfig config
+    public override MobFarmerConfig Config
     {
-        get => _config.MobFarmerConfig;
+        get => PluginConfig.MobFarmerConfig;
     }
 
-    public override bool enabled
+    public override bool IsEnabled
     {
-        get => config.Enabled;
+        get => Config.Enabled;
     }
 
     private readonly Panel panel = new();
@@ -29,18 +29,18 @@ public class MobFarmerModule : Module<Plugin, Config>
         farmer = new Farmer(this);
     }
 
-    public override void Tick(IFramework framework)
+    public override void Update(IFramework framework)
     {
         scanner.Tick(framework);
         farmer.Tick();
     }
 
-    public override void Draw()
+    public override void Render()
     {
         farmer.Draw();
     }
 
-    public override bool DrawMainUi()
+    public override bool RenderMainUi()
     {
         panel.Draw(this);
         return true;

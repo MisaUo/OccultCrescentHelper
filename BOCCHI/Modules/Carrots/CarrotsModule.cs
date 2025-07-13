@@ -7,19 +7,19 @@ namespace BOCCHI.Modules.Carrots;
 [OcelotModule(1004, 2)]
 public class CarrotsModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
 {
-    public override CarrotsConfig config
+    public override CarrotsConfig Config
     {
-        get => _config.CarrotsConfig;
+        get => PluginConfig.CarrotsConfig;
     }
 
-    public override bool tick
+    public override bool ShouldUpdate
     {
         get => true;
     }
 
-    public override bool enabled
+    public override bool IsEnabled
     {
-        get => config.IsPropertyEnabled(nameof(config.Enabled));
+        get => Config.IsPropertyEnabled(nameof(Config.Enabled));
     }
 
     private readonly CarrotsTracker tracker = new();
@@ -40,22 +40,22 @@ public class CarrotsModule(Plugin plugin, Config config) : Module<Plugin, Config
         hunter = new CarrotHunt(this);
     }
 
-    public override void Tick(IFramework framework)
+    public override void Update(IFramework framework)
     {
         tracker.Tick(framework);
         hunter.Tick(this);
     }
 
-    public override void Draw()
+    public override void Render()
     {
         radar.Draw(this);
     }
 
-    public override bool DrawMainUi()
+    public override bool RenderMainUi()
     {
         panel.Draw(this);
 
-        if (config.ShouldEnableCarrotHunt)
+        if (Config.ShouldEnableCarrotHunt)
         {
             hunter.Draw(this);
         }

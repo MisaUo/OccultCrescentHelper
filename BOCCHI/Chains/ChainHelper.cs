@@ -17,7 +17,7 @@ public class ChainHelper
 {
     private static ChainHelper? _instance = null;
 
-    private static ChainHelper instance
+    private static ChainHelper Instance
     {
         get
         {
@@ -30,21 +30,21 @@ public class ChainHelper
         }
     }
 
-    private Plugin plugin;
+    private readonly Plugin Plugin;
 
-    private static ModuleManager modules
+    private static ModuleManager Modules
     {
-        get => instance.plugin.modules;
+        get => Instance.Plugin.Modules;
     }
 
-    private static IPCManager ipc
+    private static IPCManager IPC
     {
-        get => instance.plugin.ipc;
+        get => Instance.Plugin.IPC;
     }
 
     private ChainHelper(Plugin plugin)
     {
-        this.plugin = plugin;
+        Plugin = plugin;
     }
 
     public static void Initialize(Plugin plugin)
@@ -56,7 +56,7 @@ public class ChainHelper
     {
         var config = new ReturnChainConfig
         {
-            ApproachAetheryte = instance.plugin.config.TeleporterConfig.ApproachAetheryte,
+            ApproachAetheryte = Instance.Plugin.Config.TeleporterConfig.ApproachAetheryte,
         };
 
         return ReturnChain(config);
@@ -64,26 +64,26 @@ public class ChainHelper
 
     public static ReturnChain ReturnChain(ReturnChainConfig config)
     {
-        return new ReturnChain(modules.GetModule<TeleporterModule>(), config);
+        return new ReturnChain(Modules.GetModule<TeleporterModule>(), config);
     }
 
     public static TeleportChain TeleportChain(Aethernet aethernet)
     {
         return new TeleportChain(
             aethernet,
-            ipc.GetProvider<Lifestream>(),
-            modules.GetModule<TeleporterModule>()
+            IPC.GetProvider<Lifestream>(),
+            Modules.GetModule<TeleporterModule>()
         );
     }
 
     public static MountChain MountChain()
     {
-        return new MountChain(modules.GetModule<MountModule>().config);
+        return new MountChain(Modules.GetModule<MountModule>().Config);
     }
 
     public static Func<Chain> PathfindToAndWait(Vector3 destination, float distance)
     {
-        var vnav = ipc.GetProvider<VNavmesh>();
+        var vnav = IPC.GetProvider<VNavmesh>();
         return () => Chain.Create()
             .ConditionalThen(_ => Player.DistanceTo(destination) > distance, _ =>
                 Chain.Create()
@@ -95,7 +95,7 @@ public class ChainHelper
 
     public static Func<Chain> MoveToAndWait(Vector3 destination, float distance)
     {
-        var vnav = ipc.GetProvider<VNavmesh>();
+        var vnav = IPC.GetProvider<VNavmesh>();
         return () => Chain.Create()
             .ConditionalThen(_ => Player.DistanceTo(destination) > distance, _ =>
                 Chain.Create()
@@ -107,6 +107,6 @@ public class ChainHelper
 
     public static TreasureSightChain TreasureSightChain()
     {
-        return new TreasureSightChain(modules.GetModule<TreasureModule>());
+        return new TreasureSightChain(Modules.GetModule<TreasureModule>());
     }
 }

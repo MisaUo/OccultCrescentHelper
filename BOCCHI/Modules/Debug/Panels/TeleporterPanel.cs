@@ -13,7 +13,7 @@ public class TeleporterPanel : Panel
         return "Teleporter";
     }
 
-    public override void Draw(DebugModule module)
+    public override void Render(DebugModule module)
     {
         if (module.TryGetModule<TeleporterModule>(out var teleporter) && teleporter!.IsReady())
         {

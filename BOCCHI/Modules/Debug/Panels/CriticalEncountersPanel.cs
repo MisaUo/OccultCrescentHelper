@@ -17,7 +17,7 @@ public class CriticalEncountersPanel : Panel
         return "Critical Encounters";
     }
 
-    public override unsafe void Draw(DebugModule module)
+    public override unsafe void Render(DebugModule module)
     {
         OcelotUI.Title("Critical Encounters:");
         OcelotUI.Indent(() =>
@@ -63,7 +63,7 @@ public class CriticalEncountersPanel : Panel
                     teleporter.teleporter.Button(data.aethernet, start, ev.Name.ToString(), $"ce_{data.id}", data);
                 }
 
-                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.config.EventDropConfig));
+                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
 
                 if (data.id != EventData.CriticalEncounters.Keys.Max())
                 {

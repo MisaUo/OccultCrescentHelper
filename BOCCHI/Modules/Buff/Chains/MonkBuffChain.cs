@@ -7,6 +7,6 @@ public class MonkBuffChain(BuffModule module) : BuffChain(Job.Monk, PlayerStatus
 {
     protected override bool ShouldRun()
     {
-        return module.config.ApplyFleetfooted;
+        return module.Config.ApplyFleetfooted;
     }
 }

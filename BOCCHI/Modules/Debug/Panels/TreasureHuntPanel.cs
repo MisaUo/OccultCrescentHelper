@@ -84,7 +84,7 @@ public class TreasureHuntPanel : Panel
         return "Treasure Hunt Helper";
     }
 
-    public override void Draw(DebugModule module)
+    public override void Render(DebugModule module)
     {
         OcelotUI.LabelledValue("Bronze", Treasure.Count(t => t.type == 1596)); // 60
         OcelotUI.LabelledValue("Silver", Treasure.Count(t => t.type == 1597)); // 8
@@ -109,7 +109,7 @@ public class TreasureHuntPanel : Panel
         });
     }
 
-    public override void Tick(DebugModule module)
+    public override void Update(DebugModule module)
     {
         if (!ShouldRun || HasRun)
         {

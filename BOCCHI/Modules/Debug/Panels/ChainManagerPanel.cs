@@ -11,7 +11,7 @@ public class ChainManagerPanel : Panel
         return "Chain Manager";
     }
 
-    public override void Draw(DebugModule module)
+    public override void Render(DebugModule module)
     {
         OcelotUI.Title("Chain Manager:");
         OcelotUI.Indent(() =>

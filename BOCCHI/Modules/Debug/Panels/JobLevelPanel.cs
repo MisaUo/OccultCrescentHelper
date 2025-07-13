@@ -16,7 +16,7 @@ public class JobLevelPanel : Panel
         return "Job Level";
     }
 
-    public override unsafe void Draw(DebugModule module)
+    public override unsafe void Render(DebugModule module)
     {
         // var level = PublicContentOccultCrescent.GetState()->SupportJobLevels[1];
         var state = PublicContentOccultCrescent.GetState();

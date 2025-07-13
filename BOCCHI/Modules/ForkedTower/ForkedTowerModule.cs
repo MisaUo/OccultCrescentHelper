@@ -16,9 +16,9 @@ namespace BOCCHI.Modules.ForkedTower;
 [OcelotModule]
 public class ForkedTowerModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
 {
-    public override ForkedTowerConfig config
+    public override ForkedTowerConfig Config
     {
-        get => _config.ForkedTowerConfig;
+        get => PluginConfig.ForkedTowerConfig;
     }
 
     public string TowerHash { get; private set; } = "";
@@ -32,14 +32,14 @@ public class ForkedTowerModule(Plugin plugin, Config config) : Module<Plugin, Co
         GenerateHash();
     }
 
-    public override void Draw()
+    public override void Render()
     {
-        if (!config.DrawPotentialTrapPositions)
+        if (!Config.DrawPotentialTrapPositions)
         {
             return;
         }
 
-        foreach (var trap in TrapData.Traps.Where(t => Player.DistanceTo(t.Position) <= config.TrapDrawRange))
+        foreach (var trap in TrapData.Traps.Where(t => Player.DistanceTo(t.Position) <= Config.TrapDrawRange))
         {
             var key = $"{trap.Position.X:f2}:{trap.Position.Y:f2}:{trap.Position.Z:f2}.{trap.Type}";
             PictoService.VfxRenderer.AddCircle(key, trap.Position, 4f, GetTrapColor(trap.Type));
@@ -50,14 +50,14 @@ public class ForkedTowerModule(Plugin plugin, Config config) : Module<Plugin, Co
     {
         return type switch
         {
-            OccultObjectType.Trap => config.TrapDrawColor,
-            OccultObjectType.BigTrap => config.BigTrapDrawColor,
+            OccultObjectType.Trap => Config.TrapDrawColor,
+            OccultObjectType.BigTrap => Config.BigTrapDrawColor,
             _ => new Vector4(4f, 7f, 1f, 1f),
         };
     }
 
 
-    public override bool DrawMainUi()
+    public override bool RenderMainUi()
     {
         panel.Draw(this);
         return true;

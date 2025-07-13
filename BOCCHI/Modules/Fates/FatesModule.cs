@@ -9,17 +9,17 @@ namespace BOCCHI.Modules.Fates;
 [OcelotModule(1001, 5)]
 public class FatesModule : Module<Plugin, Config>
 {
-    public override FatesConfig config
+    public override FatesConfig Config
     {
-        get => _config.FatesConfig;
+        get => PluginConfig.FatesConfig;
     }
 
-    public override bool enabled
+    public override bool IsEnabled
     {
-        get => config.IsPropertyEnabled(nameof(config.Enabled));
+        get => Config.IsPropertyEnabled(nameof(Config.Enabled));
     }
 
-    public override bool tick
+    public override bool ShouldUpdate
     {
         get => true;
     }
@@ -46,12 +46,12 @@ public class FatesModule : Module<Plugin, Config>
         alerter = new Alerter(this);
     }
 
-    public override void Tick(IFramework framework)
+    public override void Update(IFramework framework)
     {
         tracker.Tick(framework);
     }
 
-    public override bool DrawMainUi()
+    public override bool RenderMainUi()
     {
         panel.Draw(this);
         return true;

@@ -39,7 +39,7 @@ public class CarrotHunt(CarrotsModule module) : Hunter(module)
 
     protected override IPathfinder CreatePathfinder()
     {
-        return new Pathfinder(module._config.PathfinderConfig.ReturnCost, module._config.PathfinderConfig.TeleportCost);
+        return new Pathfinder(module.PluginConfig.PathfinderConfig.ReturnCost, module.PluginConfig.PathfinderConfig.TeleportCost);
     }
 
     protected override unsafe Func<Chain> GetInteractionChain(IGameObject obj)
@@ -76,7 +76,7 @@ public class CarrotHunt(CarrotsModule module) : Hunter(module)
 
     protected override void Teardown()
     {
-        if (!module.config.RepeatCarrotHunt)
+        if (!module.Config.RepeatCarrotHunt)
         {
             stopwatch.Stop();
             running = false;

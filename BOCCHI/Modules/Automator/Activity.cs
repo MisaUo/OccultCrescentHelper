@@ -65,11 +65,11 @@ public abstract class Activity
         {
             bool ShouldToggleAi(ChainContext _)
             {
-                return module.config.ShouldToggleAiProvider && !Svc.Condition[ConditionFlag.InCombat];
+                return module.Config.ShouldToggleAiProvider && !Svc.Condition[ConditionFlag.InCombat];
             }
 
             return Chain.Create("Illegal:Idle")
-                .ConditionalThen(ShouldToggleAi, _ => module.config.AiProvider.Off())
+                .ConditionalThen(ShouldToggleAi, _ => module.Config.AiProvider.Off())
                 .Then(_ => vnav.Stop())
                 .Then(_ => state = ActivityState.Pathfinding);
         };
@@ -88,7 +88,7 @@ public abstract class Activity
             module.Debug("Selected navigation type: " + navType);
 
             var chain = Chain.Create("Illegal:Pathfinding")
-                .ConditionalWait(_ => !isFate && module.config.ShouldDelayCriticalEncounters, Random.Shared.Next(10000, 15001));
+                .ConditionalWait(_ => !isFate && module.Config.ShouldDelayCriticalEncounters, Random.Shared.Next(10000, 15001));
 
             switch (navType)
             {
@@ -140,17 +140,17 @@ public abstract class Activity
         return () =>
         {
             return Chain.Create("Illegal:Participating")
-                .ConditionalThen(_ => module.config.ShouldToggleAiProvider, _ => module.config.AiProvider.On())
+                .ConditionalThen(_ => module.Config.ShouldToggleAiProvider, _ => module.Config.AiProvider.On())
                 .Then(_ => vnav.Stop())
                 .Then(new TaskManagerTask(() =>
                 {
-                    if (!module.config.ShouldForceTarget || !EzThrottler.Throttle("Participating.ForceTarget", 500))
+                    if (!module.Config.ShouldForceTarget || !EzThrottler.Throttle("Participating.ForceTarget", 500))
                     {
                         return states.GetState() == State.Idle;
                     }
 
                     var enemies = GetEnemies();
-                    Svc.Targets.Target = module.config.ShouldForceTargetCentralEnemy ? enemies.Centroid() : enemies.Closest();
+                    Svc.Targets.Target = module.Config.ShouldForceTargetCentralEnemy ? enemies.Centroid() : enemies.Closest();
 
                     return states.GetState() == State.Idle;
                 }, new TaskManagerConfiguration { TimeLimitMS = int.MaxValue }))
@@ -184,7 +184,7 @@ public abstract class Activity
 
     private bool ShouldMountToPathfindTo(Vector3 destination)
     {
-        if (!module._config.TeleporterConfig.ShouldMount)
+        if (!module.PluginConfig.TeleporterConfig.ShouldMount)
         {
             return false;
         }

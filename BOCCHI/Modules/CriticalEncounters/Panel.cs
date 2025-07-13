@@ -89,7 +89,7 @@ public class Panel
 
                 if (ev.State != DynamicEventState.Register)
                 {
-                    OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.config.EventDropConfig));
+                    OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
                     continue;
                 }
 
@@ -100,7 +100,7 @@ public class Panel
                     teleporter.teleporter.Button(data.aethernet, start, ev.Name.ToString(), $"ce_{ev.DynamicEventId}", data);
                 }
 
-                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.config.EventDropConfig));
+                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
             }
         });
     }
@@ -108,7 +108,7 @@ public class Panel
 
     private void HandleTower(DynamicEvent ev, CriticalEncountersModule module)
     {
-        if (!module.config.TrackForkedTower || ev.State == DynamicEventState.Battle)
+        if (!module.Config.TrackForkedTower || ev.State == DynamicEventState.Battle)
         {
             return;
         }

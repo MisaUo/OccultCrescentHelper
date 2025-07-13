@@ -5,8 +5,8 @@ namespace BOCCHI.Modules.Mount;
 [OcelotModule(1)]
 public class MountModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
 {
-    public override MountConfig config
+    public override MountConfig Config
     {
-        get => _config.MountConfig;
+        get => PluginConfig.MountConfig;
     }
 }

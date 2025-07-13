@@ -20,6 +20,6 @@ public class BuffCommand(Plugin plugin) : OcelotCommand
 
     public override void Command(string command, string arguments)
     {
-        plugin.modules.GetModule<BuffModule>().BuffManager.QueueBuffs();
+        plugin.Modules.GetModule<BuffModule>().BuffManager.QueueBuffs();
     }
 }

@@ -5,8 +5,8 @@ namespace BOCCHI.Modules.Pathfinder;
 [OcelotModule(3)]
 public class PathfinderModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
 {
-    public override PathfinderConfig config
+    public override PathfinderConfig Config
     {
-        get => _config.PathfinderConfig;
+        get => PluginConfig.PathfinderConfig;
     }
 }

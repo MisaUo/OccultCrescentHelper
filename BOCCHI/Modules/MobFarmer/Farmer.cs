@@ -95,12 +95,12 @@ public class Farmer
             return FarmerPhase.Fighting;
         }
 
-        return Mobs.Count() >= module.config.MinimumMobsToStartLoop ? FarmerPhase.Buffing : null;
+        return Mobs.Count() >= module.Config.MinimumMobsToStartLoop ? FarmerPhase.Buffing : null;
     }
 
     private FarmerPhase? HandleBuffingPhase()
     {
-        if (!module.config.ApplyBattleBell)
+        if (!module.Config.ApplyBattleBell)
         {
             return FarmerPhase.Gathering;
         }
@@ -127,7 +127,7 @@ public class Farmer
     {
         var vnav = module.GetIPCProvider<VNavmesh>();
 
-        if (InCombat.Count() >= module.config.MinimumMobsToStartFight || !NotInCombat.Any())
+        if (InCombat.Count() >= module.Config.MinimumMobsToStartFight || !NotInCombat.Any())
         {
             vnav.Stop();
             ChainQueue.Abort();
@@ -196,7 +196,7 @@ public class Farmer
             Svc.Targets.Target = InCombat.Centroid();
         }
 
-        var shouldReturnHome = module.config.ReturnToStartInWaitingPhase && Player.DistanceTo(StartingPoint) >= module.config.MinEuclideanDistanceToReturnHome;
+        var shouldReturnHome = module.Config.ReturnToStartInWaitingPhase && Player.DistanceTo(StartingPoint) >= module.Config.MinEuclideanDistanceToReturnHome;
         if (shouldReturnHome && !anyInCombat)
         {
             var vnav = module.GetIPCProvider<VNavmesh>();
@@ -218,12 +218,12 @@ public class Farmer
             return;
         }
 
-        if (!Running && !module.config.ShouldRenderDebugLinesWhileNotRunning)
+        if (!Running && !module.Config.ShouldRenderDebugLinesWhileNotRunning)
         {
             return;
         }
 
-        if (!module.config.RenderDebugLines)
+        if (!module.Config.RenderDebugLines)
         {
             return;
         }
@@ -231,7 +231,7 @@ public class Farmer
         foreach (var mob in NotInCombat)
         {
             var color = new Vector4(0.9f, 0.1f, 0.1f, 1f);
-            if (mob.NameId != (uint)module.config.Mob)
+            if (mob.NameId != (uint)module.Config.Mob)
             {
                 color = new Vector4(0.9f, 0.1f, 0.9f, 1f);
             }

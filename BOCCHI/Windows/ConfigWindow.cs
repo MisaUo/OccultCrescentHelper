@@ -21,9 +21,9 @@ public class ConfigWindow(Plugin primaryPlugin, Config config) : OcelotConfigWin
         };
     }
 
-    public override void Draw()
+    public override void Render()
     {
-        var modules = plugin.modules.GetModulesByConfigOrder().ToList();
+        var modules = plugin.Modules.GetModulesByConfigOrder().ToList();
         selectedConfigModule ??= modules.FirstOrDefault();
 
         using (ImRaii.Child("##LeftPanel", new Vector2(300, 0), true))
@@ -31,14 +31,14 @@ public class ConfigWindow(Plugin primaryPlugin, Config config) : OcelotConfigWin
             foreach (var module in modules)
             {
                 var concreteModule = module as Module<Plugin, Config>;
-                if (concreteModule == null || concreteModule.config == null)
+                if (concreteModule == null || concreteModule.Config == null)
                 {
                     continue;
                 }
 
-                var name = concreteModule.config.GetType().Name;
+                var name = concreteModule.Config.GetType().Name;
 
-                var title = concreteModule.config.GetTitle();
+                var title = concreteModule.Config.GetTitle();
                 if (title != null)
                 {
                     name = title;
@@ -57,7 +57,7 @@ public class ConfigWindow(Plugin primaryPlugin, Config config) : OcelotConfigWin
 
         using (ImRaii.Child("##RightPanel", new Vector2(0, 0), true))
         {
-            selectedConfigModule!.DrawConfigUi();
+            selectedConfigModule!.RenderConfigUi();
         }
     }
 }

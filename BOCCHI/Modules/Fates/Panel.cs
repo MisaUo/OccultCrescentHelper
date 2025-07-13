@@ -58,7 +58,7 @@ public class Panel
                     teleporter.teleporter.Button(data.aethernet, data.start ?? fate.Position, data.Name, $"fate_{fate.FateId}", data);
                 }
 
-                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.config.EventDropConfig));
+                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
 
                 if (!fate.Equals(module.fates.Values.Last()))
                 {

@@ -5,11 +5,11 @@ using Ocelot.Modules;
 namespace BOCCHI.Modules.WindowManager;
 
 [OcelotModule(5)]
-public class WindowManagerModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
+public class WindowManagerModule(Plugin Plugin, Config _config) : Module<Plugin, Config>(Plugin, _config)
 {
-    public override WindowManagerConfig config
+    public override WindowManagerConfig Config
     {
-        get => _config.WindowManagerConfig;
+        get => PluginConfig.WindowManagerConfig;
     }
 
 
@@ -22,15 +22,15 @@ public class WindowManagerModule(Plugin plugin, Config config) : Module<Plugin, 
 
     public override void PostInitialize()
     {
-        if (config.OpenMainOnStartUp)
+        if (Config.OpenMainOnStartUp)
         {
-            plugin.windows.OpenMainUI();
+            Plugin.Windows.OpenMainUI();
         }
 
 
-        if (config.OpenConfigOnStartUp)
+        if (Config.OpenConfigOnStartUp)
         {
-            plugin.windows.OpenConfigUI();
+            Plugin.Windows.OpenConfigUI();
         }
 
         GetModule<StateManagerModule>().OnEnterInCombat += EnterCombat;
@@ -43,58 +43,58 @@ public class WindowManagerModule(Plugin plugin, Config config) : Module<Plugin, 
     {
         if (occultCrescentTerritoryIds.Contains(id))
         {
-            if (config.OpenMainOnEnter)
+            if (Config.OpenMainOnEnter)
             {
-                plugin.windows.OpenMainUI();
+                Plugin.Windows.OpenMainUI();
             }
 
 
-            if (config.OpenConfigOnEnter)
+            if (Config.OpenConfigOnEnter)
             {
-                plugin.windows.OpenConfigUI();
+                Plugin.Windows.OpenConfigUI();
             }
         }
         else
         {
-            if (config.CloseMainOnExit)
+            if (Config.CloseMainOnExit)
             {
-                plugin.windows.CloseMainUI();
+                Plugin.Windows.CloseMainUI();
             }
 
 
-            if (config.CloseConfigOnExit)
+            if (Config.CloseConfigOnExit)
             {
-                plugin.windows.CloseConfigUI();
+                Plugin.Windows.CloseConfigUI();
             }
         }
     }
 
     private void EnterCombat()
     {
-        if (config.HideMainInCombat && plugin.windows.IsMainUIOpen())
+        if (Config.HideMainInCombat && Plugin.Windows.IsMainUIOpen())
         {
-            plugin.windows.CloseMainUI();
+            Plugin.Windows.CloseMainUI();
             mainClosed = true;
         }
 
-        if (config.HideConfigInCombat && plugin.windows.IsConfigUIOpen())
+        if (Config.HideConfigInCombat && Plugin.Windows.IsConfigUIOpen())
         {
-            plugin.windows.CloseConfigUI();
+            Plugin.Windows.CloseConfigUI();
             configClosed = true;
         }
     }
 
     private void ExitCombat()
     {
-        if (config.HideMainInCombat && mainClosed)
+        if (Config.HideMainInCombat && mainClosed)
         {
-            plugin.windows.OpenMainUI();
+            Plugin.Windows.OpenMainUI();
             mainClosed = false;
         }
 
-        if (config.HideConfigInCombat && configClosed)
+        if (Config.HideConfigInCombat && configClosed)
         {
-            plugin.windows.OpenConfigUI();
+            Plugin.Windows.OpenConfigUI();
             configClosed = false;
         }
     }

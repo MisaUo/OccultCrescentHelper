@@ -33,7 +33,7 @@ public class TeleportCommand(Plugin plugin) : OcelotCommand
             return;
         }
 
-        var lifestream = plugin.ipc.GetProvider<Lifestream>();
+        var lifestream = plugin.IPC.GetProvider<Lifestream>();
         if (!lifestream.IsReady() || lifestream.IsBusy())
         {
             Svc.Chat.Print("Lifestream is busy");
@@ -80,7 +80,7 @@ public class TeleportCommand(Plugin plugin) : OcelotCommand
 
     private Aethernet? GetFateAethernet()
     {
-        var source = plugin.modules.GetModule<FatesModule>();
+        var source = plugin.Modules.GetModule<FatesModule>();
         foreach (var fate in source.fates.Values)
         {
             if (!EventData.Fates.TryGetValue(fate.FateId, out var data))
@@ -101,7 +101,7 @@ public class TeleportCommand(Plugin plugin) : OcelotCommand
 
     private Aethernet? GetPotFateAethernet()
     {
-        var source = plugin.modules.GetModule<FatesModule>();
+        var source = plugin.Modules.GetModule<FatesModule>();
         foreach (var fate in source.fates.Values)
         {
             if (!EventData.Fates.TryGetValue(fate.FateId, out var data))
@@ -122,7 +122,7 @@ public class TeleportCommand(Plugin plugin) : OcelotCommand
 
     private Aethernet? GetCriticalEncounterAethernet()
     {
-        var source = plugin.modules.GetModule<CriticalEncountersModule>();
+        var source = plugin.Modules.GetModule<CriticalEncountersModule>();
         foreach (var encounter in source.CriticalEncounters.Values)
         {
             if (encounter.EventType >= 4 || encounter.State != DynamicEventState.Register)

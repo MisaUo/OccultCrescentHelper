@@ -46,11 +46,11 @@ Manage och automator/illegal mode.
     {
         if (arguments.Trim() == "")
         {
-            plugin.windows.GetWindow<AutomatorWindow>()?.Toggle();
+            plugin.Windows.GetWindow<AutomatorWindow>()?.Toggle();
             return;
         }
 
-        if (!plugin.modules.TryGetModule<AutomatorModule>(out var automator) || automator == null)
+        if (!plugin.Modules.TryGetModule<AutomatorModule>(out var automator) || automator == null)
         {
             return;
         }
@@ -68,12 +68,12 @@ Manage och automator/illegal mode.
                 break;
         }
 
-        plugin.config.Save();
+        plugin.Config.Save();
     }
 
     private unsafe void FlagActiveCe(AgentMap* map)
     {
-        if (!plugin.modules.TryGetModule<CriticalEncountersModule>(out var source) || source == null)
+        if (!plugin.Modules.TryGetModule<CriticalEncountersModule>(out var source) || source == null)
         {
             return;
         }
@@ -92,18 +92,13 @@ Manage och automator/illegal mode.
 
     private unsafe void FlagActiveFate(AgentMap* map, bool ignorePots)
     {
-        if (!plugin.modules.TryGetModule<FatesModule>(out var source) || source == null)
+        if (!plugin.Modules.TryGetModule<FatesModule>(out var source) || source == null)
         {
             return;
         }
 
         foreach (var fate in source.fates.Values)
         {
-            if (fate == null)
-            {
-                continue;
-            }
-
             if (!EventData.Fates.TryGetValue(fate.FateId, out var data))
             {
                 continue;

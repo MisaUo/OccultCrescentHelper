@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Numerics;
 using BOCCHI.ActionHelpers;
@@ -81,7 +82,7 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Re
             return position;
         }
 
-        return Vector3.PositiveInfinity;
+        throw new Exception("Unable to determine Aetheryte position");
     }
 
     private float GetCostToReturn()
@@ -92,7 +93,7 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Re
         }
 
 
-        return float.MaxValue;
+        throw new Exception("Unable to determine Starting position");
     }
 
     private float GetCostToWalk()

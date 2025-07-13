@@ -48,7 +48,7 @@ public class Fate(EventData data, Lifestream lifestream, VNavmesh vnav, Automato
 
                 if (states.GetState() == State.InFate)
                 {
-                    if (Vector3.Distance(Player.Position, target.Position) <= module.config.EngagementRange)
+                    if (Vector3.Distance(Player.Position, target.Position) <= module.Config.EngagementRange)
                     {
                         Actions.TryUnmount();
 

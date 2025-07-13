@@ -7,6 +7,6 @@ public class KnightBuffChain(BuffModule module) : BuffChain(Job.Knight, PlayerSt
 {
     protected override bool ShouldRun()
     {
-        return module.config.ApplyEnduringFortitude;
+        return module.Config.ApplyEnduringFortitude;
     }
 }

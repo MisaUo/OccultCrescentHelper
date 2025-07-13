@@ -7,14 +7,14 @@ namespace BOCCHI.Modules.Exp;
 [OcelotModule(int.MaxValue - 1000, 4)]
 public class ExpModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
 {
-    public override ExpConfig config
+    public override ExpConfig Config
     {
-        get => _config.ExpConfig;
+        get => PluginConfig.ExpConfig;
     }
 
-    public override bool enabled
+    public override bool IsEnabled
     {
-        get => config.IsPropertyEnabled(nameof(config.Enabled));
+        get => Config.IsPropertyEnabled(nameof(Config.Enabled));
     }
 
     public readonly ExpTracker tracker = new();
@@ -22,7 +22,7 @@ public class ExpModule(Plugin plugin, Config config) : Module<Plugin, Config>(pl
     private readonly Panel panel = new();
 
 
-    public override bool DrawMainUi()
+    public override bool RenderMainUi()
     {
         panel.Draw(this);
         return true;

@@ -6,16 +6,16 @@ using Ocelot.Modules;
 namespace BOCCHI.Modules.Treasure;
 
 [OcelotModule(1003, 1)]
-public class TreasureModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
+public class TreasureModule(Plugin _plugin, Config config) : Module<Plugin, Config>(_plugin, config)
 {
-    public override TreasureConfig config
+    public override TreasureConfig Config
     {
-        get => _config.TreasureConfig;
+        get => PluginConfig.TreasureConfig;
     }
 
-    public override bool enabled
+    public override bool IsEnabled
     {
-        get => config.IsPropertyEnabled(nameof(config.Enabled));
+        get => Config.IsPropertyEnabled(nameof(Config.Enabled));
     }
 
     public readonly static Vector4 Bronze = new(0.804f, 0.498f, 0.196f, 1f);
@@ -42,22 +42,22 @@ public class TreasureModule(Plugin plugin, Config config) : Module<Plugin, Confi
         hunter = new TreasureHunt(this);
     }
 
-    public override void Tick(IFramework framework)
+    public override void Update(IFramework framework)
     {
-        Tracker.Tick(framework, plugin);
+        Tracker.Tick(framework, Plugin);
         hunter.Tick(this);
     }
 
-    public override void Draw()
+    public override void Render()
     {
         radar.Draw(this);
     }
 
-    public override bool DrawMainUi()
+    public override bool RenderMainUi()
     {
         panel.Draw(this);
 
-        if (config.ShouldEnableTreasureHunt)
+        if (Config.ShouldEnableTreasureHunt)
         {
             hunter.Draw(this);
         }

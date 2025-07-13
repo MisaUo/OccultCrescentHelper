@@ -24,7 +24,7 @@ public class Automator
 
     private int idleTime = 0;
 
-    public void PostTick(AutomatorModule module, IFramework framework)
+    public void PostUpdate(AutomatorModule module, IFramework framework)
     {
         var vnav = module.GetIPCProvider<VNavmesh>();
         var lifestream = module.GetIPCProvider<Lifestream>();
@@ -99,14 +99,14 @@ public class Automator
             return;
         }
 
-        if (!module.config.ShouldDoFates && !module.config.ShouldDoCriticalEncounters)
+        if (!module.Config.ShouldDoFates && !module.Config.ShouldDoCriticalEncounters)
         {
             return;
         }
 
         // Try and get the next activity
-        Activity ??= module.config.ShouldDoCriticalEncounters ? FindCriticalEncounter(module, lifestream, vnav) : null;
-        Activity ??= module.config.ShouldDoFates ? FindFate(module, lifestream, vnav) : null;
+        Activity ??= module.Config.ShouldDoCriticalEncounters ? FindCriticalEncounter(module, lifestream, vnav) : null;
+        Activity ??= module.Config.ShouldDoFates ? FindFate(module, lifestream, vnav) : null;
         if (Activity != null)
         {
             Svc.Log.Info($"Selected activity: {Activity.data.Name}");
@@ -137,7 +137,7 @@ public class Automator
 
         foreach (var encounter in source.CriticalEncounters.Values)
         {
-            if (!module.config.CriticalEncountersMap.TryGetValue(encounter.DynamicEventId, out var enabled) || !enabled)
+            if (!module.Config.CriticalEncountersMap.TryGetValue(encounter.DynamicEventId, out var enabled) || !enabled)
             {
                 continue;
             }
@@ -167,7 +167,7 @@ public class Automator
 
         foreach (var fate in source.fates.Values)
         {
-            if (!module.config.FatesMap[fate.FateId] || !EventData.Fates.TryGetValue(fate.FateId, out var data))
+            if (!module.Config.FatesMap[fate.FateId] || !EventData.Fates.TryGetValue(fate.FateId, out var data))
             {
                 continue;
             }

@@ -7,6 +7,6 @@ public class BardBuffChain(BuffModule module) : BuffChain(Job.Bard, PlayerStatus
 {
     protected override bool ShouldRun()
     {
-        return module.config.ApplyRomeosBallad;
+        return module.Config.ApplyRomeosBallad;
     }
 }

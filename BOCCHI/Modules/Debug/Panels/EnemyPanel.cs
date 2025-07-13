@@ -21,7 +21,7 @@ public class EnemyPanel : Panel
 
     private List<IGameObject> enemies = [];
 
-    public override unsafe void Draw(DebugModule module)
+    public override unsafe void Render(DebugModule module)
     {
         OcelotUI.Indent(() =>
         {
@@ -81,7 +81,7 @@ public class EnemyPanel : Panel
         });
     }
 
-    public override void Tick(DebugModule module)
+    public override void Update(DebugModule module)
     {
         if (EzThrottler.Throttle("enemies", 2000))
         {

@@ -69,7 +69,7 @@ public class FatesPanel : Panel
         return "Fates";
     }
 
-    public override void Draw(DebugModule module)
+    public override void Render(DebugModule module)
     {
         OcelotUI.Title("Fates:");
         OcelotUI.Indent(() =>
@@ -85,7 +85,7 @@ public class FatesPanel : Panel
                     teleporter.teleporter.Button(data.aethernet, start, data.Name, $"fate_{data.id}", data);
                 }
 
-                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.plugin.config.EventDropConfig));
+                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
 
                 if (data.id != EventData.Fates.Keys.Max())
                 {

@@ -50,7 +50,7 @@ public class Teleporter(TeleporterModule module)
 
             Plugin.Chain.Submit(() => Chain.Create("Pathfinding")
                 .Then(new PathfindingChain(vnav, destination, ev, 20f))
-                .ConditionalThen(_ => module.config.ShouldMount, ChainHelper.MountChain())
+                .ConditionalThen(_ => module.Config.ShouldMount, ChainHelper.MountChain())
                 .WaitUntilNear(vnav, destination, 205f)
             );
         }
@@ -89,9 +89,9 @@ public class Teleporter(TeleporterModule module)
 
                 if (module.TryGetIPCProvider<VNavmesh>(out var vnav) && vnav != null && vnav.IsReady())
                 {
-                    chain.RunIf(() => module.config.PathToDestination)
+                    chain.RunIf(() => module.Config.PathToDestination)
                         .Then(new PathfindingChain(vnav, destination, ev, 20f))
-                        .ConditionalThen(_ => module.config.ShouldMount, ChainHelper.MountChain())
+                        .ConditionalThen(_ => module.Config.ShouldMount, ChainHelper.MountChain())
                         .WaitUntilNear(vnav, destination, 20f);
                 }
 
@@ -122,12 +122,12 @@ public class Teleporter(TeleporterModule module)
 
     public void OnFateEnd()
     {
-        if (module.GetModule<AutomatorModule>().enabled)
+        if (module.GetModule<AutomatorModule>().IsEnabled)
         {
             return;
         }
 
-        if (!module.config.ReturnAfterFate)
+        if (!module.Config.ReturnAfterFate)
         {
             return;
         }
@@ -137,12 +137,12 @@ public class Teleporter(TeleporterModule module)
 
     public void OnCriticalEncounterEnd()
     {
-        if (module.GetModule<AutomatorModule>().enabled)
+        if (module.GetModule<AutomatorModule>().IsEnabled)
         {
             return;
         }
 
-        if (!module.config.ReturnAfterCriticalEncounter)
+        if (!module.Config.ReturnAfterCriticalEncounter)
         {
             return;
         }

@@ -24,7 +24,7 @@ public class MainWindow(Plugin primaryPlugin, Config config) : OcelotMainWindow(
                     return;
                 }
 
-                plugin.modules.GetModule<AutomatorModule>().DisableIllegalMode();
+                plugin.Modules.GetModule<AutomatorModule>().DisableIllegalMode();
             },
             Icon = FontAwesomeIcon.Stop,
             IconOffset = new Vector2(2, 2),
@@ -48,7 +48,7 @@ public class MainWindow(Plugin primaryPlugin, Config config) : OcelotMainWindow(
         });
     }
 
-    public override void Draw()
+    public override void Render()
     {
         if (!ZoneData.IsInOccultCrescent())
         {
@@ -56,6 +56,6 @@ public class MainWindow(Plugin primaryPlugin, Config config) : OcelotMainWindow(
             return;
         }
 
-        plugin.modules?.DrawMainUi();
+        plugin.Modules.RenderMainUi();
     }
 }

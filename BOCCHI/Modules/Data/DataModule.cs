@@ -11,9 +11,9 @@ namespace BOCCHI.Modules.Data;
 [OcelotModule(int.MaxValue)]
 public class DataModule : Module<Plugin, Config>
 {
-    public override DataConfig config
+    public override DataConfig Config
     {
-        get => _config.DataConfig;
+        get => PluginConfig.DataConfig;
     }
 
     private readonly Api api;
@@ -29,9 +29,9 @@ public class DataModule : Module<Plugin, Config>
         api.Initialize();
     }
 
-    public override void Tick(IFramework _)
+    public override void Update(IFramework _)
     {
-        if (!config.Enabled)
+        if (!Config.Enabled)
         {
             return;
         }

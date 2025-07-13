@@ -6,7 +6,7 @@ namespace BOCCHI.Modules.Target;
 [OcelotModule]
 public class TargetModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
 {
-    public override void Tick(IFramework _)
+    public override void Update(IFramework _)
     {
         TargetHelper.Update();
     }

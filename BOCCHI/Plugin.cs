@@ -18,11 +18,11 @@ public sealed class Plugin : OcelotPlugin
         get => "Occult Crescent Helper";
     }
 
-    public Config config { get; }
+    public Config Config { get; }
 
-    public override IOcelotConfig _config
+    public override IOcelotConfig OcelotConfig
     {
-        get => config;
+        get => Config;
     }
 
     public static ChainQueue Chain
@@ -33,7 +33,7 @@ public sealed class Plugin : OcelotPlugin
     public Plugin(IDalamudPluginInterface plugin)
         : base(plugin, Module.DalamudReflector)
     {
-        config = plugin.GetPluginConfig() as Config ?? new Config();
+        Config = plugin.GetPluginConfig() as Config ?? new Config();
 
         SetupLanguage(plugin);
 
@@ -71,7 +71,7 @@ public sealed class Plugin : OcelotPlugin
         }
     }
 
-    public override bool ShouldTick()
+    public override bool ShouldUpdate()
     {
         return ZoneData.IsInOccultCrescent()
                && !(

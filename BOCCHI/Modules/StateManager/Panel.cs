@@ -7,7 +7,7 @@ public class Panel
 {
     public bool Draw(StateManagerModule module)
     {
-        if (!module.config.ShowDebug)
+        if (!module.Config.ShowDebug)
         {
             return false;
         }

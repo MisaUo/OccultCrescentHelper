@@ -72,7 +72,7 @@ public class TreasureHunt(TreasureModule module) : Hunter(module)
 
         Treasure = Treasure.OrderBy(t => t.Id).ToList();
 
-        return new Pathfinder(Treasure, module._config.PathfinderConfig.ReturnCost, module._config.PathfinderConfig.TeleportCost);
+        return new Pathfinder(Treasure, module.PluginConfig.PathfinderConfig.ReturnCost, module.PluginConfig.PathfinderConfig.TeleportCost);
     }
 
     protected override Func<Chain> GetInteractionChain(IGameObject obj)

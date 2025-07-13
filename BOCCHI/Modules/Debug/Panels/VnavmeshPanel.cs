@@ -12,7 +12,7 @@ public class VnavmeshPanel : Panel
         return "Vnavmesh";
     }
 
-    public override void Draw(DebugModule module)
+    public override void Render(DebugModule module)
     {
         if (module.TryGetIPCProvider<VNavmesh>(out var vnav) && vnav!.IsReady())
         {

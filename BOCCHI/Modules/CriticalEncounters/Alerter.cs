@@ -16,12 +16,12 @@ public class Alerter : IDisposable
     {
         get => new()
         {
-            [Demiatma.Azurite] = () => module.config.AlertAzurite,
-            [Demiatma.Verdigris] = () => module.config.AlertVerdigris,
-            [Demiatma.Malachite] = () => module.config.AlertMalachite,
-            [Demiatma.Realgar] = () => module.config.AlertRealgar,
-            [Demiatma.CaputMortuum] = () => module.config.AlertCaputMortuum,
-            [Demiatma.Orpiment] = () => module.config.AlertOrpiment,
+            [Demiatma.Azurite] = () => module.Config.AlertAzurite,
+            [Demiatma.Verdigris] = () => module.Config.AlertVerdigris,
+            [Demiatma.Malachite] = () => module.Config.AlertMalachite,
+            [Demiatma.Realgar] = () => module.Config.AlertRealgar,
+            [Demiatma.CaputMortuum] = () => module.Config.AlertCaputMortuum,
+            [Demiatma.Orpiment] = () => module.Config.AlertOrpiment,
         };
     }
 
@@ -29,9 +29,9 @@ public class Alerter : IDisposable
     {
         get => new()
         {
-            [SoulShard.Oracle] = () => module.config.AlertOracle,
-            [SoulShard.Berserker] = () => module.config.AlertBerserker,
-            [SoulShard.Ranger] = () => module.config.AlertRanger,
+            [SoulShard.Oracle] = () => module.Config.AlertOracle,
+            [SoulShard.Berserker] = () => module.Config.AlertBerserker,
+            [SoulShard.Ranger] = () => module.Config.AlertRanger,
         };
     }
 
@@ -45,7 +45,7 @@ public class Alerter : IDisposable
 
     private void OnCriticalEncounterSpawned(DynamicEvent ev)
     {
-        if (module.config.LogSpawn)
+        if (module.Config.LogSpawn)
         {
             Svc.Chat.Print($"{ev.Name} has Spawned");
         }
@@ -60,7 +60,7 @@ public class Alerter : IDisposable
 
     private void OnCriticalEncounterDepawned(DynamicEvent ev)
     {
-        if (module.config.LogSpawn)
+        if (module.Config.LogSpawn)
         {
             Svc.Chat.Print($"{ev.Name} has Despawned");
         }
@@ -75,7 +75,7 @@ public class Alerter : IDisposable
 
     private bool ShouldAlertForCriticalEncounter(DynamicEvent ev)
     {
-        if (module.config.AlertAll)
+        if (module.Config.AlertAll)
         {
             return true;
         }

@@ -19,6 +19,6 @@ public class TeleportChain(Aethernet aethernet, Lifestream lifestream, Teleporte
             .Then(_ => lifestream.AethernetTeleportByPlaceNameId((uint)aethernet))
             .WaitToCycleCondition(ConditionFlag.BetweenAreas)
             // Mount if we should mount and not pathfind, otherwise let the pathfinder handle it
-            .ConditionalThen(_ => module.config is { ShouldMount: true, PathToDestination: false }, ChainHelper.MountChain());
+            .ConditionalThen(_ => module.Config is { ShouldMount: true, PathToDestination: false }, ChainHelper.MountChain());
     }
 }

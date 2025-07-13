@@ -16,7 +16,7 @@ public class Radar
             return;
         }
 
-        var config = module.config;
+        var config = module.Config;
         if (!config.ShouldDrawLineToBronzeChests && !config.ShouldDrawLineToSilverChests)
         {
             return;

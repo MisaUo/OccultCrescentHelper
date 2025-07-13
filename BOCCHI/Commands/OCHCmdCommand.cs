@@ -56,7 +56,7 @@ Utility command.
 
     private unsafe void FlagActiveCe(AgentMap* map)
     {
-        if (!plugin.modules.TryGetModule<CriticalEncountersModule>(out var source) || source == null)
+        if (!plugin.Modules.TryGetModule<CriticalEncountersModule>(out var source) || source == null)
         {
             return;
         }
@@ -75,18 +75,13 @@ Utility command.
 
     private unsafe void FlagActiveFate(AgentMap* map, bool ignorePots)
     {
-        if (!plugin.modules.TryGetModule<FatesModule>(out var source) || source == null)
+        if (!plugin.Modules.TryGetModule<FatesModule>(out var source) || source == null)
         {
             return;
         }
 
         foreach (var fate in source.fates.Values)
         {
-            if (fate == null)
-            {
-                continue;
-            }
-
             if (!EventData.Fates.TryGetValue(fate.FateId, out var data))
             {
                 continue;

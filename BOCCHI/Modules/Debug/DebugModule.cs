@@ -11,10 +11,10 @@ namespace BOCCHI.Modules.Debug;
 #if DEBUG_BUILD
 [OcelotModule]
 #endif
-public class DebugModule : Module<Plugin, Config>
+public class DebugModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
 {
-    private List<Panel> panels = new()
-    {
+    private readonly List<Panel> panels =
+    [
         new TeleporterPanel(),
         new VnavmeshPanel(),
         new FatesPanel(),
@@ -27,18 +27,13 @@ public class DebugModule : Module<Plugin, Config>
         new TreasureHuntPanel(),
         new CarrotHuntPanel(),
         new JobLevelPanel(),
-    };
+    ];
 
     private int selectedPanelIndex = 0;
 
-    public DebugModule(Plugin plugin, Config config)
-        : base(plugin, config)
-    {
-    }
-
     public override void PostInitialize()
     {
-        if (plugin.windows.TryGetWindow<DebugWindow>(out var window) && window != null && !window.IsOpen)
+        if (Plugin.Windows.TryGetWindow<DebugWindow>(out var window) && window != null && !window.IsOpen)
         {
             window.Toggle();
         }
@@ -70,16 +65,16 @@ public class DebugModule : Module<Plugin, Config>
         // Right panel content
         ImGui.BeginGroup();
         ImGui.BeginChild("PanelContent", new Vector2(0, 0), false);
-        panels[selectedPanelIndex].Draw(this);
+        panels[selectedPanelIndex].Render(this);
         ImGui.EndChild();
         ImGui.EndGroup();
 
         ImGui.EndGroup();
     }
 
-    public override void Tick(IFramework _)
+    public override void Update(IFramework _)
     {
-        panels.Each(p => p.Tick(this));
+        panels.Each(p => p.Update(this));
     }
 
     public override void OnTerritoryChanged(ushort id)

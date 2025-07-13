@@ -59,7 +59,7 @@ public class CarrotHuntPanel : Panel
         return "Carrot Hunt Helper";
     }
 
-    public override unsafe void Draw(DebugModule module)
+    public override unsafe void Render(DebugModule module)
     {
         var vnav = module.GetIPCProvider<VNavmesh>();
         OcelotUI.LabelledValue("Carrots", CarrotData.Data.Count); // 25
@@ -127,7 +127,7 @@ public class CarrotHuntPanel : Panel
         });
     }
 
-    public override void Tick(DebugModule module)
+    public override void Update(DebugModule module)
     {
         if (!ShouldRun || HasRun || task != null)
         {

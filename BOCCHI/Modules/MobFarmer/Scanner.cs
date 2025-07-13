@@ -16,26 +16,26 @@ public class Scanner(MobFarmerModule module)
     {
         Mobs = TargetHelper.Enemies.Where(o =>
         {
-            if (Player.DistanceTo(o) > module.config.MaxEuclideanDistance)
+            if (Player.DistanceTo(o) > module.Config.MaxEuclideanDistance)
             {
                 return false;
             }
 
             var chara = (BattleChara*)o.Address;
 
-            if (o.NameId == (uint)module.config.Mob)
+            if (o.NameId == (uint)module.Config.Mob)
             {
-                return chara->ForayInfo.Level <= module.config.MaxMobLevel;
+                return chara->ForayInfo.Level <= module.Config.MaxMobLevel;
             }
 
-            if (!module.config.ConsiderSpecialMobs)
+            if (!module.Config.ConsiderSpecialMobs)
             {
                 return false;
             }
 
             if (MobData.MobsWithSpawnCondition.Contains((Mob)o.NameId))
             {
-                return chara->ForayInfo.Level <= module.config.MaxMobLevel;
+                return chara->ForayInfo.Level <= module.Config.MaxMobLevel;
             }
 
             return false;

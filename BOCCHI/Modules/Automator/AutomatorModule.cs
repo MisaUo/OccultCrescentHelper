@@ -10,14 +10,14 @@ namespace BOCCHI.Modules.Automator;
 [OcelotModule(int.MaxValue - 1)]
 public class AutomatorModule : Module<Plugin, Config>
 {
-    public override AutomatorConfig config
+    public override AutomatorConfig Config
     {
-        get => _config.AutomatorConfig;
+        get => PluginConfig.AutomatorConfig;
     }
 
-    public override bool enabled
+    public override bool IsEnabled
     {
-        get => config.IsPropertyEnabled(nameof(config.Enabled));
+        get => Config.IsPropertyEnabled(nameof(Config.Enabled));
     }
 
     public readonly Automator automator = new();
@@ -34,13 +34,13 @@ public class AutomatorModule : Module<Plugin, Config>
     }
 
 
-    public override void PostTick(IFramework framework)
+    public override void PostUpdate(IFramework framework)
     {
-        automator.PostTick(this, framework);
+        automator.PostUpdate(this, framework);
     }
 
 
-    public override bool DrawMainUi()
+    public override bool RenderMainUi()
     {
         panel.Draw(this);
         return true;
@@ -54,14 +54,14 @@ public class AutomatorModule : Module<Plugin, Config>
         }
 
         automator.Refresh();
-        config.Enabled = false;
-        plugin.config.Save();
+        Config.Enabled = false;
+        PluginConfig.Save();
     }
 
     public static void ToggleIllegalMode(OcelotPlugin plugin)
     {
-        var module = plugin.modules.GetModule<AutomatorModule>();
-        if (!module.config.Enabled)
+        var module = plugin.Modules.GetModule<AutomatorModule>();
+        if (!module.Config.Enabled)
         {
             module.EnableIllegalMode();
         }
@@ -73,8 +73,8 @@ public class AutomatorModule : Module<Plugin, Config>
 
     public void EnableIllegalMode()
     {
-        var wasDisabled = !config.Enabled;
-        config.Enabled = true;
+        var wasDisabled = !Config.Enabled;
+        Config.Enabled = true;
 
         if (wasDisabled)
         {
@@ -84,10 +84,10 @@ public class AutomatorModule : Module<Plugin, Config>
 
     public void DisableIllegalMode()
     {
-        var wasEnabled = config.Enabled;
-        config.Enabled = false;
+        var wasEnabled = Config.Enabled;
+        Config.Enabled = false;
         automator.Refresh();
-        plugin.ipc.GetProvider<VNavmesh>().Stop();
+        Plugin.IPC.GetProvider<VNavmesh>().Stop();
         Plugin.Chain.Abort();
 
         if (wasEnabled)

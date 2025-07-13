@@ -31,7 +31,7 @@ public class AutomatorWindow(Plugin _plugin, Config _config) : OcelotWindow(_plu
         });
     }
 
-    public override void Draw()
+    public override void Render()
     {
         if (!ZoneData.IsInOccultCrescent())
         {
@@ -39,8 +39,8 @@ public class AutomatorWindow(Plugin _plugin, Config _config) : OcelotWindow(_plu
             return;
         }
 
-        var automator = plugin.modules.GetModule<AutomatorModule>();
-        if (!automator.enabled)
+        var automator = plugin.Modules.GetModule<AutomatorModule>();
+        if (!automator.IsEnabled)
         {
             ImGui.TextUnformatted("Illegal Mode is not enabled.");
             return;
@@ -51,6 +51,6 @@ public class AutomatorWindow(Plugin _plugin, Config _config) : OcelotWindow(_plu
 
     protected override string GetWindowName()
     {
-        return plugin.modules.GetModule<AutomatorModule>().T("panel.lens.title");
+        return plugin.Modules.GetModule<AutomatorModule>().T("panel.lens.title");
     }
 }

@@ -9,17 +9,17 @@ namespace BOCCHI.Modules.CriticalEncounters;
 [OcelotModule(1002, 6)]
 public class CriticalEncountersModule : Module<Plugin, Config>
 {
-    public override CriticalEncountersConfig config
+    public override CriticalEncountersConfig Config
     {
-        get => _config.CriticalEncountersConfig;
+        get => PluginConfig.CriticalEncountersConfig;
     }
 
-    public override bool enabled
+    public override bool IsEnabled
     {
-        get => config.IsPropertyEnabled(nameof(config.Enabled));
+        get => Config.IsPropertyEnabled(nameof(Config.Enabled));
     }
 
-    public override bool tick
+    public override bool ShouldUpdate
     {
         get => true;
     }
@@ -47,12 +47,12 @@ public class CriticalEncountersModule : Module<Plugin, Config>
         alerter = new Alerter(this);
     }
 
-    public override void Tick(IFramework framework)
+    public override void Update(IFramework framework)
     {
         Tracker.Tick(framework);
     }
 
-    public override bool DrawMainUi()
+    public override bool RenderMainUi()
     {
         panel.Draw(this);
         return true;
