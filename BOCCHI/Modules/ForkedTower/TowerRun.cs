@@ -66,7 +66,7 @@ public class TowerRun(string hash)
             return;
         }
 
-        foreach (var trap in DiscoveredTraps.Values)
+        foreach (var trap in GetNearbyTraps())
         {
             if (Player.DistanceTo(trap) > config.ForkedTowerConfig.TrapDrawRange)
             {
