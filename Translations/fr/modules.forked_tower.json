@@ -19,6 +19,26 @@
         "trap_draw_range": {
           "label": null,
           "tooltip": null
+        },
+        "draw_big_trap_range": {
+          "label": null,
+          "tooltip": null
+        },
+        "draw_outline_for_complex_mode": {
+          "label": null,
+          "tooltip": null
+        },
+        "draw_simple_mode": {
+          "label": null,
+          "tooltip": null
+        },
+        "draw_small_trap_range": {
+          "label": null,
+          "tooltip": null
+        },
+        "stop_rendering_complete_groups": {
+          "label": null,
+          "tooltip": null
         }
       }
     }
