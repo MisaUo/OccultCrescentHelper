@@ -14,6 +14,18 @@
         "resolved": "1.2.25",
         "contentHash": "xCXiw7BCxHJ8pF6wPepRUddlh2dlQlbr81gXA72hdk4FLHkKXas7EH/n+fk5UCA/YfMqG1Z6XaPiUjDbUNBUzg=="
       },
+      "FFXIVOcelot": {
+        "type": "Direct",
+        "requested": "[0.41.0, )",
+        "resolved": "0.41.0",
+        "contentHash": "36tATf+uYSJObodq7f/6RiCF9k20PxHEBavTOTNtFuLUzN4AiFmz0NDiVGbNmgFagaVYkStE+aEw5dhGSMyzng==",
+        "dependencies": {
+          "Ecommons": "3.0.0",
+          "Microsoft.Extensions.Configuration": "7.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "7.0.0",
+          "Pictomancy": "0.0.0"
+        }
+      },
       "TextCopy": {
         "type": "Direct",
         "requested": "[6.2.1, )",
@@ -112,15 +124,6 @@
         "dependencies": {
           "NETStandard.Library": "1.6.1",
           "SharpDX": "4.2.0"
-        }
-      },
-      "FFXIVOcelot": {
-        "type": "Project",
-        "dependencies": {
-          "Ecommons": "[3.0.0, )",
-          "Microsoft.Extensions.Configuration": "[7.0.0, )",
-          "Microsoft.Extensions.Configuration.Abstractions": "[7.0.0, )",
-          "Pictomancy": "[0.0.0, )"
         }
       },
       "pictomancy": {
