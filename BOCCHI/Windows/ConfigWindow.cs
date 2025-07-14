@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Numerics;
+using BOCCHI.Modules;
 using Dalamud.Interface.Utility.Raii;
 using ImGuiNET;
 using Ocelot.Modules;
@@ -21,7 +22,7 @@ public class ConfigWindow(Plugin primaryPlugin, Config config) : OcelotConfigWin
         };
     }
 
-    public override void Render()
+    public override void Render(RenderContext context)
     {
         var modules = plugin.Modules.GetModulesByConfigOrder().ToList();
         selectedConfigModule ??= modules.FirstOrDefault();
@@ -30,8 +31,7 @@ public class ConfigWindow(Plugin primaryPlugin, Config config) : OcelotConfigWin
         {
             foreach (var module in modules)
             {
-                var concreteModule = module as Module<Plugin, Config>;
-                if (concreteModule == null || concreteModule.Config == null)
+                if (module is not Module concreteModule || concreteModule.Config == null)
                 {
                     continue;
                 }
@@ -57,7 +57,7 @@ public class ConfigWindow(Plugin primaryPlugin, Config config) : OcelotConfigWin
 
         using (ImRaii.Child("##RightPanel", new Vector2(0, 0), true))
         {
-            selectedConfigModule!.RenderConfigUi();
+            selectedConfigModule!.RenderConfigUi(context);
         }
     }
 }

@@ -1,11 +1,12 @@
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Ocelot.Modules;
+using Ocelot.Windows;
 
 namespace BOCCHI.Modules.Exp;
 
 [OcelotModule(int.MaxValue - 1000, 4)]
-public class ExpModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
+public class ExpModule(Plugin plugin, Config config) : Module(plugin, config)
 {
     public override ExpConfig Config
     {
@@ -22,7 +23,7 @@ public class ExpModule(Plugin plugin, Config config) : Module<Plugin, Config>(pl
     private readonly Panel panel = new();
 
 
-    public override bool RenderMainUi()
+    public override bool RenderMainUi(RenderContext context)
     {
         panel.Draw(this);
         return true;

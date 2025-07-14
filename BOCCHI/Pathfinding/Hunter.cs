@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using BOCCHI.Chains;
 using BOCCHI.Enums;
+using BOCCHI.Modules;
 using BOCCHI.Modules.Pathfinder;
 using BOCCHI.Modules.StateManager;
 using Dalamud.Game.ClientState.Objects.Types;
@@ -57,7 +58,7 @@ public abstract class Hunter
 
     protected Dictionary<PathfinderStepType, Func<bool>> Handlers;
 
-    protected Hunter(Module<Plugin, Config> module)
+    protected Hunter(Module module)
     {
         states = module.GetModule<StateManagerModule>();
         vnav = module.GetIPCProvider<VNavmesh>();
@@ -87,7 +88,7 @@ public abstract class Hunter
 
     protected abstract List<uint> GetValidNodes(int max);
 
-    public void Tick(Module<Plugin, Config> module)
+    public void Update()
     {
         if (!running || Plugin.Chain.IsRunning)
         {
@@ -99,10 +100,10 @@ public abstract class Hunter
             pathfinder = CreatePathfinder();
         }
 
-        MaintainWatcherChain(module);
+        MaintainWatcherChain();
     }
 
-    private void MaintainWatcherChain(Module<Plugin, Config> module)
+    private void MaintainWatcherChain()
     {
         if (Plugin.Chain.IsRunning)
         {

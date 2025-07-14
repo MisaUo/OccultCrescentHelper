@@ -31,7 +31,7 @@ public class AutomatorWindow(Plugin _plugin, Config _config) : OcelotWindow(_plu
         });
     }
 
-    public override void Render()
+    public override void Render(RenderContext context)
     {
         if (!ZoneData.IsInOccultCrescent())
         {

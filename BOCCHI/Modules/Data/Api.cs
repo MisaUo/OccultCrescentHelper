@@ -66,7 +66,7 @@ public class Api(DataModule module)
 
     public async Task SendTrapData(IGameObject obj)
     {
-        var trap = new Trap(obj, forkedTowerModule.TowerHash);
+        var trap = new Trap(obj, forkedTowerModule.TowerRun.Hash);
         if (TrapData.HasSharedData(trap))
         {
             return;

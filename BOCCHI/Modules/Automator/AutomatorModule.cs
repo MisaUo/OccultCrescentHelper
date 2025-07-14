@@ -1,14 +1,14 @@
 using System.Collections.Generic;
-using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
 using Ocelot;
 using Ocelot.IPC;
 using Ocelot.Modules;
+using Ocelot.Windows;
 
 namespace BOCCHI.Modules.Automator;
 
 [OcelotModule(int.MaxValue - 1)]
-public class AutomatorModule : Module<Plugin, Config>
+public class AutomatorModule : Module
 {
     public override AutomatorConfig Config
     {
@@ -34,13 +34,13 @@ public class AutomatorModule : Module<Plugin, Config>
     }
 
 
-    public override void PostUpdate(IFramework framework)
+    public override void PostUpdate(UpdateContext context)
     {
-        automator.PostUpdate(this, framework);
+        automator.PostUpdate(this, context.Framework);
     }
 
 
-    public override bool RenderMainUi()
+    public override bool RenderMainUi(RenderContext context)
     {
         panel.Draw(this);
         return true;

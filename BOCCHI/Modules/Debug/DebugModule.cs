@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Numerics;
 using BOCCHI.Modules.Debug.Panels;
-using Dalamud.Plugin.Services;
 using ECommons;
 using ImGuiNET;
 using Ocelot.Modules;
@@ -11,7 +10,7 @@ namespace BOCCHI.Modules.Debug;
 #if DEBUG_BUILD
 [OcelotModule]
 #endif
-public class DebugModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
+public class DebugModule(Plugin plugin, Config config) : Module(plugin, config)
 {
     private readonly List<Panel> panels =
     [
@@ -72,7 +71,7 @@ public class DebugModule(Plugin plugin, Config config) : Module<Plugin, Config>(
         ImGui.EndGroup();
     }
 
-    public override void Update(IFramework _)
+    public override void Update(UpdateContext context)
     {
         panels.Each(p => p.Update(this));
     }

@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Numerics;
-using Dalamud.Plugin.Services;
 using Ocelot.Modules;
+using Ocelot.Windows;
 
 namespace BOCCHI.Modules.Treasure;
 
 [OcelotModule(1003, 1)]
-public class TreasureModule(Plugin _plugin, Config config) : Module<Plugin, Config>(_plugin, config)
+public class TreasureModule(Plugin _plugin, Config config) : Module(_plugin, config)
 {
     public override TreasureConfig Config
     {
@@ -42,18 +42,18 @@ public class TreasureModule(Plugin _plugin, Config config) : Module<Plugin, Conf
         hunter = new TreasureHunt(this);
     }
 
-    public override void Update(IFramework framework)
+    public override void Update(UpdateContext context)
     {
-        Tracker.Tick(framework, Plugin);
-        hunter.Tick(this);
+        Tracker.Tick(Plugin);
+        hunter.Update();
     }
 
-    public override void Render()
+    public override void Render(RenderContext context)
     {
         radar.Draw(this);
     }
 
-    public override bool RenderMainUi()
+    public override bool RenderMainUi(RenderContext context)
     {
         panel.Draw(this);
 

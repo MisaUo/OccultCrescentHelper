@@ -34,11 +34,11 @@ public class ChainManagerPanel : Panel
                     var current = pair.Value.CurrentChain!;
                     OcelotUI.Title("Current Chain:");
                     ImGui.SameLine();
-                    ImGui.TextUnformatted(current.name);
+                    ImGui.TextUnformatted(current.Name);
 
                     OcelotUI.Title("Progress:");
                     ImGui.SameLine();
-                    ImGui.TextUnformatted($"{current.progress * 100}%");
+                    ImGui.TextUnformatted($"{current.Progress * 100}%");
 
                     OcelotUI.Title("Queued Chains:");
                     ImGui.SameLine();

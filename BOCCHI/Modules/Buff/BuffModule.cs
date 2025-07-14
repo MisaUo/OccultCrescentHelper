@@ -1,10 +1,10 @@
-using Dalamud.Plugin.Services;
 using Ocelot.Modules;
+using Ocelot.Windows;
 
 namespace BOCCHI.Modules.Buff;
 
 [OcelotModule(1005, 2)]
-public class BuffModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
+public class BuffModule(Plugin plugin, Config config) : Module(plugin, config)
 {
     public override BuffConfig Config
     {
@@ -25,12 +25,12 @@ public class BuffModule(Plugin plugin, Config config) : Module<Plugin, Config>(p
 
     private readonly Panel panel = new();
 
-    public override void Update(IFramework framework)
+    public override void Update(UpdateContext context)
     {
-        BuffManager.Tick(framework, this);
+        BuffManager.Update(this);
     }
 
-    public override bool RenderMainUi()
+    public override bool RenderMainUi(RenderContext context)
     {
         panel.Draw(this);
         return true;

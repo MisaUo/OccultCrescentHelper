@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using BOCCHI.Data;
 using Dalamud.Game.ClientState.Fates;
-using Dalamud.Plugin.Services;
 using Ocelot.Modules;
+using Ocelot.Windows;
 
 namespace BOCCHI.Modules.Fates;
 
 [OcelotModule(1001, 5)]
-public class FatesModule : Module<Plugin, Config>
+public class FatesModule : Module
 {
     public override FatesConfig Config
     {
@@ -46,12 +46,12 @@ public class FatesModule : Module<Plugin, Config>
         alerter = new Alerter(this);
     }
 
-    public override void Update(IFramework framework)
+    public override void Update(UpdateContext context)
     {
-        tracker.Tick(framework);
+        tracker.Tick(context.Framework);
     }
 
-    public override bool RenderMainUi()
+    public override bool RenderMainUi(RenderContext context)
     {
         panel.Draw(this);
         return true;

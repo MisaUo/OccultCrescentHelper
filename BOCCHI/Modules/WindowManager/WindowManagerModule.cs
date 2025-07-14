@@ -5,7 +5,7 @@ using Ocelot.Modules;
 namespace BOCCHI.Modules.WindowManager;
 
 [OcelotModule(5)]
-public class WindowManagerModule(Plugin Plugin, Config _config) : Module<Plugin, Config>(Plugin, _config)
+public class WindowManagerModule(Plugin _plugin, Config _config) : Module(_plugin, _config)
 {
     public override WindowManagerConfig Config
     {

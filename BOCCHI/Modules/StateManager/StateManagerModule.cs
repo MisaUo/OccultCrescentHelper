@@ -1,11 +1,11 @@
 using System;
-using Dalamud.Plugin.Services;
 using Ocelot.Modules;
+using Ocelot.Windows;
 
 namespace BOCCHI.Modules.StateManager;
 
 [OcelotModule(6, -1)]
-public class StateManagerModule : Module<Plugin, Config>
+public class StateManagerModule : Module
 {
     public override StateManagerConfig Config
     {
@@ -69,12 +69,12 @@ public class StateManagerModule : Module<Plugin, Config>
     {
     }
 
-    public override void Update(IFramework framework)
+    public override void Update(UpdateContext context)
     {
-        state.Tick(framework);
+        state.Tick(context.Framework);
     }
 
-    public override bool RenderMainUi()
+    public override bool RenderMainUi(RenderContext context)
     {
         return panel.Draw(this);
     }

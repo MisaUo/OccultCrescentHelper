@@ -7,7 +7,6 @@ using BOCCHI.Enums;
 using Dalamud.Game.Addon.Lifecycle;
 using Dalamud.Game.Addon.Lifecycle.AddonArgTypes;
 using Dalamud.Game.ClientState.Objects.Enums;
-using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using FFXIVClientStructs.FFXIV.Component.GUI;
@@ -33,7 +32,7 @@ public class TreasureTracker : IDisposable
         Svc.AddonLifecycle.RegisterListener(AddonEvent.PostDraw, "_WideText", OnWideTextPostDraw);
     }
 
-    public void Tick(IFramework _, Plugin plugin)
+    public void Tick(Plugin plugin)
     {
         var treasures = Svc.Objects
             .Where(o => o is { ObjectKind: ObjectKind.Treasure })

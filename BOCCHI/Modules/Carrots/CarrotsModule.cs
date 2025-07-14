@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using Dalamud.Plugin.Services;
 using Ocelot.Modules;
+using Ocelot.Windows;
 
 namespace BOCCHI.Modules.Carrots;
 
 [OcelotModule(1004, 2)]
-public class CarrotsModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
+public class CarrotsModule(Plugin plugin, Config config) : Module(plugin, config)
 {
     public override CarrotsConfig Config
     {
@@ -40,18 +40,18 @@ public class CarrotsModule(Plugin plugin, Config config) : Module<Plugin, Config
         hunter = new CarrotHunt(this);
     }
 
-    public override void Update(IFramework framework)
+    public override void Update(UpdateContext context)
     {
-        tracker.Tick(framework);
-        hunter.Tick(this);
+        tracker.Tick(context.Framework);
+        hunter.Update();
     }
 
-    public override void Render()
+    public override void Render(RenderContext context)
     {
         radar.Draw(this);
     }
 
-    public override bool RenderMainUi()
+    public override bool RenderMainUi(RenderContext context)
     {
         panel.Draw(this);
 

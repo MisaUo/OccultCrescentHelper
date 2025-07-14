@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using BOCCHI.Data;
 using BOCCHI.Modules.Buff.Chains;
-using Dalamud.Plugin.Services;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;
 using Ocelot.Chain;
@@ -25,7 +24,7 @@ public class BuffManager
 
     private int lowestTimer = int.MaxValue;
 
-    public void Tick(IFramework _, BuffModule module)
+    public void Update(BuffModule module)
     {
         if (applyBuffsOnNextTick)
         {

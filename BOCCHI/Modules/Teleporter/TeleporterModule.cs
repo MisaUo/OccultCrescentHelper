@@ -10,7 +10,7 @@ using Ocelot.Modules;
 namespace BOCCHI.Modules.Teleporter;
 
 [OcelotModule(2)]
-public class TeleporterModule : Module<Plugin, Config>
+public class TeleporterModule : Module
 {
     public override TeleporterConfig Config
     {

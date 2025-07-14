@@ -1,7 +1,6 @@
 using System.Linq;
 using BOCCHI.Enums;
 using Dalamud.Game.ClientState.Objects.SubKinds;
-using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
 using ECommons.Throttlers;
 using Ocelot.Modules;
@@ -9,7 +8,7 @@ using Ocelot.Modules;
 namespace BOCCHI.Modules.Data;
 
 [OcelotModule(int.MaxValue)]
-public class DataModule : Module<Plugin, Config>
+public class DataModule : Module
 {
     public override DataConfig Config
     {
@@ -29,7 +28,7 @@ public class DataModule : Module<Plugin, Config>
         api.Initialize();
     }
 
-    public override void Update(IFramework _)
+    public override void Update(UpdateContext context)
     {
         if (!Config.Enabled)
         {

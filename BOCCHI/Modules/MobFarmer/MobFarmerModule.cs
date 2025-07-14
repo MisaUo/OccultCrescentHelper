@@ -1,10 +1,10 @@
-using Dalamud.Plugin.Services;
 using Ocelot.Modules;
+using Ocelot.Windows;
 
 namespace BOCCHI.Modules.MobFarmer;
 
 [OcelotModule(int.MaxValue - 2)]
-public class MobFarmerModule : Module<Plugin, Config>
+public class MobFarmerModule : Module
 {
     public override MobFarmerConfig Config
     {
@@ -29,18 +29,18 @@ public class MobFarmerModule : Module<Plugin, Config>
         farmer = new Farmer(this);
     }
 
-    public override void Update(IFramework framework)
+    public override void Update(UpdateContext context)
     {
-        scanner.Tick(framework);
+        scanner.Tick(context.Framework);
         farmer.Tick();
     }
 
-    public override void Render()
+    public override void Render(RenderContext context)
     {
         farmer.Draw();
     }
 
-    public override bool RenderMainUi()
+    public override bool RenderMainUi(RenderContext context)
     {
         panel.Draw(this);
         return true;

@@ -1,10 +1,10 @@
-using Dalamud.Plugin.Services;
 using Ocelot.Modules;
+using Ocelot.Windows;
 
 namespace BOCCHI.Modules.Currency;
 
 [OcelotModule(int.MaxValue - 1001, 3)]
-public class CurrencyModule(Plugin plugin, Config config) : Module<Plugin, Config>(plugin, config)
+public class CurrencyModule(Plugin plugin, Config config) : Module(plugin, config)
 {
     public override CurrencyConfig Config
     {
@@ -25,9 +25,9 @@ public class CurrencyModule(Plugin plugin, Config config) : Module<Plugin, Confi
 
     private readonly Panel panel = new();
 
-    public override void Update(IFramework framework)
+    public override void Update(UpdateContext context)
     {
-        Tracker.Tick(framework);
+        Tracker.Tick(context.Framework);
     }
 
     public override void OnTerritoryChanged(ushort _)
@@ -35,7 +35,7 @@ public class CurrencyModule(Plugin plugin, Config config) : Module<Plugin, Confi
         Tracker.Reset();
     }
 
-    public override bool RenderMainUi()
+    public override bool RenderMainUi(RenderContext context)
     {
         panel.Draw(this);
         return true;

@@ -71,7 +71,7 @@ public sealed class Plugin : OcelotPlugin
         }
     }
 
-    public override bool ShouldUpdate()
+    protected override bool ShouldUpdate()
     {
         return ZoneData.IsInOccultCrescent()
                && !(

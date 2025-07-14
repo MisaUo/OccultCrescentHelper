@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using BOCCHI.Data;
-using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using Ocelot.Modules;
+using Ocelot.Windows;
 
 namespace BOCCHI.Modules.CriticalEncounters;
 
 [OcelotModule(1002, 6)]
-public class CriticalEncountersModule : Module<Plugin, Config>
+public class CriticalEncountersModule : Module
 {
     public override CriticalEncountersConfig Config
     {
@@ -47,12 +47,12 @@ public class CriticalEncountersModule : Module<Plugin, Config>
         alerter = new Alerter(this);
     }
 
-    public override void Update(IFramework framework)
+    public override void Update(UpdateContext context)
     {
-        Tracker.Tick(framework);
+        Tracker.Tick(context.Framework);
     }
 
-    public override bool RenderMainUi()
+    public override bool RenderMainUi(RenderContext context)
     {
         panel.Draw(this);
         return true;

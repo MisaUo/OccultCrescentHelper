@@ -48,7 +48,7 @@ public class MainWindow(Plugin primaryPlugin, Config config) : OcelotMainWindow(
         });
     }
 
-    public override void Render()
+    public override void Render(RenderContext context)
     {
         if (!ZoneData.IsInOccultCrescent())
         {
@@ -56,6 +56,6 @@ public class MainWindow(Plugin primaryPlugin, Config config) : OcelotMainWindow(
             return;
         }
 
-        plugin.Modules.RenderMainUi();
+        plugin.Modules.RenderMainUi(context);
     }
 }
