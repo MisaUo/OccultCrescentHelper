@@ -4,7 +4,6 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.ForkedTower;
 
-[Text("config.no_traps")]
 public class ForkedTowerConfig : ModuleConfig
 {
     [Checkbox]
