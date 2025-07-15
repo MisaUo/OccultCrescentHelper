@@ -304,7 +304,10 @@ public abstract class Hunter
             return false;
         }
 
-        StepProcessor.SubmitFront(ChainHelper.ReturnChain());
+        StepProcessor.SubmitFront(ChainHelper.ReturnChain(new ReturnChainConfig
+        {
+            ApproachAetheryte = true,
+        }));
 
         return true;
     }
