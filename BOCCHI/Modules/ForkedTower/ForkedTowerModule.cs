@@ -51,14 +51,12 @@ public class ForkedTowerModule(Plugin plugin, Config config) : Module(plugin, co
             return;
         }
 
-        var pictomancy = PictoService.GetDrawList();
-
         var traps = GetTrapsToRender().ToList();
         foreach (var trap in traps)
         {
             if (Config.DrawSimpleMode || Config.DrawOutlineForComplexMode)
             {
-                pictomancy.AddCircle(trap.Position, 4f, ImGui.GetColorU32(GetTrapColor(trap.Type)));
+                context.Pictomancy.AddCircle(trap.Position, 4f, ImGui.GetColorU32(GetTrapColor(trap.Type)));
             }
 
             if (!Config.DrawSimpleMode)
@@ -93,9 +91,14 @@ public class ForkedTowerModule(Plugin plugin, Config config) : Module(plugin, co
     {
         var groups = TrapData.Groups.AsEnumerable();
 
-// #if !DEBUG
+#if DEBUG
+        if (!Config.IgnoreDrawRange)
+        {
+            groups = groups.Where(group => group.GetDistance() <= Config.TrapDrawRange);
+        }
+#else
         groups = groups.Where(group => group.GetDistance() <= Config.TrapDrawRange);
-// #endif
+#endif
 
         if (Config.StopRenderingCompleteGroups)
         {

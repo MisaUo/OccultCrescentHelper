@@ -21,6 +21,10 @@ public class ForkedTowerConfig : ModuleConfig
     [RangeIndicator]
     public float TrapDrawRange { get; set; } = 150f;
 
+#if DEBUG
+    [Checkbox] public bool IgnoreDrawRange { get; set; } = false;
+#endif
+
     [Color4] public Vector4 TrapDrawColor { get; set; } = Vector4.One;
 
     [Color4] public Vector4 BigTrapDrawColor { get; set; } = Vector4.One;

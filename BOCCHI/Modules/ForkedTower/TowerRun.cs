@@ -10,7 +10,6 @@ using ECommons.GameHelpers;
 using ImGuiNET;
 using Ocelot.Modules;
 using Ocelot.Windows;
-using Pictomancy;
 
 namespace BOCCHI.Modules.ForkedTower;
 
@@ -60,9 +59,6 @@ public class TowerRun(string hash)
             return;
         }
 
-
-        var pictomancy = PictoService.GetDrawList();
-
         foreach (var trap in GetNearbyTraps())
         {
             if (Player.DistanceTo(trap) > config.ForkedTowerConfig.TrapDrawRange)
@@ -72,12 +68,12 @@ public class TowerRun(string hash)
 
             if (config.ForkedTowerConfig.DrawSmallTrapRange && trap.DataId == (uint)OccultObjectType.Trap)
             {
-                pictomancy.AddCircle(trap.Position, 7f, ImGui.GetColorU32(ImGuiColors.DPSRed));
+                context.Pictomancy.AddCircle(trap.Position, 7f, ImGui.GetColorU32(ImGuiColors.DPSRed));
             }
 
             if (config.ForkedTowerConfig.DrawBigTrapRange && trap.DataId == (uint)OccultObjectType.BigTrap)
             {
-                pictomancy.AddCircle(trap.Position, 30f, ImGui.GetColorU32(ImGuiColors.DPSRed));
+                context.Pictomancy.AddCircle(trap.Position, 30f, ImGui.GetColorU32(ImGuiColors.DPSRed));
             }
         }
     }

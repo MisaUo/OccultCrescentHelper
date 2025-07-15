@@ -41,8 +41,6 @@ public sealed class Plugin : OcelotPlugin
 
         ChainManager.Initialize();
         ChainHelper.Initialize(this);
-
-        throw new Exception("Blah blah blah, this is a test exception to see if the plugin loads correctly. If you see this, it means the plugin is working as expected.");
     }
 
     private void SetupLanguage(IDalamudPluginInterface plugin)
