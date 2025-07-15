@@ -17,6 +17,11 @@ public class TeleporterModule : Module
         get => PluginConfig.TeleporterConfig;
     }
 
+    public override bool ShouldInitialize
+    {
+        get => true;
+    }
+
     public readonly Teleporter teleporter;
 
     public TeleporterModule(Plugin plugin, Config config)

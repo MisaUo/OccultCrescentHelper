@@ -30,6 +30,11 @@ public class DebugModule(Plugin plugin, Config config) : Module(plugin, config)
 
     private int selectedPanelIndex = 0;
 
+    public override bool ShouldInitialize
+    {
+        get => true;
+    }
+
     public override void PostInitialize()
     {
         if (Plugin.Windows.TryGetWindow<DebugWindow>(out var window) && window != null && !window.IsOpen)

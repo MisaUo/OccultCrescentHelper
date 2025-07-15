@@ -23,6 +23,11 @@ public class ForkedTowerModule(Plugin plugin, Config config) : Module(plugin, co
         get => PluginConfig.ForkedTowerConfig;
     }
 
+    public override bool ShouldInitialize
+    {
+        get => true;
+    }
+
     public TowerRun TowerRun { get; private set; } = new("");
 
     private readonly Panel panel = new();
@@ -46,11 +51,7 @@ public class ForkedTowerModule(Plugin plugin, Config config) : Module(plugin, co
             return;
         }
 
-        using var pictomancy = PictoService.Draw();
-        if (pictomancy == null)
-        {
-            return;
-        }
+        var pictomancy = PictoService.GetDrawList();
 
         var traps = GetTrapsToRender().ToList();
         foreach (var trap in traps)
@@ -66,6 +67,7 @@ public class ForkedTowerModule(Plugin plugin, Config config) : Module(plugin, co
                 PictoService.VfxRenderer.AddCircle(key, trap.Position, 4f, GetTrapColor(trap.Type));
             }
         }
+
 
         TowerRun.Render(context);
     }
@@ -91,9 +93,9 @@ public class ForkedTowerModule(Plugin plugin, Config config) : Module(plugin, co
     {
         var groups = TrapData.Groups.AsEnumerable();
 
-#if !DEBUG
+// #if !DEBUG
         groups = groups.Where(group => group.GetDistance() <= Config.TrapDrawRange);
-#endif
+// #endif
 
         if (Config.StopRenderingCompleteGroups)
         {

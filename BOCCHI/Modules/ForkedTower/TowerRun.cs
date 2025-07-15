@@ -55,16 +55,13 @@ public class TowerRun(string hash)
 
     public void Render(RenderContext context)
     {
-        using var pictomancy = PictoService.Draw();
-        if (pictomancy == null)
-        {
-            return;
-        }
-
         if (context.Config is not Config config)
         {
             return;
         }
+
+
+        var pictomancy = PictoService.GetDrawList();
 
         foreach (var trap in GetNearbyTraps())
         {
@@ -75,7 +72,7 @@ public class TowerRun(string hash)
 
             if (config.ForkedTowerConfig.DrawSmallTrapRange && trap.DataId == (uint)OccultObjectType.Trap)
             {
-                pictomancy.AddCircle(trap.Position, 6f, ImGui.GetColorU32(ImGuiColors.DPSRed));
+                pictomancy.AddCircle(trap.Position, 7f, ImGui.GetColorU32(ImGuiColors.DPSRed));
             }
 
             if (config.ForkedTowerConfig.DrawBigTrapRange && trap.DataId == (uint)OccultObjectType.BigTrap)

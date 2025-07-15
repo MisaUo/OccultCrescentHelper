@@ -13,6 +13,11 @@ public class TreasureModule(Plugin _plugin, Config config) : Module(_plugin, con
         get => PluginConfig.TreasureConfig;
     }
 
+    public override bool ShouldInitialize
+    {
+        get => true;
+    }
+
     public override bool IsEnabled
     {
         get => Config.IsPropertyEnabled(nameof(Config.Enabled));
@@ -50,7 +55,7 @@ public class TreasureModule(Plugin _plugin, Config config) : Module(_plugin, con
 
     public override void Render(RenderContext context)
     {
-        radar.Draw(this);
+        radar.Draw(context.ForModule(this));
     }
 
     public override bool RenderMainUi(RenderContext context)

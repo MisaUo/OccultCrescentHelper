@@ -8,6 +8,7 @@
         <IsPackable>false</IsPackable>
         <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
         <NoWarn>$(NoWarn);4014</NoWarn>
+        <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=$(MSBuildProjectName)/</PathMap>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
         <DefineConstants>DEBUG;TRACE;DEBUG_BUILD</DefineConstants>
@@ -31,7 +32,7 @@
         <ProjectReference Include="../Ocelot/Ocelot/Ocelot.csproj"/>
     </ItemGroup>
     <ItemGroup Condition="'$(Configuration)' == 'Release'">
-        <PackageReference Include="FFXIVOcelot" Version="0.41.0"/>
+        <PackageReference Include="FFXIVOcelot" Version="0.42.0"/>
         <ProjectReference Include="../Ocelot/ffxiv_pictomancy/Pictomancy/Pictomancy.csproj"/>
     </ItemGroup>
     <ItemGroup>

@@ -12,6 +12,11 @@ public class WindowManagerModule(Plugin _plugin, Config _config) : Module(_plugi
         get => PluginConfig.WindowManagerConfig;
     }
 
+    public override bool ShouldInitialize
+    {
+        get => true;
+    }
+
 
     private readonly List<uint> occultCrescentTerritoryIds = [1252];
 

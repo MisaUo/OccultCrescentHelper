@@ -48,7 +48,7 @@ public class MainWindow(Plugin primaryPlugin, Config config) : OcelotMainWindow(
         });
     }
 
-    public override void Render(RenderContext context)
+    protected override void Render(RenderContext context)
     {
         if (!ZoneData.IsInOccultCrescent())
         {

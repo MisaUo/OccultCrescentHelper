@@ -15,6 +15,11 @@ public class DataModule : Module
         get => PluginConfig.DataConfig;
     }
 
+    public override bool ShouldInitialize
+    {
+        get => true;
+    }
+
     private readonly Api api;
 
     public DataModule(Plugin plugin, Config config)

@@ -22,7 +22,7 @@ public class ConfigWindow(Plugin primaryPlugin, Config config) : OcelotConfigWin
         };
     }
 
-    public override void Render(RenderContext context)
+    protected override void Render(RenderContext context)
     {
         var modules = plugin.Modules.GetModulesByConfigOrder().ToList();
         selectedConfigModule ??= modules.FirstOrDefault();

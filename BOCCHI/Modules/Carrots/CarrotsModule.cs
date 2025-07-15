@@ -17,6 +17,11 @@ public class CarrotsModule(Plugin plugin, Config config) : Module(plugin, config
         get => true;
     }
 
+    public override bool ShouldInitialize
+    {
+        get => true;
+    }
+
     public override bool IsEnabled
     {
         get => Config.IsPropertyEnabled(nameof(Config.Enabled));
@@ -48,7 +53,7 @@ public class CarrotsModule(Plugin plugin, Config config) : Module(plugin, config
 
     public override void Render(RenderContext context)
     {
-        radar.Draw(this);
+        radar.Draw(context.ForModule(this));
     }
 
     public override bool RenderMainUi(RenderContext context)

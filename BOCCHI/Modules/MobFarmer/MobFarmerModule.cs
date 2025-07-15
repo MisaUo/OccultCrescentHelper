@@ -37,7 +37,7 @@ public class MobFarmerModule : Module
 
     public override void Render(RenderContext context)
     {
-        farmer.Draw();
+        farmer.Draw(context.ForModule(this));
     }
 
     public override bool RenderMainUi(RenderContext context)

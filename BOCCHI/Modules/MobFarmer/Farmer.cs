@@ -14,6 +14,7 @@ using ECommons.Throttlers;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
+using Ocelot.Windows;
 using Chain = Ocelot.Chain.Chain;
 
 namespace BOCCHI.Modules.MobFarmer;
@@ -211,7 +212,7 @@ public class Farmer
         return !anyInCombat ? FarmerPhase.Waiting : null;
     }
 
-    public void Draw()
+    public void Draw(RenderContext context)
     {
         if (!Mobs.Any())
         {
@@ -236,12 +237,12 @@ public class Farmer
                 color = new Vector4(0.9f, 0.1f, 0.9f, 1f);
             }
 
-            Helpers.DrawLine(Player.Position, mob.Position, 3f, color);
+            context.DrawLine(mob.Position, color);
         }
 
         foreach (var mob in InCombat)
         {
-            Helpers.DrawLine(Player.Position, mob.Position, 3f, new Vector4(0.1f, 0.9f, 0.1f, 1f));
+            context.DrawLine(mob.Position, new Vector4(0.1f, 0.9f, 0.1f, 1f));
         }
     }
 
