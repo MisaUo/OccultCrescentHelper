@@ -14,7 +14,7 @@ public class Radar
             return;
         }
 
-        if (context.IsForModule<CarrotsModule>(out var module))
+        if (!context.IsForModule<CarrotsModule>(out var module))
         {
             return;
         }

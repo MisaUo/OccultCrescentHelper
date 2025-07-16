@@ -8,11 +8,13 @@ using BOCCHI.Pathfinding;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
+using ECommons.GameHelpers;
 using ECommons.Throttlers;
 using FFXIVClientStructs.FFXIV.Client.Game.Control;
 using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using FFXIVClientStructs.FFXIV.Client.LayoutEngine;
 using Ocelot.Chain;
+using Ocelot.Chain.ChainEx;
 using ObjectKind = Dalamud.Game.ClientState.Objects.Enums.ObjectKind;
 
 namespace BOCCHI.Modules.Treasure;
@@ -78,11 +80,17 @@ public class TreasureHunt(TreasureModule module) : Hunter(module)
     protected override Func<Chain> GetInteractionChain(IGameObject obj)
     {
         return () => Chain.Create()
+            .BreakIf(() => !GetValidObjects().Any(o => Vector3.Distance(o.Position, obj.Position) <= DISTANCE_TO_NODE_TO_USE))
             .Then(new TaskManagerTask(() =>
             {
                 if (!EzThrottler.Throttle("ChestInteract", 250))
                 {
                     return false;
+                }
+
+                if (Player.DistanceTo(obj) > DISTANCE_TO_NODE_TO_USE)
+                {
+                    return true;
                 }
 
                 unsafe

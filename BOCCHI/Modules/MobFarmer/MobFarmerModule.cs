@@ -45,4 +45,9 @@ public class MobFarmerModule : Module
         panel.Draw(this);
         return true;
     }
+
+    public override void Dispose()
+    {
+        farmer.Dispose();
+    }
 }

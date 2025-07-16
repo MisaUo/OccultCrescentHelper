@@ -45,7 +45,7 @@ public class CarrotHunt(CarrotsModule module) : Hunter(module)
     protected override unsafe Func<Chain> GetInteractionChain(IGameObject obj)
     {
         return () => Chain.Create()
-            .BreakIf(() => !GetValidObjects().Any(o => Vector3.Distance(o.Position, obj.Position) <= 2f))
+            .BreakIf(() => !GetValidObjects().Any(o => Vector3.Distance(o.Position, obj.Position) <= DISTANCE_TO_NODE_TO_USE))
             .ConditionalThen(_ => Player.Mounted, _ => Actions.Unmount.Cast())
             .Wait(500)
             .BreakIf(() => Items.FortuneCarrot.Count() <= 0)

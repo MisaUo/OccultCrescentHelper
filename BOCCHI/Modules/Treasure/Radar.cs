@@ -16,7 +16,7 @@ public class Radar
             return;
         }
 
-        if (context.IsForModule<TreasureModule>(out var module))
+        if (!context.IsForModule<TreasureModule>(out var module))
         {
             return;
         }
@@ -27,21 +27,17 @@ public class Radar
             return;
         }
 
+
         foreach (var treasure in module.Treasures.Where(treasure => treasure.IsValid()))
         {
-            if (treasure.GetTreasureType() == TreasureType.Bronze)
+            if (config.ShouldDrawLineToBronzeChests && treasure.GetTreasureType() == TreasureType.Bronze)
             {
-                if (config.ShouldDrawLineToBronzeChests)
-                {
-                    context.DrawLine(treasure.GetPosition(), treasure.GetColor());
-                }
+                context.DrawLine(treasure.GetPosition(), treasure.GetColor());
             }
-            else if (treasure.GetTreasureType() == TreasureType.Silver)
+
+            if (config.ShouldDrawLineToSilverChests && treasure.GetTreasureType() == TreasureType.Silver)
             {
-                if (config.ShouldDrawLineToSilverChests)
-                {
-                    context.DrawLine(treasure.GetPosition(), treasure.GetColor());
-                }
+                context.DrawLine(treasure.GetPosition(), treasure.GetColor());
             }
         }
     }

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
+using BOCCHI.Data;
 using BOCCHI.Data.Traps;
 using BOCCHI.Enums;
 using BOCCHI.Modules.CriticalEncounters;
 using ECommons.GameHelpers;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
-using ImGuiNET;
 using Ocelot.Modules;
 using Ocelot.Windows;
 using Pictomancy;
@@ -46,6 +46,18 @@ public class ForkedTowerModule(Plugin plugin, Config config) : Module(plugin, co
 
     public override void Render(RenderContext context)
     {
+        if (!ZoneData.IsInOccultCrescent())
+        {
+            return;
+        }
+
+#if RELEASE
+        if (!ZoneData.IsInForkedTower())
+        {
+            return;
+        }
+#endif
+
         if (!Config.DrawPotentialTrapPositions)
         {
             return;
@@ -56,7 +68,7 @@ public class ForkedTowerModule(Plugin plugin, Config config) : Module(plugin, co
         {
             if (Config.DrawSimpleMode || Config.DrawOutlineForComplexMode)
             {
-                context.Pictomancy.AddCircle(trap.Position, 4f, ImGui.GetColorU32(GetTrapColor(trap.Type)));
+                context.DrawCircle(trap.Position, 4f, GetTrapColor(trap.Type));
             }
 
             if (!Config.DrawSimpleMode)

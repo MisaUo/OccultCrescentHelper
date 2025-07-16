@@ -4,22 +4,24 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using BOCCHI.ActionHelpers;
+using BOCCHI.Modules.ForkedTower;
 using BOCCHI.Modules.MobFarmer.Chains;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Objects.Types;
-using ECommons.Automation;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
+using ECommons.Reflection;
 using ECommons.Throttlers;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
+using Ocelot.Modules;
 using Ocelot.Windows;
 using Chain = Ocelot.Chain.Chain;
 
 namespace BOCCHI.Modules.MobFarmer;
 
-public class Farmer
+public class Farmer : IDisposable
 {
     private MobFarmerModule module;
 
@@ -38,6 +40,13 @@ public class Farmer
     private Vector3 StartingPoint = Vector3.Zero;
 
     public FarmerPhase Phase { get; private set; } = FarmerPhase.Waiting;
+
+    private IRotationPlugin RotationPlugin;
+
+    private Dictionary<string, Func<IModule, IRotationPlugin>> rotationPlugins = new()
+    {
+        { "WrathCombo", m => new Wrath(m) },
+    };
 
     public IEnumerable<IBattleNpc> Mobs
     {
@@ -68,6 +77,19 @@ public class Farmer
             { FarmerPhase.Stacking, HandleStackingPhase },
             { FarmerPhase.Fighting, HandleFightingPhase },
         };
+
+
+        RotationPlugin = new BlankRotationPlugin();
+        foreach (var (plugin, factory) in rotationPlugins)
+        {
+            if (!DalamudReflector.TryGetDalamudPlugin(plugin, out _, false, true))
+            {
+                continue;
+            }
+
+            RotationPlugin = factory(module);
+            break;
+        }
     }
 
     public void Tick()
@@ -173,7 +195,8 @@ public class Farmer
         if (HasRunStack && !vnav.IsRunning())
         {
             HasRunStack = false;
-            Chat.ExecuteCommand("/wrath set 110058");
+            // Chat.ExecuteCommand("/wrath set 110058");
+            RotationPlugin.PhantomJobOn();
             return FarmerPhase.Fighting;
         }
 
@@ -209,7 +232,14 @@ public class Farmer
             return Player.DistanceTo(StartingPoint) <= 2f ? FarmerPhase.Waiting : null;
         }
 
-        return !anyInCombat ? FarmerPhase.Waiting : null;
+        if (!anyInCombat && !Svc.Condition[ConditionFlag.InCombat])
+        {
+            // Svc.Commands.ProcessCommand("/wrath unset 110058");
+            RotationPlugin.PhantomJobOff();
+            return FarmerPhase.Waiting;
+        }
+
+        return null;
     }
 
     public void Draw(RenderContext context)
@@ -253,7 +283,13 @@ public class Farmer
         if (Running)
         {
             StartingPoint = Player.Position;
-            Svc.Commands.ProcessCommand("/wrath unset 110058");
+            // Svc.Commands.ProcessCommand("/wrath unset 110058");
+            RotationPlugin.PhantomJobOff();
         }
+    }
+
+    public void Dispose()
+    {
+        RotationPlugin.Dispose();
     }
 }

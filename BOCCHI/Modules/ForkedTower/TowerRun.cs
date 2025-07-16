@@ -7,7 +7,6 @@ using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Interface.Colors;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
-using ImGuiNET;
 using Ocelot.Modules;
 using Ocelot.Windows;
 
@@ -68,12 +67,12 @@ public class TowerRun(string hash)
 
             if (config.ForkedTowerConfig.DrawSmallTrapRange && trap.DataId == (uint)OccultObjectType.Trap)
             {
-                context.Pictomancy.AddCircle(trap.Position, 7f, ImGui.GetColorU32(ImGuiColors.DPSRed));
+                context.DrawCircle(trap.Position, 7f, ImGuiColors.DPSRed);
             }
 
             if (config.ForkedTowerConfig.DrawBigTrapRange && trap.DataId == (uint)OccultObjectType.BigTrap)
             {
-                context.Pictomancy.AddCircle(trap.Position, 30f, ImGui.GetColorU32(ImGuiColors.DPSRed));
+                context.DrawCircle(trap.Position, 30f, ImGuiColors.DalamudOrange);
             }
         }
     }
