@@ -23,7 +23,7 @@ public class Scanner(MobFarmerModule module)
 
             var chara = (BattleChara*)o.Address;
 
-            if (o.NameId == (uint)module.Config.Mob)
+            if (module.Config.Mobs.Contains((Mob)o.NameId))
             {
                 return chara->ForayInfo.Level <= module.Config.MaxMobLevel;
             }

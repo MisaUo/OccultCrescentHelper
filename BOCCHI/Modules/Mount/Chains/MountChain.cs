@@ -19,15 +19,12 @@ public class MountChain(MountConfig config) : RetryChainFactory
 
     private bool Breaker()
     {
-        // @todo add IsCasting to ecommons Player
-        // https://github.com/NightmareXIV/ECommons/pull/123
-
         return Svc.Condition[ConditionFlag.Mounted]
                || Svc.Condition[ConditionFlag.BetweenAreas]
                || Svc.Condition[ConditionFlag.BetweenAreas51]
                || Svc.Condition[ConditionFlag.InCombat]
                || Player.Status.Has(PlayerStatus.HoofingIt)
-               || Player.Available && Player.Object.IsCasting
+               || Player.IsCasting
                || Player.IsDead;
     }
 

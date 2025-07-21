@@ -4,7 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using BOCCHI.ActionHelpers;
-using BOCCHI.Modules.ForkedTower;
+using BOCCHI.Data;
 using BOCCHI.Modules.MobFarmer.Chains;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Objects.Types;
@@ -262,7 +262,7 @@ public class Farmer : IDisposable
         foreach (var mob in NotInCombat)
         {
             var color = new Vector4(0.9f, 0.1f, 0.1f, 1f);
-            if (mob.NameId != (uint)module.Config.Mob)
+            if (module.Config.Mobs.Contains((Mob)mob.NameId))
             {
                 color = new Vector4(0.9f, 0.1f, 0.9f, 1f);
             }

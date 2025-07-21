@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using BOCCHI.Data;
 using Ocelot.Config.Attributes;
 using Ocelot.Modules;
@@ -10,9 +11,9 @@ public class MobFarmerConfig : ModuleConfig
     [Label("generic.label.enabled")]
     public bool Enabled { get; set; } = true;
 
-    [Enum(typeof(Mob), nameof(MobProvider))]
+    [MultiEnum(typeof(Mob), nameof(MobProvider))]
     [Searchable]
-    public Mob Mob { get; set; } = Mob.Foper;
+    public List<Mob> Mobs { get; set; } = [];
 
     [Checkbox] public bool ConsiderSpecialMobs { get; set; } = false;
 
