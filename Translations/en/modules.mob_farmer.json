@@ -3,9 +3,9 @@
     "mob_farmer": {
       "config": {
         "title": "Mob Farmer Config",
-        "mob": {
-          "label": "Mob",
-          "tooltip": "The mob to farm"
+        "mobs": {
+          "label": "Mobs",
+          "tooltip": "The mobs to farm"
         },
         "consider_special_mobs": {
           "label": "Consider special mobs",
