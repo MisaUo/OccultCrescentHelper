@@ -72,4 +72,7 @@ public enum Mob
     Mousse = 13941,
     Mimic = 13942,
     Fool = 13943,
+    Sculpture = 13917,
+    Isleblazer = 13920,
+    OccultGolem = 13929,
 }
