@@ -1,6 +1,6 @@
 ﻿using BOCCHI.Data;
 
-namespace BOCCHI.Modules.ForkedTower;
+namespace BOCCHI.Modules.MobFarmer;
 
 public class BlankRotationPlugin : IRotationPlugin
 {

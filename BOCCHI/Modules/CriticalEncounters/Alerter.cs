@@ -85,18 +85,18 @@ public class Alerter : IDisposable
             return false;
         }
 
-        if (data.demiatma != null)
+        if (data.Demiatma != null)
         {
-            var demiatma = (Demiatma)data.demiatma;
+            var demiatma = (Demiatma)data.Demiatma;
             if (DemiatmaAlerts.TryGetValue(demiatma, out var getter))
             {
                 return getter();
             }
         }
 
-        if (data.soulshard != null)
+        if (data.Soulshard != null)
         {
-            var soulshard = (SoulShard)data.soulshard;
+            var soulshard = (SoulShard)data.Soulshard;
             if (SoulShardAlerts.TryGetValue(soulshard, out var getter))
             {
                 return getter();

@@ -1,7 +1,7 @@
 ﻿using System;
 using BOCCHI.Data;
 
-namespace BOCCHI.Modules.ForkedTower;
+namespace BOCCHI.Modules.MobFarmer;
 
 public interface IRotationPlugin : IDisposable
 {

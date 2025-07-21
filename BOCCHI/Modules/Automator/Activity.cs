@@ -82,7 +82,7 @@ public abstract class Activity
             var playerShard = AethernetData.AllByDistance().First();
             var activityShard = GetAethernetData();
 
-            var isFate = data.type == EventType.Fate;
+            var isFate = data.Type == EventType.Fate;
             var navType = SmartNavigation.Decide(Player.Position, GetPosition(), activityShard);
 
             module.Debug("Selected navigation type: " + navType);
@@ -172,12 +172,12 @@ public abstract class Activity
 
     private AethernetData GetAethernetData()
     {
-        return data.aethernet?.GetData() ?? AethernetData.AllByDistance(GetPosition()).First();
+        return data.Aethernet?.GetData() ?? AethernetData.AllByDistance(GetPosition()).First();
     }
 
     protected bool IsInZone()
     {
-        var radius = data.radius ?? GetRadius();
+        var radius = data.Radius ?? GetRadius();
 
         return Player.DistanceTo(GetPosition()) <= radius;
     }

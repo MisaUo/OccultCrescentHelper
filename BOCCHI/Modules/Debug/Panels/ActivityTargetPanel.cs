@@ -73,9 +73,9 @@ public class ActivityTargetPanel : Panel
             if (activity != null)
             {
                 var data = activity.data;
-                if (data.type == EventType.Fate)
+                if (data.Type == EventType.Fate)
                 {
-                    return battleChara->FateId == data!.id;
+                    return battleChara->FateId == data!.Id;
                 }
             }
 

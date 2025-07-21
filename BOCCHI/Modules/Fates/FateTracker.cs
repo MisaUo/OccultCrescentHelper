@@ -1,30 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BOCCHI.Data;
-using Dalamud.Game.ClientState.Fates;
-using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
+using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Fates;
 
 public class FateTracker
 {
-    public readonly Dictionary<uint, IFate> Fates = [];
+    public readonly Dictionary<uint, Fate> Fates = [];
 
-    public Dictionary<uint, EventProgress> Progress { get; } = [];
+    public event Action<Fate>? OnFateSpawned;
 
-    public event Action<IFate>? OnFateSpawned;
-
-    public event Action<IFate>? OnFateDespawned;
+    public event Action<Fate>? OnFateDespawned;
 
 
-    public void Tick(IFramework _)
+    public void Update(UpdateContext context)
     {
         var currentFates = Svc.Fates.ToDictionary(f => (uint)f.FateId, f => f);
 
-        foreach (var (id, fate) in currentFates)
+        foreach (var (id, data) in currentFates)
         {
+            var fate = new Fate(data);
             if (!Fates.ContainsKey(id))
             {
                 OnFateSpawned?.Invoke(fate);
@@ -38,31 +35,11 @@ public class FateTracker
         {
             OnFateDespawned?.Invoke(Fates[id]);
             Fates.Remove(id);
-            Progress.Remove(id);
         }
 
-        foreach (var (id, fate) in Fates)
+        foreach (var fate in Fates.Values)
         {
-            if (fate.Progress == 0)
-            {
-                continue;
-            }
-
-            if (!Progress.TryGetValue(id, out var current))
-            {
-                current = new EventProgress();
-                Progress[id] = current;
-            }
-
-            if (current.samples.Count == 0 || current.samples[^1].Progress != fate.Progress)
-            {
-                current.AddProgress(fate.Progress);
-            }
-
-            if (fate.Progress == 100)
-            {
-                Progress.Remove(id);
-            }
+            fate.Update(context);
         }
     }
 }

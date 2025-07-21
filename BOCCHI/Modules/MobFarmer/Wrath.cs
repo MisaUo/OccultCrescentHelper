@@ -6,7 +6,7 @@ using ECommons.DalamudServices;
 using Ocelot.IPC;
 using Ocelot.Modules;
 
-namespace BOCCHI.Modules.ForkedTower;
+namespace BOCCHI.Modules.MobFarmer;
 
 public class Wrath : IRotationPlugin
 {

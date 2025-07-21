@@ -5,7 +5,6 @@ using BOCCHI.ActionHelpers;
 using BOCCHI.Data;
 using BOCCHI.Modules.Fates;
 using BOCCHI.Modules.StateManager;
-using Dalamud.Game.ClientState.Fates;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
@@ -16,7 +15,7 @@ using Ocelot.IPC;
 
 namespace BOCCHI.Modules.Automator;
 
-public class Fate(EventData data, Lifestream lifestream, VNavmesh vnav, AutomatorModule module, IFate fate)
+public class FateActivity(EventData data, Lifestream lifestream, VNavmesh vnav, AutomatorModule module, Fate fate)
     : Activity(data, lifestream, vnav, module)
 {
     protected override TaskManagerTask GetPathfindingWatcher(StateManagerModule states)
@@ -70,29 +69,22 @@ public class Fate(EventData data, Lifestream lifestream, VNavmesh vnav, Automato
 
     protected override float GetRadius()
     {
-        return module.GetModule<FatesModule>().fates[data.id].Radius;
+        return module.GetModule<FatesModule>().fates[data.Id].Radius;
     }
 
     public override bool IsValid()
     {
-        return Svc.Fates.Contains(fate);
+        return Svc.Fates.Any(f => f.FateId == fate.Id);
     }
 
     protected override Vector3 GetPosition()
     {
-        return data.start ?? fate.Position;
+        return fate.StartPosition;
     }
 
     public override string GetName()
     {
-        try
-        {
-            return fate.Name.ToString();
-        }
-        catch (AccessViolationException)
-        {
-            return data.Name;
-        }
+        return fate.Name;
     }
 
     protected override unsafe bool IsActivityTarget(IBattleNpc obj)
@@ -101,7 +93,7 @@ public class Fate(EventData data, Lifestream lifestream, VNavmesh vnav, Automato
         {
             var battleChara = (BattleChara*)obj.Address;
 
-            return battleChara->FateId == data.id;
+            return battleChara->FateId == data.Id;
         }
         catch (Exception ex)
         {

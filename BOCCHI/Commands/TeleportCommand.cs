@@ -83,17 +83,12 @@ public class TeleportCommand(Plugin plugin) : OcelotCommand
         var source = plugin.Modules.GetModule<FatesModule>();
         foreach (var fate in source.fates.Values)
         {
-            if (!EventData.Fates.TryGetValue(fate.FateId, out var data))
+            if (fate.IsPotFate())
             {
                 continue;
             }
 
-            if (data.notes == MonsterNote.PersistentPots)
-            {
-                continue;
-            }
-
-            return data.aethernet ?? ZoneHelper.GetClosestAethernetShard(data.start ?? fate.Position);
+            return fate.GetAethernet();
         }
 
         return null;
@@ -104,17 +99,12 @@ public class TeleportCommand(Plugin plugin) : OcelotCommand
         var source = plugin.Modules.GetModule<FatesModule>();
         foreach (var fate in source.fates.Values)
         {
-            if (!EventData.Fates.TryGetValue(fate.FateId, out var data))
+            if (!fate.IsPotFate())
             {
                 continue;
             }
 
-            if (data.notes != MonsterNote.PersistentPots)
-            {
-                continue;
-            }
-
-            return data.aethernet ?? ZoneHelper.GetClosestAethernetShard(data.start ?? fate.Position);
+            return fate.GetAethernet();
         }
 
         return null;
@@ -135,7 +125,7 @@ public class TeleportCommand(Plugin plugin) : OcelotCommand
                 continue;
             }
 
-            return data.aethernet ?? ZoneHelper.GetClosestAethernetShard(data.start ?? encounter.MapMarker.Position);
+            return data.Aethernet ?? ZoneHelper.GetClosestAethernetShard(data.StartPosition ?? encounter.MapMarker.Position);
         }
 
         return null;

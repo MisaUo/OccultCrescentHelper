@@ -6,25 +6,23 @@ namespace BOCCHI.Data;
 
 public struct EventData
 {
-    public uint id;
+    public uint Id;
 
-    public EventType type;
+    public EventType Type;
 
-    public string Name;
+    public string InternalName;
 
-    public Demiatma? demiatma;
+    public Demiatma? Demiatma;
 
-    public SoulShard? soulshard;
+    public SoulShard? Soulshard;
 
-    public MonsterNote? notes;
+    public MonsterNote? Note;
 
-    public Monster? monster;
+    public Aethernet? Aethernet;
 
-    public Aethernet? aethernet;
+    public Vector3? StartPosition;
 
-    public Vector3? start;
-
-    public float? radius;
+    public float? Radius;
 
     public readonly static Dictionary<uint, EventData> Fates = new()
     {
@@ -32,158 +30,147 @@ public struct EventData
             1962,
             new EventData
             {
-                id = 1962,
-                type = EventType.Fate,
-                Name = "Rough Waters",
-                demiatma = Demiatma.Azurite,
-                monster = Monster.Nammu,
-                start = new Vector3(162.00f, 56.00f, 676.00f),
+                Id = 1962,
+                Type = EventType.Fate,
+                InternalName = "Rough Waters",
+                Demiatma = Enums.Demiatma.Azurite,
+                StartPosition = new Vector3(162.00f, 56.00f, 676.00f),
             }
         },
         {
             1963,
             new EventData
             {
-                id = 1963,
-                type = EventType.Fate,
-                Name = "The Golden Guardian",
-                demiatma = Demiatma.Azurite,
-                monster = Monster.GildedHeadstone,
-                start = new Vector3(373.20f, 70.00f, 486.00f),
+                Id = 1963,
+                Type = EventType.Fate,
+                InternalName = "The Golden Guardian",
+                Demiatma = Enums.Demiatma.Azurite,
+                StartPosition = new Vector3(373.20f, 70.00f, 486.00f),
             }
         },
         {
             1964,
             new EventData
             {
-                id = 1964,
-                type = EventType.Fate,
-                Name = "King of the Crescent",
-                demiatma = Demiatma.Orpiment,
-                monster = Monster.Ropross,
-                start = new Vector3(-226.10f, 116.38f, 254.00f),
+                Id = 1964,
+                Type = EventType.Fate,
+                InternalName = "King of the Crescent",
+                Demiatma = Enums.Demiatma.Orpiment,
+                StartPosition = new Vector3(-226.10f, 116.38f, 254.00f),
             }
         },
         {
             1965,
             new EventData
             {
-                id = 1965,
-                type = EventType.Fate,
-                Name = "The Winged Terror",
-                demiatma = Demiatma.Realgar,
-                monster = Monster.GiantBird,
-                aethernet = Aethernet.TheWanderersHaven,
-                start = new Vector3(-548.50f, 3.00f, -595.00f),
+                Id = 1965,
+                Type = EventType.Fate,
+                InternalName = "The Winged Terror",
+                Demiatma = Enums.Demiatma.Realgar,
+                Aethernet = Enums.Aethernet.TheWanderersHaven,
+                StartPosition = new Vector3(-548.50f, 3.00f, -595.00f),
             }
         },
         {
             1966,
             new EventData
             {
-                id = 1966,
-                type = EventType.Fate,
-                Name = "An Unending Duty",
-                demiatma = Demiatma.Malachite,
-                monster = Monster.Sisyphus,
-                start = new Vector3(-223.10f, 107.00f, 36.00f),
+                Id = 1966,
+                Type = EventType.Fate,
+                InternalName = "An Unending Duty",
+                Demiatma = Enums.Demiatma.Malachite,
+                StartPosition = new Vector3(-223.10f, 107.00f, 36.00f),
             }
         },
         {
             1967,
             new EventData
             {
-                id = 1967,
-                type = EventType.Fate,
-                Name = "Brain Drain",
-                demiatma = Demiatma.Realgar,
-                monster = Monster.AdvancedAevis,
-                aethernet = Aethernet.CrystallizedCaverns,
-                start = new Vector3(-48.10f, 111.76f, -320.00f),
+                Id = 1967,
+                Type = EventType.Fate,
+                InternalName = "Brain Drain",
+                Demiatma = Enums.Demiatma.Realgar,
+                Aethernet = Enums.Aethernet.CrystallizedCaverns,
+                StartPosition = new Vector3(-48.10f, 111.76f, -320.00f),
             }
         },
         {
             1968,
             new EventData
             {
-                id = 1968,
-                type = EventType.Fate,
-                Name = "A Delicate Balance",
-                demiatma = Demiatma.Verdigris,
-                monster = Monster.Dehumidifier,
-                start = new Vector3(-370.00f, 75.00f, 650.00f),
+                Id = 1968,
+                Type = EventType.Fate,
+                InternalName = "A Delicate Balance",
+                Demiatma = Enums.Demiatma.Verdigris,
+                StartPosition = new Vector3(-370.00f, 75.00f, 650.00f),
             }
         },
         {
             1969,
             new EventData
             {
-                id = 1969,
-                type = EventType.Fate,
-                Name = "Sworn to Soil",
-                demiatma = Demiatma.Verdigris,
-                monster = Monster.MadMudarch,
-                start = new Vector3(-589.10f, 96.50f, 333.00f),
+                Id = 1969,
+                Type = EventType.Fate,
+                InternalName = "Sworn to Soil",
+                Demiatma = Enums.Demiatma.Verdigris,
+                StartPosition = new Vector3(-589.10f, 96.50f, 333.00f),
             }
         },
         {
             1970,
             new EventData
             {
-                id = 1970,
-                type = EventType.Fate,
-                Name = "A Prying Eye",
-                demiatma = Demiatma.Azurite,
-                monster = Monster.Observer,
-                start = new Vector3(-71.00f, 71.31f, 557.00f),
+                Id = 1970,
+                Type = EventType.Fate,
+                InternalName = "A Prying Eye",
+                Demiatma = Enums.Demiatma.Azurite,
+                StartPosition = new Vector3(-71.00f, 71.31f, 557.00f),
             }
         },
         {
             1971,
             new EventData
             {
-                id = 1971,
-                type = EventType.Fate,
-                Name = "Fatal Allure",
-                demiatma = Demiatma.Orpiment,
-                monster = Monster.Execrator,
-                start = new Vector3(79.00f, 97.86f, 278.00f),
+                Id = 1971,
+                Type = EventType.Fate,
+                InternalName = "Fatal Allure",
+                Demiatma = Enums.Demiatma.Orpiment,
+                StartPosition = new Vector3(79.00f, 97.86f, 278.00f),
             }
         },
         {
             1972,
             new EventData
             {
-                id = 1972,
-                type = EventType.Fate,
-                Name = "Serving Darkness",
-                demiatma = Demiatma.CaputMortuum,
-                monster = Monster.Lifereaper,
-                start = new Vector3(413.00f, 96.00f, -13.00f),
+                Id = 1972,
+                Type = EventType.Fate,
+                InternalName = "Serving Darkness",
+                Demiatma = Enums.Demiatma.CaputMortuum,
+                StartPosition = new Vector3(413.00f, 96.00f, -13.00f),
             }
         },
         {
             1976,
             new EventData
             {
-                id = 1976,
-                type = EventType.Fate,
-                Name = "Persistent Pots",
-                demiatma = Demiatma.Orpiment,
-                notes = MonsterNote.PersistentPots,
-                start = new Vector3(200.00f, 111.73f, -215.00f),
+                Id = 1976,
+                Type = EventType.Fate,
+                InternalName = "Persistent Pots",
+                Demiatma = Enums.Demiatma.Orpiment,
+                Note = MonsterNote.PersistentPots,
+                StartPosition = new Vector3(200.00f, 111.73f, -215.00f),
             }
         },
         {
             1977,
             new EventData
             {
-                id = 1977,
-                type = EventType.Fate,
-                Name = "Pleading Pots",
-                demiatma = Demiatma.Verdigris,
-                notes = MonsterNote.PersistentPots,
-                start = new Vector3(-481.00f, 75.00f, 528.00f),
+                Id = 1977,
+                Type = EventType.Fate,
+                InternalName = "Pleading Pots",
+                Demiatma = Enums.Demiatma.Verdigris,
+                Note = MonsterNote.PersistentPots,
+                StartPosition = new Vector3(-481.00f, 75.00f, 528.00f),
             }
         },
     };
@@ -194,198 +181,183 @@ public struct EventData
             48,
             new EventData
             {
-                id = 48,
-                type = EventType.CriticalEncounter,
-                Name = "The Forked Tower: Blood",
+                Id = 48,
+                Type = EventType.CriticalEncounter,
+                InternalName = "The Forked Tower: Blood",
             }
         },
         {
             33,
             new EventData
             {
-                id = 33,
-                type = EventType.CriticalEncounter,
-                Name = "Scourge of the Mind",
-                demiatma = Demiatma.Azurite,
-                monster = Monster.MysteriousMindflayer,
-                aethernet = Aethernet.Eldergrowth,
+                Id = 33,
+                Type = EventType.CriticalEncounter,
+                InternalName = "Scourge of the Mind",
+                Demiatma = Enums.Demiatma.Azurite,
+                Aethernet = Enums.Aethernet.Eldergrowth,
             }
         },
         {
             34,
             new EventData
             {
-                id = 34,
-                type = EventType.CriticalEncounter,
-                Name = "The Black Regiment",
-                demiatma = Demiatma.Orpiment,
-                soulshard = SoulShard.Ranger,
-                monster = Monster.BlackStar,
-                notes = MonsterNote.BlackChocobos,
-                aethernet = Aethernet.Eldergrowth,
+                Id = 34,
+                Type = EventType.CriticalEncounter,
+                InternalName = "The Black Regiment",
+                Demiatma = Enums.Demiatma.Orpiment,
+                Soulshard = SoulShard.Ranger,
+                Note = MonsterNote.BlackChocobos,
+                Aethernet = Enums.Aethernet.Eldergrowth,
             }
         },
         {
             35,
             new EventData
             {
-                id = 35,
-                type = EventType.CriticalEncounter,
-                Name = "The Unbridled",
-                demiatma = Demiatma.Azurite,
-                soulshard = SoulShard.Berserker,
-                monster = Monster.CrescentBerserker,
-                notes = MonsterNote.CrescentBerserker,
-                aethernet = Aethernet.Eldergrowth,
+                Id = 35,
+                Type = EventType.CriticalEncounter,
+                InternalName = "The Unbridled",
+                Demiatma = Enums.Demiatma.Azurite,
+                Soulshard = SoulShard.Berserker,
+                Note = MonsterNote.CrescentBerserker,
+                Aethernet = Enums.Aethernet.Eldergrowth,
             }
         },
         {
             36,
             new EventData
             {
-                id = 36,
-                type = EventType.CriticalEncounter,
-                Name = "Crawling Death",
-                demiatma = Demiatma.Azurite,
-                monster = Monster.DeathClawOccultCrescent,
-                aethernet = Aethernet.Eldergrowth,
+                Id = 36,
+                Type = EventType.CriticalEncounter,
+                InternalName = "Crawling Death",
+                Demiatma = Enums.Demiatma.Azurite,
+                Aethernet = Enums.Aethernet.Eldergrowth,
             }
         },
         {
             37,
             new EventData
             {
-                id = 37,
-                type = EventType.CriticalEncounter,
-                Name = "Calamity Bound",
-                demiatma = Demiatma.Verdigris,
-                monster = Monster.CloisterDemon,
-                notes = MonsterNote.CloisterDemon,
-                aethernet = Aethernet.Stonemarsh,
+                Id = 37,
+                Type = EventType.CriticalEncounter,
+                InternalName = "Calamity Bound",
+                Demiatma = Enums.Demiatma.Verdigris,
+                Note = MonsterNote.CloisterDemon,
+                Aethernet = Enums.Aethernet.Stonemarsh,
             }
         },
         {
             38,
             new EventData
             {
-                id = 38,
-                type = EventType.CriticalEncounter,
-                Name = "Trial by Claw",
-                demiatma = Demiatma.Malachite,
-                monster = Monster.CrystalDragon,
-                aethernet = Aethernet.CrystallizedCaverns,
+                Id = 38,
+                Type = EventType.CriticalEncounter,
+                InternalName = "Trial by Claw",
+                Demiatma = Enums.Demiatma.Malachite,
+                Aethernet = Enums.Aethernet.CrystallizedCaverns,
             }
         },
         {
             39,
             new EventData
             {
-                id = 39,
-                type = EventType.CriticalEncounter,
-                Name = "From Times Bygone",
-                demiatma = Demiatma.Malachite,
-                monster = Monster.MythicIdol,
-                notes = MonsterNote.MythicIdol,
-                aethernet = Aethernet.Stonemarsh,
+                Id = 39,
+                Type = EventType.CriticalEncounter,
+                InternalName = "From Times Bygone",
+                Demiatma = Enums.Demiatma.Malachite,
+                Note = MonsterNote.MythicIdol,
+                Aethernet = Enums.Aethernet.Stonemarsh,
             }
         },
         {
             40,
             new EventData
             {
-                id = 40,
-                type = EventType.CriticalEncounter,
-                Name = "Company of Stone",
-                demiatma = Demiatma.CaputMortuum,
-                monster = Monster.OccultKnight,
-                aethernet = Aethernet.BaseCamp,
+                Id = 40,
+                Type = EventType.CriticalEncounter,
+                InternalName = "Company of Stone",
+                Demiatma = Enums.Demiatma.CaputMortuum,
+                Aethernet = Enums.Aethernet.BaseCamp,
             }
         },
         {
             41,
             new EventData
             {
-                id = 41,
-                type = EventType.CriticalEncounter,
-                Name = "Shark Attack",
-                demiatma = Demiatma.Realgar,
-                monster = Monster.NymianPotaladus,
-                notes = MonsterNote.NymianPotaladus,
-                aethernet = Aethernet.TheWanderersHaven,
+                Id = 41,
+                Type = EventType.CriticalEncounter,
+                InternalName = "Shark Attack",
+                Demiatma = Enums.Demiatma.Realgar,
+                Note = MonsterNote.NymianPotaladus,
+                Aethernet = Enums.Aethernet.TheWanderersHaven,
             }
         },
         {
             42,
             new EventData
             {
-                id = 42,
-                type = EventType.CriticalEncounter,
-                Name = "On the Hunt",
-                demiatma = Demiatma.CaputMortuum,
-                soulshard = SoulShard.Oracle,
-                monster = Monster.LionRampant,
-                aethernet = Aethernet.Eldergrowth,
+                Id = 42,
+                Type = EventType.CriticalEncounter,
+                InternalName = "On the Hunt",
+                Demiatma = Enums.Demiatma.CaputMortuum,
+                Soulshard = SoulShard.Oracle,
+                Aethernet = Enums.Aethernet.Eldergrowth,
             }
         },
         {
             43,
             new EventData
             {
-                id = 43,
-                type = EventType.CriticalEncounter,
-                Name = "With Extreme Prejudice",
-                demiatma = Demiatma.Realgar,
-                monster = Monster.CommandUrn,
-                aethernet = Aethernet.TheWanderersHaven,
+                Id = 43,
+                Type = EventType.CriticalEncounter,
+                InternalName = "With Extreme Prejudice",
+                Demiatma = Enums.Demiatma.Realgar,
+                Aethernet = Enums.Aethernet.TheWanderersHaven,
             }
         },
         {
             44,
             new EventData
             {
-                id = 44,
-                type = EventType.CriticalEncounter,
-                Name = "Noise Complaint",
-                demiatma = Demiatma.Orpiment,
-                monster = Monster.NeoGarula,
-                aethernet = Aethernet.BaseCamp,
+                Id = 44,
+                Type = EventType.CriticalEncounter,
+                InternalName = "Noise Complaint",
+                Demiatma = Enums.Demiatma.Orpiment,
+                Aethernet = Enums.Aethernet.BaseCamp,
             }
         },
         {
             45,
             new EventData
             {
-                id = 45,
-                type = EventType.CriticalEncounter,
-                Name = "Cursed Concern",
-                demiatma = Demiatma.Realgar,
-                monster = Monster.TradeTortoise,
-                notes = MonsterNote.TradeTortoise,
-                aethernet = Aethernet.TheWanderersHaven,
+                Id = 45,
+                Type = EventType.CriticalEncounter,
+                InternalName = "Cursed Concern",
+                Demiatma = Enums.Demiatma.Realgar,
+                Note = MonsterNote.TradeTortoise,
+                Aethernet = Enums.Aethernet.TheWanderersHaven,
             }
         },
         {
             46,
             new EventData
             {
-                id = 46,
-                type = EventType.CriticalEncounter,
-                Name = "Eternal Watch",
-                demiatma = Demiatma.CaputMortuum,
-                monster = Monster.RepairedLion,
-                aethernet = Aethernet.Eldergrowth,
+                Id = 46,
+                Type = EventType.CriticalEncounter,
+                InternalName = "Eternal Watch",
+                Demiatma = Enums.Demiatma.CaputMortuum,
+                Aethernet = Enums.Aethernet.Eldergrowth,
             }
         },
         {
             47,
             new EventData
             {
-                id = 47,
-                type = EventType.CriticalEncounter,
-                Name = "Flame of Dusk",
-                demiatma = Demiatma.Malachite,
-                monster = Monster.Hinkypunk,
-                aethernet = Aethernet.CrystallizedCaverns,
+                Id = 47,
+                Type = EventType.CriticalEncounter,
+                InternalName = "Flame of Dusk",
+                Demiatma = Enums.Demiatma.Malachite,
+                Aethernet = Enums.Aethernet.CrystallizedCaverns,
             }
         },
     };

@@ -41,8 +41,8 @@ public class FatesPanel : Panel
         Dictionary<uint, uint> locations = [];
         foreach (var fate in EventData.Fates.Values)
         {
-            var fateRow = Svc.Data.GetExcelSheet<Fate>().FirstOrDefault(f => f.RowId == fate.id);
-            locations[fate.id] = fateRow.Location;
+            var fateRow = Svc.Data.GetExcelSheet<Fate>().FirstOrDefault(f => f.RowId == fate.Id);
+            locations[fate.Id] = fateRow.Location;
         }
 
 
@@ -76,18 +76,18 @@ public class FatesPanel : Panel
         {
             foreach (var data in EventData.Fates.Values)
             {
-                ImGui.TextUnformatted(data.Name);
+                ImGui.TextUnformatted(data.InternalName);
 
                 if (module.TryGetModule<TeleporterModule>(out var teleporter) && teleporter!.IsReady())
                 {
-                    var start = FateLocations[data.id];
+                    var start = FateLocations[data.Id];
 
-                    teleporter.teleporter.Button(data.aethernet, start, data.Name, $"fate_{data.id}", data);
+                    teleporter.teleporter.Button(data.Aethernet, start, data.InternalName, $"fate_{data.Id}", data);
                 }
 
                 OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
 
-                if (data.id != EventData.Fates.Keys.Max())
+                if (data.Id != EventData.Fates.Keys.Max())
                 {
                     OcelotUI.VSpace();
                 }

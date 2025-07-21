@@ -16,13 +16,13 @@ public struct EventIconRenderer
     {
         uint rendered = 0;
 
-        if (data.demiatma != null && config.ShowDemiatmaDrops)
+        if (data.Demiatma != null && config.ShowDemiatmaDrops)
         {
             Demiatma(data);
             rendered++;
         }
 
-        if (data.notes != null && config.ShowNoteDrops)
+        if (data.Note != null && config.ShowNoteDrops)
         {
             if (rendered > 0)
             {
@@ -33,7 +33,7 @@ public struct EventIconRenderer
             rendered++;
         }
 
-        if (data.soulshard != null && config.ShowSoulShardDrops)
+        if (data.Soulshard != null && config.ShowSoulShardDrops)
         {
             if (rendered > 0)
             {
@@ -47,7 +47,7 @@ public struct EventIconRenderer
 
     public static unsafe void Demiatma(EventData data)
     {
-        var itemData = Svc.Data.GetExcelSheet<Item>().GetRow((uint)data.demiatma!);
+        var itemData = Svc.Data.GetExcelSheet<Item>().GetRow((uint)data.Demiatma!);
 
         var count = InventoryManager.Instance()->GetInventoryItemCount(itemData.RowId);
         var needed = Math.Max(0, 3 - count);
@@ -56,7 +56,7 @@ public struct EventIconRenderer
 
         var demiatma = Svc.Texture.GetFromGameIcon(new GameIconLookup(itemData.Icon)).GetWrapOrEmpty();
 
-        DrawIcon(demiatma, border, $"Demiatma_{itemData.RowId}_fate_{data.id}");
+        DrawIcon(demiatma, border, $"Demiatma_{itemData.RowId}_fate_{data.Id}");
 
         if (ImGui.IsItemHovered())
         {
@@ -76,11 +76,11 @@ public struct EventIconRenderer
 
     public static void Notes(EventData data)
     {
-        var itemData = Svc.Data.GetExcelSheet<Item>().GetRow((uint)data.notes!);
+        var itemData = Svc.Data.GetExcelSheet<Item>().GetRow((uint)data.Note!);
 
         var notes = Svc.Texture.GetFromGameIcon(new GameIconLookup(itemData.Icon)).GetWrapOrEmpty();
 
-        DrawIcon(notes, new Vector4(1f, 1f, 1f, 1f), $"Note_{itemData.RowId}_fate_{data.id}");
+        DrawIcon(notes, new Vector4(1f, 1f, 1f, 1f), $"Note_{itemData.RowId}_fate_{data.Id}");
 
         if (ImGui.IsItemHovered())
         {
@@ -92,11 +92,11 @@ public struct EventIconRenderer
 
     private static void SoulShard(EventData data)
     {
-        var itemData = Svc.Data.GetExcelSheet<Item>().GetRow((uint)data.soulshard!);
+        var itemData = Svc.Data.GetExcelSheet<Item>().GetRow((uint)data.Soulshard!);
 
         var soulshard = Svc.Texture.GetFromGameIcon(new GameIconLookup(itemData.Icon)).GetWrapOrEmpty();
 
-        DrawIcon(soulshard, new Vector4(1f, 1f, 1f, 1f), $"SoulShard_{itemData.RowId}_ce_{data.id}");
+        DrawIcon(soulshard, new Vector4(1f, 1f, 1f, 1f), $"SoulShard_{itemData.RowId}_ce_{data.Id}");
 
         if (ImGui.IsItemHovered())
         {

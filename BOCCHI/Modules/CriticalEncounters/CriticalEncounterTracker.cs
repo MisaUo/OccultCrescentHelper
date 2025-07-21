@@ -61,7 +61,7 @@ public class CriticalEncounterTracker
 
                 if (current.samples.Count == 0 || current.samples[^1].Progress != ev.Progress)
                 {
-                    current.AddProgress(ev.Progress);
+                    current.Add(ev.Progress);
                 }
 
                 if (ev.Progress == 100)

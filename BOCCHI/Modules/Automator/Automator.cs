@@ -50,7 +50,7 @@ public class Automator
 
                 if (Activity != null)
                 {
-                    module.Debug($"Resuming running activity: {Activity.data.Name}");
+                    module.Debug($"Resuming running activity: {Activity.GetName()}");
                 }
 
                 return;
@@ -62,7 +62,7 @@ public class Automator
 
                 if (Activity != null)
                 {
-                    module.Debug($"Resuming running activity: {Activity.data.Name}");
+                    module.Debug($"Resuming running activity: {Activity.GetName()}");
                 }
 
                 return;
@@ -109,7 +109,7 @@ public class Automator
         Activity ??= module.Config.ShouldDoFates ? FindFate(module, lifestream, vnav) : null;
         if (Activity != null)
         {
-            Svc.Log.Info($"Selected activity: {Activity.data.Name}");
+            Svc.Log.Info($"Selected activity: {Activity.GetName()}");
             return;
         }
 
@@ -158,7 +158,7 @@ public class Automator
         return null;
     }
 
-    private static Fate? FindFate(AutomatorModule module, Lifestream lifestream, VNavmesh vnav)
+    private static FateActivity? FindFate(AutomatorModule module, Lifestream lifestream, VNavmesh vnav)
     {
         if (!module.TryGetModule<FatesModule>(out var source) || source == null)
         {
@@ -167,12 +167,12 @@ public class Automator
 
         foreach (var fate in source.fates.Values)
         {
-            if (!module.Config.FatesMap[fate.FateId] || !EventData.Fates.TryGetValue(fate.FateId, out var data))
+            if (!module.Config.FatesMap[fate.Id])
             {
                 continue;
             }
 
-            return new Fate(data, lifestream, vnav, module, fate);
+            return new FateActivity(fate.Data, lifestream, vnav, module, fate);
         }
 
         return null;

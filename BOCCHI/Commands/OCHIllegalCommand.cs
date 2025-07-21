@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using BOCCHI.Data;
 using BOCCHI.Enums;
 using BOCCHI.Modules.Automator;
 using BOCCHI.Modules.CriticalEncounters;
@@ -99,17 +98,12 @@ Manage och automator/illegal mode.
 
         foreach (var fate in source.fates.Values)
         {
-            if (!EventData.Fates.TryGetValue(fate.FateId, out var data))
+            if (ignorePots && fate.Data.Note == MonsterNote.PersistentPots)
             {
                 continue;
             }
 
-            if (ignorePots && data.notes == MonsterNote.PersistentPots)
-            {
-                continue;
-            }
-
-            map->SetFlagMapMarker(Svc.ClientState.TerritoryType, Svc.ClientState.MapId, data.start ?? fate.Position);
+            map->SetFlagMapMarker(Svc.ClientState.TerritoryType, Svc.ClientState.MapId, fate.StartPosition);
             return;
         }
     }

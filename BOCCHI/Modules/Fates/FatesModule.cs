@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using BOCCHI.Data;
-using Dalamud.Game.ClientState.Fates;
 using Ocelot.Modules;
 using Ocelot.Windows;
 
@@ -26,14 +24,9 @@ public class FatesModule : Module
 
     public readonly FateTracker tracker = new();
 
-    public Dictionary<uint, IFate> fates
+    public Dictionary<uint, Fate> fates
     {
         get => tracker.Fates;
-    }
-
-    public Dictionary<uint, EventProgress> progress
-    {
-        get => tracker.Progress;
     }
 
     private readonly Panel panel = new();
@@ -48,7 +41,7 @@ public class FatesModule : Module
 
     public override void Update(UpdateContext context)
     {
-        tracker.Tick(context.Framework);
+        tracker.Update(context);
     }
 
     public override bool RenderMainUi(RenderContext context)

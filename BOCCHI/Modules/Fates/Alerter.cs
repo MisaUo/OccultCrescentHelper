@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using BOCCHI.Data;
 using BOCCHI.Enums;
-using Dalamud.Game.ClientState.Fates;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.UI;
 
@@ -33,7 +31,7 @@ public class Alerter : IDisposable
         this.module.tracker.OnFateDespawned += OnFateDespawned;
     }
 
-    private void OnFateSpawned(IFate fate)
+    private void OnFateSpawned(Fate fate)
     {
         if (module.Config.LogSpawn)
         {
@@ -48,7 +46,7 @@ public class Alerter : IDisposable
         UIGlobals.PlaySoundEffect(66);
     }
 
-    private void OnFateDespawned(IFate fate)
+    private void OnFateDespawned(Fate fate)
     {
         if (module.Config.LogSpawn)
         {
@@ -63,21 +61,16 @@ public class Alerter : IDisposable
         UIGlobals.PlaySoundEffect(68);
     }
 
-    private bool ShouldAlertForFate(IFate fate)
+    private bool ShouldAlertForFate(Fate fate)
     {
         if (module.Config.AlertAll)
         {
             return true;
         }
 
-        if (!EventData.Fates.TryGetValue(fate.FateId, out var data))
+        if (fate.Data.Demiatma != null)
         {
-            return false;
-        }
-
-        if (data.demiatma != null)
-        {
-            var demiatma = (Demiatma)data.demiatma;
+            var demiatma = (Demiatma)fate.Data.Demiatma;
             if (DemiatmaAlerts.TryGetValue(demiatma, out var getter))
             {
                 return getter();

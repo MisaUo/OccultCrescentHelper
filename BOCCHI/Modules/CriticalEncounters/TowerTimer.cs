@@ -66,7 +66,7 @@ public class TowerTimer : IDisposable
         return LastForkedTowerRegister + ForkedTowerWarmUpTimer - DateTime.Now;
     }
 
-    private void OnFateDespawned(IFate _)
+    private void OnFateDespawned(Fate _)
     {
         FatesCompleted++;
     }

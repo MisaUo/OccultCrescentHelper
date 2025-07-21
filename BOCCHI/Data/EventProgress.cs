@@ -10,7 +10,17 @@ public class EventProgress
 
     public List<ProgressSample> samples { get; } = new();
 
-    public void AddProgress(float progress)
+    public int Count
+    {
+        get => samples.Count;
+    }
+
+    public float Latest
+    {
+        get => samples[^1].Progress;
+    }
+
+    public void Add(float progress)
     {
         if (samples.Count >= MaxSamples)
         {

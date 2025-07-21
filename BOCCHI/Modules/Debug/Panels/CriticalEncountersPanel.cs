@@ -24,7 +24,7 @@ public class CriticalEncountersPanel : Panel
         {
             foreach (var data in EventData.CriticalEncounters.Values)
             {
-                var ev = module.GetModule<CriticalEncountersModule>().CriticalEncounters[data.id];
+                var ev = module.GetModule<CriticalEncountersModule>().CriticalEncounters[data.Id];
 
                 ImGui.TextUnformatted(ev.Name.ToString());
 
@@ -60,22 +60,22 @@ public class CriticalEncountersPanel : Panel
                 {
                     var start = ev.MapMarker.Position;
 
-                    teleporter.teleporter.Button(data.aethernet, start, ev.Name.ToString(), $"ce_{data.id}", data);
+                    teleporter.teleporter.Button(data.Aethernet, start, ev.Name.ToString(), $"ce_{data.Id}", data);
                 }
 
                 OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
 
-                if (data.id != EventData.CriticalEncounters.Keys.Max())
+                if (data.Id != EventData.CriticalEncounters.Keys.Max())
                 {
                     OcelotUI.VSpace();
                 }
 
-                if (ImGui.CollapsingHeader($"Event Data##{data.id}"))
+                if (ImGui.CollapsingHeader($"Event Data##{data.Id}"))
                 {
                     PrintEvent(ev);
                 }
 
-                if (ImGui.CollapsingHeader($"Map Marker Data##{data.id}"))
+                if (ImGui.CollapsingHeader($"Map Marker Data##{data.Id}"))
                 {
                     PrintMapMarker(ev.MapMarker);
                 }

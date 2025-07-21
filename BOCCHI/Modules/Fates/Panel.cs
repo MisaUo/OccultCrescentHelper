@@ -28,14 +28,9 @@ public class Panel
                     return;
                 }
 
-                if (!EventData.Fates.TryGetValue(fate.FateId, out var data))
-                {
-                    continue;
-                }
-
                 try
                 {
-                    ImGui.TextUnformatted($"{fate.Name} ({fate.Progress}%)");
+                    ImGui.TextUnformatted($"{fate.Name} ({fate.CurrentProgress}%)");
                 }
                 catch (AccessViolationException)
                 {
@@ -43,22 +38,20 @@ public class Panel
                 }
 
 
-                if (module.progress.TryGetValue(fate.FateId, out var progress))
+                var estimate = fate.Progress.EstimateTimeToCompletion();
+                if (estimate != null)
                 {
-                    var estimate = progress.EstimateTimeToCompletion();
-                    if (estimate != null)
-                    {
-                        ImGui.SameLine();
-                        ImGui.TextUnformatted($"({module.T("panel.estimated")} {estimate.Value:mm\\:ss})");
-                    }
+                    ImGui.SameLine();
+                    ImGui.TextUnformatted($"({module.T("panel.estimated")} {estimate.Value:mm\\:ss})");
                 }
+
 
                 if (module.TryGetModule<TeleporterModule>(out var teleporter) && teleporter!.IsReady())
                 {
-                    teleporter.teleporter.Button(data.aethernet, data.start ?? fate.Position, data.Name, $"fate_{fate.FateId}", data);
+                    teleporter.teleporter.Button(fate.Data.Aethernet, fate.StartPosition, fate.Name, $"fate_{fate.Id}", fate.Data);
                 }
 
-                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
+                OcelotUI.Indent(() => EventIconRenderer.Drops(fate.Data, module.PluginConfig.EventDropConfig));
 
                 if (!fate.Equals(module.fates.Values.Last()))
                 {
