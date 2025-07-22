@@ -27,7 +27,7 @@ public class TeleportCommand(Plugin plugin) : OcelotCommand
 
     public override void Command(string command, string arguments)
     {
-        if (ZoneHelper.GetNearbyAethernetShards().Count <= 0)
+        if (ZoneData.GetNearbyAethernetShards().Count <= 0)
         {
             Svc.Chat.Print("You are not near a aethernet shards.");
             return;
@@ -69,7 +69,7 @@ public class TeleportCommand(Plugin plugin) : OcelotCommand
             return;
         }
 
-        if (ZoneHelper.IsNearAethernetShard((Aethernet)shard))
+        if (ZoneData.IsNearAethernetShard((Aethernet)shard))
         {
             Svc.Chat.Print("You are already at the closest shard");
             return;
@@ -125,7 +125,7 @@ public class TeleportCommand(Plugin plugin) : OcelotCommand
                 continue;
             }
 
-            return data.Aethernet ?? ZoneHelper.GetClosestAethernetShard(data.StartPosition ?? encounter.MapMarker.Position);
+            return data.Aethernet ?? ZoneData.GetClosestAethernetShard(data.StartPosition ?? encounter.MapMarker.Position);
         }
 
         return null;

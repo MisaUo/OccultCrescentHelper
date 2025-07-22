@@ -9,8 +9,9 @@ public class BuffingHandler : FarmerPhaseHandler
 {
     private bool HasRunBuff = false;
 
-    public override void OnEnter(MobFarmerModule module)
+    public override void Enter(MobFarmerModule module)
     {
+        base.Enter(module);
         HasRunBuff = false;
     }
 

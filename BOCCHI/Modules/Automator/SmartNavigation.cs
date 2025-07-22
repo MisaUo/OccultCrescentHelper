@@ -22,11 +22,11 @@ public static class SmartNavigation
     {
         var closestToPlayer = AethernetData.GetClosestToPlayer();
 
-        var costToWalkToNearestShard = Vector3.Distance(playerPosition, closestToPlayer.position);
-        var costToWalkFromEventShardToEvent = Vector3.Distance(closestToDestination.position, destination);
+        var costToWalkToNearestShard = Vector3.Distance(playerPosition, closestToPlayer.Position);
+        var costToWalkFromEventShardToEvent = Vector3.Distance(closestToDestination.Position, destination);
         var costToWalkToEventDirectly = Vector3.Distance(playerPosition, destination);
 
-        var costToReturnThenWalk = RETURN_BASE_COST + Vector3.Distance(Aethernet.BaseCamp.GetData().position, destination);
+        var costToReturnThenWalk = RETURN_BASE_COST + Vector3.Distance(Aethernet.BaseCamp.GetData().Position, destination);
         var costToReturnTeleportThenWalk = RETURN_BASE_COST + costToWalkFromEventShardToEvent;
         var costToWalkToShardThenEvent = costToWalkToNearestShard + costToWalkFromEventShardToEvent;
 
@@ -38,7 +38,7 @@ public static class SmartNavigation
             { NavigationType.WalkTeleportWalk, costToWalkToShardThenEvent },
         };
 
-        Svc.Log.Debug("Closest Aethernet: " + closestToDestination.aethernet.ToFriendlyString());
+        Svc.Log.Debug("Closest Aethernet: " + closestToDestination.Aethernet.ToFriendlyString());
         foreach (var (type, cost) in costs)
         {
             Svc.Log.Debug($"{type} - {cost:f2}");

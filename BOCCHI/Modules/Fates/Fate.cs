@@ -108,6 +108,6 @@ public class Fate(IFate fate)
 
     public Aethernet GetAethernet()
     {
-        return Data.Aethernet ?? ZoneHelper.GetClosestAethernetShard(StartPosition);
+        return Data.Aethernet ?? ZoneData.GetClosestAethernetShard(StartPosition);
     }
 }

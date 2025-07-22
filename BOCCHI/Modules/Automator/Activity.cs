@@ -108,7 +108,7 @@ public abstract class Activity
                 case NavigationType.ReturnTeleportWalk:
                     chain
                         .Then(ChainHelper.ReturnChain(new ReturnChainConfig { ApproachAetheryte = true }))
-                        .Then(ChainHelper.TeleportChain(activityShard.aethernet))
+                        .Then(ChainHelper.TeleportChain(activityShard.Aethernet))
                         .Debug("Waiting for lifestream to not be 'busy'")
                         .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new TaskManagerConfiguration { TimeLimitMS = 30000 }))
                         .Then(new PathfindingChain(vnav, GetPosition(), data))
@@ -117,8 +117,8 @@ public abstract class Activity
 
                 case NavigationType.WalkTeleportWalk:
                     chain
-                        .Then(ChainHelper.PathfindToAndWait(playerShard.position, AethernetData.DISTANCE))
-                        .Then(ChainHelper.TeleportChain(activityShard.aethernet))
+                        .Then(ChainHelper.PathfindToAndWait(playerShard.Position, AethernetData.DISTANCE))
+                        .Then(ChainHelper.TeleportChain(activityShard.Aethernet))
                         .Debug("Waiting for lifestream to not be 'busy'")
                         .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new TaskManagerConfiguration { TimeLimitMS = 30000 }))
                         .Then(new PathfindingChain(vnav, GetPosition(), data))

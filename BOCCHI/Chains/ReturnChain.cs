@@ -35,7 +35,17 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Re
 
         chain.Then(ChainHelper.TreasureSightChain());
         chain.Then(ApplyBuffs);
-        chain.ConditionalThen(_ => config.ApproachAetheryte, ChainHelper.PathfindToAndWait(GetAetherytePosition(), AethernetData.DISTANCE));
+
+        if (config.ApproachAetheryte)
+        {
+            var vnav = module.GetIPCProvider<VNavmesh>();
+            var lifestream = module.GetIPCProvider<Lifestream>();
+
+            chain.Then(new PathfindAndMoveToChain(vnav, GetAetherytePosition()));
+            chain.Then(_ => lifestream.GetActiveCustomAetheryte() != 0);
+            chain.Then(_ => vnav.Stop());
+        }
+
 
         return chain.Then(_ => complete = true);
     }
@@ -45,7 +55,7 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Re
         var vnav = module.GetIPCProvider<VNavmesh>();
         var buffs = module.GetModule<BuffModule>();
 
-        var closestKnowledgeCrystal = ZoneHelper.GetNearbyKnowledgeCrystal(60f).FirstOrDefault();
+        var closestKnowledgeCrystal = ZoneData.GetNearbyKnowledgeCrystal(60f).FirstOrDefault();
 
         var chain = Chain.Create();
         chain.BreakIf(() => !buffs.ShouldRefreshBuffs() || !vnav.IsReady() || closestKnowledgeCrystal == null);

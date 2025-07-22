@@ -290,7 +290,7 @@ public abstract class Hunter
         // If we are in combat, start running back to the base camp so we can escape combat
         if (inCombat && !vnav.IsRunning())
         {
-            vnav.PathfindAndMoveTo(Aethernet.BaseCamp.GetData().position, false);
+            vnav.PathfindAndMoveTo(Aethernet.BaseCamp.GetData().Position, false);
             return false;
         }
 
@@ -314,7 +314,7 @@ public abstract class Hunter
 
     private bool WalkToAethernetHandler()
     {
-        var destination = CurrentStep.Aethernet.GetData().position;
+        var destination = CurrentStep.Aethernet.GetData().Position;
 
         if (!vnav.IsRunning())
         {

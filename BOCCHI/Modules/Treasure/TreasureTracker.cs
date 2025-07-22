@@ -23,7 +23,7 @@ public class TreasureTracker : IDisposable
 
     public int SilverChests { get; private set; } = 0;
 
-    private readonly TimeSpan ParseWideTextCooldown = TimeSpan.FromSeconds(10);
+    private readonly TimeSpan ParseWideTextCooldown = TimeSpan.FromSeconds(5);
 
     private DateTime LastParseWideText = DateTime.MinValue;
 

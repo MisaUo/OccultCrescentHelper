@@ -74,7 +74,7 @@ public class WindowManagerModule(Plugin _plugin, Config _config) : Module(_plugi
         }
     }
 
-    private void EnterCombat()
+    private void EnterCombat(StateManagerModule module)
     {
         if (Config.HideMainInCombat && Plugin.Windows.IsMainUIOpen())
         {
@@ -89,7 +89,7 @@ public class WindowManagerModule(Plugin _plugin, Config _config) : Module(_plugi
         }
     }
 
-    private void ExitCombat()
+    private void ExitCombat(StateManagerModule module)
     {
         if (Config.HideMainInCombat && mainClosed)
         {

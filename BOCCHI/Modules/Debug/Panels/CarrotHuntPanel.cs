@@ -150,7 +150,7 @@ public class CarrotHuntPanel : Panel
         NodeDataSchema data = new();
         foreach (var datum in AethernetData.All())
         {
-            data.AethernetToNodeDistances[datum.aethernet] = [];
+            data.AethernetToNodeDistances[datum.Aethernet] = [];
         }
 
         foreach (var carrot in CarrotData.Data)
@@ -183,12 +183,12 @@ public class CarrotHuntPanel : Panel
                     Chain.Create()
                         .Then(async void (_) =>
                         {
-                            var path = await vnav.Pathfind(datum.destination, carrot.Position, false);
+                            var path = await vnav.Pathfind(datum.Destination, carrot.Position, false);
                             var distance = CalculatePathLength(path);
 
                             var nodes = path.Select(Position.Create).ToList();
 
-                            data.AethernetToNodeDistances[datum.aethernet].Add(new ToNode(carrot.Id, distance, nodes));
+                            data.AethernetToNodeDistances[datum.Aethernet].Add(new ToNode(carrot.Id, distance, nodes));
 
                             Progress++;
                         })
@@ -199,12 +199,12 @@ public class CarrotHuntPanel : Panel
                     Chain.Create()
                         .Then(async void (_) =>
                         {
-                            var path = await vnav.Pathfind(datum.destination, carrot.Position, false);
+                            var path = await vnav.Pathfind(datum.Destination, carrot.Position, false);
                             var distance = CalculatePathLength(path);
 
                             var nodes = path.Select(Position.Create).ToList();
 
-                            data.NodeToAethernetDistances[carrot.Id].Add(new ToAethernet(datum.aethernet, distance, nodes));
+                            data.NodeToAethernetDistances[carrot.Id].Add(new ToAethernet(datum.Aethernet, distance, nodes));
 
                             Progress++;
                         })

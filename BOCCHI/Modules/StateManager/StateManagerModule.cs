@@ -14,64 +14,65 @@ public class StateManagerModule : Module
 
     private readonly Panel panel = new();
 
-    private readonly StateManager state = new();
+    private readonly StateMachine StateMachine;
 
-    public event Action? OnEnterIdle
+    public event Action<StateManagerModule>? OnEnterIdle
     {
-        add => state.OnEnterIdle += value;
-        remove => state.OnEnterIdle -= value;
+        add => StateMachine.Handlers[State.Idle].OnEnter += value;
+        remove => StateMachine.Handlers[State.Idle].OnEnter -= value;
     }
 
-    public event Action? OnExitIdle
+    public event Action<StateManagerModule>? OnExitIdle
     {
-        add => state.OnExitIdle += value;
-        remove => state.OnExitIdle -= value;
+        add => StateMachine.Handlers[State.Idle].OnExit += value;
+        remove => StateMachine.Handlers[State.Idle].OnExit -= value;
     }
 
-    public event Action? OnEnterInCombat
+    public event Action<StateManagerModule>? OnEnterInCombat
     {
-        add => state.OnEnterInCombat += value;
-        remove => state.OnEnterInCombat -= value;
+        add => StateMachine.Handlers[State.InCombat].OnEnter += value;
+        remove => StateMachine.Handlers[State.InCombat].OnEnter -= value;
     }
 
-    public event Action? OnExitInCombat
+    public event Action<StateManagerModule>? OnExitInCombat
     {
-        add => state.OnExitInCombat += value;
-        remove => state.OnExitInCombat -= value;
+        add => StateMachine.Handlers[State.InCombat].OnExit += value;
+        remove => StateMachine.Handlers[State.InCombat].OnExit -= value;
     }
 
-    public event Action? OnEnterInFate
+    public event Action<StateManagerModule>? OnEnterInFate
     {
-        add => state.OnEnterInFate += value;
-        remove => state.OnEnterInFate -= value;
+        add => StateMachine.Handlers[State.InFate].OnEnter += value;
+        remove => StateMachine.Handlers[State.InFate].OnEnter -= value;
     }
 
-    public event Action? OnExitInFate
+    public event Action<StateManagerModule>? OnExitInFate
     {
-        add => state.OnExitInFate += value;
-        remove => state.OnExitInFate -= value;
+        add => StateMachine.Handlers[State.InFate].OnExit += value;
+        remove => StateMachine.Handlers[State.InFate].OnExit -= value;
     }
 
-    public event Action? OnEnterInCriticalEncounter
+    public event Action<StateManagerModule>? OnEnterInCriticalEncounter
     {
-        add => state.OnEnterInCriticalEncounter += value;
-        remove => state.OnEnterInCriticalEncounter -= value;
+        add => StateMachine.Handlers[State.InCriticalEncounter].OnEnter += value;
+        remove => StateMachine.Handlers[State.InCriticalEncounter].OnEnter -= value;
     }
 
-    public event Action? OnExitInCriticalEncounter
+    public event Action<StateManagerModule>? OnExitInCriticalEncounter
     {
-        add => state.OnExitInCriticalEncounter += value;
-        remove => state.OnExitInCriticalEncounter -= value;
+        add => StateMachine.Handlers[State.InCriticalEncounter].OnExit += value;
+        remove => StateMachine.Handlers[State.InCriticalEncounter].OnExit -= value;
     }
 
     public StateManagerModule(Plugin plugin, Config config)
         : base(plugin, config)
     {
+        StateMachine = new StateMachine(State.Idle, this);
     }
 
     public override void Update(UpdateContext context)
     {
-        state.Tick(context.Framework);
+        StateMachine.Update(this);
     }
 
     public override bool RenderMainUi(RenderContext context)
@@ -81,11 +82,11 @@ public class StateManagerModule : Module
 
     public State GetState()
     {
-        return state.GetState();
+        return StateMachine.State;
     }
 
     public string GetStateText()
     {
-        return state.GetState().ToString();
+        return GetState().ToString();
     }
 }

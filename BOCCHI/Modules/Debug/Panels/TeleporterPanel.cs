@@ -1,4 +1,5 @@
 using System.Linq;
+using BOCCHI.Data;
 using BOCCHI.Enums;
 using BOCCHI.Modules.Teleporter;
 using ImGuiNET;
@@ -20,16 +21,16 @@ public class TeleporterPanel : Panel
             OcelotUI.Title("Teleporter:");
             OcelotUI.Indent(() =>
             {
-                var shards = ZoneHelper.GetNearbyAethernetShards();
+                var shards = ZoneData.GetNearbyAethernetShards();
                 if (shards.Count > 0)
                 {
                     OcelotUI.Title("Nearby Aethernet Shards:");
                     OcelotUI.Indent(() =>
                     {
-                        foreach (var shard in ZoneHelper.GetNearbyAethernetShards())
+                        foreach (var shard in ZoneData.GetNearbyAethernetShards())
                         {
-                            var data = AethernetData.All().First(o => o.dataId == shard.DataId);
-                            ImGui.TextUnformatted(data.aethernet.ToFriendlyString());
+                            var data = AethernetData.All().First(o => o.DataId == shard.DataId);
+                            ImGui.TextUnformatted(data.Aethernet.ToFriendlyString());
                         }
                     });
                 }

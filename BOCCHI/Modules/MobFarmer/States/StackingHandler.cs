@@ -11,8 +11,9 @@ public class StackingHandler : FarmerPhaseHandler
 {
     private bool HasRunStack = false;
 
-    public override void OnEnter(MobFarmerModule module)
+    public override void Enter(MobFarmerModule module)
     {
+        base.Enter(module);
         HasRunStack = false;
     }
 

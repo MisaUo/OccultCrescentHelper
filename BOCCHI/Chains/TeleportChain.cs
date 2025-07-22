@@ -1,3 +1,4 @@
+using BOCCHI.Data;
 using BOCCHI.Enums;
 using BOCCHI.Modules.Teleporter;
 using Dalamud.Game.ClientState.Conditions;
@@ -14,7 +15,7 @@ public class TeleportChain(Aethernet aethernet, Lifestream lifestream, Teleporte
     {
         return chain
             .Then(_ => lifestream.Abort())
-            .Then(new TaskManagerTask(() => ZoneHelper.GetNearbyAethernetShards(AethernetData.DISTANCE).Count > 0))
+            .Then(new TaskManagerTask(() => ZoneData.GetNearbyAethernetShards(AethernetData.DISTANCE).Count > 0))
             .Then(_ => module.GetIPCProvider<VNavmesh>()?.Stop())
             .Then(_ => lifestream.AethernetTeleportByPlaceNameId((uint)aethernet))
             .WaitToCycleCondition(ConditionFlag.BetweenAreas)

@@ -1,7 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Numerics;
+using BOCCHI.Enums;
+using Dalamud.Game.ClientState.Objects.Enums;
+using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
 
 namespace BOCCHI.Data;
@@ -22,7 +26,7 @@ public static class ZoneData
     };
 
     // Zone functions
-    public static bool IsInSouthHorn()
+    private static bool IsInSouthHorn()
     {
         return Svc.ClientState.TerritoryType == SOUTHHORN;
     }
@@ -33,7 +37,7 @@ public static class ZoneData
     }
 
     // Tower functions
-    public static bool IsInForkedTowerBlood()
+    private static bool IsInForkedTowerBlood()
     {
         var player = Svc.ClientState.LocalPlayer;
         if (player == null)
@@ -45,7 +49,7 @@ public static class ZoneData
             PlayerStatus.DutiesAsAssigned,
             PlayerStatus.ResurrectionDenied,
             PlayerStatus.ResurrectionRestricted
-        );
+        ) && IsInSouthHorn();
     }
 
     public static bool IsInForkedTower()
@@ -53,7 +57,7 @@ public static class ZoneData
         return IsInForkedTowerBlood();
     }
 
-    public static string GetCurrentZoneName()
+    private static string GetCurrentZoneName()
     {
         if (IsInSouthHorn())
         {
@@ -69,5 +73,42 @@ public static class ZoneData
         Directory.CreateDirectory(directory);
 
         return directory;
+    }
+
+    public static Aethernet GetClosestAethernetShard(Vector3 position)
+    {
+        return AethernetData.All().OrderBy((data) => Vector3.Distance(position, data.Position)).First()!.Aethernet;
+    }
+
+    public static IList<IGameObject> GetNearbyAethernetShards(float range = 4.3f)
+    {
+        var playerPos = Svc.ClientState.LocalPlayer?.Position ?? Vector3.Zero;
+
+        return Svc.Objects
+            .Where(o => o.ObjectKind == ObjectKind.EventObj)
+            .Where(o => AethernetData.All().Select((datum) => datum.DataId).Contains(o.DataId))
+            .Where(o => Vector3.Distance(o.Position, playerPos) <= range)
+            .ToList();
+    }
+
+    public static bool IsNearAethernetShard(Aethernet aethernet, float range = 4.3f)
+    {
+        return GetNearbyAethernetShards(range).Any(o => o.DataId == aethernet.GetData().DataId);
+    }
+
+    public static IList<IGameObject> GetNearbyKnowledgeCrystal(float range = 4.5f)
+    {
+        var playerPos = Svc.ClientState.LocalPlayer?.Position ?? Vector3.Zero;
+
+        return Svc.Objects
+            .Where(o => o.ObjectKind == ObjectKind.EventObj)
+            .Where(o => o.DataId == (uint)OccultObjectType.KnowledgeCrystal)
+            .Where(o => Vector3.Distance(o.Position, playerPos) <= range)
+            .ToList();
+    }
+
+    public static bool IsNearKnowledgeCrystal(float range = 4.5f)
+    {
+        return GetNearbyKnowledgeCrystal(range).Any();
     }
 }

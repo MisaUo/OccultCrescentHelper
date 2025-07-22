@@ -133,7 +133,7 @@ public class TreasureHuntPanel : Panel
         NodeDataSchema data = new();
         foreach (var datum in AethernetData.All())
         {
-            data.AethernetToNodeDistances[datum.aethernet] = [];
+            data.AethernetToNodeDistances[datum.Aethernet] = [];
         }
 
         foreach (var treasure in Treasure)
@@ -166,12 +166,12 @@ public class TreasureHuntPanel : Panel
                     Chain.Create()
                         .Then(async void (_) =>
                         {
-                            var path = await vnav.Pathfind(datum.destination, treasure.position, false);
+                            var path = await vnav.Pathfind(datum.Destination, treasure.position, false);
                             var distance = CalculatePathLength(path);
 
                             var nodes = path.Select(p => Position.Create(p)).ToList();
 
-                            data.AethernetToNodeDistances[datum.aethernet].Add(new ToNode(treasure.id, distance, nodes));
+                            data.AethernetToNodeDistances[datum.Aethernet].Add(new ToNode(treasure.id, distance, nodes));
 
                             Progress++;
                         })
@@ -182,13 +182,13 @@ public class TreasureHuntPanel : Panel
                     Chain.Create()
                         .Then(async void (_) =>
                         {
-                            var path = await vnav.Pathfind(datum.destination, treasure.position, false);
+                            var path = await vnav.Pathfind(datum.Destination, treasure.position, false);
                             var distance = CalculatePathLength(path);
 
                             var nodes = path.Select(p => Position.Create(p)).ToList();
 
 
-                            data.NodeToAethernetDistances[treasure.id].Add(new ToAethernet(datum.aethernet, distance, nodes));
+                            data.NodeToAethernetDistances[treasure.id].Add(new ToAethernet(datum.Aethernet, distance, nodes));
 
                             Progress++;
                         })

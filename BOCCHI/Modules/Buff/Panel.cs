@@ -1,3 +1,4 @@
+using BOCCHI.Data;
 using Dalamud.Interface;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
@@ -12,7 +13,7 @@ public class Panel
         OcelotUI.Title($"{module.T("panel.title")}:");
         OcelotUI.Indent(() =>
         {
-            var isNearKnowledgeCrystal = ZoneHelper.IsNearKnowledgeCrystal();
+            var isNearKnowledgeCrystal = ZoneData.IsNearKnowledgeCrystal();
             var isQueued = module.BuffManager.IsQueued();
 
             if (ImGuiEx.IconButton(FontAwesomeIcon.Redo, "Button##ApplyBuffs", enabled: isNearKnowledgeCrystal && !isQueued))

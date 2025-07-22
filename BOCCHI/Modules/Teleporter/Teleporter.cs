@@ -4,6 +4,7 @@ using BOCCHI.Chains;
 using BOCCHI.Data;
 using BOCCHI.Enums;
 using BOCCHI.Modules.Automator;
+using BOCCHI.Modules.StateManager;
 using Dalamud.Interface;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
@@ -27,7 +28,7 @@ public class Teleporter(TeleporterModule module)
 
         if (aethernet == null)
         {
-            aethernet = ZoneHelper.GetClosestAethernetShard(destination);
+            aethernet = ZoneData.GetClosestAethernetShard(destination);
         }
 
         OcelotUI.Indent(() =>
@@ -75,8 +76,8 @@ public class Teleporter(TeleporterModule module)
             return;
         }
 
-        var isNearShards = ZoneHelper.GetNearbyAethernetShards().Any();
-        var isNearCurrentShard = ZoneHelper.IsNearAethernetShard(aethernet);
+        var isNearShards = ZoneData.GetNearbyAethernetShards().Any();
+        var isNearCurrentShard = ZoneData.IsNearAethernetShard(aethernet);
 
         if (ImGuiEx.IconButton(FontAwesomeIcon.LocationArrow, $"{name}##{id}", enabled: isNearShards && !isNearCurrentShard))
         {
@@ -120,7 +121,7 @@ public class Teleporter(TeleporterModule module)
         }
     }
 
-    public void OnFateEnd()
+    public void OnFateEnd(StateManagerModule states)
     {
         if (module.GetModule<AutomatorModule>().IsEnabled)
         {
@@ -135,7 +136,7 @@ public class Teleporter(TeleporterModule module)
         Return();
     }
 
-    public void OnCriticalEncounterEnd()
+    public void OnCriticalEncounterEnd(StateManagerModule states)
     {
         if (module.GetModule<AutomatorModule>().IsEnabled)
         {
