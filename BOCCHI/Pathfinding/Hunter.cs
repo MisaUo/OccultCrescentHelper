@@ -210,7 +210,7 @@ public abstract class Hunter
 
                 if (ImGui.IsItemHovered())
                 {
-                    ImGui.SetTooltip(I18N.T("hunter.port.tooltip"));
+                    ImGui.SetTooltip(I18N.T("hunter.export.tooltip"));
                 }
 
                 OcelotUI.LabelledValue(I18N.T("hunter.elapsed"), $"{stopwatch.Elapsed:mm\\:ss}");

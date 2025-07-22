@@ -19,6 +19,10 @@
           "label": "Max euclidean distance",
           "tooltip": "Max euclidean distance to a mob before ignoring it, useful to stop yourself getting chained across the map when considering special mobs."
         },
+        "min_euclidean_distance_to_return_home": {
+          "label": "Min distance to return to home",
+          "tooltip": "After combat, if you are further away from your starting point than this, you will walk back."
+        },
         "return_to_start_in_waiting_phase": {
           "label": "Return to your starting point after combat",
           "tooltip": "Starting point is determined by where you are stood when you press Start."
