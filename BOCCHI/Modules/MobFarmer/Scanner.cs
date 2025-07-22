@@ -12,6 +12,16 @@ public class Scanner(MobFarmerModule module)
 {
     public IEnumerable<IBattleNpc> Mobs { get; private set; } = [];
 
+    public IEnumerable<IBattleNpc> InCombat
+    {
+        get => Mobs.Where(o => o.IsTargetingPlayer());
+    }
+
+    public IEnumerable<IBattleNpc> NotInCombat
+    {
+        get => Mobs.Where(o => !o.HasTarget());
+    }
+
     public unsafe void Tick(IFramework _)
     {
         Mobs = TargetHelper.Enemies.Where(o =>

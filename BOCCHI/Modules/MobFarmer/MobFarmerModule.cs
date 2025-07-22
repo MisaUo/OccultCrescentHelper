@@ -18,26 +18,26 @@ public class MobFarmerModule : Module
 
     private readonly Panel panel = new();
 
-    public readonly Scanner scanner;
+    public readonly Scanner Scanner;
 
-    public readonly Farmer farmer;
+    public readonly Farmer Farmer;
 
     public MobFarmerModule(Plugin plugin, Config config)
         : base(plugin, config)
     {
-        scanner = new Scanner(this);
-        farmer = new Farmer(this);
+        Scanner = new Scanner(this);
+        Farmer = new Farmer(this);
     }
 
     public override void Update(UpdateContext context)
     {
-        scanner.Tick(context.Framework);
-        farmer.Tick();
+        Scanner.Tick(context.Framework);
+        Farmer.Update(context.ForModule(this));
     }
 
     public override void Render(RenderContext context)
     {
-        farmer.Draw(context.ForModule(this));
+        Farmer.Draw(context.ForModule(this));
     }
 
     public override bool RenderMainUi(RenderContext context)
@@ -48,6 +48,6 @@ public class MobFarmerModule : Module
 
     public override void Dispose()
     {
-        farmer.Dispose();
+        Farmer.Dispose();
     }
 }

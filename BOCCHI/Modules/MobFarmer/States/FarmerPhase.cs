@@ -1,4 +1,4 @@
-﻿namespace BOCCHI.Modules.MobFarmer;
+﻿namespace BOCCHI.Modules.MobFarmer.States;
 
 public enum FarmerPhase
 {
