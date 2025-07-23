@@ -40,9 +40,10 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Re
         {
             var vnav = module.GetIPCProvider<VNavmesh>();
             var lifestream = module.GetIPCProvider<Lifestream>();
+            var position = GetAetherytePosition();
 
             chain.Then(new PathfindAndMoveToChain(vnav, GetAetherytePosition()));
-            chain.Then(_ => lifestream.GetActiveCustomAetheryte() != 0);
+            chain.Then(_ => lifestream.GetActiveCustomAetheryte() != 0 && Player.DistanceTo(position) <= AethernetData.DISTANCE);
             chain.Then(_ => vnav.Stop());
         }
 
