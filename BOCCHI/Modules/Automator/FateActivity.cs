@@ -47,7 +47,8 @@ public class FateActivity(EventData data, Lifestream lifestream, VNavmesh vnav, 
 
                 if (states.GetState() == State.InFate)
                 {
-                    if (Vector3.Distance(Player.Position, target.Position) <= module.Config.EngagementRange)
+                    var distance = Vector3.Distance(Player.Position, target.Position) - target.HitboxRadius;
+                    if (distance <= module.Config.EngagementRange)
                     {
                         Actions.TryUnmount();
 
