@@ -14,7 +14,7 @@ public class TeleportChain(Aethernet aethernet, Lifestream lifestream, Teleporte
 {
     protected override Chain Create(Chain chain)
     {
-        var vnav = module.GetIPCProvider<VNavmesh>();
+        var vnav = module.GetIPCSubscriber<VNavmesh>();
         var nearby = ZoneData.GetNearbyAethernetShards(AethernetData.DISTANCE);
         if (nearby.Count <= 0)
         {

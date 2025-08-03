@@ -9,22 +9,22 @@ using Ocelot.States;
 namespace BOCCHI.Modules.MobFarmer.States;
 
 [State<FarmerPhase>(FarmerPhase.Fighting)]
-public class FightingHandler : FarmerPhaseHandler
+public class FightingHandler(MobFarmerModule module) : FarmerPhaseHandler(module)
 {
-    public override FarmerPhase? Handle(MobFarmerModule module)
+    public override FarmerPhase? Handle()
     {
-        var anyInCombat = module.Scanner.InCombat.Any();
+        var anyInCombat = Module.Scanner.InCombat.Any();
         if (anyInCombat && EzThrottler.Throttle("Targetter"))
         {
-            Svc.Targets.Target = module.Scanner.InCombat.Centroid();
+            Svc.Targets.Target = Module.Scanner.InCombat.Centroid();
         }
 
 
-        var startingPoint = module.Farmer.StartingPoint;
-        var shouldReturnHome = module.Config.ReturnToStartInWaitingPhase && Player.DistanceTo(startingPoint) >= module.Config.MinEuclideanDistanceToReturnHome;
+        var startingPoint = Module.Farmer.StartingPoint;
+        var shouldReturnHome = Module.Config.ReturnToStartInWaitingPhase && Player.DistanceTo(startingPoint) >= Module.Config.MinEuclideanDistanceToReturnHome;
         if (shouldReturnHome && !anyInCombat)
         {
-            var vnav = module.GetIPCProvider<VNavmesh>();
+            var vnav = Module.GetIPCSubscriber<VNavmesh>();
             if (!vnav.IsRunning())
             {
                 vnav.PathfindAndMoveTo(startingPoint, false);
@@ -35,7 +35,7 @@ public class FightingHandler : FarmerPhaseHandler
 
         if (!anyInCombat && !Svc.Condition[ConditionFlag.InCombat])
         {
-            module.Farmer.RotationPlugin.PhantomJobOff();
+            Module.Farmer.RotationPlugin.PhantomJobOff();
             return FarmerPhase.Waiting;
         }
 

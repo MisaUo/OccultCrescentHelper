@@ -3,9 +3,9 @@
 namespace BOCCHI.Modules.StateManager.States;
 
 [StateAttribute<State>(State.Idle)]
-public class IdleHandler : BaseHandler
+public class IdleHandler(StateManagerModule module) : BaseHandler(module)
 {
-    public override State? Handle(StateManagerModule module)
+    public override State? Handle()
     {
         if (IsInCombat())
         {

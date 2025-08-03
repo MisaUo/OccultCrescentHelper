@@ -26,8 +26,8 @@ public class Automator
 
     public void PostUpdate(AutomatorModule module, IFramework framework)
     {
-        var vnav = module.GetIPCProvider<VNavmesh>();
-        var lifestream = module.GetIPCProvider<Lifestream>();
+        var vnav = module.GetIPCSubscriber<VNavmesh>();
+        var lifestream = module.GetIPCSubscriber<Lifestream>();
         if (!vnav.IsReady() || !lifestream.IsReady())
         {
             return;

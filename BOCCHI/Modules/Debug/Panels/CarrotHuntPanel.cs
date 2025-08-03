@@ -61,7 +61,7 @@ public class CarrotHuntPanel : Panel
 
     public override unsafe void Render(DebugModule module)
     {
-        var vnav = module.GetIPCProvider<VNavmesh>();
+        var vnav = module.GetIPCSubscriber<VNavmesh>();
         OcelotUI.LabelledValue("Carrots", CarrotData.Data.Count); // 25
 
         OcelotUI.Indent(() =>
@@ -145,7 +145,7 @@ public class CarrotHuntPanel : Panel
         stopwatch.Restart();
         var outputFile = Path.Join(ZoneData.GetCurrentZoneDataDirectory(), "precomputed_carrot_hunt_data.json");
 
-        var vnav = module.GetIPCProvider<VNavmesh>();
+        var vnav = module.GetIPCSubscriber<VNavmesh>();
 
         NodeDataSchema data = new();
         foreach (var datum in AethernetData.All())

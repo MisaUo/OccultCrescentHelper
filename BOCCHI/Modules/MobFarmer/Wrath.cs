@@ -21,7 +21,7 @@ public class Wrath : IRotationPlugin
 
     public Wrath(IModule module)
     {
-        wrath = module.GetIPCProvider<WrathCombo>();
+        wrath = module.GetIPCSubscriber<WrathCombo>();
         var lease = wrath.RegisterForLease(Svc.PluginInterface.InternalName, module.GetType().FullName!);
         if (lease == null)
         {

@@ -7,7 +7,7 @@ using Ocelot.States;
 
 namespace BOCCHI.Modules.StateManager.States;
 
-public abstract class BaseHandler : StateHandler<State, StateManagerModule>
+public abstract class BaseHandler(StateManagerModule module) : StateHandler<State, StateManagerModule>(module)
 {
     protected bool IsInCombat()
     {

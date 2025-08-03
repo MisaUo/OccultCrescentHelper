@@ -61,7 +61,7 @@ public abstract class Hunter
     protected Hunter(Module module)
     {
         states = module.GetModule<StateManagerModule>();
-        vnav = module.GetIPCProvider<VNavmesh>();
+        vnav = module.GetIPCSubscriber<VNavmesh>();
         config = module.PluginConfig.PathfinderConfig;
 
         Handlers = new Dictionary<PathfinderStepType, Func<bool>>

@@ -23,7 +23,7 @@ public class AutomatorWindow(Plugin _plugin, Config _config) : OcelotWindow(_plu
                     return;
                 }
 
-                AutomatorModule.ToggleIllegalMode(plugin);
+                AutomatorModule.ToggleIllegalMode(Plugin);
             },
             Icon = FontAwesomeIcon.Skull,
             IconOffset = new Vector2(2, 2),
@@ -39,7 +39,7 @@ public class AutomatorWindow(Plugin _plugin, Config _config) : OcelotWindow(_plu
             return;
         }
 
-        var automator = plugin.Modules.GetModule<AutomatorModule>();
+        var automator = Plugin.Modules.GetModule<AutomatorModule>();
         if (!automator.IsEnabled)
         {
             ImGui.TextUnformatted("Illegal Mode is not enabled.");
@@ -51,6 +51,6 @@ public class AutomatorWindow(Plugin _plugin, Config _config) : OcelotWindow(_plu
 
     protected override string GetWindowName()
     {
-        return plugin.Modules.GetModule<AutomatorModule>().T("panel.lens.title");
+        return Plugin.Modules.GetModule<AutomatorModule>().T("panel.lens.title");
     }
 }

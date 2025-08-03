@@ -39,7 +39,6 @@ public sealed class Plugin : OcelotPlugin
 
         OcelotInitialize();
 
-        ChainManager.Initialize();
         ChainHelper.Initialize(this);
     }
 
@@ -83,11 +82,5 @@ public sealed class Plugin : OcelotPlugin
                    Svc.Condition[ConditionFlag.WatchingCutscene78] ||
                    Svc.ClientState.LocalPlayer?.IsTargetable != true
                );
-    }
-
-    public override void Dispose()
-    {
-        base.Dispose();
-        ChainManager.Close();
     }
 }

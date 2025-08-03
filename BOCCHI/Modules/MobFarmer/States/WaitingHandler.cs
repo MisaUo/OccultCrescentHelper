@@ -6,17 +6,17 @@ using Ocelot.States;
 namespace BOCCHI.Modules.MobFarmer.States;
 
 [State<FarmerPhase>(FarmerPhase.Waiting)]
-public class WaitingHandler : FarmerPhaseHandler
+public class WaitingHandler(MobFarmerModule module) : FarmerPhaseHandler(module)
 {
-    public override FarmerPhase? Handle(MobFarmerModule module)
+    public override FarmerPhase? Handle()
     {
         if (Svc.Condition[ConditionFlag.InCombat])
         {
             return FarmerPhase.Fighting;
         }
 
-        var mobs = module.Scanner.Mobs;
+        var mobs = Module.Scanner.Mobs;
 
-        return mobs.Count() >= module.Config.MinimumMobsToStartLoop ? FarmerPhase.Buffing : null;
+        return mobs.Count() >= Module.Config.MinimumMobsToStartLoop ? FarmerPhase.Buffing : null;
     }
 }

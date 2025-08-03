@@ -5,19 +5,19 @@ using Ocelot.States;
 namespace BOCCHI.Modules.MobFarmer.States;
 
 [State<FarmerPhase>(FarmerPhase.Buffing)]
-public class BuffingHandler : FarmerPhaseHandler
+public class BuffingHandler(MobFarmerModule module) : FarmerPhaseHandler(module)
 {
     private bool HasRunBuff = false;
 
-    public override void Enter(MobFarmerModule module)
+    public override void Enter()
     {
-        base.Enter(module);
+        base.Enter();
         HasRunBuff = false;
     }
 
-    public override FarmerPhase? Handle(MobFarmerModule module)
+    public override FarmerPhase? Handle()
     {
-        if (!module.Config.ApplyBattleBell)
+        if (!Module.Config.ApplyBattleBell)
         {
             return FarmerPhase.Gathering;
         }
@@ -34,7 +34,7 @@ public class BuffingHandler : FarmerPhaseHandler
             return FarmerPhase.Gathering;
         }
 
-        Plugin.Chain.Submit(new BattleBellChain(module));
+        Plugin.Chain.Submit(new BattleBellChain(Module));
         HasRunBuff = true;
 
         return null;

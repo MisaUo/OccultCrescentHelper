@@ -13,12 +13,12 @@ namespace BOCCHI.Commands;
 [OcelotCommand]
 public class OCHCmdCommand(Plugin plugin) : OcelotCommand
 {
-    public override string command
+    protected override string Command
     {
         get => "/bocchicmd";
     }
 
-    public override string description
+    protected override string Description
     {
         get => @"
 Utility command.
@@ -30,17 +30,17 @@ Utility command.
 ".Trim();
     }
 
-    public override IReadOnlyList<string> aliases
+    protected override IReadOnlyList<string> Aliases
     {
         get => ["/ochcmd"];
     }
 
-    public override IReadOnlyList<string> validArguments
+    protected override IReadOnlyList<string> ValidArguments
     {
         get => ["flag-active-ce", "flag-active-fate", "flag-active-non-pot-fate"];
     }
 
-    public override unsafe void Command(string command, string arguments)
+    public override unsafe void Execute(string command, string arguments)
     {
         var map = AgentMap.Instance();
         map->IsFlagMarkerSet = false;

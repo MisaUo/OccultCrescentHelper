@@ -7,18 +7,18 @@ namespace BOCCHI.Commands;
 [OcelotCommand]
 public class BuffCommand(Plugin plugin) : OcelotCommand
 {
-    public override string command
+    protected override string Command
     {
         get => "/bocchibuff";
     }
 
-    public override string description
+    protected override string Description
     {
         get => "";
     }
 
 
-    public override void Command(string command, string arguments)
+    public override void Execute(string command, string arguments)
     {
         plugin.Modules.GetModule<BuffModule>().BuffManager.QueueBuffs();
     }

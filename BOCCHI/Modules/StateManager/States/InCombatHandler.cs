@@ -3,9 +3,9 @@
 namespace BOCCHI.Modules.StateManager.States;
 
 [StateAttribute<State>(State.InCombat)]
-public class InCombatHandler : BaseHandler
+public class InCombatHandler(StateManagerModule module) : BaseHandler(module)
 {
-    public override State? Handle(StateManagerModule module)
+    public override State? Handle()
     {
         if (IsInFate())
         {

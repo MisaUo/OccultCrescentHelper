@@ -18,7 +18,7 @@ public class DebugWindow(Plugin priamryPlugin, Config config) : OcelotWindow(pri
             return;
         }
 
-        if (plugin.Modules.TryGetModule<DebugModule>(out var module) && module != null)
+        if (Plugin.Modules.TryGetModule<DebugModule>(out var module) && module != null)
         {
             module.DrawPanels();
         }

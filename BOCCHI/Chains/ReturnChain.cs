@@ -38,8 +38,8 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Re
 
         if (config.ApproachAetheryte)
         {
-            var vnav = module.GetIPCProvider<VNavmesh>();
-            var lifestream = module.GetIPCProvider<Lifestream>();
+            var vnav = module.GetIPCSubscriber<VNavmesh>();
+            var lifestream = module.GetIPCSubscriber<Lifestream>();
             var position = GetAetherytePosition();
 
             chain.Then(new PathfindAndMoveToChain(vnav, GetAetherytePosition()));
@@ -53,7 +53,7 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Re
 
     private Chain ApplyBuffs()
     {
-        var vnav = module.GetIPCProvider<VNavmesh>();
+        var vnav = module.GetIPCSubscriber<VNavmesh>();
         var buffs = module.GetModule<BuffModule>();
 
         var closestKnowledgeCrystal = ZoneData.GetNearbyKnowledgeCrystal(60f).FirstOrDefault();

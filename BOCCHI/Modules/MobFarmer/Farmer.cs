@@ -57,7 +57,7 @@ public class Farmer : IDisposable
             return;
         }
 
-        StateMachine.Update(module);
+        StateMachine.Update();
     }
 
     public void Draw(RenderContext context)
@@ -102,7 +102,7 @@ public class Farmer : IDisposable
     public void Toggle(MobFarmerModule module)
     {
         Running = !Running;
-        StateMachine.Reset(module);
+        StateMachine.Reset();
         if (!Running)
         {
             return;

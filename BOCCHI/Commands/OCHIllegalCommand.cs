@@ -14,12 +14,12 @@ namespace BOCCHI.Commands;
 [OcelotCommand]
 public class OCHIllegalCommand(Plugin plugin) : OcelotCommand
 {
-    public override string command
+    protected override string Command
     {
         get => "/bocchiillegal";
     }
 
-    public override string description
+    protected override string Description
     {
         get => @"
 Manage och automator/illegal mode.
@@ -31,17 +31,17 @@ Manage och automator/illegal mode.
 ".Trim();
     }
 
-    public override IReadOnlyList<string> aliases
+    protected override IReadOnlyList<string> Aliases
     {
         get => ["/ochillegal", "/bocchillegal"];
     }
 
-    public override IReadOnlyList<string> validArguments
+    protected override IReadOnlyList<string> ValidArguments
     {
         get => ["on", "off", "toggle"];
     }
 
-    public override void Command(string command, string arguments)
+    public override void Execute(string command, string arguments)
     {
         if (arguments.Trim() == "")
         {

@@ -14,7 +14,7 @@ public class VnavmeshPanel : Panel
 
     public override void Render(DebugModule module)
     {
-        if (module.TryGetIPCProvider<VNavmesh>(out var vnav) && vnav!.IsReady())
+        if (module.TryGetIPCSubscriber<VNavmesh>(out var vnav) && vnav!.IsReady())
         {
             OcelotUI.Title("Vnav state:");
             ImGui.SameLine();
@@ -23,7 +23,7 @@ public class VnavmeshPanel : Panel
 
             if (ImGui.Button("Test vnav thingy"))
             {
-                vnav.MoveToPath([new Vector3(815.2f, 72.5f, -705.15f)], false);
+                vnav.FollowPath([new Vector3(815.2f, 72.5f, -705.15f)], false);
             }
         }
     }

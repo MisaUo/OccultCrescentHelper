@@ -128,7 +128,7 @@ public class TreasureHuntPanel : Panel
 
         var outputFile = Path.Join(ZoneData.GetCurrentZoneDataDirectory(), "precomputed_treasure_hunt_data.json");
 
-        var vnav = module.GetIPCProvider<VNavmesh>();
+        var vnav = module.GetIPCSubscriber<VNavmesh>();
 
         NodeDataSchema data = new();
         foreach (var datum in AethernetData.All())

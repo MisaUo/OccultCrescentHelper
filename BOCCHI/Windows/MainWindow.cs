@@ -24,7 +24,7 @@ public class MainWindow(Plugin primaryPlugin, Config config) : OcelotMainWindow(
                     return;
                 }
 
-                plugin.Modules.GetModule<AutomatorModule>().DisableIllegalMode();
+                Plugin.Modules.GetModule<AutomatorModule>().DisableIllegalMode();
             },
             Icon = FontAwesomeIcon.Stop,
             IconOffset = new Vector2(2, 2),
@@ -40,7 +40,7 @@ public class MainWindow(Plugin primaryPlugin, Config config) : OcelotMainWindow(
                     return;
                 }
 
-                AutomatorModule.ToggleIllegalMode(plugin);
+                AutomatorModule.ToggleIllegalMode(Plugin);
             },
             Icon = FontAwesomeIcon.Skull,
             IconOffset = new Vector2(2, 2),
@@ -56,6 +56,6 @@ public class MainWindow(Plugin primaryPlugin, Config config) : OcelotMainWindow(
             return;
         }
 
-        plugin.Modules.RenderMainUi(context);
+        Plugin.Modules.RenderMainUi(context);
     }
 }

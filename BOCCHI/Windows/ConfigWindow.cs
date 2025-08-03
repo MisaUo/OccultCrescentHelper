@@ -24,7 +24,7 @@ public class ConfigWindow(Plugin primaryPlugin, Config config) : OcelotConfigWin
 
     protected override void Render(RenderContext context)
     {
-        var modules = plugin.Modules.GetModulesByConfigOrder().ToList();
+        var modules = Plugin.Modules.GetModulesByConfigOrder().ToList();
         selectedConfigModule ??= modules.FirstOrDefault();
 
         using (ImRaii.Child("##LeftPanel", new Vector2(300, 0), true))

@@ -7,12 +7,12 @@ namespace BOCCHI.Commands;
 [OcelotCommand]
 public class ConfigCommand(Plugin plugin) : OcelotCommand
 {
-    public override string command
+    protected override string Command
     {
         get => "/bocchicfg";
     }
 
-    public override string description
+    protected override string Description
     {
         get => @"
 Opens Occult Crescent Helper config ui
@@ -21,13 +21,13 @@ Opens Occult Crescent Helper config ui
 ".Trim();
     }
 
-    public override IReadOnlyList<string> aliases
+    protected override IReadOnlyList<string> Aliases
     {
         get => ["/bocchic", "/ochcfg", "/ochc", "/occultcrescenthelperconfig"];
     }
 
 
-    public override void Command(string command, string arguments)
+    public override void Execute(string command, string arguments)
     {
         plugin.Windows.ToggleConfigUI();
     }

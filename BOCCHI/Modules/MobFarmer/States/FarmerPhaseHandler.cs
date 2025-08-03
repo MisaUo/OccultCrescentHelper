@@ -2,4 +2,4 @@
 
 namespace BOCCHI.Modules.MobFarmer.States;
 
-public abstract class FarmerPhaseHandler : StateHandler<FarmerPhase, MobFarmerModule>;
+public abstract class FarmerPhaseHandler(MobFarmerModule module) : StateHandler<FarmerPhase, MobFarmerModule>(module);

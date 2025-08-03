@@ -7,28 +7,28 @@ using Ocelot.States;
 namespace BOCCHI.Modules.MobFarmer.States;
 
 [State<FarmerPhase>(FarmerPhase.Stacking)]
-public class StackingHandler : FarmerPhaseHandler
+public class StackingHandler(MobFarmerModule module) : FarmerPhaseHandler(module)
 {
     private bool HasRunStack = false;
 
-    public override void Enter(MobFarmerModule module)
+    public override void Enter()
     {
-        base.Enter(module);
+        base.Enter();
         HasRunStack = false;
     }
 
-    public override FarmerPhase? Handle(MobFarmerModule module)
+    public override FarmerPhase? Handle()
     {
-        var vnav = module.GetIPCProvider<VNavmesh>();
+        var vnav = Module.GetIPCSubscriber<VNavmesh>();
 
         if (HasRunStack && !vnav.IsRunning())
         {
             HasRunStack = false;
-            module.Farmer.RotationPlugin.PhantomJobOn();
+            Module.Farmer.RotationPlugin.PhantomJobOn();
             return FarmerPhase.Fighting;
         }
 
-        var furthest = module.Scanner.InCombat.Where(o => o.Address != Svc.Targets.Target?.Address).OrderBy(Player.DistanceTo).LastOrDefault();
+        var furthest = Module.Scanner.InCombat.Where(o => o.Address != Svc.Targets.Target?.Address).OrderBy(Player.DistanceTo).LastOrDefault();
         if (furthest == null)
         {
             return FarmerPhase.Fighting;

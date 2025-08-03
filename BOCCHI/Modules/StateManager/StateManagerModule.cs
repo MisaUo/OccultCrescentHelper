@@ -72,7 +72,7 @@ public class StateManagerModule : Module
 
     public override void Update(UpdateContext context)
     {
-        StateMachine.Update(this);
+        StateMachine.Update();
     }
 
     public override bool RenderMainUi(RenderContext context)

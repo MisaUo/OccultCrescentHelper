@@ -3,9 +3,9 @@
 namespace BOCCHI.Modules.StateManager.States;
 
 [StateAttribute<State>(State.InCriticalEncounter)]
-public class InCriticalEncounterHandler : BaseHandler
+public class InCriticalEncounterHandler(StateManagerModule module) : BaseHandler(module)
 {
-    public override State? Handle(StateManagerModule module)
+    public override State? Handle()
     {
         if (!IsInCriticalEncounter())
         {

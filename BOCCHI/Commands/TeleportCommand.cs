@@ -14,18 +14,18 @@ namespace BOCCHI.Commands;
 [OcelotCommand]
 public class TeleportCommand(Plugin plugin) : OcelotCommand
 {
-    public override string command
+    protected override string Command
     {
         get => "/bocchitp";
     }
 
-    public override string description
+    protected override string Description
     {
         get => "";
     }
 
 
-    public override void Command(string command, string arguments)
+    public override void Execute(string command, string arguments)
     {
         if (ZoneData.GetNearbyAethernetShards().Count <= 0)
         {

@@ -12,12 +12,12 @@ namespace BOCCHI.Commands;
 [OcelotCommand]
 public class MainCommand(Plugin plugin) : OcelotCommand
 {
-    public override string command
+    protected override string Command
     {
         get => "/bocchi";
     }
 
-    public override string description
+    protected override string Description
     {
         get => @"
 Opens Occult Crescent Helper main ui
@@ -28,7 +28,7 @@ Opens Occult Crescent Helper main ui
 ".Trim();
     }
 
-    public override IReadOnlyList<string> aliases
+    protected override IReadOnlyList<string> Aliases
     {
         get => ["/och", "/occultcrescenthelper"];
     }
@@ -38,7 +38,7 @@ Opens Occult Crescent Helper main ui
         "en", "de", "fr", "jp", "uwu",
     ];
 
-    public override void Command(string command, string arguments)
+    public override void Execute(string command, string arguments)
     {
         if (arguments is "config" or "cfg")
         {
@@ -56,13 +56,13 @@ Opens Occult Crescent Helper main ui
 
         if (arguments == "buff")
         {
-            new BuffCommand(plugin).Command("/bocchibuff", "");
+            new BuffCommand(plugin).Execute("/bocchibuff", "");
             return;
         }
 
         if (arguments.StartsWith("tp"))
         {
-            new TeleportCommand(plugin).Command("/bocchitp", arguments.ReplaceFirst("tp", "").Trim());
+            new TeleportCommand(plugin).Execute("/bocchitp", arguments.ReplaceFirst("tp", "").Trim());
             return;
         }
 

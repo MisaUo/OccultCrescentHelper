@@ -13,21 +13,21 @@ using Ocelot.States;
 namespace BOCCHI.Modules.MobFarmer.States;
 
 [State<FarmerPhase>(FarmerPhase.Gathering)]
-public class GatheringHandler : FarmerPhaseHandler
+public class GatheringHandler(MobFarmerModule module) : FarmerPhaseHandler(module)
 {
     private ChainQueue ChainQueue
     {
         get => ChainManager.Get("MobFarmer+Farmer");
     }
 
-    public override FarmerPhase? Handle(MobFarmerModule module)
+    public override FarmerPhase? Handle()
     {
-        var vnav = module.GetIPCProvider<VNavmesh>();
+        var vnav = Module.GetIPCSubscriber<VNavmesh>();
 
-        var InCombat = module.Scanner.InCombat;
-        var NotInCombat = module.Scanner.NotInCombat.ToArray();
+        var InCombat = Module.Scanner.InCombat;
+        var NotInCombat = Module.Scanner.NotInCombat.ToArray();
 
-        if (InCombat.Count() >= module.Config.MinimumMobsToStartFight || !NotInCombat.Any())
+        if (InCombat.Count() >= Module.Config.MinimumMobsToStartFight || !NotInCombat.Any())
         {
             vnav.Stop();
             ChainQueue.Abort();
@@ -62,7 +62,7 @@ public class GatheringHandler : FarmerPhaseHandler
                 .Then(_ => path = task!.Result)
                 .BreakIf(() => path.Count <= 1)
                 .Then(_ => path.RemoveAt(0))
-                .Then(_ => vnav.MoveToPath(path, false))
+                .Then(_ => vnav.FollowPath(path, false))
         );
 
         return null;

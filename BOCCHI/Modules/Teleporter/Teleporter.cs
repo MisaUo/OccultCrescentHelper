@@ -21,7 +21,7 @@ public class Teleporter(TeleporterModule module)
 {
     public void Button(Aethernet? aethernet, Vector3 destination, string name, string id, EventData ev)
     {
-        if (!module.TryGetIPCProvider<VNavmesh>(out var vnav) || vnav == null || !vnav.IsReady())
+        if (!module.TryGetIPCSubscriber<VNavmesh>(out var vnav) || vnav == null || !vnav.IsReady())
         {
             return;
         }
@@ -40,7 +40,7 @@ public class Teleporter(TeleporterModule module)
 
     private void PathfindingButton(Vector3 destination, string name, string id, EventData ev)
     {
-        if (!module.TryGetIPCProvider<VNavmesh>(out var vnav) || vnav == null || !vnav.IsReady())
+        if (!module.TryGetIPCSubscriber<VNavmesh>(out var vnav) || vnav == null || !vnav.IsReady())
         {
             return;
         }
@@ -61,7 +61,7 @@ public class Teleporter(TeleporterModule module)
             ImGui.SetTooltip($"Pathfind to {name}");
         }
 
-        if (!module.TryGetIPCProvider<Lifestream>(out var lifestream) || lifestream == null || !lifestream.IsReady())
+        if (!module.TryGetIPCSubscriber<Lifestream>(out var lifestream) || lifestream == null || !lifestream.IsReady())
         {
             return;
         }
@@ -71,7 +71,7 @@ public class Teleporter(TeleporterModule module)
 
     private void TeleportButton(Aethernet aethernet, Vector3 destination, string name, string id, EventData ev)
     {
-        if (!module.TryGetIPCProvider<Lifestream>(out var lifestream) || lifestream == null || !lifestream.IsReady())
+        if (!module.TryGetIPCSubscriber<Lifestream>(out var lifestream) || lifestream == null || !lifestream.IsReady())
         {
             return;
         }
@@ -88,7 +88,7 @@ public class Teleporter(TeleporterModule module)
                     .Debug("Waiting for lifestream to not be 'busy'")
                     .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new TaskManagerConfiguration { TimeLimitMS = 30000 }));
 
-                if (module.TryGetIPCProvider<VNavmesh>(out var vnav) && vnav != null && vnav.IsReady())
+                if (module.TryGetIPCSubscriber<VNavmesh>(out var vnav) && vnav != null && vnav.IsReady())
                 {
                     chain.RunIf(() => module.Config.PathToDestination)
                         .Then(new PathfindingChain(vnav, destination, ev, 20f))
@@ -163,6 +163,6 @@ public class Teleporter(TeleporterModule module)
 
     public bool IsReady()
     {
-        return module.TryGetIPCProvider<Lifestream>(out _);
+        return module.TryGetIPCSubscriber<Lifestream>(out _);
     }
 }
