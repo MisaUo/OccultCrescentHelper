@@ -7,7 +7,7 @@ using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Data;
 
-[OcelotModule(int.MaxValue)]
+// [OcelotModule(int.MaxValue)]
 public class DataModule : Module
 {
     public override DataConfig Config
