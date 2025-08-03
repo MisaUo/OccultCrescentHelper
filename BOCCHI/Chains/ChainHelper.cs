@@ -71,7 +71,7 @@ public class ChainHelper
     {
         return new TeleportChain(
             aethernet,
-            IPC.GetProvider<Lifestream>(),
+            IPC.GetSubscriber<Lifestream>(),
             Modules.GetModule<TeleporterModule>()
         );
     }
@@ -83,7 +83,7 @@ public class ChainHelper
 
     public static Func<Chain> PathfindToAndWait(Vector3 destination, float distance)
     {
-        var vnav = IPC.GetProvider<VNavmesh>();
+        var vnav = IPC.GetSubscriber<VNavmesh>();
         return () => Chain.Create()
             .ConditionalThen(_ => Player.DistanceTo(destination) > distance, _ =>
                 Chain.Create()
@@ -95,7 +95,7 @@ public class ChainHelper
 
     public static Func<Chain> MoveToAndWait(Vector3 destination, float distance)
     {
-        var vnav = IPC.GetProvider<VNavmesh>();
+        var vnav = IPC.GetSubscriber<VNavmesh>();
         return () => Chain.Create()
             .ConditionalThen(_ => Player.DistanceTo(destination) > distance, _ =>
                 Chain.Create()

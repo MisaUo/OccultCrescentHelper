@@ -17,7 +17,7 @@ public class Automator
 {
     private static bool IsChainActive
     {
-        get => ChainManager.Active().Count > 0;
+        get => ChainManager.Queues.Count > 0;
     }
 
     public Activity? Activity { get; private set; } = null;

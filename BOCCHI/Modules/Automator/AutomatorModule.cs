@@ -87,7 +87,7 @@ public class AutomatorModule : Module
         var wasEnabled = Config.Enabled;
         Config.Enabled = false;
         automator.Refresh();
-        Plugin.IPC.GetProvider<VNavmesh>().Stop();
+        Plugin.IPC.GetSubscriber<VNavmesh>().Stop();
         Plugin.Chain.Abort();
 
         if (wasEnabled)

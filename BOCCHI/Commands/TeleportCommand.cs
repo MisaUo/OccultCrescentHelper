@@ -33,7 +33,7 @@ public class TeleportCommand(Plugin plugin) : OcelotCommand
             return;
         }
 
-        var lifestream = plugin.IPC.GetProvider<Lifestream>();
+        var lifestream = plugin.IPC.GetSubscriber<Lifestream>();
         if (!lifestream.IsReady() || lifestream.IsBusy())
         {
             Svc.Chat.Print("Lifestream is busy");

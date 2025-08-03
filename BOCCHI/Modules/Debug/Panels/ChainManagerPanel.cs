@@ -16,7 +16,7 @@ public class ChainManagerPanel : Panel
         OcelotUI.Title("Chain Manager:");
         OcelotUI.Indent(() =>
         {
-            var instances = ChainManager.Active();
+            var instances = ChainManager.Queues;
             OcelotUI.Title("# of instances:");
             ImGui.SameLine();
             ImGui.TextUnformatted(instances.Count.ToString());
