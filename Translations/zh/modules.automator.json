@@ -1,0 +1,174 @@
+{
+  "modules": {
+    "automator": {
+      "config": {
+        "title": "非法模式",
+        "enabled": {
+          "tooltip": "非法模式属于自动化程序，其行为仅由此部分配置决定，不受外部设置影响"
+        },
+        "ai_provider": {
+          "label": "AI选择",
+          "tooltip": "选择所使用的AI插件"
+        },
+        "toggle_ai_provider": {
+          "label": "自动切换AI状态",
+          "tooltip": "开始FATE/CE时开启AI\n前往FATE/CE的路上关闭AI"
+        },
+        "force_target": {
+          "label": "强制选中目标",
+          "tooltip": "在FATE和CE中始终保持目标选中"
+        },
+        "force_target_central_enemy": {
+          "label": "优先选中中心敌人",
+          "tooltip": "优先选中群怪中心位置的敌人"
+        },
+        "engagement_range": {
+          "label": "接战距离",
+          "tooltip": "距离FATE怪物多远时下坐骑并启动循环/AI插件"
+        },
+        "do_critical_encounters": {
+          "label": "参加CE",
+          "tooltip": "选择运行时是否考虑参加CE"
+        },
+        "delay_critical_encounters": {
+          "label": "延迟前往CE",
+          "tooltip": "前往CE前添加10-15秒延迟"
+        },
+        "do_scourge_of_the_mind": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_the_black_regiment": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_the_unbridled": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_crawling_death": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_calamity_bound": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_trial_by_claw": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_from_times_bygone": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_company_of_stone": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_shark_attack": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_on_the_hunt": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_with_extreme_prejudice": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_noise_complaint": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_cursed_concern": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_eternal_watch": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_flame_of_dusk": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_fates": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_rough_waters": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_the_golden_guardian": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_king_of_the_crescent": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_the_winged_terror": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_an_unending_duty": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_brain_drain": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_a_delicate_balance": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_sworn_to_soil": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_a_prying_eye": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_fatal_allure": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_serving_darkness": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_persistent_pots": {
+          "label": null,
+          "tooltip": null
+        },
+        "do_pleading_pots": {
+          "label": null,
+          "tooltip": null
+        }
+      },
+      "panel": {
+        "title": "非法模式",
+        "activity": {
+          "label": "活动状态",
+          "none": "无"
+        },
+        "activity_state": {
+          "label": null,
+          "none": null
+        },
+        "lens": {
+          "title": null
+        }
+      },
+      "messages": {
+        "off": "[BOCCHI] 非法模式关闭",
+        "on": "[BOCCHI] 非法模式启动"
+      }
+    }
+  }
+}

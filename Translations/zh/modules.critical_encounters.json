@@ -1,0 +1,64 @@
+{
+  "modules": {
+    "critical_encounters": {
+      "config": {
+        "title": "CE设置",
+        "track_forked_tower": {
+          "label": "追踪歧路之塔",
+          "tooltip": "记录歧路之塔最后结束的时间"
+        },
+        "log_spawn": {
+          "label": "在出现/消失时输出聊天信息",
+          "tooltip": "当CE出现或消失时，在聊天窗口输出一条消息"
+        },
+        "alert_all": {
+          "label": "所有CE出现时通知",
+          "tooltip": "当任何CE出现时播放提示音"
+        },
+        "alert_azurite": {
+          "label": null,
+          "tooltip": null
+        },
+        "alert_verdigris": {
+          "label": null,
+          "tooltip": null
+        },
+        "alert_malachite": {
+          "label": null,
+          "tooltip": null
+        },
+        "alert_realgar": {
+          "label": null,
+          "tooltip": null
+        },
+        "alert_caput_mortuum": {
+          "label": null,
+          "tooltip": null
+        },
+        "alert_orpiment": {
+          "label": null,
+          "tooltip": null
+        },
+        "alert_oracle": {
+          "label": null,
+          "tooltip": null
+        },
+        "alert_berserker": {
+          "label": null,
+          "tooltip": null
+        },
+        "alert_ranger": {
+          "label": null,
+          "tooltip": null
+        }
+      },
+      "panel": {
+        "title": "紧急遭遇战",
+        "none": "当前无活跃的CE",
+        "register": "准备中",
+        "warmup": "开始中",
+        "estimated": "预计"
+      }
+    }
+  }
+}
