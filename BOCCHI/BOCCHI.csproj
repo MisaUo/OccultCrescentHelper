@@ -35,12 +35,6 @@
         <PackageReference Include="FFXIVOcelot" Version="1.1.0"/>
     </ItemGroup>
     <ItemGroup>
-        <Reference Include="Dalamud.Common">
-            <HintPath>$(DalamudLibPath)Dalamud.Common.dll</HintPath>
-            <Private>False</Private>
-        </Reference>
-    </ItemGroup>
-    <ItemGroup>
         <PackageReference Include="TextCopy" Version="6.2.1"/>
     </ItemGroup>
 </Project>
