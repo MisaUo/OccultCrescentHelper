@@ -3,8 +3,8 @@ using System.Linq;
 using BOCCHI.Data;
 using BOCCHI.Modules.Teleporter;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
-using ImGuiNET;
-using Ocelot;
+using Dalamud.Bindings.ImGui;
+using Ocelot.Ui;
 
 namespace BOCCHI.Modules.CriticalEncounters;
 
@@ -12,8 +12,8 @@ public class Panel
 {
     public void Draw(CriticalEncountersModule module)
     {
-        OcelotUI.Title($"{module.T("panel.title")}:");
-        OcelotUI.Indent(() =>
+        OcelotUi.Title($"{module.T("panel.title")}:");
+        OcelotUi.Indent(() =>
         {
             var active = module.CriticalEncounters.Values.Count(ev => ev.State != DynamicEventState.Inactive);
             if (active <= 0)
@@ -89,7 +89,7 @@ public class Panel
 
                 if (ev.State != DynamicEventState.Register)
                 {
-                    OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
+                    OcelotUi.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
                     continue;
                 }
 
@@ -100,7 +100,7 @@ public class Panel
                     teleporter.teleporter.Button(data.Aethernet, start, ev.Name.ToString(), $"ce_{ev.DynamicEventId}", data);
                 }
 
-                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
+                OcelotUi.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
             }
         });
     }
@@ -113,27 +113,27 @@ public class Panel
             return;
         }
 
-        OcelotUI.Error("This feature is a work in progress.");
+        OcelotUi.Error("This feature is a work in progress.");
 
         if (ev.State == DynamicEventState.Inactive)
         {
             ImGui.TextUnformatted($"{ev.Name}:");
 
             var time = module.Tracker.TowerTimer.GetTimeToForkedTowerSpawn(ev.State);
-            OcelotUI.Indent(() => { OcelotUI.LabelledValue("Forked Tower Spawn Estimate", $"{time:mm\\:ss}"); });
+            OcelotUi.Indent(() => { OcelotUi.LabelledValue("Forked Tower Spawn Estimate", $"{time:mm\\:ss}"); });
         }
         else
         {
             ImGui.TextUnformatted($"{ev.Name}:");
 
             var time = module.Tracker.TowerTimer.GetTimeRemainingToRegister(ev.State);
-            OcelotUI.Indent(() => { OcelotUI.LabelledValue("Forked Tower Register", $"{time:mm\\:ss}"); });
+            OcelotUi.Indent(() => { OcelotUi.LabelledValue("Forked Tower Register", $"{time:mm\\:ss}"); });
         }
 
-        OcelotUI.Indent(32, () =>
+        OcelotUi.Indent(32, () =>
         {
-            OcelotUI.LabelledValue("Critical Encounters completed", module.Tracker.TowerTimer.CriticalEncountersCompleted);
-            OcelotUI.LabelledValue("Fates completed", module.Tracker.TowerTimer.FatesCompleted);
+            OcelotUi.LabelledValue("Critical Encounters completed", module.Tracker.TowerTimer.CriticalEncountersCompleted);
+            OcelotUi.LabelledValue("Fates completed", module.Tracker.TowerTimer.FatesCompleted);
         });
 
 
@@ -142,15 +142,15 @@ public class Panel
             return;
         }
 
-        OcelotUI.Indent(() =>
+        OcelotUi.Indent(() =>
         {
-            OcelotUI.LabelledValue("Players on Platform", TowerHelper.GetPlayersInTowerZone(TowerHelper.TowerType.Blood));
+            OcelotUi.LabelledValue("Players on Platform", TowerHelper.GetPlayersInTowerZone(TowerHelper.TowerType.Blood));
             if (ImGui.IsItemHovered())
             {
                 ImGui.SetTooltip("This includes your character");
             }
 
-            OcelotUI.LabelledValue("Players near Platform", TowerHelper.GetPlayersNearTowerZone(TowerHelper.TowerType.Blood));
+            OcelotUi.LabelledValue("Players near Platform", TowerHelper.GetPlayersNearTowerZone(TowerHelper.TowerType.Blood));
             if (ImGui.IsItemHovered())
             {
                 ImGui.SetTooltip("This includes your character");
