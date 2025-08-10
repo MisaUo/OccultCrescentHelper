@@ -1,6 +1,7 @@
 using System.Linq;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 using Ocelot;
+using Ocelot.Ui;
 
 namespace BOCCHI.Modules.MobFarmer;
 
@@ -8,8 +9,8 @@ public class Panel
 {
     public void Draw(MobFarmerModule module)
     {
-        OcelotUI.Title("Mob Farmer:");
-        OcelotUI.Indent(() =>
+        OcelotUi.Title("Mob Farmer:");
+        OcelotUi.Indent(() =>
         {
             if (ImGui.Button(module.Farmer.Running ? I18N.T("generic.label.stop") : I18N.T("generic.label.start")))
             {
@@ -18,11 +19,11 @@ public class Panel
 
             if (module.Farmer.Running)
             {
-                OcelotUI.LabelledValue("Phase", module.Farmer.StateMachine.State);
+                OcelotUi.LabelledValue("Phase", module.Farmer.StateMachine.State);
             }
 
-            OcelotUI.LabelledValue("Not Engaged", module.Scanner.NotInCombat.Count());
-            OcelotUI.LabelledValue("Engaged", module.Scanner.InCombat.Count());
+            OcelotUi.LabelledValue("Not Engaged", module.Scanner.NotInCombat.Count());
+            OcelotUi.LabelledValue("Engaged", module.Scanner.InCombat.Count());
         });
     }
 }

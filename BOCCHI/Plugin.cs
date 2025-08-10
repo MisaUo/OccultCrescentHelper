@@ -37,13 +37,9 @@ public sealed class Plugin : OcelotPlugin
 
         SetupLanguage(plugin);
 
-        OcelotInitialize();
+        OcelotInitialize(OcelotFeature.All);
 
         ChainHelper.Initialize(this);
-
-#if DEBUG
-        InitializeDebug();
-#endif
     }
 
     private void SetupLanguage(IDalamudPluginInterface plugin)

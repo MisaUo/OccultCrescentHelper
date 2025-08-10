@@ -2,7 +2,7 @@
 using BOCCHI.Data;
 using BOCCHI.Modules.Automator;
 using Dalamud.Interface;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 using Ocelot;
 using Ocelot.Windows;
 

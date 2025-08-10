@@ -43,7 +43,7 @@ Utility command.
     public override unsafe void Execute(string command, string arguments)
     {
         var map = AgentMap.Instance();
-        map->IsFlagMarkerSet = false;
+        map->FlagMarkerCount = 0;
 
         switch (arguments)
         {
