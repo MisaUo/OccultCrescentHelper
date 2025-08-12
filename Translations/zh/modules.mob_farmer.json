@@ -2,7 +2,7 @@
   "modules": {
     "mob_farmer": {
       "config": {
-        "title": null,
+        "title": "刷怪设置",
         "mobs": {
           "label": "目标怪物",
           "tooltip": "需要击杀的怪物列表"
@@ -36,12 +36,12 @@
           "tooltip": "未运行时仍显示调试线"
         },
         "apply_battle_bell": {
-          "label": null,
-          "tooltip": null
+          "label": "使用战斗之铃",
+          "tooltip": "在拉怪前使用战斗之铃"
         },
         "maximum_battle_bell_wait_time": {
-          "label": null,
-          "tooltip": null
+          "label": "战斗之铃最大等待时间",
+          "tooltip": "等待战斗之铃冷却结束的最长时间"
         },
         "minimum_mobs_to_start_loop": {
           "label": "启动循环所需怪物数",

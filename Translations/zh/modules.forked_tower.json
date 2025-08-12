@@ -2,7 +2,7 @@
   "modules": {
     "forked_tower": {
       "config": {
-        "title": "歧路之塔设置",
+        "title": "两歧塔设置",
         "draw_potential_trap_positions": {
           "label": "显示隐藏陷阱位置",
           "tooltip": "启用范围内陷阱生成位置的显示功能"
@@ -12,8 +12,8 @@
           "tooltip": "以轮廓线方式显示陷阱位置"
         },
         "draw_outline_for_complex_mode": {
-          "label": null,
-          "tooltip": null
+          "label": "复杂模式绘制",
+          "tooltip": "使用复杂渲染器绘制，这样你就可以透过墙壁看到它们"
         },
         "trap_draw_range": {
           "label": "陷阱显示范围",

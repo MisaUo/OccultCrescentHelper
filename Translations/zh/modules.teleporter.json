@@ -13,11 +13,11 @@
         },
         "return_after_fate": {
           "label": "FATE结束后返回营地",
-          "tooltip": "完成FATE后使用秘术返回返回营地"
+          "tooltip": "完成FATE后使用亚返回返回营地"
         },
         "return_after_critical_encounter": {
           "label": "CE结束后返回营地",
-          "tooltip": "完成CE后使用秘术返回返回营地"
+          "tooltip": "完成CE后使用亚返回返回营地"
         },
         "approach_aetheryte": {
           "label": "返回后接近以太水晶",
