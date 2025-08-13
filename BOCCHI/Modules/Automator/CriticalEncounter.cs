@@ -53,22 +53,31 @@ public class CriticalEncounter : Activity
                     .Where(o => Vector3.Distance(o.Position, GetPosition()) <= GetRadius())
                     .ToList();
 
-                if (playersInZone.Count > 4)
+                if (playersInZone.Count > 2)
                 {
                     var minX = playersInZone.Min(p => p.Position.X);
                     var maxX = playersInZone.Max(p => p.Position.X);
                     var minY = playersInZone.Min(p => p.Position.Z);
                     var maxY = playersInZone.Max(p => p.Position.Z);
 
+
                     // Choose a random point within the bounding box of players
-                    var rand = new Random();
-                    var randX = (float)(minX + rand.NextDouble() * (maxX - minX));
-                    var randY = (float)(minY + rand.NextDouble() * (maxY - minY));
-                    var randomPoint = new Vector3(randX, GetPosition().Y, randY);
+                    var random = new Random();
+                    const float minAbs = 1f;
+                    const float maxAbs = 4f;
 
-                    module.Debug($"Pathfinding to random point: {randomPoint} (MinX: {minX}, MaxX: {maxX}, MinY: {minY}, MaxY: {maxY})");
+                    var positiveX = random.Next(0, 2) == 1;
+                    var magnitudeX = (float)(minAbs + random.NextDouble() * (maxAbs - minAbs));
+                    var valueX = positiveX ? magnitudeX : -magnitudeX;
 
-                    vnav.PathfindAndMoveTo(randomPoint, false);
+                    var positiveZ = random.Next(0, 2) == 1;
+                    var magnitudeZ = (float)(minAbs + random.NextDouble() * (maxAbs - minAbs));
+                    var valueZ = positiveZ ? magnitudeZ : -magnitudeZ;
+
+                    var destination = GetPosition() + new Vector3(valueX, 0, valueZ);
+                    module.Debug($"Pathfinding to random point: {destination}");
+                    vnav.PathfindAndMoveTo(destination, false);
+
                     finalDestination = true;
                 }
             }
