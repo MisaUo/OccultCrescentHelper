@@ -58,7 +58,7 @@ public class Teleporter(TeleporterModule module)
 
         if (ImGui.IsItemHovered())
         {
-            ImGui.SetTooltip($"Pathfind to {name}");
+            ImGui.SetTooltip($"寻路前往 {name}");
         }
 
         if (!module.TryGetIPCSubscriber<Lifestream>(out var lifestream) || lifestream == null || !lifestream.IsReady())
