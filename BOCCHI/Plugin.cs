@@ -1,5 +1,4 @@
-﻿using System;
-using BOCCHI.Chains;
+﻿using BOCCHI.Chains;
 using BOCCHI.Data;
 using Dalamud.Game;
 using Dalamud.Game.ClientState.Conditions;
@@ -8,6 +7,7 @@ using ECommons;
 using ECommons.DalamudServices;
 using Ocelot;
 using Ocelot.Chain;
+using System;
 
 namespace BOCCHI;
 
@@ -29,10 +29,17 @@ public sealed class Plugin : OcelotPlugin
     {
         get => ChainManager.Get("OCH##main");
     }
-
+    private bool IsDev;
     public Plugin(IDalamudPluginInterface plugin)
         : base(plugin, Module.DalamudReflector)
     {
+#if !DEBUG
+        if (plugin.IsDev)
+        {
+            IsDev = true;
+            return;
+        }
+#endif
         Config = plugin.GetPluginConfig() as Config ?? new Config();
 
         SetupLanguage(plugin);
