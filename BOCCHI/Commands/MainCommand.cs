@@ -1,11 +1,11 @@
-using System.Collections.Generic;
-using System.Linq;
-using BOCCHI.Modules.Debug;
+﻿using BOCCHI.Modules.Debug;
 using ECommons;
 using ECommons.DalamudServices;
 using Ocelot;
 using Ocelot.Commands;
 using Ocelot.Modules;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BOCCHI.Commands;
 
@@ -20,10 +20,10 @@ public class MainCommand(Plugin plugin) : OcelotCommand
     protected override string Description
     {
         get => @"
-Opens Occult Crescent Helper main ui
- - /bocchi : Opens the main ui
- - /bocchi config : opens the config ui
- - /bocchi cfg : opens the config ui
+打开 Occult Crescent Helper 主界面
+ - /bocchi : 打开主界面
+ - /bocchi config : 打开设置界面
+ - /bocchi cfg : 打开设置界面
 --------------------------------
 ".Trim();
     }

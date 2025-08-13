@@ -1,10 +1,10 @@
-using System;
-using System.Linq;
-using BOCCHI.Data;
+﻿using BOCCHI.Data;
 using BOCCHI.Modules.Teleporter;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using ImGuiNET;
 using Ocelot;
+using System;
+using System.Linq;
 
 namespace BOCCHI.Modules.CriticalEncounters;
 
@@ -113,27 +113,27 @@ public class Panel
             return;
         }
 
-        OcelotUI.Error("This feature is a work in progress.");
+        OcelotUI.Error("此功能尚在开发中");
 
         if (ev.State == DynamicEventState.Inactive)
         {
             ImGui.TextUnformatted($"{ev.Name}:");
 
             var time = module.Tracker.TowerTimer.GetTimeToForkedTowerSpawn(ev.State);
-            OcelotUI.Indent(() => { OcelotUI.LabelledValue("Forked Tower Spawn Estimate", $"{time:mm\\:ss}"); });
+            OcelotUI.Indent(() => { OcelotUI.LabelledValue("两歧塔出现预计还需", $"{time:mm\\:ss}"); });
         }
         else
         {
             ImGui.TextUnformatted($"{ev.Name}:");
 
             var time = module.Tracker.TowerTimer.GetTimeRemainingToRegister(ev.State);
-            OcelotUI.Indent(() => { OcelotUI.LabelledValue("Forked Tower Register", $"{time:mm\\:ss}"); });
+            OcelotUI.Indent(() => { OcelotUI.LabelledValue("两歧塔报名时间", $"{time:mm\\:ss}"); });
         }
 
         OcelotUI.Indent(32, () =>
         {
-            OcelotUI.LabelledValue("Critical Encounters completed", module.Tracker.TowerTimer.CriticalEncountersCompleted);
-            OcelotUI.LabelledValue("Fates completed", module.Tracker.TowerTimer.FatesCompleted);
+            OcelotUI.LabelledValue("紧急遭遇战已完成", module.Tracker.TowerTimer.CriticalEncountersCompleted);
+            OcelotUI.LabelledValue("FATE已完成", module.Tracker.TowerTimer.FatesCompleted);
         });
 
 
@@ -144,16 +144,16 @@ public class Panel
 
         OcelotUI.Indent(() =>
         {
-            OcelotUI.LabelledValue("Players on Platform", TowerHelper.GetPlayersInTowerZone(TowerHelper.TowerType.Blood));
+            OcelotUI.LabelledValue("平台上的玩家", TowerHelper.GetPlayersInTowerZone(TowerHelper.TowerType.Blood));
             if (ImGui.IsItemHovered())
             {
-                ImGui.SetTooltip("This includes your character");
+                ImGui.SetTooltip("包括你的角色");
             }
 
-            OcelotUI.LabelledValue("Players near Platform", TowerHelper.GetPlayersNearTowerZone(TowerHelper.TowerType.Blood));
+            OcelotUI.LabelledValue("平台附近的玩家", TowerHelper.GetPlayersNearTowerZone(TowerHelper.TowerType.Blood));
             if (ImGui.IsItemHovered())
             {
-                ImGui.SetTooltip("This includes your character");
+                ImGui.SetTooltip("包括你的角色");
             }
         });
     }

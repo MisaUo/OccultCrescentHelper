@@ -1,6 +1,6 @@
-using System.Linq;
-using ImGuiNET;
+﻿using ImGuiNET;
 using Ocelot;
+using System.Linq;
 
 namespace BOCCHI.Modules.MobFarmer;
 
@@ -8,7 +8,7 @@ public class Panel
 {
     public void Draw(MobFarmerModule module)
     {
-        OcelotUI.Title("Mob Farmer:");
+        OcelotUI.Title("刷怪:");
         OcelotUI.Indent(() =>
         {
             if (ImGui.Button(module.Farmer.Running ? I18N.T("generic.label.stop") : I18N.T("generic.label.start")))

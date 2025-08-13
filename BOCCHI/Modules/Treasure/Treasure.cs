@@ -1,11 +1,11 @@
-using System.Linq;
-using System.Numerics;
-using BOCCHI.Enums;
+﻿using BOCCHI.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game.Object;
-using XIVTreasure = Lumina.Excel.Sheets.Treasure;
+using System.Linq;
+using System.Numerics;
 using TreasureFlags = FFXIVClientStructs.FFXIV.Client.Game.Object.Treasure.TreasureFlags;
+using XIVTreasure = Lumina.Excel.Sheets.Treasure;
 
 namespace BOCCHI.Modules.Treasure;
 
@@ -93,9 +93,9 @@ public class Treasure(IGameObject obj)
     {
         return GetTreasureType() switch
         {
-            TreasureType.Bronze => "Bronze Treasure Coffer",
-            TreasureType.Silver => "Silver Treasure Coffer",
-            _ => "Unknown Treasure Coffer",
+            TreasureType.Bronze => "铜宝箱",
+            TreasureType.Silver => "银宝箱",
+            _ => "未知宝箱",
         };
     }
 }

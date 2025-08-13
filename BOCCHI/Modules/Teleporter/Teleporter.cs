@@ -1,6 +1,4 @@
-using System.Linq;
-using System.Numerics;
-using BOCCHI.Chains;
+﻿using BOCCHI.Chains;
 using BOCCHI.Data;
 using BOCCHI.Enums;
 using BOCCHI.Modules.Automator;
@@ -14,6 +12,8 @@ using Ocelot;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
+using System.Linq;
+using System.Numerics;
 
 namespace BOCCHI.Modules.Teleporter;
 
@@ -47,9 +47,9 @@ public class Teleporter(TeleporterModule module)
 
         if (ImGuiEx.IconButton(FontAwesomeIcon.Running, $"{name}##{id}"))
         {
-            Svc.Log.Info($"Pathfinding to {name} at {destination}");
+            Svc.Log.Info($"寻路前往位于 {{destination}} 的 {{name}}");
 
-            Plugin.Chain.Submit(() => Chain.Create("Pathfinding")
+            Plugin.Chain.Submit(() => Chain.Create("寻路中")
                 .Then(new PathfindingChain(vnav, destination, ev, 20f))
                 .ConditionalThen(_ => module.Config.ShouldMount, ChainHelper.MountChain())
                 .WaitUntilNear(vnav, destination, 205f)
@@ -85,7 +85,7 @@ public class Teleporter(TeleporterModule module)
             {
                 var chain = Chain.Create("Teleport Sequence")
                     .Then(ChainHelper.TeleportChain(aethernet))
-                    .Debug("Waiting for lifestream to not be 'busy'")
+                    .Debug("等待Lifestream不再“忙碌”")
                     .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new TaskManagerConfiguration { TimeLimitMS = 30000 }));
 
                 if (module.TryGetIPCSubscriber<VNavmesh>(out var vnav) && vnav != null && vnav.IsReady())
@@ -109,15 +109,15 @@ public class Teleporter(TeleporterModule module)
 
         if (!isNearShards)
         {
-            ImGui.SetTooltip($"You must be near an aetheryte to teleport");
+            ImGui.SetTooltip($"你必须靠近一个水晶才能传送");
         }
         else if (isNearCurrentShard)
         {
-            ImGui.SetTooltip($"You're already at this aetheryte");
+            ImGui.SetTooltip($"你已经在 {aethernet.ToFriendlyString()} 附近了");
         }
         else
         {
-            ImGui.SetTooltip($"Teleport to {aethernet.ToFriendlyString()}");
+            ImGui.SetTooltip($"传送至 {aethernet.ToFriendlyString()}");
         }
     }
 

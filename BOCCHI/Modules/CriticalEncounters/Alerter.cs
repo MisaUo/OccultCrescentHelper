@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using BOCCHI.Data;
+﻿using BOCCHI.Data;
 using BOCCHI.Enums;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using FFXIVClientStructs.FFXIV.Client.UI;
+using System;
+using System.Collections.Generic;
 
 namespace BOCCHI.Modules.CriticalEncounters;
 
@@ -47,7 +47,7 @@ public class Alerter : IDisposable
     {
         if (module.Config.LogSpawn)
         {
-            Svc.Chat.Print($"{ev.Name} has Spawned");
+            Svc.Chat.Print($"{ev.Name} 已出现");
         }
 
         if (!ShouldAlertForCriticalEncounter(ev))
@@ -62,7 +62,7 @@ public class Alerter : IDisposable
     {
         if (module.Config.LogSpawn)
         {
-            Svc.Chat.Print($"{ev.Name} has Despawned");
+            Svc.Chat.Print($"{ev.Name} 已消失");
         }
 
         if (!ShouldAlertForCriticalEncounter(ev))
