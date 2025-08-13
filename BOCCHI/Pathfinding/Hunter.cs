@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Numerics;
-using System.Text.Json;
-using System.Threading.Tasks;
-using BOCCHI.Chains;
+﻿using BOCCHI.Chains;
 using BOCCHI.Enums;
 using BOCCHI.Modules;
 using BOCCHI.Modules.Pathfinder;
@@ -18,17 +11,25 @@ using Ocelot;
 using Ocelot.Chain;
 using Ocelot.IPC;
 using Ocelot.Modules;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Numerics;
+using System.Text.Json;
+using System.Threading.Tasks;
 using TextCopy;
 
 namespace BOCCHI.Pathfinding;
 
 public abstract class Hunter
 {
+    protected Module m;
     protected const float DISTANCE_TO_NODE_TO_USE = 2f;
 
     protected StateManagerModule states;
 
-    protected VNavmesh vnav;
+    protected VNavmesh vnav => m.GetIPCSubscriber<VNavmesh>();
 
     protected PathfinderConfig config;
 
@@ -60,8 +61,8 @@ public abstract class Hunter
 
     protected Hunter(Module module)
     {
+        m = module;
         states = module.GetModule<StateManagerModule>();
-        vnav = module.GetIPCSubscriber<VNavmesh>();
         config = module.PluginConfig.PathfinderConfig;
 
         Handlers = new Dictionary<PathfinderStepType, Func<bool>>
