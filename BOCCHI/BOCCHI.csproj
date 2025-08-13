@@ -28,10 +28,6 @@
             <Link>Data\%(RecursiveDir)%(Filename)%(Extension)</Link>
         </None>
     </ItemGroup>
-    <ItemGroup Condition="'$(Configuration)' == 'Release'">
-        <PackageReference Include="FFXIVOcelot" Version="0.57.1" />
-        <ProjectReference Include="../Ocelot/ffxiv_pictomancy/Pictomancy/Pictomancy.csproj" />
-    </ItemGroup>
     <ItemGroup>
         <Reference Include="Dalamud.Common">
             <HintPath>$(DalamudLibPath)Dalamud.Common.dll</HintPath>

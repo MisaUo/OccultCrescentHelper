@@ -1000,7 +1000,7 @@
       "FFXIVOcelot": {
         "type": "Project",
         "dependencies": {
-          "ECommons": "[3.0.0.18-api13, )",
+          "ECommons": "[3.0.0.7, )",
           "Microsoft.Extensions.Configuration": "[7.0.0, )",
           "Microsoft.Extensions.Configuration.Abstractions": "[7.0.0, )",
           "Pictomancy": "[0.0.0, )"
