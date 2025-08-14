@@ -1,9 +1,10 @@
-using System.Collections.Generic;
+﻿using ECommons.Automation;
 using ECommons.DalamudServices;
 using Ocelot;
 using Ocelot.IPC;
 using Ocelot.Modules;
 using Ocelot.Windows;
+using System.Collections.Generic;
 
 namespace BOCCHI.Modules.Automator;
 
@@ -69,6 +70,7 @@ public class AutomatorModule : Module
         {
             module.DisableIllegalMode();
         }
+        Chat.ExecuteCommand("/aeTargetSelector off");
     }
 
     public void EnableIllegalMode()

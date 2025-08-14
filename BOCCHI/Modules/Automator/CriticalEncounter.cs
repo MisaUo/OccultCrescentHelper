@@ -166,17 +166,8 @@ public class CriticalEncounter : Activity
             return true;
         }
 
-        if (DynamicEventContainer.GetInstance()->CurrentEventId == Encounter.DynamicEventId)
-        {
-            return true;
-        }
-
-        if (Encounter.State is DynamicEventState.Warmup or DynamicEventState.Battle)
-        {
-            return Player.Status.Has(PlayerStatus.HoofingIt);
-        }
-
-        return false;
+        var dec = DynamicEventContainer.GetInstance();
+        return dec != null && Encounter.DynamicEventId == dec->CurrentEventId;
     }
 
     protected override float GetRadius()
