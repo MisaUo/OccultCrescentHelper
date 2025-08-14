@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Dalamud.CN.NET.Sdk/12.0.2">
     <PropertyGroup>
-        <Version>0.69.1.1</Version>
+        <Version>0.69.1.2</Version>
         <Description>A helper for Occult Crescent.</Description>
         <PackageProjectUrl>https://github.com/OhKannaDuh/OccultCrescentHelper</PackageProjectUrl>
         <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
         <IsPackable>false</IsPackable>
-        <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
         <NoWarn>$(NoWarn);4014</NoWarn>
         <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=$(MSBuildProjectName)/</PathMap>
     </PropertyGroup>
@@ -27,12 +26,6 @@
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
             <Link>Data\%(RecursiveDir)%(Filename)%(Extension)</Link>
         </None>
-    </ItemGroup>
-    <ItemGroup>
-        <Reference Include="Dalamud.Common">
-            <HintPath>$(DalamudLibPath)Dalamud.Common.dll</HintPath>
-            <Private>False</Private>
-        </Reference>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="TextCopy" Version="6.2.1" />
