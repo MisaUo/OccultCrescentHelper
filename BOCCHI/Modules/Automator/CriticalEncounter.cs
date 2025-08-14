@@ -55,16 +55,10 @@ public class CriticalEncounter : Activity
 
                 if (playersInZone.Count > 2)
                 {
-                    var minX = playersInZone.Min(p => p.Position.X);
-                    var maxX = playersInZone.Max(p => p.Position.X);
-                    var minY = playersInZone.Min(p => p.Position.Z);
-                    var maxY = playersInZone.Max(p => p.Position.Z);
-
-
-                    // Choose a random point within the bounding box of players
+                    
                     var random = new Random();
-                    const float minAbs = 1f;
-                    const float maxAbs = 4f;
+                    const float minAbs = 2f;
+                    const float maxAbs = 7f;
 
                     var positiveX = random.Next(0, 2) == 1;
                     var magnitudeX = (float)(minAbs + random.NextDouble() * (maxAbs - minAbs));
@@ -162,7 +156,11 @@ public class CriticalEncounter : Activity
         {
             return true;
         }
-
+        if (Encounter.State is DynamicEventState.Warmup)
+        {
+            return true;
+        }
+        
         if (Encounter.State is DynamicEventState.Warmup or DynamicEventState.Battle)
         {
             return Player.Status.Has(PlayerStatus.HoofingIt);
