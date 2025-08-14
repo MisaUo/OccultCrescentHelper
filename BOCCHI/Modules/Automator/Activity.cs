@@ -1,19 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using BOCCHI.Chains;
+﻿using BOCCHI.Chains;
 using BOCCHI.Data;
 using BOCCHI.Enums;
 using BOCCHI.Modules.StateManager;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Objects.Types;
+using ECommons.Automation;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;
 using Ocelot.Chain;
 using Ocelot.IPC;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 
 namespace BOCCHI.Modules.Automator;
 
@@ -141,6 +142,7 @@ public abstract class Activity
         {
             return Chain.Create("Illegal:Participating")
                 .ConditionalThen(_ => module.Config.ShouldToggleAiProvider, _ => module.Config.AiProvider.On())
+                .Then(_ => Chat.ExecuteCommand("/aeTargetSelector off"))
                 .Then(_ => vnav.Stop())
                 .Then(new TaskManagerTask(() =>
                 {

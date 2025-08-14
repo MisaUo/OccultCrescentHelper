@@ -4,6 +4,7 @@ using BOCCHI.Modules.CriticalEncounters;
 using BOCCHI.Modules.StateManager;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
+using ECommons.Automation;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
@@ -144,6 +145,8 @@ public class CriticalEncounter : Activity
                             {
                                 module.Config.AiProvider.On();
                             }
+
+                            Chat.ExecuteCommand("/aeTargetSelector off");
                         }
 
                         return states.GetState() == State.InCriticalEncounter;
