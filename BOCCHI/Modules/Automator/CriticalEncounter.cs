@@ -1,7 +1,4 @@
-using System;
-using System.Linq;
-using System.Numerics;
-using BOCCHI.ActionHelpers;
+﻿using BOCCHI.ActionHelpers;
 using BOCCHI.Data;
 using BOCCHI.Modules.CriticalEncounters;
 using BOCCHI.Modules.StateManager;
@@ -14,6 +11,9 @@ using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using Ocelot.Chain;
 using Ocelot.IPC;
+using System;
+using System.Linq;
+using System.Numerics;
 
 namespace BOCCHI.Modules.Automator;
 
@@ -156,9 +156,14 @@ public class CriticalEncounter : Activity
         };
     }
 
-    public override bool IsValid()
+    public override unsafe bool IsValid()
     {
         if (Encounter.State == DynamicEventState.Register)
+        {
+            return true;
+        }
+
+        if (DynamicEventContainer.GetInstance()->CurrentEventId == Encounter.DynamicEventId)
         {
             return true;
         }
