@@ -18,11 +18,11 @@ public class Panel
 
             if (module.Farmer.Running)
             {
-                OcelotUI.LabelledValue("Phase", module.Farmer.StateMachine.State);
+                OcelotUI.LabelledValue("状态", module.Farmer.StateMachine.State);
             }
 
-            OcelotUI.LabelledValue("Not Engaged", module.Scanner.NotInCombat.Count());
-            OcelotUI.LabelledValue("Engaged", module.Scanner.InCombat.Count());
+            OcelotUI.LabelledValue("未开怪", module.Scanner.NotInCombat.Count());
+            OcelotUI.LabelledValue("已开怪", module.Scanner.InCombat.Count());
         });
     }
 }

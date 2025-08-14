@@ -54,6 +54,38 @@ public class AutomatorConfig : ModuleConfig
     [DependsOn(nameof(DoCriticalEncounters))]
 
     public bool DelayCriticalEncounters { get; set; } = false;
+    
+    private float _minDelay = 5f;
+    [FloatRange(0f, 30f)]
+    [DependsOn(nameof(DelayCriticalEncounters))]
+    public float MinDelay
+    {
+        get => _minDelay;
+        set
+        {
+            _minDelay = value;
+            if (_minDelay >= MaxDelay)
+            {
+                MaxDelay = _minDelay + 0.1f;
+            }
+        }
+    }
+
+    private float _maxDelay = 15f;
+    [FloatRange(0f, 30f)]
+    [DependsOn(nameof(DelayCriticalEncounters))]
+    public float MaxDelay
+    {
+        get => _maxDelay;
+        set
+        {
+            _maxDelay = value;
+            if (_maxDelay <= MinDelay)
+            {
+                MinDelay = _maxDelay - 0.1f;
+            }
+        }
+    }
 
     public bool ShouldDelayCriticalEncounters
     {

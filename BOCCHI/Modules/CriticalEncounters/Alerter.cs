@@ -47,7 +47,7 @@ public class Alerter : IDisposable
     {
         if (module.Config.LogSpawn)
         {
-            Svc.Chat.Print($"{ev.Name} 已出现");
+            Svc.Chat.Print($"[CE] {ev.Name} 已出现");
         }
 
         if (!ShouldAlertForCriticalEncounter(ev))
@@ -62,7 +62,7 @@ public class Alerter : IDisposable
     {
         if (module.Config.LogSpawn)
         {
-            Svc.Chat.Print($"{ev.Name} 已消失");
+            Svc.Chat.Print($"[CE] {ev.Name} 已消失");
         }
 
         if (!ShouldAlertForCriticalEncounter(ev))

@@ -34,6 +34,14 @@
           "label": "延迟前往CE",
           "tooltip": "前往CE前添加10-15秒延迟"
         },
+        "min_delay": {
+          "label": "最低延迟",
+          "tooltip": "设置前往CE的最低延迟"
+        },
+        "max_delay": {
+          "label": "最高延迟",
+          "tooltip": "设置前往CE的最高延迟"
+        },
         "do_scourge_of_the_mind": {
           "label": "CE: 脑髓爱好者——夺心魔",
           "tooltip": "选择是否参加CE “脑髓爱好者——夺心魔”"
