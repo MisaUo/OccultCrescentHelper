@@ -1,12 +1,10 @@
-using System;
-using System.Linq;
-using System.Numerics;
-using BOCCHI.ActionHelpers;
+﻿using BOCCHI.ActionHelpers;
 using BOCCHI.Data;
 using BOCCHI.Modules.CriticalEncounters;
 using BOCCHI.Modules.StateManager;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
+using ECommons.Automation;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
@@ -14,6 +12,9 @@ using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using Ocelot.Chain;
 using Ocelot.IPC;
+using System;
+using System.Linq;
+using System.Numerics;
 
 namespace BOCCHI.Modules.Automator;
 
@@ -55,10 +56,16 @@ public class CriticalEncounter : Activity
 
                 if (playersInZone.Count > 2)
                 {
-                    
+                    var minX = playersInZone.Min(p => p.Position.X);
+                    var maxX = playersInZone.Max(p => p.Position.X);
+                    var minY = playersInZone.Min(p => p.Position.Z);
+                    var maxY = playersInZone.Max(p => p.Position.Z);
+
+
+                    // Choose a random point within the bounding box of players
                     var random = new Random();
-                    const float minAbs = 2f;
-                    const float maxAbs = 7f;
+                    const float minAbs = 1f;
+                    const float maxAbs = 4f;
 
                     var positiveX = random.Next(0, 2) == 1;
                     var magnitudeX = (float)(minAbs + random.NextDouble() * (maxAbs - minAbs));
@@ -138,6 +145,8 @@ public class CriticalEncounter : Activity
                             {
                                 module.Config.AiProvider.On();
                             }
+
+                            Chat.ExecuteCommand("/aeTargetSelector off");
                         }
 
                         return states.GetState() == State.InCriticalEncounter;
@@ -150,17 +159,18 @@ public class CriticalEncounter : Activity
         };
     }
 
-    public override bool IsValid()
+    public override unsafe bool IsValid()
     {
         if (Encounter.State == DynamicEventState.Register)
         {
             return true;
         }
-        if (Encounter.State is DynamicEventState.Warmup)
+
+        if (DynamicEventContainer.GetInstance()->CurrentEventId == Encounter.DynamicEventId)
         {
             return true;
         }
-        
+
         if (Encounter.State is DynamicEventState.Warmup or DynamicEventState.Battle)
         {
             return Player.Status.Has(PlayerStatus.HoofingIt);
