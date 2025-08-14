@@ -43,8 +43,8 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Re
             var position = GetAetherytePosition();
 
             var random = new Random();
-            const float minAbs = 1.5f;
-            const float maxAbs = 2.3f;
+            const float minAbs = 0f;
+            const float maxAbs = 1.8f;
 
             var positiveX = random.Next(0, 2) == 1;
             var magnitudeX = (float)(minAbs + random.NextDouble() * (maxAbs - minAbs));
