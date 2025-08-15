@@ -30,6 +30,14 @@
           "label": "参加CE",
           "tooltip": "选择运行时是否考虑参加CE"
         },
+        "min_distance": {
+          "label": "最近距离",
+          "tooltip": "设置待机位置距离CE中心的最近距离"
+        },
+        "max_distance": {
+          "label": "最远距离",
+          "tooltip": "设置待机位置距离CE中心的最远距离"
+        },
         "delay_critical_encounters": {
           "label": "延迟前往CE",
           "tooltip": "前往CE前添加10-15秒延迟"
