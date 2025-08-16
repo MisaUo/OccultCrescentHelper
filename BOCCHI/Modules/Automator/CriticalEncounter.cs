@@ -146,7 +146,10 @@ public class CriticalEncounter : Activity
                                 module.Config.AiProvider.On();
                             }
 
-                            Chat.ExecuteCommand("/aeTargetSelector off");
+                            if (Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded))
+                            {
+                                Chat.ExecuteCommand("/aeTargetSelector off");
+                            }
                         }
 
                         return states.GetState() == State.InCriticalEncounter;

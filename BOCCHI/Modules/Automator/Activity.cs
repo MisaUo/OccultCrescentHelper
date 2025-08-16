@@ -10,6 +10,7 @@ using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;
 using Ocelot.Chain;
+using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
 using System;
 using System.Collections.Generic;
@@ -118,7 +119,9 @@ public abstract class Activity
 
                 case NavigationType.WalkTeleportWalk:
                     chain
-                        .Then(ChainHelper.PathfindToAndWait(playerShard.Position, AethernetData.DISTANCE))
+                        .ConditionalThen(_ => Player.DistanceTo(playerShard.Position) > AethernetData.DISTANCE, new PathfindAndMoveToChain(vnav, playerShard.Position))
+                        .Wait(1000)
+                        .BreakIf(() => lifestream.GetActiveCustomAetheryte() == 0)
                         .Then(ChainHelper.TeleportChain(activityShard.Aethernet))
                         .Debug("Waiting for lifestream to not be 'busy'")
                         .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new TaskManagerConfiguration { TimeLimitMS = 30000 }))
@@ -142,7 +145,7 @@ public abstract class Activity
         {
             return Chain.Create("Illegal:Participating")
                 .ConditionalThen(_ => module.Config.ShouldToggleAiProvider, _ => module.Config.AiProvider.On())
-                .Then(_ => Chat.ExecuteCommand("/aeTargetSelector off"))
+                .ConditionalThen(_ => Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded), _ => Chat.ExecuteCommand("/aeTargetSelector off"))
                 .Then(_ => vnav.Stop())
                 .Then(new TaskManagerTask(() =>
                 {
