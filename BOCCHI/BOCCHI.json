@@ -7,5 +7,5 @@
   "IconUrl": "https://raw.githubusercontent.com/OhKannaDuh/OccultCrescentHelper/refs/heads/master/assets/icon.png",
   "ApplicableVersion": "any",
   "Tags": [ "BOCCHI", "Occult Crescent", "Occult", "Crescent", "Illegal", "Critical Encounter", "Fate", "Faye", "BOCCHER", "OCH" ],
-  "Changelog": "- 修复在CE开始时可能触发返回的问题"
+  "Changelog": "- 修复远距离不使用传送而直接寻路的问题\n- 修复非法模式有时会发呆的问题\n- 新增CE传送延迟设置，随机待机位置设置"
 }
