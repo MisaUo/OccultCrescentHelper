@@ -42,8 +42,8 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Re
             var lifestream = module.GetIPCSubscriber<Lifestream>();
             var position = GetAetherytePosition();
 
-            chain.Then(PathfindAndMoveToChain.RandomNearby(vnav, position, AethernetData.DISTANCE, 2));
-            chain.Then(_ => lifestream.GetActiveCustomAetheryte() != 0 && Player.DistanceTo(position) <= AethernetData.DISTANCE);
+            chain.Then(PathfindAndMoveToChain.RandomNearby(vnav, position, 3, 2));
+            chain.Then(_ => lifestream.GetActiveCustomAetheryte() != 0 && Player.DistanceTo(position) < AethernetData.DISTANCE);
             chain.Then(_ => vnav.Stop());
         }
 

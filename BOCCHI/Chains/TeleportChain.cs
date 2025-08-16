@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using BOCCHI.Data;
 using BOCCHI.Enums;
 using BOCCHI.Modules.Teleporter;
@@ -15,7 +15,7 @@ public class TeleportChain(Aethernet aethernet, Lifestream lifestream, Teleporte
     protected override Chain Create(Chain chain)
     {
         var vnav = module.GetIPCSubscriber<VNavmesh>();
-        var nearby = ZoneData.GetNearbyAethernetShards(AethernetData.DISTANCE);
+        var nearby = ZoneData.GetNearbyAethernetShards(20);
         if (nearby.Count <= 0)
         {
             return chain;
