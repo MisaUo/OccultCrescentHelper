@@ -1,6 +1,6 @@
-using System.Collections.Generic;
-using Ocelot.Config.Attributes;
+﻿using Ocelot.Config.Attributes;
 using Ocelot.Modules;
+using System.Collections.Generic;
 
 namespace BOCCHI.Modules.Automator;
 
@@ -24,7 +24,7 @@ public class AutomatorConfig : ModuleConfig
     }
 
     [Checkbox] public bool ForceTarget { get; set; } = true;
-    
+
     public bool ShouldForceTarget
     {
         get => IsPropertyEnabled(nameof(ForceTarget));
@@ -82,13 +82,11 @@ public class AutomatorConfig : ModuleConfig
         }
     }
 
-    
-    
     [Checkbox]
     [DependsOn(nameof(DoCriticalEncounters))]
 
     public bool DelayCriticalEncounters { get; set; } = false;
-    
+
     private float _minDelay = 5f;
     [FloatRange(0f, 30f)]
     [DependsOn(nameof(DelayCriticalEncounters))]
