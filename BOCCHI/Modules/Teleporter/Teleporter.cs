@@ -47,7 +47,7 @@ public class Teleporter(TeleporterModule module)
 
         if (ImGuiEx.IconButton(FontAwesomeIcon.Running, $"{name}##{id}"))
         {
-            Svc.Log.Info($"寻路前往位于 {{destination}} 的 {{name}}");
+            Svc.Log.Info($"寻路前往位于 {destination} 的 {name}");
 
             Plugin.Chain.Submit(() => Chain.Create("寻路中")
                 .Then(new PathfindingChain(vnav, destination, ev, 20f))

@@ -1,6 +1,7 @@
 ﻿using ECommons.Automation;
 using ECommons.DalamudServices;
 using Ocelot;
+using Ocelot.Chain;
 using Ocelot.IPC;
 using Ocelot.Modules;
 using Ocelot.Windows;
@@ -91,6 +92,7 @@ public class AutomatorModule : Module
         automator.Refresh();
         Plugin.IPC.GetSubscriber<VNavmesh>().Stop();
         Plugin.Chain.Abort();
+        ChainManager.AbortAll();
 
         if (wasEnabled)
         {
