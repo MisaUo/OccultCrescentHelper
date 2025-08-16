@@ -120,6 +120,7 @@ public abstract class Activity
                 case NavigationType.WalkTeleportWalk:
                     chain
                         .ConditionalThen(_ => Player.DistanceTo(playerShard.Position) > AethernetData.DISTANCE, new PathfindAndMoveToChain(vnav, playerShard.Position))
+                        .Wait(3000)
                         .BreakIf(() => lifestream.GetActiveCustomAetheryte() == 0 || Player.DistanceTo(playerShard.Position) > AethernetData.DISTANCE)
                         .Then(ChainHelper.TeleportChain(activityShard.Aethernet))
                         .Debug("Waiting for lifestream to not be 'busy'")
