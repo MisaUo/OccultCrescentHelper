@@ -1,7 +1,4 @@
-using System;
-using System.Linq;
-using System.Numerics;
-using BOCCHI.ActionHelpers;
+﻿using BOCCHI.ActionHelpers;
 using BOCCHI.Data;
 using BOCCHI.Enums;
 using BOCCHI.Modules.Buff;
@@ -14,6 +11,9 @@ using ECommons.GameHelpers;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
+using System;
+using System.Linq;
+using System.Numerics;
 
 namespace BOCCHI.Chains;
 
@@ -42,21 +42,7 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Re
             var lifestream = module.GetIPCSubscriber<Lifestream>();
             var position = GetAetherytePosition();
 
-            var random = new Random();
-            const float minAbs = 1.5f;
-            const float maxAbs = 2.3f;
-
-            var positiveX = random.Next(0, 2) == 1;
-            var magnitudeX = (float)(minAbs + random.NextDouble() * (maxAbs - minAbs));
-            var valueX = positiveX ? magnitudeX : -magnitudeX;
-
-            var positiveZ = random.Next(0, 2) == 1;
-            var magnitudeZ = (float)(minAbs + random.NextDouble() * (maxAbs - minAbs));
-            var valueZ = positiveZ ? magnitudeZ : -magnitudeZ;
-
-            var destination = position + new Vector3(valueX, 0, valueZ);
-
-            chain.Then(new PathfindAndMoveToChain(vnav, destination));
+            chain.Then(PathfindAndMoveToChain.RandomNearby(vnav, position, AethernetData.DISTANCE, 3));
             chain.Then(_ => lifestream.GetActiveCustomAetheryte() != 0 && Player.DistanceTo(position) <= AethernetData.DISTANCE);
             chain.Then(_ => vnav.Stop());
         }
@@ -73,7 +59,7 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Re
         var closestKnowledgeCrystal = ZoneData.GetNearbyKnowledgeCrystal(60f).FirstOrDefault();
 
         var chain = Chain.Create();
-        
+
         var random = new Random();
         const float minAbs = 0.5f;
         const float maxAbs = 2f;
@@ -85,8 +71,8 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Re
         var positiveZ = random.Next(0, 2) == 1;
         var magnitudeZ = (float)(minAbs + random.NextDouble() * (maxAbs - minAbs));
         var valueZ = positiveZ ? magnitudeZ : -magnitudeZ;
-        
-        
+
+
         chain.BreakIf(() => !buffs.ShouldRefreshBuffs() || !vnav.IsReady() || closestKnowledgeCrystal == null);
         chain.Then(_ => Actions.TryUnmount());
 
