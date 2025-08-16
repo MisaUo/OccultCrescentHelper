@@ -29,16 +29,12 @@ public sealed class Plugin : OcelotPlugin
     {
         get => ChainManager.Get("OCH##main");
     }
-    private bool IsDev;
     public Plugin(IDalamudPluginInterface plugin)
         : base(plugin, Module.DalamudReflector)
     {
 #if !DEBUG
-        if (plugin.IsDev)
-        {
-            IsDev = true;
+        if (plugin.IsDev || plugin.SourceRepository != "https://raw.githubusercontent.com/NiGuangOwO/DalamudPlugins/main/pluginmaster.json")
             return;
-        }
 #endif
         Config = plugin.GetPluginConfig() as Config ?? new Config();
 
