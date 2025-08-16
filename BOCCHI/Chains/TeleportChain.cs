@@ -1,12 +1,11 @@
-﻿using System.Linq;
-using BOCCHI.Data;
+﻿using BOCCHI.Data;
 using BOCCHI.Enums;
 using BOCCHI.Modules.Teleporter;
 using Dalamud.Game.ClientState.Conditions;
-using ECommons.GameHelpers;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
+using System.Linq;
 
 namespace BOCCHI.Chains;
 
@@ -25,10 +24,10 @@ public class TeleportChain(Aethernet aethernet, Lifestream lifestream, Teleporte
         chain.BreakIf(() => nearby.Count <= 0);
 
         var nearest = nearby.First();
-        if (Player.DistanceTo(nearest.Position) >= AethernetData.DISTANCE)
+        if (lifestream.GetActiveCustomAetheryte() == 0)
         {
             chain.Then(new PathfindAndMoveToChain(vnav, nearest.Position));
-            chain.Then(_ => lifestream.GetActiveCustomAetheryte() != 0 && Player.DistanceTo(nearest.Position) < AethernetData.DISTANCE);
+            chain.Then(_ => lifestream.GetActiveCustomAetheryte() != 0);
         }
 
         chain.Then(_ => vnav.Stop());

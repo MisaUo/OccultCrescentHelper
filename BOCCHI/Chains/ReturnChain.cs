@@ -17,10 +17,8 @@ using System.Numerics;
 
 namespace BOCCHI.Chains;
 
-public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : RetryChainFactory
+public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : ChainFactory
 {
-    private bool complete = false;
-
     protected override Chain Create(Chain chain)
     {
         chain.BreakIf(() => Player.IsDead);
@@ -43,12 +41,12 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Re
             var position = GetAetherytePosition();
 
             chain.Then(PathfindAndMoveToChain.RandomNearby(vnav, position, 3, 2));
-            chain.Then(_ => lifestream.GetActiveCustomAetheryte() != 0 && Player.DistanceTo(position) < AethernetData.DISTANCE);
+            chain.Then(_ => lifestream.GetActiveCustomAetheryte() != 0);
             chain.Then(_ => vnav.Stop());
         }
 
 
-        return chain.Then(_ => complete = true);
+        return chain;
     }
 
     private Chain ApplyBuffs()
@@ -69,16 +67,6 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Re
         chain.Then(new AllBuffsChain(buffs));
 
         return chain;
-    }
-
-    public override bool IsComplete()
-    {
-        return complete;
-    }
-
-    public override int GetMaxAttempts()
-    {
-        return 5;
     }
 
     public override TaskManagerConfiguration? Config()

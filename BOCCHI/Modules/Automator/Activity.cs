@@ -119,9 +119,9 @@ public abstract class Activity
 
                 case NavigationType.WalkTeleportWalk:
                     chain
-                        .ConditionalThen(_ => Player.DistanceTo(playerShard.Position) > AethernetData.DISTANCE, new PathfindAndMoveToChain(vnav, playerShard.Position))
-                        .Wait(1000)
-                        .BreakIf(() => lifestream.GetActiveCustomAetheryte() == 0 || Player.DistanceTo(playerShard.Position) > AethernetData.DISTANCE)
+                        .ConditionalThen(_ => lifestream.GetActiveCustomAetheryte() == 0, new PathfindAndMoveToChain(vnav, playerShard.Position))
+                        .Wait(3000)
+                        .BreakIf(() => lifestream.GetActiveCustomAetheryte() == 0)
                         .Then(ChainHelper.TeleportChain(activityShard.Aethernet))
                         .Debug("Waiting for lifestream to not be 'busy'")
                         .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new TaskManagerConfiguration { TimeLimitMS = 30000 }))
