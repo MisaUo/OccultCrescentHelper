@@ -42,7 +42,22 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Re
             var lifestream = module.GetIPCSubscriber<Lifestream>();
             var position = GetAetherytePosition();
 
-            chain.Then(new PathfindAndMoveToChain(vnav, position));
+            var random = new Random();
+            const float minAbs = 0f;
+            const float maxAbs = 1.8f;
+
+            var positiveX = random.Next(0, 2) == 1;
+            var magnitudeX = (float)(minAbs + random.NextDouble() * (maxAbs - minAbs));
+            var valueX = positiveX ? magnitudeX : -magnitudeX;
+
+            var positiveZ = random.Next(0, 2) == 1;
+            var magnitudeZ = (float)(minAbs + random.NextDouble() * (maxAbs - minAbs));
+            var valueZ = positiveZ ? magnitudeZ : -magnitudeZ;
+
+            var destination = position + new Vector3(valueX, 0, valueZ);
+
+            chain.Then(new PathfindAndMoveToChain(vnav, destination));
+
             chain.Then(_ => lifestream.GetActiveCustomAetheryte() != 0 && Player.DistanceTo(position) <= AethernetData.DISTANCE);
             chain.Then(_ => vnav.Stop());
         }

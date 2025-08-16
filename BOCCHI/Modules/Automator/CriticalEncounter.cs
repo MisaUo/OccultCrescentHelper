@@ -54,28 +54,24 @@ public class CriticalEncounter : Activity
                     .Where(o => Vector3.Distance(o.Position, GetPosition()) <= GetRadius())
                     .ToList();
 
-                if (playersInZone.Count > 2)
+                if (playersInZone.Count >= 1)
                 {
-                    var minX = playersInZone.Min(p => p.Position.X);
-                    var maxX = playersInZone.Max(p => p.Position.X);
-                    var minY = playersInZone.Min(p => p.Position.Z);
-                    var maxY = playersInZone.Max(p => p.Position.Z);
-
-
-                    // Choose a random point within the bounding box of players
                     var random = new Random();
-                    const float minAbs = 1f;
-                    const float maxAbs = 4f;
-
-                    var positiveX = random.Next(0, 2) == 1;
-                    var magnitudeX = (float)(minAbs + random.NextDouble() * (maxAbs - minAbs));
-                    var valueX = positiveX ? magnitudeX : -magnitudeX;
-
-                    var positiveZ = random.Next(0, 2) == 1;
-                    var magnitudeZ = (float)(minAbs + random.NextDouble() * (maxAbs - minAbs));
-                    var valueZ = positiveZ ? magnitudeZ : -magnitudeZ;
-
-                    var destination = GetPosition() + new Vector3(valueX, 0, valueZ);
+                    var center = GetPosition();
+                    
+                    var minR = MathF.Max(0f, module.Config.MinDistance);
+                    var maxR = MathF.Max(minR, module.Config.MaxDistance);
+                    
+                    var theta = random.NextDouble() * 2.0 * Math.PI;
+                    
+                    var u = random.NextDouble();
+                    var r = MathF.Sqrt((float)(u * (maxR * maxR - minR * minR) + minR * minR));
+                    
+                    var valueX = r * (float)Math.Cos(theta);
+                    var valueZ = r * (float)Math.Sin(theta);
+                    
+                    var destination = center + new Vector3(valueX, 0f, valueZ);
+                    Svc.Log.Debug($"获取场地中心为{center}, 本次偏移为{new Vector3(valueX, 0f, valueZ)}, 最终目的地为{destination}");
                     module.Debug($"Pathfinding to random point: {destination}");
                     vnav.PathfindAndMoveTo(destination, false);
 
