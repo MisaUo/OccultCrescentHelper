@@ -6,6 +6,7 @@ using Ocelot.IPC;
 using Ocelot.Modules;
 using Ocelot.Windows;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BOCCHI.Modules.Automator;
 
@@ -71,7 +72,11 @@ public class AutomatorModule : Module
         {
             module.DisableIllegalMode();
         }
-        Chat.ExecuteCommand("/aeTargetSelector off");
+
+        if (Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded))
+        {
+            Chat.ExecuteCommand("/aeTargetSelector off");
+        }
     }
 
     public void EnableIllegalMode()
