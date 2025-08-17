@@ -25,12 +25,13 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Ch
 {
     protected override unsafe Chain Create(Chain chain)
     {
-        chain.BreakIf(() => Player.IsDead || ActionManager.Instance()->GetActionStatus(ActionType.GeneralAction, 8) != 0);
+        chain.BreakIf(() => Player.IsDead);
 
         var shouldReturn = GetCostToReturn() < GetCostToWalk();
 
         if (shouldReturn)
         {
+            chain.Then(_ => ActionManager.Instance()->GetActionStatus(ActionType.GeneralAction, 8) == 0);
             chain = Actions.Return.CastOnChain(chain);
             chain.WaitToCast().WaitToCycleCondition(ConditionFlag.BetweenAreas);
         }
@@ -58,8 +59,12 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Ch
     {
         var auto = module.GetModule<AutomatorModule>();
         var state = PublicContentOccultCrescent.GetState();
+        var currentJob = Job.Current;
         var chain = Chain.Create();
-        chain.BreakIf(() => !auto.Config.ShouldChangeLowLevelJob);
+
+        if (!auto.Config.ShouldChangeLowLevelJob
+            || state->SupportJobLevels[currentJob.ByteId] < Svc.Data.GetExcelSheet<MKDSupportJob>().GetRow(currentJob.ByteId).Unknown10)
+            return chain;
 
         foreach (var job in Svc.Data.GetExcelSheet<MKDSupportJob>())
         {
@@ -69,7 +74,6 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Ch
                 continue;
             }
 
-            chain.BreakIf(() => state->CurrentSupportJob == job.RowId);
             chain.Then(_ => PublicContentOccultCrescent.ChangeSupportJob((byte)job.RowId));
             return chain;
         }
