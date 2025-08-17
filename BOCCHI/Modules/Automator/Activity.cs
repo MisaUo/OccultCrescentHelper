@@ -9,6 +9,8 @@ using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;
+using FFXIVClientStructs.FFXIV.Client.Game.Fate;
+using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
@@ -33,7 +35,7 @@ public abstract class Activity
 
     protected readonly Dictionary<ActivityState, Func<StateManagerModule, Func<Chain>?>> handlers;
 
-    protected Activity(EventData data, Lifestream lifestream, VNavmesh vnav, AutomatorModule module)
+    protected unsafe Activity(EventData data, Lifestream lifestream, VNavmesh vnav, AutomatorModule module)
     {
         this.data = data;
         this.lifestream = lifestream;
@@ -49,7 +51,10 @@ public abstract class Activity
         };
 
         var states = module.GetModule<StateManagerModule>();
-        if (states.GetState() == State.InFate || states.GetState() == State.InCriticalEncounter)
+        if (states.GetState() == State.InFate
+            || states.GetState() == State.InCriticalEncounter
+            || (FateManager.Instance() != null && FateManager.Instance()->GetCurrentFateId() != 0)
+            || (DynamicEventContainer.GetInstance() != null && DynamicEventContainer.GetInstance()->CurrentEventId != 0))
         {
             state = ActivityState.Participating;
         }
@@ -122,6 +127,7 @@ public abstract class Activity
                         .ConditionalThen(_ => lifestream.GetActiveCustomAetheryte() == 0, new PathfindAndMoveToChain(vnav, playerShard.Position))
                         .Wait(3000)
                         .BreakIf(() => lifestream.GetActiveCustomAetheryte() == 0)
+                        .Then(_ => vnav.Stop())
                         .Then(ChainHelper.TeleportChain(activityShard.Aethernet))
                         .Debug("Waiting for lifestream to not be 'busy'")
                         .Then(new TaskManagerTask(() => !lifestream.IsBusy(), new TaskManagerConfiguration { TimeLimitMS = 30000 }))

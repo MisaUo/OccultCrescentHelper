@@ -1,10 +1,11 @@
-﻿using System.Numerics;
-using BOCCHI.Data;
+﻿using BOCCHI.Data;
 using BOCCHI.Modules.Automator;
 using Dalamud.Interface;
+using Dalamud.Interface.Colors;
 using ImGuiNET;
 using Ocelot;
 using Ocelot.Windows;
+using System.Numerics;
 
 namespace BOCCHI.Windows;
 
@@ -55,6 +56,16 @@ public class MainWindow(Plugin primaryPlugin, Config config) : OcelotMainWindow(
             ImGui.TextUnformatted(I18N.T("generic.label.not_in_zone"));
             return;
         }
+
+        ImGui.PushFont(UiBuilder.IconFont);
+        ImGui.TextColored(ImGuiColors.DalamudYellow, FontAwesomeIcon.ExclamationTriangle.ToIconString());
+        ImGui.PopFont();
+        ImGui.SameLine();
+        ImGui.TextUnformatted("插件开源免费，汉化维护不易，请勿从任何闲鱼小店上购买本插件");
+        ImGui.SameLine();
+        ImGui.PushFont(UiBuilder.IconFont);
+        ImGui.TextColored(ImGuiColors.DalamudYellow, FontAwesomeIcon.ExclamationTriangle.ToIconString());
+        ImGui.PopFont();
 
         Plugin.Modules.RenderMainUi(context);
     }

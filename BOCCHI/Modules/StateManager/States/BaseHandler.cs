@@ -15,7 +15,8 @@ public abstract class BaseHandler(StateManagerModule module) : StateHandler<Stat
 
     protected unsafe bool IsInFate()
     {
-        return FateManager.Instance()->CurrentFate is not null;
+        var fm = FateManager.Instance();
+        return fm != null && fm->GetCurrentFateId() != 0;
     }
 
     protected unsafe bool IsInCriticalEncounter()

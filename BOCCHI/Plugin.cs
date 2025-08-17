@@ -33,7 +33,7 @@ public sealed class Plugin : OcelotPlugin
         : base(plugin, Module.DalamudReflector)
     {
 #if !DEBUG
-        if (plugin.IsDev || plugin.SourceRepository != "https://raw.githubusercontent.com/NiGuangOwO/DalamudPlugins/main/pluginmaster.json")
+        if (plugin.IsDev || (!plugin.SourceRepository.Contains("NiGuangOwO/DalamudPlugins") && !plugin.SourceRepository.Contains("Ookura-Risona/DalamudPlugins")))
             return;
 #endif
         Config = plugin.GetPluginConfig() as Config ?? new Config();

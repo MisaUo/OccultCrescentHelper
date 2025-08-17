@@ -1,6 +1,7 @@
 ﻿using BOCCHI.ActionHelpers;
 using BOCCHI.Data;
 using BOCCHI.Enums;
+using BOCCHI.Modules.Automator;
 using BOCCHI.Modules.Buff;
 using BOCCHI.Modules.Buff.Chains;
 using BOCCHI.Modules.Teleporter;
@@ -8,6 +9,9 @@ using Dalamud.Game.ClientState.Conditions;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
+using FFXIVClientStructs.FFXIV.Client.Game;
+using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
+using Lumina.Excel.Sheets;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
@@ -19,9 +23,9 @@ namespace BOCCHI.Chains;
 
 public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : ChainFactory
 {
-    protected override Chain Create(Chain chain)
+    protected override unsafe Chain Create(Chain chain)
     {
-        chain.BreakIf(() => Player.IsDead);
+        chain.BreakIf(() => Player.IsDead || ActionManager.Instance()->GetActionStatus(ActionType.GeneralAction, 8) != 0);
 
         var shouldReturn = GetCostToReturn() < GetCostToWalk();
 
@@ -33,6 +37,7 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Ch
 
         chain.Then(ChainHelper.TreasureSightChain());
         chain.Then(ApplyBuffs);
+        chain.Then(ChangeLowLevelJob);
 
         if (config.ApproachAetheryte)
         {
@@ -45,6 +50,29 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Ch
             chain.Then(_ => vnav.Stop());
         }
 
+
+        return chain;
+    }
+
+    private unsafe Chain ChangeLowLevelJob()
+    {
+        var auto = module.GetModule<AutomatorModule>();
+        var state = PublicContentOccultCrescent.GetState();
+        var chain = Chain.Create();
+        chain.BreakIf(() => !auto.Config.ShouldChangeLowLevelJob);
+
+        foreach (var job in Svc.Data.GetExcelSheet<MKDSupportJob>())
+        {
+            var level = state->SupportJobLevels[(byte)job.RowId];
+            if (level == 0 || level >= job.Unknown10)
+            {
+                continue;
+            }
+
+            chain.BreakIf(() => state->CurrentSupportJob == job.RowId);
+            chain.Then(_ => PublicContentOccultCrescent.ChangeSupportJob((byte)job.RowId));
+            return chain;
+        }
 
         return chain;
     }

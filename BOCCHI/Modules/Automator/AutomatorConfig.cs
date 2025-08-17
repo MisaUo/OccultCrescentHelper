@@ -23,6 +23,12 @@ public class AutomatorConfig : ModuleConfig
         get => IsPropertyEnabled(nameof(ToggleAiProvider));
     }
 
+    [Checkbox] public bool ChangeLowLevelJob { get; set; } = true;
+    public bool ShouldChangeLowLevelJob
+    {
+        get => IsPropertyEnabled(nameof(ChangeLowLevelJob));
+    }
+
     [Checkbox] public bool ForceTarget { get; set; } = true;
 
     public bool ShouldForceTarget

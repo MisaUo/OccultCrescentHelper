@@ -1,4 +1,4 @@
-{
+﻿{
   "modules": {
     "automator": {
       "config": {
@@ -13,6 +13,10 @@
         "toggle_ai_provider": {
           "label": "自动切换AI状态",
           "tooltip": "开始FATE/CE时开启AI\n前往FATE/CE的路上关闭AI"
+        },
+        "change_low_level_job": {
+          "label": "自动切换低等级职业",
+          "tooltip": "返回基地时自动切换低等级职业进行练级"
         },
         "force_target": {
           "label": "强制选中目标",
