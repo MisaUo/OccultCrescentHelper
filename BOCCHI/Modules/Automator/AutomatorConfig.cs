@@ -56,38 +56,6 @@ public class AutomatorConfig : ModuleConfig
         get => IsPropertyEnabled(nameof(DoCriticalEncounters));
     }
 
-    private float _minDistance = 3f;
-    [FloatRange(0f, 20f)]
-    [DependsOn(nameof(DoCriticalEncounters))]
-    public float MinDistance
-    {
-        get => _minDistance;
-        set
-        {
-            _minDistance = value;
-            if (_minDistance >= _maxDistance)
-            {
-                _maxDistance = _minDistance + 0.1f;
-            }
-        }
-    }
-
-    private float _maxDistance = 10f;
-    [FloatRange(0f, 20f)]
-    [DependsOn(nameof(DoCriticalEncounters))]
-    public float MaxDistance
-    {
-        get => _maxDistance;
-        set
-        {
-            _maxDistance = value;
-            if (_maxDistance <= _minDistance)
-            {
-                _minDistance = _maxDistance - 0.1f;
-            }
-        }
-    }
-
     [Checkbox]
     [DependsOn(nameof(DoCriticalEncounters))]
 

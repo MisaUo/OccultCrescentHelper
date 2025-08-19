@@ -1,6 +1,5 @@
 ﻿using BOCCHI.ActionHelpers;
 using BOCCHI.Data;
-using BOCCHI.Enums;
 using BOCCHI.Modules.Automator;
 using BOCCHI.Modules.Buff;
 using BOCCHI.Modules.Buff.Chains;
@@ -46,7 +45,7 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Ch
             var lifestream = module.GetIPCSubscriber<Lifestream>();
             var position = GetAetherytePosition();
 
-            chain.Then(PathfindAndMoveToChain.RandomNearby(vnav, position, 3, 2));
+            chain.Then(PathfindAndMoveToChain.RandomNearby(vnav, position, 3));
             chain.Then(_ => lifestream.GetActiveCustomAetheryte() != 0);
             chain.Then(_ => vnav.Stop());
         }
@@ -92,8 +91,8 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Ch
         chain.BreakIf(() => !buffs.ShouldRefreshBuffs() || !vnav.IsReady() || closestKnowledgeCrystal == null);
         chain.Then(_ => Actions.TryUnmount());
 
-        chain.Then(PathfindAndMoveToChain.RandomNearby(vnav, closestKnowledgeCrystal!.Position, AethernetData.DISTANCE, 2));
-        chain.WaitUntilNear(vnav, closestKnowledgeCrystal!.Position, AethernetData.DISTANCE);
+        chain.Then(PathfindAndMoveToChain.RandomNearby(vnav, closestKnowledgeCrystal!.Position, 3));
+        chain.WaitUntilNear(vnav, closestKnowledgeCrystal!.Position, 3);
         chain.Then(_ => vnav.Stop());
 
         chain.Then(new AllBuffsChain(buffs));

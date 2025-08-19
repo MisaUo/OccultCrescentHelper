@@ -1,4 +1,5 @@
-﻿using BOCCHI.Chains;
+﻿using BOCCHI.ActionHelpers;
+using BOCCHI.Chains;
 using BOCCHI.Data;
 using BOCCHI.Enums;
 using BOCCHI.Modules.StateManager;
@@ -138,6 +139,7 @@ public abstract class Activity
 
             chain
                 .Then(GetPathfindingWatcher(states))
+                .ConditionalThen(_ => !vnav.IsRunning(), _ => Actions.TryUnmount())
                 .Then(_ => state = GetPostPathfindingState());
 
             return chain;
