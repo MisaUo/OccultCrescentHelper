@@ -54,7 +54,7 @@ public class CriticalEncounter : Activity
                     .Where(o => Vector3.Distance(o.Position, GetPosition()) <= GetRadius())
                     .ToList();
 
-                if (playersInZone.Count > 4)
+                if (playersInZone.Count > 0)
                 {
                     var minX = playersInZone.Min(p => p.Position.X);
                     var maxX = playersInZone.Max(p => p.Position.X);
