@@ -126,7 +126,6 @@ public abstract class Activity
                 case NavigationType.WalkTeleportWalk:
                     chain
                         .ConditionalThen(_ => lifestream.GetActiveCustomAetheryte() == 0, new PathfindAndMoveToChain(vnav, playerShard.Position))
-                        .Wait(3000)
                         .BreakIf(() => lifestream.GetActiveCustomAetheryte() == 0)
                         .Then(_ => vnav.Stop())
                         .Then(ChainHelper.TeleportChain(activityShard.Aethernet))
