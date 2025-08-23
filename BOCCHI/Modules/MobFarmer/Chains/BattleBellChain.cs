@@ -1,5 +1,7 @@
 ﻿using BOCCHI.ActionHelpers;
 using BOCCHI.Data;
+using Dalamud.Game.ClientState.Conditions;
+using ECommons.DalamudServices;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 
@@ -13,6 +15,10 @@ public class BattleBellChain(MobFarmerModule module) : ChainFactory
     {
         chain.BreakIf(() => Actions.Geomancer.BattleBell.GetRecastTime() >= module.Config.MaximumBattleBellWaitTime);
         chain.BreakIf(() => Actions.Geomancer.RingingRespite.GetRecastTime() >= module.Config.MaximumBattleBellWaitTime);
+        if (Svc.Condition[ConditionFlag.Mounted])
+        {
+            chain.Then(_ => Actions.TryUnmount()).Wait(1500);
+        }
         chain.Then(Job.Geomancer.ChangeToChain);
         chain.Then(Actions.Geomancer.BattleBell.GetCastChain()).Wait(1000);
         chain.Then(Actions.Geomancer.RingingRespite.GetCastChain()).Wait(1000);
