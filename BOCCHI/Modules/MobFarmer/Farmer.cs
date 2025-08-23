@@ -52,7 +52,7 @@ public class Farmer : IDisposable
         }
 
 
-        if (!Running || !module.Scanner.Mobs.Any())
+        if (!Running/* || !module.Scanner.Mobs.Any()*/)
         {
             return;
         }
