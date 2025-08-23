@@ -1,5 +1,6 @@
 ﻿using BOCCHI.ActionHelpers;
 using BOCCHI.Modules.MobFarmer.Chains;
+using Ocelot.IPC;
 using Ocelot.States;
 
 namespace BOCCHI.Modules.MobFarmer.States;
@@ -17,6 +18,17 @@ public class BuffingHandler(MobFarmerModule module) : FarmerPhaseHandler(module)
 
     public override FarmerPhase? Handle()
     {
+        var vnav = Module.GetIPCSubscriber<VNavmesh>();
+        if (vnav.IsRunning())
+        {
+            return null;
+        }
+                
+        if (Plugin.Chain.IsRunning)
+        {
+            return null;
+        }
+        
         if (!Module.Config.ApplyBattleBell)
         {
             return FarmerPhase.Gathering;
@@ -30,7 +42,10 @@ public class BuffingHandler(MobFarmerModule module) : FarmerPhaseHandler(module)
         if (HasRunBuff)
         {
             HasRunBuff = false;
-            Plugin.Chain.Submit(Actions.Sprint.GetCastChain());
+            if (Actions.Sprint.GetRecastTime() == 0)
+            {
+                Plugin.Chain.Submit(Actions.Sprint.GetCastChain());
+            }
             return FarmerPhase.Gathering;
         }
 
