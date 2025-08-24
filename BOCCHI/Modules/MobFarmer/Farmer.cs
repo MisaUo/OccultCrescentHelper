@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using BOCCHI.Data;
+﻿using BOCCHI.Data;
 using BOCCHI.Modules.MobFarmer.States;
+using ECommons.Automation;
+using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using ECommons.Reflection;
 using Ocelot.Modules;
 using Ocelot.States;
 using Ocelot.Windows;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 
 namespace BOCCHI.Modules.MobFarmer;
 
@@ -52,7 +54,7 @@ public class Farmer : IDisposable
         }
 
 
-        if (!Running/* || !module.Scanner.Mobs.Any()*/)
+        if (!Running)
         {
             return;
         }
@@ -110,6 +112,16 @@ public class Farmer : IDisposable
 
         StartingPoint = Player.Position;
         RotationPlugin.PhantomJobOff();
+        if (Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded))
+        {
+            Chat.ExecuteCommand("/aepull off");
+            Chat.ExecuteCommand("/aeTargetSelector off");
+            Chat.ExecuteCommand("/occs 炮击 on");
+            Chat.ExecuteCommand("/occs 神圣炮 off");
+            Chat.ExecuteCommand("/occs 暗黑炮 on");
+            Chat.ExecuteCommand("/occs 冲击炮 off");
+            Chat.ExecuteCommand("/occs 老化炮 on");
+        }
     }
 
     public void Dispose()
