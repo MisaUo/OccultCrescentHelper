@@ -116,6 +116,11 @@ public class Farmer : IDisposable
         {
             Chat.ExecuteCommand("/aepull off");
             Chat.ExecuteCommand("/aeTargetSelector off");
+            Chat.ExecuteCommand("/occs 炮击 on");
+            Chat.ExecuteCommand("/occs 神圣炮 off");
+            Chat.ExecuteCommand("/occs 暗黑炮 on");
+            Chat.ExecuteCommand("/occs 冲击炮 off");
+            Chat.ExecuteCommand("/occs 老化炮 on");
         }
     }
 
