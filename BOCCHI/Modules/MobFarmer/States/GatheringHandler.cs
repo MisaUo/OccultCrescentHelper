@@ -23,6 +23,17 @@ public class GatheringHandler(MobFarmerModule module) : FarmerPhaseHandler(modul
         get => ChainManager.Get("MobFarmer+Farmer");
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+        if (Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded))
+        {
+            Chat.ExecuteCommand("/aepull on");
+            Chat.ExecuteCommand("/aeTargetSelector off");
+            Chat.ExecuteCommand("/occs off");
+        }
+    }
+
     public override FarmerPhase? Handle()
     {
         var vnav = Module.GetIPCSubscriber<VNavmesh>();
@@ -32,11 +43,6 @@ public class GatheringHandler(MobFarmerModule module) : FarmerPhaseHandler(modul
         if (Svc.Condition[ConditionFlag.Mounted])
         {
             ChainQueue.Submit(() => Chain.Create().Then(_ => Actions.TryUnmount()));
-        }
-        if (Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded))
-        {
-            Chat.ExecuteCommand("/aepull on");
-            Chat.ExecuteCommand("/aeTargetSelector off");
         }
 
         if (InCombat.Count() >= Module.Config.MinimumMobsToStartFight || !NotInCombat.Any())

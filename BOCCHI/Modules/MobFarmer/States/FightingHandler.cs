@@ -20,6 +20,25 @@ namespace BOCCHI.Modules.MobFarmer.States;
 [State<FarmerPhase>(FarmerPhase.Fighting)]
 public class FightingHandler(MobFarmerModule module) : FarmerPhaseHandler(module)
 {
+    public override void Enter()
+    {
+        base.Enter();
+        if (Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded))
+        {
+            Chat.ExecuteCommand("/occs on");
+            Chat.ExecuteCommand("/aeTargetSelector off");
+        }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        if (Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded))
+        {
+            Chat.ExecuteCommand("/aepull off");
+        }
+    }
+
     public override FarmerPhase? Handle()
     {
         var anyInCombat = Module.Scanner.InCombat.Any();
@@ -64,11 +83,6 @@ public class FightingHandler(MobFarmerModule module) : FarmerPhaseHandler(module
         if (!anyInCombat && !Svc.Condition[ConditionFlag.InCombat])
         {
             Module.Farmer.RotationPlugin.PhantomJobOff();
-            if (Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded))
-            {
-                Chat.ExecuteCommand("/aepull off");
-                Chat.ExecuteCommand("/aeTargetSelector off");
-            }
             return FarmerPhase.Waiting;
         }
 
