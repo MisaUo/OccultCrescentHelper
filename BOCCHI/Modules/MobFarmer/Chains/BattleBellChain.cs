@@ -9,8 +9,6 @@ namespace BOCCHI.Modules.MobFarmer.Chains;
 
 public class BattleBellChain(MobFarmerModule module) : ChainFactory
 {
-    private readonly Job StartingJob = Job.Current;
-
     protected override Chain Create(Chain chain)
     {
         chain.BreakIf(() => Actions.Geomancer.BattleBell.GetRecastTime() >= module.Config.MaximumBattleBellWaitTime);
@@ -22,7 +20,7 @@ public class BattleBellChain(MobFarmerModule module) : ChainFactory
         chain.Then(Job.Geomancer.ChangeToChain);
         chain.Then(Actions.Geomancer.BattleBell.GetCastChain()).Wait(1000);
         chain.Then(Actions.Geomancer.RingingRespite.GetCastChain()).Wait(1000);
-        chain.Then(StartingJob.ChangeToChain);
+        chain.Then(Job.Cannoneer.ChangeToChain);
 
         return chain;
     }

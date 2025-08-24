@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BOCCHI.Data;
+﻿using BOCCHI.Data;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Plugin.Services;
 using ECommons.GameHelpers;
 using FFXIVClientStructs.FFXIV.Client.Game.Character;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BOCCHI.Modules.MobFarmer;
 
@@ -26,6 +26,11 @@ public class Scanner(MobFarmerModule module)
     {
         Mobs = TargetHelper.Enemies.Where(o =>
         {
+            if (o.IsTargetingPlayer())
+            {
+                return true;
+            }
+
             if (Player.DistanceTo(o) > module.Config.MaxEuclideanDistance)
             {
                 return false;
