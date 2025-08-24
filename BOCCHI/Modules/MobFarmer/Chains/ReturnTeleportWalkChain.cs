@@ -21,7 +21,7 @@ public class ReturnTeleportWalkChain(VNavmesh vnav, Lifestream lifestream, Vecto
         chain.Debug("Waiting for lifestream to not be 'busy'");
         chain.Then(new TaskManagerTask(() => !lifestream.IsBusy(), new TaskManagerConfiguration { TimeLimitMS = 30000 }));
         chain.Then(new PathfindAndMoveToChain(vnav, destination));
-        chain.ConditionalThen(_ => Vector3.Distance(Player.Position, destination) > 20f, ChainHelper.MountChain());
+        chain.ConditionalThen(_ => Vector3.Distance(Player.Position, destination) > 15f, ChainHelper.MountChain());
         chain.WaitUntilNear(vnav, destination, 2f);
         chain.Then(_ => vnav.Stop());
         chain.ConditionalThen(_ => Svc.Condition[ConditionFlag.Mounted], _ => Actions.TryUnmount());

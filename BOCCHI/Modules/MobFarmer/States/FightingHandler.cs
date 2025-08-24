@@ -74,8 +74,8 @@ public class FightingHandler(MobFarmerModule module) : FarmerPhaseHandler(module
             {
                 Plugin.Chain.Submit(() =>
                         Chain.Create("ReturnHome")
-                            .ConditionalThen(_ => ShouldMountTo(startingPoint), ChainHelper.MountChain())
                             .Then(new PathfindAndMoveToChain(vnav, startingPoint))
+                            .ConditionalThen(_ => Vector3.Distance(Player.Position, startingPoint) > 15f, ChainHelper.MountChain())
                             .WaitUntilNear(vnav, startingPoint, 2f)
                             .Then(_ => vnav.Stop())
                 );
@@ -91,15 +91,5 @@ public class FightingHandler(MobFarmerModule module) : FarmerPhaseHandler(module
         }
 
         return null;
-    }
-
-    private bool ShouldMountTo(Vector3 destination)
-    {
-        if (!Module.PluginConfig.TeleporterConfig.ShouldMount)
-        {
-            return false;
-        }
-
-        return Vector3.Distance(Player.Position, destination) > 15f;
     }
 }
