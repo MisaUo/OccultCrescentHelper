@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using System.Numerics;
-using ECommons.DalamudServices;
+﻿using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using Ocelot.IPC;
 using Ocelot.States;
+using System.Linq;
+using System.Numerics;
 
 namespace BOCCHI.Modules.MobFarmer.States;
 
@@ -38,18 +38,10 @@ public class StackingHandler(MobFarmerModule module) : FarmerPhaseHandler(module
                 Module.Farmer.RotationPlugin.PhantomJobOn();
                 return FarmerPhase.Fighting;
             }
-            
-            if (!vnav.IsRunning())
-            {
-                HasRunStack = false;
-                StackGoal = null;
-                Module.Farmer.RotationPlugin.PhantomJobOn();
-                return FarmerPhase.Fighting;
-            }
-            
+
             return null;
         }
-        
+
         var furthest = Module.Scanner.InCombat
             .Where(o => o.Address != Svc.Targets.Target?.Address)
             .OrderBy(Player.DistanceTo)
@@ -58,11 +50,6 @@ public class StackingHandler(MobFarmerModule module) : FarmerPhaseHandler(module
         if (furthest == null)
         {
             return FarmerPhase.Fighting;
-        }
-
-        if (vnav.IsRunning())
-        {
-            vnav.Stop();
         }
 
         StackGoal = furthest.Position;

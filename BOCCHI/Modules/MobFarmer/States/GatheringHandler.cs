@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Threading.Tasks;
+﻿using BOCCHI.ActionHelpers;
+using Dalamud.Game.ClientState.Conditions;
+using ECommons.Automation;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;
@@ -9,6 +8,10 @@ using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
 using Ocelot.States;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+using System.Threading.Tasks;
 
 namespace BOCCHI.Modules.MobFarmer.States;
 
@@ -25,7 +28,16 @@ public class GatheringHandler(MobFarmerModule module) : FarmerPhaseHandler(modul
         var vnav = Module.GetIPCSubscriber<VNavmesh>();
 
         var InCombat = Module.Scanner.InCombat;
-        var NotInCombat = Module.Scanner.NotInCombat.ToArray();
+        var NotInCombat = Module.Scanner.NotInCombat;
+        if (Svc.Condition[ConditionFlag.Mounted])
+        {
+            ChainQueue.Submit(() => Chain.Create().Then(_ => Actions.TryUnmount()));
+        }
+        if (Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded))
+        {
+            Chat.ExecuteCommand("/aepull on");
+            Chat.ExecuteCommand("/aeTargetSelector off");
+        }
 
         if (InCombat.Count() >= Module.Config.MinimumMobsToStartFight || !NotInCombat.Any())
         {
