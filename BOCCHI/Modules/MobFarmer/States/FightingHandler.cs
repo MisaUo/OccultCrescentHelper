@@ -1,5 +1,6 @@
 ﻿using BOCCHI.Chains;
 using BOCCHI.Enums;
+using BOCCHI.Modules.Automator;
 using BOCCHI.Modules.Buff;
 using BOCCHI.Modules.MobFarmer.Chains;
 using Dalamud.Game.ClientState.Conditions;
@@ -23,6 +24,9 @@ public class FightingHandler(MobFarmerModule module) : FarmerPhaseHandler(module
     public override void Enter()
     {
         base.Enter();
+        var auto = Module.GetModule<AutomatorModule>();
+        auto.Config.AiProvider.On();
+
         if (Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded))
         {
             Chat.ExecuteCommand("/occs on");

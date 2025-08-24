@@ -1,4 +1,5 @@
 ﻿using BOCCHI.ActionHelpers;
+using BOCCHI.Modules.Automator;
 using Dalamud.Game.ClientState.Conditions;
 using ECommons.Automation;
 using ECommons.DalamudServices;
@@ -26,6 +27,9 @@ public class GatheringHandler(MobFarmerModule module) : FarmerPhaseHandler(modul
     public override void Enter()
     {
         base.Enter();
+        var auto = Module.GetModule<AutomatorModule>();
+        auto.Config.AiProvider.Off();
+
         if (Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded))
         {
             Chat.ExecuteCommand("/aepull on");
