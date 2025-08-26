@@ -13,7 +13,7 @@ public class Panel
         {
             if (ImGui.Button(module.Farmer.Running ? I18N.T("generic.label.stop") : I18N.T("generic.label.start")))
             {
-                module.Farmer.Toggle(module);
+                module.Farmer.Toggle();
             }
 
             if (module.Farmer.Running)

@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using BOCCHI.Enums;
+﻿using BOCCHI.Enums;
 using BOCCHI.Modules.CriticalEncounters;
 using BOCCHI.Modules.Fates;
 using ECommons.DalamudServices;
@@ -7,6 +6,7 @@ using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using Ocelot.Commands;
 using Ocelot.Modules;
+using System.Collections.Generic;
 
 namespace BOCCHI.Commands;
 
@@ -21,11 +21,11 @@ public class OCHCmdCommand(Plugin plugin) : OcelotCommand
     protected override string Description
     {
         get => @"
-Utility command.
- - Flag commands clear active flag before trying to place a new one
-   - /bocchicmd flag-active-ce (Place a flag marker on the current Critical Engagement)
-   - /bocchicmd flag-active-fate (Place a flag marker on a current Fate)
-   - /bocchicmd flag-active-non-pot-fate (Place a flag marker on a current fate that isn't a pot fate)
+实用命令。
+   - 标志命令在尝试放置新标志之前将清除现有标志
+   - /bocchicmd flag-active-ce （在当前CE地点放置标记）
+   - /bocchicmd flag-active-fate （在当前FATE上放置标记）
+   - /bocchicmd flag-active-non-pot-fate （在当前非POT FATE处放置标记）
 --------------------------------
 ".Trim();
     }
@@ -47,9 +47,15 @@ Utility command.
 
         switch (arguments)
         {
-            case "flag-active-ce": FlagActiveCe(map); break;
-            case "flag-active-fate": FlagActiveFate(map, false); break;
-            case "flag-active-non-pot-fate": FlagActiveFate(map, true); break;
+            case "flag-active-ce":
+                FlagActiveCe(map);
+                break;
+            case "flag-active-fate":
+                FlagActiveFate(map, false);
+                break;
+            case "flag-active-non-pot-fate":
+                FlagActiveFate(map, true);
+                break;
         }
     }
 

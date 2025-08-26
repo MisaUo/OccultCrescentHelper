@@ -7,5 +7,5 @@
   "IconUrl": "https://raw.githubusercontent.com/OhKannaDuh/OccultCrescentHelper/refs/heads/master/assets/icon.png",
   "ApplicableVersion": "any",
   "Tags": [ "BOCCHI", "Occult Crescent", "Occult", "Crescent", "Illegal", "Critical Encounter", "Fate", "Faye", "BOCCHER", "OCH" ],
-  "Changelog": "- 对刷怪模式进行了大量优化和修正"
+  "Changelog": "- 新增刷怪模式控制指令"
 }

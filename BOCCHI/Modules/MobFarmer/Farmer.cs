@@ -101,14 +101,13 @@ public class Farmer : IDisposable
         }
     }
 
-    public void Toggle(MobFarmerModule module)
+    public void EnableFarmerMode()
     {
-        Running = !Running;
-        StateMachine.Reset();
-        if (!Running)
-        {
+        if (Running)
             return;
-        }
+
+        Running = true;
+        StateMachine.Reset();
 
         StartingPoint = Player.Position;
         RotationPlugin.PhantomJobOff();
@@ -121,6 +120,24 @@ public class Farmer : IDisposable
             Chat.ExecuteCommand("/occs 暗黑炮 on");
             Chat.ExecuteCommand("/occs 冲击炮 off");
             Chat.ExecuteCommand("/occs 老化炮 on");
+        }
+    }
+
+    public void DisableFarmerMode()
+    {
+        Running = false;
+        StateMachine.Reset();
+    }
+
+    public void Toggle()
+    {
+        if (!Running)
+        {
+            EnableFarmerMode();
+        }
+        else
+        {
+            DisableFarmerMode();
         }
     }
 
