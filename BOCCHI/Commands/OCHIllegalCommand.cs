@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using BOCCHI.Enums;
+﻿using BOCCHI.Enums;
 using BOCCHI.Modules.Automator;
 using BOCCHI.Modules.CriticalEncounters;
 using BOCCHI.Modules.Fates;
@@ -8,6 +7,7 @@ using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using Ocelot.Commands;
 using Ocelot.Modules;
+using System.Collections.Generic;
 
 namespace BOCCHI.Commands;
 
@@ -22,11 +22,11 @@ public class OCHIllegalCommand(Plugin plugin) : OcelotCommand
     protected override string Description
     {
         get => @"
-Manage och automator/illegal mode.
- - /bocchiillegal (Toggles the automator lens window)
- - /bocchiillegal on (Enables illegal mode (Automation))
- - /bocchiillegal off (Disables illegal mode (Automation))
- - /bocchiillegal toggle (Toggles illegal mode (Automation))
+管理自动化/非法模式。
+ - /bocchiillegal（切换非法模式窗口）
+ - /bocchiillegal on（启用非法模式（自动化））
+ - /bocchiillegal off（禁用非法模式（自动化））
+ - /bocchiillegal toggle（切换非法模式（自动化））
 --------------------------------
 ".Trim();
     }
