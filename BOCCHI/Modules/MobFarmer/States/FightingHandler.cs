@@ -37,9 +37,14 @@ public class FightingHandler(MobFarmerModule module) : FarmerPhaseHandler(module
     public override void Exit()
     {
         base.Exit();
+        var auto = Module.GetModule<AutomatorModule>();
+        auto.Config.AiProvider.Off();
+
         if (Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded))
         {
+            Chat.ExecuteCommand("/occs off");
             Chat.ExecuteCommand("/aepull off");
+            Chat.ExecuteCommand("/aeTargetSelector off");
         }
     }
 
