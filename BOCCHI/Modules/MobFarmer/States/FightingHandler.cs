@@ -92,7 +92,7 @@ public class FightingHandler(MobFarmerModule module) : FarmerPhaseHandler(module
         if (!anyInCombat && !Svc.Condition[ConditionFlag.InCombat])
         {
             Module.Farmer.RotationPlugin.PhantomJobOff();
-            return FarmerPhase.Waiting;
+            return FarmerPhase.TreasureFinding;
         }
 
         return null;

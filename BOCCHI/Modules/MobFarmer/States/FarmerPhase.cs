@@ -7,4 +7,5 @@ public enum FarmerPhase
     Gathering,
     Stacking,
     Fighting,
+    TreasureFinding,
 }
