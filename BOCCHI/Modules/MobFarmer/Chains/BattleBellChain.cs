@@ -17,6 +17,8 @@ public class BattleBellChain(MobFarmerModule module) : ChainFactory
         {
             chain.Then(_ => Actions.TryUnmount()).Wait(1500);
         }
+        chain.Then(Job.Freelancer.ChangeToChain).Wait(500);
+        chain.Then(Actions.Freelancer.Treasuresight.GetCastChain()).Wait(1500);
         chain.Then(Job.Geomancer.ChangeToChain);
         chain.Then(Actions.Geomancer.BattleBell.GetCastChain()).Wait(1000);
         chain.Then(Actions.Geomancer.RingingRespite.GetCastChain()).Wait(1000);
