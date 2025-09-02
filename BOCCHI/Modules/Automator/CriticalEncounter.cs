@@ -152,8 +152,8 @@ public class CriticalEncounter : Activity
 
                             if (Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded))
                             {
-                                Chat.ExecuteCommand("/aepull on");
                                 Chat.ExecuteCommand("/aeTargetSelector off");
+                                Chat.ExecuteCommand("/aepull on");
                             }
                         }
 

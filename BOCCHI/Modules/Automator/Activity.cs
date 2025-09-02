@@ -78,6 +78,11 @@ public abstract class Activity
 
             return Chain.Create("Illegal:Idle")
                 .ConditionalThen(ShouldToggleAi, _ => module.Config.AiProvider.Off())
+                .ConditionalThen(_ => Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded), _ =>
+                {
+                    Chat.ExecuteCommand("/aeTargetSelector off");
+                    Chat.ExecuteCommand("/aepull off");
+                })
                 .Then(_ => vnav.Stop())
                 .Then(_ => state = ActivityState.Pathfinding);
         };
@@ -158,7 +163,11 @@ public abstract class Activity
         {
             return Chain.Create("Illegal:Participating")
                 .ConditionalThen(_ => module.Config.ShouldToggleAiProvider, _ => module.Config.AiProvider.On())
-                .ConditionalThen(_ => Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded), _ => Chat.ExecuteCommand("/aeTargetSelector off"))
+                .ConditionalThen(_ => Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded), _ =>
+                {
+                    Chat.ExecuteCommand("/aeTargetSelector off");
+                    Chat.ExecuteCommand("/aepull on");
+                })
                 .Then(_ => vnav.Stop())
                 .Then(new TaskManagerTask(() =>
                 {
