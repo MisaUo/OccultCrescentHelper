@@ -138,7 +138,13 @@ public abstract class Activity
 
             chain
                 .Then(GetPathfindingWatcher(states))
-                .ConditionalThen(_ => !vnav.IsRunning(), _ => Actions.TryUnmount())
+                .ConditionalThen(_ => !vnav.IsRunning(), _ =>
+                {
+                    if (module.GetModule<AutomatorModule>().random.NextDouble() < 0.5)
+                    {
+                        Actions.TryUnmount();
+                    }
+                })
                 .Then(_ => state = GetPostPathfindingState());
 
             return chain;
