@@ -7,5 +7,5 @@
   "IconUrl": "https://raw.githubusercontent.com/OhKannaDuh/OccultCrescentHelper/refs/heads/master/assets/icon.png",
   "ApplicableVersion": "any",
   "Tags": [ "BOCCHI", "Occult Crescent", "Occult", "Crescent", "Illegal", "Critical Encounter", "Fate", "Faye", "BOCCHER", "OCH" ],
-  "Changelog": "- 新增刷怪模式控制指令"
+  "Changelog": "- 优化进入CE区域后等待位置的随机性\n- 农怪模式回起点后增加魔寻宝技能"
 }

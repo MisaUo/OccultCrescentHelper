@@ -60,9 +60,22 @@ public class CriticalEncounter : Activity
                     var maxX = playersInZone.Max(p => p.Position.X);
                     var minY = playersInZone.Min(p => p.Position.Z);
                     var maxY = playersInZone.Max(p => p.Position.Z);
+                    var rand = module.GetModule<AutomatorModule>().random;
+
+                    // 处理所有玩家位置相同的情况
+                    if (minX == maxX)
+                    {
+                        var randomOffset = (float)(rand.NextDouble() * 2.0);
+                        maxX += randomOffset;
+                    }
+
+                    if (minY == maxY)
+                    {
+                        var randomOffset = (float)(rand.NextDouble() * 2.0);
+                        maxY += randomOffset;
+                    }
 
                     // Choose a random point within the bounding box of players
-                    var rand = new Random();
                     var randX = (float)(minX + rand.NextDouble() * (maxX - minX));
                     var randY = (float)(minY + rand.NextDouble() * (maxY - minY));
                     var randomPoint = new Vector3(randX, GetPosition().Y, randY);
@@ -140,6 +153,7 @@ public class CriticalEncounter : Activity
                             if (Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded))
                             {
                                 Chat.ExecuteCommand("/aeTargetSelector off");
+                                Chat.ExecuteCommand("/aepull on");
                             }
                         }
 

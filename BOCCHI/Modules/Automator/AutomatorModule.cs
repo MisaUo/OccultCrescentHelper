@@ -5,6 +5,7 @@ using Ocelot.Chain;
 using Ocelot.IPC;
 using Ocelot.Modules;
 using Ocelot.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,6 +29,8 @@ public class AutomatorModule : Module
     public readonly Panel panel = new();
 
     private readonly List<uint> occultCrescentTerritoryIds = [1252];
+
+    public readonly Random random = new();
 
     public AutomatorModule(Plugin plugin, Config config)
         : base(plugin, config)
